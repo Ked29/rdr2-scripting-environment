@@ -25,7 +25,7 @@ void createPed(Hash model, float posx, float posy, float posz, float heading)
 	{
 		WAIT(0);
 	}
-	ped = PED::CREATE_PED(model, posx, posy, posz, 0.f, false, false, false, false);
+	ped = PED::CREATE_PED(model, posx, posy, posz, heading, false, false, false, false);
 	ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
 	PED::_EQUIP_PED_OUTFIT_PRESET(ped, 0, false);
 	PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
