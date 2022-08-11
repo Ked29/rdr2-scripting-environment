@@ -1,0 +1,8 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(500,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  script.cpp
+  Generating code
+  17 of 181 functions ( 9.4%) were compiled, the rest were copied from previous compilation.
+    7 functions were new in current compilation
+    14 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Pools.vcxproj -> C:\Program Files (x86)\Steam\steamapps\common\Red Dead Redemption 2\Alphatest.asi
