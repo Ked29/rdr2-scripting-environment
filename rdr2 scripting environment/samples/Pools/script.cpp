@@ -16,6 +16,7 @@ using namespace std;
 
 /*------------- SPAWN PED ----------------------------------------------------------------------------------------------------------------------------------------------------*/
 Ped ped = 0;
+const char* guardHorses[] = { "A_C_Horse_KentuckySaddle_Black", "A_C_Horse_KentuckySaddle_ChestnutPinto", "A_C_Horse_KentuckySaddle_Grey", "A_C_Horse_KentuckySaddle_SilverBay" };
 
 void createPed(Hash model, float posx, float posy, float posz, float heading)
 {
@@ -31,9 +32,18 @@ void createPed(Hash model, float posx, float posy, float posz, float heading)
 }
 /*Example of spawning ped*/
 //Vector3 PlayerPos = ENTITY::GET_ENTITY_COORDS(PLAYER::PLAYER_ID(), true, true);
-//createPed(MISC::GET_HASH_KEY("cs_dutch"), PlayerPos.x, PlayerPos.y + MISC::GET_RANDOM_INT_IN_RANGE(5, 10), PlayerPos.z, 0.f);
+//createPed(joaat("cs_dutch"), PlayerPos.x, PlayerPos.y + MISC::GET_RANDOM_INT_IN_RANGE(5, 10), PlayerPos.z, 0.f);
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
+/*Examples of createPedWithOptions function
+|  Spawning A Ped With A Horse  |
+createPedWithOptions(joaat("g_m_m_unicornwallgoons_01"), PlayerPos.x, PlayerPos.y, PlayerPos.z, 0.f, true, joaat(guardHorses[MISC::GET_RANDOM_INT_IN_RANGE(0, 3)]));
+|  Spawning A Ped With A Vehicle  |
+createPedWithOptions(joaat("u_m_m_cornwalldriver_01"), PlayerPos.x, PlayerPos.y, PlayerPos.z, 0.f, false, NULL, false, NULL, NULL, NULL, true, VS_DRIVER, joaat("wagonarmoured01x"));
+|  Spawning A Ped With A Scenario  |
+createPedWithOptions(joaat("cs_dutch"), PlayerPos.x, PlayerPos.y, PlayerPos.z, 0.f, false, NULL, true, joaat("WORLD_HUMAN_LEAN_BACK_WALL_SMOKING"), 0.f, 0, false, 0, NULL);
+|  Spawning A Ped Normally  |
+createPedWithOptions(joaat("cs_dutch"), PlayerPos.x, PlayerPos.y, PlayerPos.z)
+*/
 
 void main()
 {
