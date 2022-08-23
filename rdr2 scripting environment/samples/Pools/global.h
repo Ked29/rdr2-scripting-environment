@@ -1,5 +1,9 @@
 #pragma once
 
+#include "script.h"
+#include <string>
+#include <vector>
+#include "keyboard.h"
 
 inline Ped pwo = 0;
 inline Vehicle pwov = 0;
