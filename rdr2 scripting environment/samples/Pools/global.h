@@ -5,10 +5,10 @@
 #include <vector>
 #include "keyboard.h"
 
-inline Ped pwo = 0;
-inline Vehicle pwov = 0;
-inline Ped pwoh = 0;
-inline Ped pwod = 0;
+Ped pwo = 0;
+Vehicle pwov = 0;
+Ped pwoh = 0;
+Ped pwod = 0;
 
 inline void createPedWithOptions(Hash model, float posx, float posy, float posz, float heading = 0.f, bool onHorse = false, Hash horseModel = NULL, bool spawnWithScenario = false, Hash scenarioName = NULL, float scenarioHeading = 0.f, int outfitVariation = 0, bool inVehicle = false, int seatIndex = 0, Hash VehicleName = NULL)
 {
