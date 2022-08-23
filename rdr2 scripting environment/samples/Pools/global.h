@@ -5,6 +5,12 @@
 #include <vector>
 #include "keyboard.h"
 
+inline Hash joaat(const char* text)
+{
+	Hash textHash = MISC::GET_HASH_KEY(text);
+	return textHash;
+}
+
 Ped pwo = 0;
 Vehicle pwov = 0;
 Ped pwoh = 0;
