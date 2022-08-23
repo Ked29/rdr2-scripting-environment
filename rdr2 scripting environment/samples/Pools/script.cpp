@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "keyboard.h"
+#include "global.h"
 
 
 using namespace std;
