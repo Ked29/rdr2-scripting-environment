@@ -48,7 +48,6 @@ inline void createPedWithOptions(Hash model, float posx, float posy, float posz,
 		WAIT(0);
 		}
 		pwo = PED::CREATE_PED(model, posx + 5, posy + 5, posz, heading, false, false, false, false);
-		spawnedPeds.push_back(pwo);
 		ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(pwo, true);
 		PED::_EQUIP_PED_OUTFIT_PRESET(pwo, outfitVariation, false);
 		PED::_UPDATE_PED_VARIATION(pwo, true, true, true, true, true);
