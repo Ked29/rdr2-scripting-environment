@@ -19,6 +19,10 @@ inline int RINT(int p1, int p2)
 {
 	return MISC::GET_RANDOM_INT_IN_RANGE(p1, p2);
 }
+inline float RFLOAT(float p1, float p2)
+{
+	return MISC::GET_RANDOM_FLOAT_IN_RANGE(p1, p2);
+}
 
 Ped pwo = 0;
 Vehicle pwov = 0;
