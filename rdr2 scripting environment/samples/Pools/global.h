@@ -12,13 +12,14 @@ inline Hash joaat(const char* text)
 	return MISC::GET_HASH_KEY(text);
 }
 inline float DFC(float p1, float p2, float p3, float p4, float p5, float p6, bool p7 = false)
-{	if(p7 == true)
+{
+	if (p7 == true)
 	{
-		return MISC::GET_DISTANCE_BETWEEN_COORDS(p1, p2, p3, p4, p5, p6, true);	
+		return MISC::GET_DISTANCE_BETWEEN_COORDS(p1, p2, p3, p4, p5, p6, true);
 	}
- 	else
+	else
 	{
-		return MISC::GET_DISTANCE_BETWEEN_COORDS(p1, p2, p3, p4, p5, p6, false);	
+		return MISC::GET_DISTANCE_BETWEEN_COORDS(p1, p2, p3, p4, p5, p6, false);
 	}
 }
 inline int RINT(int p1, int p2)
