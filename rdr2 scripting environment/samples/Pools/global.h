@@ -11,6 +11,14 @@ inline Hash joaat(const char* text)
 {
 	return MISC::GET_HASH_KEY(text);
 }
+inline float DFC(float p1, float p2, float p3, float p4, float p5, float p6)
+{
+	return MISC::GET_DISTANCE_BETWEEN_COORDS(p1, p2, p3, p4, p5, p6, true);
+}
+inline int RINT(int p1, int p2)
+{
+	return MISC::GET_RANDOM_INT_IN_RANGE(p1, p2);
+}
 
 Ped pwo = 0;
 Vehicle pwov = 0;
