@@ -7,8 +7,7 @@
 
 inline Hash joaat(const char* text)
 {
-	Hash textHash = MISC::GET_HASH_KEY(text);
-	return textHash;
+	return MISC::GET_HASH_KEY(text);
 }
 
 Ped pwo = 0;
