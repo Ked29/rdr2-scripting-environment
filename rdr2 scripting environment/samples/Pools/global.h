@@ -156,3 +156,9 @@ inline int createBlipForEntity(Hash blipHash, Entity entity)
 		return blip;
 	}
 }
+inline Vehicle getVehicle(Ped ped) {
+	return PED::GET_VEHICLE_PED_IS_USING(ped);
+}
+inline bool inVehicle(Ped ped) {
+	return PED::IS_PED_IN_ANY_VEHICLE(ped, true);
+}
