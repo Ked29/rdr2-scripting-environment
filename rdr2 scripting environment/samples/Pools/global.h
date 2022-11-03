@@ -126,3 +126,18 @@ inline void createPedWithOptions(Hash model, float posx, float posy, float posz,
 		}
 	}
 }
+inline int createBlipForCoords(Hash blipHash, Vector3 coords)
+{
+	int iVar0{};
+	if (MAP::DOES_BLIP_EXIST(iVar0))
+	{
+		MAP::REMOVE_BLIP(&iVar0);
+		iVar0 = MAP::BLIP_ADD_FOR_COORDS(blipHash, coords.x, coords.y, coords.z);
+		return iVar0;
+	}
+	else
+	{
+		iVar0 = MAP::BLIP_ADD_FOR_COORDS(blipHash, coords.x, coords.y, coords.z);
+		return iVar0;
+	}
+}	
