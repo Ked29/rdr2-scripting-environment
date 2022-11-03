@@ -131,7 +131,7 @@ inline int createBlipForCoords(Hash blipHash, Vector3 coords)
 	int blip{};
 	if (MAP::DOES_BLIP_EXIST(blip))
 	{
-		MAP::REMOVE_BLIP(blip);
+		MAP::REMOVE_BLIP(&blip);
 		blip = MAP::BLIP_ADD_FOR_COORDS(blipHash, coords.x, coords.y, coords.z);
 		return blip;
 	}
