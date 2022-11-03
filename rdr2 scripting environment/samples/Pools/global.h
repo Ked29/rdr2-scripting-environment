@@ -141,3 +141,18 @@ inline int createBlipForCoords(Hash blipHash, Vector3 coords)
 		return blip;
 	}
 }	
+inline int createBlipForEntity(Hash blipHash, Entity entity)
+{
+	int blip{};
+	if (MAP::DOES_BLIP_EXIST(blip))
+	{
+		MAP::REMOVE_BLIP(&blip);
+		blip = MAP::BLIP_ADD_FOR_ENTITY(blipHash, entity);
+		return blip;
+	}
+	else
+	{
+		blip = MAP::BLIP_ADD_FOR_ENTITY(blipHash, entity);
+		return blip;
+	}
+}
