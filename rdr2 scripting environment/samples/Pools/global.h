@@ -156,9 +156,105 @@ inline int createBlipForEntity(Hash blipHash, Entity entity)
 		return blip;
 	}
 }
+/*Can be combined/used in harmony with function below.
+getter function for the vehicle handle that a ped is in.*/
 inline Vehicle getVehicle(Ped ped) {
 	return PED::GET_VEHICLE_PED_IS_USING(ped);
 }
+/*returns true or false if ped is in any vehicle*/
 inline bool inVehicle(Ped ped) {
 	return PED::IS_PED_IN_ANY_VEHICLE(ped, true);
+}
+inline Vector3 func_vec(Ped ped) {
+	return ENTITY::GET_ENTITY_COORDS(ped, true, true);
+}
+/*Simple ped creator function, returns the ped handle so that you have full control over all peds you spawn*/
+inline int func_cped(Hash model, float posx, float posy, float posz, float heading = 0.f, Vector3 coords = { 0, 0, 0 }, int outfitVariation = 0)
+{
+	int ped;
+	if (posx == NULL && posy == NULL && posz == NULL) 
+	{
+		posx = coords.x;
+		posy = coords.y;
+		posz = coords.z;
+	}
+	STREAMING::REQUEST_MODEL(model, true);
+	if (!STREAMING::HAS_MODEL_LOADED(model))
+	{
+		WAIT(0);
+	}
+	ped = PED::CREATE_PED(model, posx, posy, posz, heading, false, false, false, false);
+	ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
+	PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, false);
+	PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	return ped;
+}
+/*Slightly modified version of SgtJoe's script kill code
+only difference is this can kill multiple scripts at once*/
+inline void kill_scripts(vector<Hash> scripts)
+{
+        SCRIPTS::SCRIPT_THREAD_ITERATOR_RESET();
+        int ThreadID = SCRIPTS::SCRIPT_THREAD_ITERATOR_GET_NEXT_THREAD_ID();
+	while (ThreadID > 0)
+        {
+            if (find(scripts.begin(), scripts.end(), SCRIPTS::_GET_HASH_OF_THREAD(ThreadID)) != scripts.end())
+            {
+                SCRIPTS::TERMINATE_THREAD(ThreadID);
+            }
+	ThreadID = SCRIPTS::SCRIPT_THREAD_ITERATOR_GET_NEXT_THREAD_ID();
+        }
+}
+/*
+simple prompt function, will return prompt handle for checking if pressed
+Types for p1 are either 0(Standard press) or 1(standardized hold press)
+type is set to standard press by default
+p2(addToPed) is for if you want to add prompt to a ped (false by default)
+p3 is only if p2 is true, the ped you want to add the prompt to.
+*/
+inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Ped ped = 0)
+{
+	int prompt{};
+	int pedGroup{};
+	if (type == 0)
+	{
+		prompt = HUD::_UI_PROMPT_REGISTER_BEGIN();
+		HUD::_UI_PROMPT_SET_CONTROL_ACTION(prompt, joaat("INPUT_INTERACT_LOCKON_POS"));
+		HUD::_UI_PROMPT_SET_TEXT(prompt, name);
+		HUD::_UI_PROMPT_SET_STANDARD_MODE(prompt, true);
+		HUD::_UI_PROMPT_REGISTER_END(prompt);
+		if (addToPed && ped != NULL)
+		{
+			pedGroup = HUD::_UI_PROMPT_GET_GROUP_ID_FOR_TARGET_ENTITY(ped);
+			HUD::_UI_PROMPT_SET_GROUP(prompt, pedGroup, 0);
+			HUD::_UI_PROMPT_SET_ENABLED(prompt, true);
+			HUD::_UI_PROMPT_SET_VISIBLE(prompt, true);
+		}
+		else if (!addToPed)
+		{
+			HUD::_UI_PROMPT_SET_ENABLED(prompt, true);
+			HUD::_UI_PROMPT_SET_VISIBLE(prompt, true);
+		}
+		return prompt;
+	}
+	else if (type == 1)
+	{
+		prompt = HUD::_UI_PROMPT_REGISTER_BEGIN();
+		HUD::_UI_PROMPT_SET_CONTROL_ACTION(prompt, joaat("INPUT_INTERACT_LOCKON_POS"));
+		HUD::_UI_PROMPT_SET_TEXT(prompt, name);
+		HUD::_UI_PROMPT_SET_STANDARDIZED_HOLD_MODE(prompt, joaat("MEDIUM_TIMED_EVENT"));
+		HUD::_UI_PROMPT_REGISTER_END(prompt);
+		if (addToPed && ped != NULL)
+		{
+			pedGroup = HUD::_UI_PROMPT_GET_GROUP_ID_FOR_TARGET_ENTITY(ped);
+			HUD::_UI_PROMPT_SET_GROUP(prompt, pedGroup, 0);
+			HUD::_UI_PROMPT_SET_ENABLED(prompt, true);
+			HUD::_UI_PROMPT_SET_VISIBLE(prompt, true);
+		}
+		else if (!addToPed)
+		{
+			HUD::_UI_PROMPT_SET_ENABLED(prompt, true);
+			HUD::_UI_PROMPT_SET_VISIBLE(prompt, true);
+		}
+		return prompt;
+	}
 }
