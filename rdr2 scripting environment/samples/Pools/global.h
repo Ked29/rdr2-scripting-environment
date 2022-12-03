@@ -189,8 +189,11 @@ inline int func_cped(Hash model, float posx, float posy, float posz, float headi
 	PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
 	return ped;
 }
-/*Slightly modified version of SgtJoe's script kill code
-only difference is this can kill multiple scripts at once*/
+/*
+Slightly modified version of SgtJoe's script kill code
+only difference is this can kill multiple scripts at once
+Example param -> vector<Hash> killscripts = {joaat("carmodydell"), joaat("beat_bear_trap"), joaat("campfire_gang")};
+*/
 inline void kill_scripts(vector<Hash> scripts)
 {
         SCRIPTS::SCRIPT_THREAD_ITERATOR_RESET();
