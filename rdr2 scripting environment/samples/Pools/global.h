@@ -85,9 +85,9 @@ inline void createPedWithOptions(Hash model, float posx, float posy, float posz,
 	pwoh = PED::CREATE_PED(horseModel, posx + 2, posy + 2, posz, heading, false, false, false, false);
 	pwod = PED::CREATE_PED_ON_MOUNT(pwoh, model, VS_DRIVER, false, false, false, false);
 	pedVector.push_back(pwoh & pwod);
-	PED::_EQUIP_PED_OUTFIT_PRESET(pwoh, outfitVariation, false);
+	PED::_EQUIP_META_PED_OUTFIT_PRESET(pwoh, outfitVariation, false);
 	PED::_UPDATE_PED_VARIATION(pwoh, true, true, true, true, true);
-	PED::_EQUIP_PED_OUTFIT_PRESET(pwod, outfitVariation, false);
+	PED::_EQUIP_META_PED_OUTFIT_PRESET(pwod, outfitVariation, false);
 	PED::_UPDATE_PED_VARIATION(pwod, true, true, true, true, true);
 	
 	}
@@ -105,7 +105,7 @@ inline void createPedWithOptions(Hash model, float posx, float posy, float posz,
 		pwo = PED::CREATE_PED_INSIDE_VEHICLE(pwov, model, seatIndex, true, true, true);
 		vehicleVector.push_back(pwov);
 		pedVector.push_back(pwo);
-		PED::_EQUIP_PED_OUTFIT_PRESET(pwo, outfitVariation, false);
+		PED::_EQUIP_META_PED_OUTFIT_PRESET(pwo, outfitVariation, false);
 		PED::_UPDATE_PED_VARIATION(pwo, true, true, true, true, true);
 	}
 	if(onHorse == false && inVehicle == false)
@@ -118,7 +118,7 @@ inline void createPedWithOptions(Hash model, float posx, float posy, float posz,
 		pwo = PED::CREATE_PED(model, posx + 5, posy + 5, posz, heading, false, false, false, false);
 		pedVector.push_back(pwo);
 		ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(pwo, true);
-		PED::_EQUIP_PED_OUTFIT_PRESET(pwo, outfitVariation, false);
+		PED::_EQUIP_META_PED_OUTFIT_PRESET(pwo, outfitVariation, false);
 		PED::_UPDATE_PED_VARIATION(pwo, true, true, true, true, true);
 		if (spawnWithScenario == true)
 		{
