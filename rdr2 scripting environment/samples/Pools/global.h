@@ -209,21 +209,22 @@ inline void kill_scripts(vector<Hash> scripts)
 }
 /*
 simple prompt function, will return prompt handle for checking if pressed
-Types for p1 are either 0(Standard press) or 1(standardized hold press)
+p1 determines how long the press should take if it is held, use enum ePromptPressDuration
+Types for p2 are either 0(Standard press) or 1(standardized hold press)
 type is set to standard press by default
-p2(addToPed) is for if you want to add prompt to a ped (false by default)
-p3 is only if p2 is true, the ped you want to add the prompt to.
+p3(addToPed) is for if you want to add prompt to a ped (false by default)
+p4 is only if p2 is true, the ped you want to add the prompt to.
 */
-inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Ped ped = 0)
+inline int func_prompt(const char* name, Hash promptPressDuration, int type = 0, bool addToPed = false, Ped ped = 0)
 {
 	int prompt{};
 	int pedGroup{};
-	if(type > 1 || type < 0)
+	if (type > 1 || type < 0)
 	{
 		type = 0;
 	}
-	if(!ENTITY::DOES_ENTITY_EXIST(ped))
-	{	
+	if (!ENTITY::DOES_ENTITY_EXIST(ped))
+	{
 		prompt = 0;
 	}
 	if (type == 0)
@@ -233,7 +234,7 @@ inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Pe
 		HUD::_UI_PROMPT_SET_TEXT(prompt, name);
 		HUD::_UI_PROMPT_SET_STANDARD_MODE(prompt, true);
 		HUD::_UI_PROMPT_REGISTER_END(prompt);
-		if (addToPed)
+		if (addToPed && ped != NULL)
 		{
 			pedGroup = HUD::_UI_PROMPT_GET_GROUP_ID_FOR_TARGET_ENTITY(ped);
 			HUD::_UI_PROMPT_SET_GROUP(prompt, pedGroup, 0);
@@ -251,9 +252,9 @@ inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Pe
 		prompt = HUD::_UI_PROMPT_REGISTER_BEGIN();
 		HUD::_UI_PROMPT_SET_CONTROL_ACTION(prompt, joaat("INPUT_INTERACT_LOCKON_POS"));
 		HUD::_UI_PROMPT_SET_TEXT(prompt, name);
-		HUD::_UI_PROMPT_SET_STANDARDIZED_HOLD_MODE(prompt, joaat("MEDIUM_TIMED_EVENT"));
+		HUD::_UI_PROMPT_SET_STANDARDIZED_HOLD_MODE(prompt, promptPressDuration);
 		HUD::_UI_PROMPT_REGISTER_END(prompt);
-		if (addToPed)
+		if (addToPed && ped != NULL)
 		{
 			pedGroup = HUD::_UI_PROMPT_GET_GROUP_ID_FOR_TARGET_ENTITY(ped);
 			HUD::_UI_PROMPT_SET_GROUP(prompt, pedGroup, 0);
