@@ -218,6 +218,14 @@ inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Pe
 {
 	int prompt{};
 	int pedGroup{};
+	if(type > 1 || type < 0)
+	{
+		type = 0;
+	}
+	if(!ENTITY::DOES_ENTITY_EXIST(ped))
+	{	
+		prompt = 0;
+	}
 	if (type == 0)
 	{
 		prompt = HUD::_UI_PROMPT_REGISTER_BEGIN();
@@ -237,7 +245,6 @@ inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Pe
 			HUD::_UI_PROMPT_SET_ENABLED(prompt, true);
 			HUD::_UI_PROMPT_SET_VISIBLE(prompt, true);
 		}
-		return prompt;
 	}
 	else if (type == 1)
 	{
@@ -258,6 +265,6 @@ inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Pe
 			HUD::_UI_PROMPT_SET_ENABLED(prompt, true);
 			HUD::_UI_PROMPT_SET_VISIBLE(prompt, true);
 		}
-		return prompt;
 	}
+	return prompt;
 }
