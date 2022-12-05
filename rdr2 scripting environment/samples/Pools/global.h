@@ -233,7 +233,7 @@ inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Pe
 		HUD::_UI_PROMPT_SET_TEXT(prompt, name);
 		HUD::_UI_PROMPT_SET_STANDARD_MODE(prompt, true);
 		HUD::_UI_PROMPT_REGISTER_END(prompt);
-		if (addToPed && ped != NULL)
+		if (addToPed)
 		{
 			pedGroup = HUD::_UI_PROMPT_GET_GROUP_ID_FOR_TARGET_ENTITY(ped);
 			HUD::_UI_PROMPT_SET_GROUP(prompt, pedGroup, 0);
@@ -253,7 +253,7 @@ inline int func_prompt(const char* name, int type = 0, bool addToPed = false, Pe
 		HUD::_UI_PROMPT_SET_TEXT(prompt, name);
 		HUD::_UI_PROMPT_SET_STANDARDIZED_HOLD_MODE(prompt, joaat("MEDIUM_TIMED_EVENT"));
 		HUD::_UI_PROMPT_REGISTER_END(prompt);
-		if (addToPed && ped != NULL)
+		if (addToPed)
 		{
 			pedGroup = HUD::_UI_PROMPT_GET_GROUP_ID_FOR_TARGET_ENTITY(ped);
 			HUD::_UI_PROMPT_SET_GROUP(prompt, pedGroup, 0);
