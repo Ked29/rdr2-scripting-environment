@@ -269,3 +269,10 @@ inline int func_prompt(const char* name, Hash promptPressDuration, int type = 0,
 	}
 	return prompt;
 }
+inline void DisplayObjective(const char* objective)
+{
+	UILOG::_UILOG_SET_CACHED_OBJECTIVE(objective);
+	UILOG::_UILOG_PRINT_CACHED_OBJECTIVE();
+	UILOG::_UILOG_CLEAR_HAS_DISPLAYED_CACHED_OBJECTIVE();
+	UILOG::_UILOG_CLEAR_CACHED_OBJECTIVE();
+}
