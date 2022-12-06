@@ -29,6 +29,30 @@ void main()
 {
 	while (true)
 	{
+		/*
+		Example of triggering something with a key press event
+		bool state{false};
+		if(IsKeyJustUp(VK_F7))
+		{
+			state = !state;
+		}
+		if(state)
+		{	
+			ENTITY::SET_ENTITY_INVINCIBLE(PLAYER::PLAYER_PED_ID(), true);
+			UILOG::_UILOG_SET_CACHED_OBJECTIVE("Activated Godmode");
+			UILOG::_UILOG_PRINT_CACHED_OBJECTIVE();
+			UILOG::_UILOG_CLEAR_HAS_DISPLAYED_CACHED_OBJECTIVE();
+			UILOG::_UILOG_CLEAR_CACHED_OBJECTIVE();
+		}
+		else if(!state)
+		{
+			ENTITY::SET_ENTITY_INVINCIBLE(PLAYER::PLAYER_PED_ID(), false);
+			UILOG::_UILOG_SET_CACHED_OBJECTIVE("Disabled Godmode");
+			UILOG::_UILOG_PRINT_CACHED_OBJECTIVE();
+			UILOG::_UILOG_CLEAR_HAS_DISPLAYED_CACHED_OBJECTIVE();
+			UILOG::_UILOG_CLEAR_CACHED_OBJECTIVE();
+		}
+		*/
 		ENTITY::SET_ENTITY_INVINCIBLE(PLAYER::PLAYER_PED_ID(), true);
 		WAIT(0);
 	}
