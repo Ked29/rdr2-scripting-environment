@@ -36,8 +36,10 @@ namespace BUILTIN
 	// Calculates the magnitude of a vector but does not perform Sqrt operations. (Its way faster)
 	NATIVE_DECL float VMAG2(float x, float y, float z) { return invoke<float>(0xA8CEACB4F35AE058, x, y, z); } // 0xA8CEACB4F35AE058 0xE796E629 b1207
 	// Calculates distance between vectors.
+	// The value returned will be in meters.
 	NATIVE_DECL float VDIST(float x1, float y1, float z1, float x2, float y2, float z2) { return invoke<float>(0x2A488C176D52CCA5, x1, y1, z1, x2, y2, z2); } // 0x2A488C176D52CCA5 0x3C08ECB7 b1207
 	// Calculates distance between vectors but does not perform Sqrt operations. (Its way faster)
+	// The value returned will be in RAGE units.
 	NATIVE_DECL float VDIST2(float x1, float y1, float z1, float x2, float y2, float z2) { return invoke<float>(0xB7A628320EFF8E47, x1, y1, z1, x2, y2, z2); } // 0xB7A628320EFF8E47 0xC85DEF1F b1207
 	NATIVE_DECL int SHIFT_LEFT(int value, int bitShift) { return invoke<int>(0xEDD95A39E5544DE8, value, bitShift); } // 0xEDD95A39E5544DE8 0x314CC6CD b1207
 	NATIVE_DECL int SHIFT_RIGHT(int value, int bitShift) { return invoke<int>(0x97EF1E5BCE9DC075, value, bitShift); } // 0x97EF1E5BCE9DC075 0x352633CA b1207
@@ -62,7 +64,7 @@ namespace AICOVERPOINT
 	NATIVE_DECL void TASK_ENTER_COVER(Ped ped) { invoke<Void>(0x4972A022AE6DAFA1, ped); } // 0x4972A022AE6DAFA1 b1207
 	NATIVE_DECL void TASK_EXIT_COVER(Ped ped) { invoke<Void>(0x2BC4A6D92D140112, ped); } // 0x2BC4A6D92D140112 b1207
 	NATIVE_DECL int _0x957D7E750216D74B(Ped ped) { return invoke<int>(0x957D7E750216D74B, ped); } // 0x957D7E750216D74B b1207
-	NATIVE_DECL void _0x89783FDDF079C88D(Any p0) { invoke<Void>(0x89783FDDF079C88D, p0); } // 0x89783FDDF079C88D b1207
+	NATIVE_DECL void _TASK_AI_SEEK_COVER_TO_COVER_POINT(Any* args) { invoke<Void>(0x89783FDDF079C88D, args); } // 0x89783FDDF079C88D b1207
 	// coverLayer: see levels_0/levels/rdr3/coverlayers
 	NATIVE_DECL void _0x64340DC208D671D5(const char* coverLayer) { invoke<Void>(0x64340DC208D671D5, coverLayer); } // 0x64340DC208D671D5 b1207
 	// coverLayer: see levels_0/levels/rdr3/coverlayers
@@ -157,13 +159,14 @@ namespace AITRANSPORT
 	NATIVE_DECL void _0x8C8371EDFAF014A0(Ped ped, float p1) { invoke<Void>(0x8C8371EDFAF014A0, ped, p1); } // 0x8C8371EDFAF014A0 b1207
 	// _SET_TRANSPORT_*
 	NATIVE_DECL void _0xF8C20282B237E3F7(Ped ped) { invoke<Void>(0xF8C20282B237E3F7, ped); } // 0xF8C20282B237E3F7 b1207
+	// NB_CUSTOM_CLIENT_ON_CREATE_COMPLETE: Setting vehicle transition enabled
 	// _SET_TRANSPORT_*
 	NATIVE_DECL void _0x13F138225C202F66(Entity transportEntity, int p1) { invoke<Void>(0x13F138225C202F66, transportEntity, p1); } // 0x13F138225C202F66 b1207
 }
 
 namespace ANIMSCENE
 {
-	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/_CREATE_ANIM_SCENE/README.md
+	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eAnimSceneFlag
 	NATIVE_DECL AnimScene _CREATE_ANIM_SCENE(const char* animDict, int flags, const char* playbackListName, BOOL p3, BOOL p4) { return invoke<AnimScene>(0x1FCA98E33C1437B3, animDict, flags, playbackListName, p3, p4); } // 0x1FCA98E33C1437B3 b1207
 	NATIVE_DECL void _DELETE_ANIM_SCENE(AnimScene animScene) { invoke<Void>(0x84EEDB2C6E650000, animScene); } // 0x84EEDB2C6E650000 b1207
 	NATIVE_DECL void TRIGGER_ANIM_SCENE_SKIP(AnimScene animScene) { invoke<Void>(0x4B85B3CF9197AEDF, animScene); } // 0x4B85B3CF9197AEDF b1207
@@ -317,7 +320,9 @@ namespace ANIMSCENE
 namespace _NAMESPACE4
 {
 	// nullsub, doesn't do anything
-	NATIVE_DECL void _0xC31C44C43B48FDE3(Any* gamerHandle, int badSportBehaviorType) { invoke<Void>(0xC31C44C43B48FDE3, gamerHandle, badSportBehaviorType); } // 0xC31C44C43B48FDE3 b1207
+	// however it is being used in tty scripts: [NET_BAD_SPORT_REPORT_PLAYER] Detected bad sport behavior from Player
+	// badSportBehavior: BS_QUITTER = 0, BS_VEHICLE_DESTRUCTION = 1, BS_VOTED_OUT = 2
+	NATIVE_DECL void _REPORT_PLAYER_BAD_SPORT_BEHAVIOR(Any* gamerHandle, int badSportBehaviorType) { invoke<Void>(0xC31C44C43B48FDE3, gamerHandle, badSportBehaviorType); } // 0xC31C44C43B48FDE3 b1207
 }
 
 namespace ATTRIBUTE
@@ -435,6 +440,7 @@ namespace ATTRIBUTE
 
 namespace AUDIO
 {
+	// _AUDIO_IS_* - _AUDIO_TRIGGER*
 	NATIVE_DECL void _0x7455CD705F7E933E() { invoke<Void>(0x7455CD705F7E933E); } // 0x7455CD705F7E933E b1207
 	NATIVE_DECL void CLEAR_CONVERSATION_HISTORY() { invoke<Void>(0x33D51F801CB16E4F); } // 0x33D51F801CB16E4F b1207
 	NATIVE_DECL void _CLEAR_CONVERSATION_HISTORY_FOR_SCRIPTED_CONVERSATION(const char* convoRoot) { invoke<Void>(0xEF51242E35242B47, convoRoot); } // 0xEF51242E35242B47 b1207
@@ -524,10 +530,10 @@ namespace AUDIO
 	// {
 	// 	const char* speechName;
 	// 	const char* voiceName;
-	// 	alignas(8) int v3;
+	// 	alignas(8) int variation;
 	// 	alignas(8) Hash speechParamHash;
-	// 	alignas(8) Entity entity;
-	// 	alignas(8) BOOL v6;
+	// 	alignas(8) Ped listenerPed;
+	// 	alignas(8) BOOL syncOverNetwork;
 	// 	alignas(8) int v7;
 	// 	alignas(8) int v8;
 	// };
@@ -537,12 +543,12 @@ namespace AUDIO
 	// 
 	// Example:
 	// 
-	// ScriptedSpeechParams params{"RE_PH_RHD_V3_AGGRO", "0405_U_M_M_RhdSheriff_01", 1, 0x67F3AB43, 0, true, 1, 1};
+	// ScriptedSpeechParams params{"RE_PH_RHD_V3_AGGRO", "0405_U_M_M_RhdSheriff_01", 1, joaat("SPEECH_PARAMS_BEAT_SHOUTED_CLEAR"), 0, true, 1, 1};
 	// PLAY_PED_AMBIENT_SPEECH_NATIVE(PLAYER_PED_ID(), (Any*)&params);
 	// 
 	// Old name: _PLAY_AMBIENT_SPEECH1
 	// https://github.com/femga/rdr3_discoveries/tree/master/audio/audio_banks
-	NATIVE_DECL BOOL PLAY_PED_AMBIENT_SPEECH_NATIVE(Ped ped, Any* params) { return invoke<BOOL>(0x8E04FEDD28D42462, ped, params); } // 0x8E04FEDD28D42462 0x5C57B85D b1207
+	NATIVE_DECL BOOL PLAY_PED_AMBIENT_SPEECH_NATIVE(Ped speaker, Any* params) { return invoke<BOOL>(0x8E04FEDD28D42462, speaker, params); } // 0x8E04FEDD28D42462 0x5C57B85D b1207
 	// Old name: _PLAY_AMBIENT_SPEECH_AT_COORDS
 	NATIVE_DECL BOOL PLAY_AMBIENT_SPEECH_FROM_POSITION_NATIVE(float x, float y, float z, Any* params) { return invoke<BOOL>(0xED640017ED337E45, x, y, z, params); } // 0xED640017ED337E45 0xA1A1402E b1207
 	NATIVE_DECL Any _0x72E4D1C4639BC465(Entity p0, Any p1) { return invoke<Any>(0x72E4D1C4639BC465, p0, p1); } // 0x72E4D1C4639BC465 b1207
@@ -714,7 +720,7 @@ namespace AUDIO
 	NATIVE_DECL void _0x6B7A88A61B41E589(Any p0) { invoke<Void>(0x6B7A88A61B41E589, p0); } // 0x6B7A88A61B41E589 b1207
 	NATIVE_DECL void _0x4BE3EC91C01F0FE8() { invoke<Void>(0x4BE3EC91C01F0FE8); } // 0x4BE3EC91C01F0FE8 b1207
 	NATIVE_DECL void SET_AUDIO_ONLINE_TRANSITION_STAGE(const char* p0) { invoke<Void>(0x9B1FC259187C97C0, p0); } // 0x9B1FC259187C97C0 b1207
-	NATIVE_DECL void _0x2E399EAFBEEA74D5() { invoke<Void>(0x2E399EAFBEEA74D5); } // 0x2E399EAFBEEA74D5 b1207
+	NATIVE_DECL void _STOP_ALL_SCRIPTED_AUDIO_SOUNDS() { invoke<Void>(0x2E399EAFBEEA74D5); } // 0x2E399EAFBEEA74D5 b1207
 	NATIVE_DECL void _0x64B956F4E761DF5C(Any p0) { invoke<Void>(0x64B956F4E761DF5C, p0); } // 0x64B956F4E761DF5C b1207
 }
 
@@ -796,7 +802,7 @@ namespace CAM
 	// Setting ease to TRUE will smooth the transition.
 	NATIVE_DECL void RENDER_SCRIPT_CAMS(BOOL render, BOOL ease, int easeTime, BOOL p3, BOOL p4, int p5) { invoke<Void>(0x33281167E4942E4F, render, ease, easeTime, p3, p4, p5); } // 0x33281167E4942E4F 0x74337969 b1207
 	// This native makes the gameplay camera zoom into first person/third person with a special effect.
-	// blendBackSmoothingType: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/STOP_RENDERING_SCRIPT_CAMS_USING_CATCH_UP/README.md
+	// blendBackSmoothingType: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eBlendBackSmoothing
 	NATIVE_DECL void STOP_RENDERING_SCRIPT_CAMS_USING_CATCH_UP(BOOL render, float distance, int blendBackSmoothingType, BOOL p3, BOOL p4, BOOL p5) { invoke<Void>(0x8C7C7FF7CF0E5153, render, distance, blendBackSmoothingType, p3, p4, p5); } // 0x8C7C7FF7CF0E5153 0xD3C08183 b1207
 	NATIVE_DECL Cam CREATE_CAM(const char* camName, BOOL p1) { return invoke<Cam>(0xE72CDBA7F0A02DD6, camName, p1); } // 0xE72CDBA7F0A02DD6 0xE9BF2A7D b1207
 	NATIVE_DECL Cam CREATE_CAM_WITH_PARAMS(const char* camName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fov, BOOL p8, int p9) { return invoke<Cam>(0x40C23491CE83708E, camName, posX, posY, posZ, rotX, rotY, rotZ, fov, p8, p9); } // 0x40C23491CE83708E 0x23B02F15 b1207
@@ -815,6 +821,7 @@ namespace CAM
 	NATIVE_DECL BOOL IS_CAM_RENDERING(Cam cam) { return invoke<BOOL>(0x4415F8A6C536D39F, cam); } // 0x4415F8A6C536D39F 0x6EC6B5B2 b1207
 	NATIVE_DECL Cam GET_RENDERING_CAM() { return invoke<Cam>(0x03A8931ECC8015D6); } // 0x03A8931ECC8015D6 0x0FCF4DF1 b1207
 	NATIVE_DECL Vector3 GET_CAM_COORD(Cam cam) { return invoke<Vector3>(0x6B12F11C2A9F0344, cam); } // 0x6B12F11C2A9F0344 0x7C40F09C b1207
+	// rotationOrder: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eEulerRotationOrder
 	NATIVE_DECL Vector3 GET_CAM_ROT(Cam cam, int rotationOrder) { return invoke<Vector3>(0x9BF96B57254E7889, cam, rotationOrder); } // 0x9BF96B57254E7889 0xDAC84C9F b1207
 	NATIVE_DECL float GET_CAM_FOV(Cam cam) { return invoke<float>(0x8101D32A0A6B0F60, cam); } // 0x8101D32A0A6B0F60 0xD6E9FCF5 b1207
 	NATIVE_DECL void SET_CAM_PARAMS(Cam cam, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fieldOfView, Any p8, int p9, int p10, int p11, Any p12, Any p13) { invoke<Void>(0xA47BBFFFB83D4D0A, cam, posX, posY, posZ, rotX, rotY, rotZ, fieldOfView, p8, p9, p10, p11, p12, p13); } // 0xA47BBFFFB83D4D0A 0x2167CEBF b1207
@@ -915,6 +922,7 @@ namespace CAM
 	// Returns true if player is in first person
 	NATIVE_DECL BOOL _IS_IN_FULL_FIRST_PERSON_MODE() { return invoke<BOOL>(0xD1BA66940E94C547); } // 0xD1BA66940E94C547 b1207
 	NATIVE_DECL void SHAKE_GAMEPLAY_CAM(const char* shakeName, float intensity) { invoke<Void>(0xD9B31B4650520529, shakeName, intensity); } // 0xD9B31B4650520529 0xF2EFE660 b1207
+	// shakeName: REINFORCED_LASSO_STRUGGLE_SHAKE
 	// _RES*
 	NATIVE_DECL void _0xC3E9E5D4F413B773(const char* shakeName, float intensity) { invoke<Void>(0xC3E9E5D4F413B773, shakeName, intensity); } // 0xC3E9E5D4F413B773 b1207
 	NATIVE_DECL BOOL IS_GAMEPLAY_CAM_SHAKING() { return invoke<BOOL>(0xEA4C5F4AA0A4DBEF); } // 0xEA4C5F4AA0A4DBEF 0x3457D681 b1207
@@ -944,6 +952,7 @@ namespace CAM
 	NATIVE_DECL void _0x18C3DFAC458783BB() { invoke<Void>(0x18C3DFAC458783BB); } // 0x18C3DFAC458783BB b1207
 	NATIVE_DECL void _0xF1A6FEEDF3776EF9() { invoke<Void>(0xF1A6FEEDF3776EF9); } // 0xF1A6FEEDF3776EF9 b1207
 	NATIVE_DECL void _0xE6F364DE6C2FDEFE() { invoke<Void>(0xE6F364DE6C2FDEFE); } // 0xE6F364DE6C2FDEFE b1207
+	// NPLOI_UPDATE__GUN_SPINNING_PREVIEW - Adjusting Camera / Ped Reset Flags This Frame
 	// _DISABLE_*
 	NATIVE_DECL void _0x0F1FFEF5D54AE832() { invoke<Void>(0x0F1FFEF5D54AE832); } // 0x0F1FFEF5D54AE832 b1207
 	NATIVE_DECL void _0x3C8F74E8FE751614() { invoke<Void>(0x3C8F74E8FE751614); } // 0x3C8F74E8FE751614 b1207
@@ -1084,6 +1093,7 @@ namespace CAM
 	NATIVE_DECL void _0xDF7F5BE9150E47E4(Any p0) { invoke<Void>(0xDF7F5BE9150E47E4, p0); } // 0xDF7F5BE9150E47E4 b1207
 	NATIVE_DECL void _0xB85C13E0BF1F2A1C(Any p0) { invoke<Void>(0xB85C13E0BF1F2A1C, p0); } // 0xB85C13E0BF1F2A1C b1207
 	NATIVE_DECL void _0x066167C63111D8CF(Any p0, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0x066167C63111D8CF, p0, p1, p2, p3, p4); } // 0x066167C63111D8CF b1207
+	// NPLOI_UPDATE__GUN_SPINNING_PREVIEW - Adjusting Camera / Ped Reset Flags This Frame
 	// _DISABLE_*
 	NATIVE_DECL void _0xA8BA2E0204D8486F() { invoke<Void>(0xA8BA2E0204D8486F); } // 0xA8BA2E0204D8486F b1355
 	// Camera will be or is running
@@ -1093,12 +1103,13 @@ namespace CAM
 	NATIVE_DECL void _LOAD_CINEMATIC_CAM_LOCATION(const char* locationDictName) { invoke<Void>(0x1B3C2D961F5FC0E1, locationDictName); } // 0x1B3C2D961F5FC0E1 b1207
 	NATIVE_DECL void _UNLOAD_CINEMATIC_CAMERA_LOCATION(const char* dictionaryName) { invoke<Void>(0x2412216FCC7B4E3E, dictionaryName); } // 0x2412216FCC7B4E3E b1207
 	NATIVE_DECL BOOL _0xAA235E2F2C09E952(const char* sLocationDictName) { return invoke<BOOL>(0xAA235E2F2C09E952, sLocationDictName); } // 0xAA235E2F2C09E952 b1207
-	NATIVE_DECL Any _0x595550376B7EA230(Any p0) { return invoke<Any>(0x595550376B7EA230, p0); } // 0x595550376B7EA230 b1207
-	NATIVE_DECL Any _0x465F04F68AD38197(Any p0, Any p1, Any p2) { return invoke<Any>(0x465F04F68AD38197, p0, p1, p2); } // 0x465F04F68AD38197 b1207
-	NATIVE_DECL Any _0xEA113BF9B0C0C5D7(Any p0, Any p1, Any p2) { return invoke<Any>(0xEA113BF9B0C0C5D7, p0, p1, p2); } // 0xEA113BF9B0C0C5D7 b1207
+	// Checks data related to Cinematic Cam Locations, if the check fails, the location is being loaded using 0x1B3C2D961F5FC0E1.
+	NATIVE_DECL BOOL _0x595550376B7EA230(const char* locationDictName) { return invoke<BOOL>(0x595550376B7EA230, locationDictName); } // 0x595550376B7EA230 b1207
+	NATIVE_DECL Any _0x465F04F68AD38197(const char* dictionary, const char* shotName, int duration) { return invoke<Any>(0x465F04F68AD38197, dictionary, shotName, duration); } // 0x465F04F68AD38197 b1207
+	NATIVE_DECL Any _0xEA113BF9B0C0C5D7(const char* dictionary, const char* shotName, int duration) { return invoke<Any>(0xEA113BF9B0C0C5D7, dictionary, shotName, duration); } // 0xEA113BF9B0C0C5D7 b1207
 	NATIVE_DECL void _CINEMATIC_LOCATION_TRIGGER_SCRIPTED_SHOT_EVENT_2(const char* dictionary, const char* shotName, int duration) { invoke<Void>(0xBC016635D6A73B31, dictionary, shotName, duration); } // 0xBC016635D6A73B31 b1207
 	NATIVE_DECL void CINEMATIC_LOCATION_TRIGGER_SCRIPTED_SHOT_EVENT(const char* dictionary, const char* shotName, const char* cameraName, Any p3) { invoke<Void>(0x02389579A53C3276, dictionary, shotName, cameraName, p3); } // 0x02389579A53C3276 b1207
-	NATIVE_DECL void _0xA54D643D0773EB65(Any p0, Any p1, Any p2) { invoke<Void>(0xA54D643D0773EB65, p0, p1, p2); } // 0xA54D643D0773EB65 b1207
+	NATIVE_DECL void _0xA54D643D0773EB65(const char* dictionary, const char* shotName, int duration) { invoke<Void>(0xA54D643D0773EB65, dictionary, shotName, duration); } // 0xA54D643D0773EB65 b1207
 	NATIVE_DECL void CINEMATIC_LOCATION_STOP_SCRIPTED_SHOT_EVENT(Any p0, Any p1, Any p2) { invoke<Void>(0x6D4D25C2137FF511, p0, p1, p2); } // 0x6D4D25C2137FF511 b1207
 	NATIVE_DECL BOOL _0xC3AEBB276825A359(const char* dictionary, const char* shotName, int duration) { return invoke<BOOL>(0xC3AEBB276825A359, dictionary, shotName, duration); } // 0xC3AEBB276825A359 b1436
 	NATIVE_DECL BOOL _0x1D931B7CC0EE3956(const char* dictionary, const char* shotName, const char* cameraName) { return invoke<BOOL>(0x1D931B7CC0EE3956, dictionary, shotName, cameraName); } // 0x1D931B7CC0EE3956 b1436
@@ -1189,6 +1200,7 @@ namespace COLLECTION
 	// Returns p2 (index?) for 0xB9020EC89C07DF04
 	NATIVE_DECL int _0x755901C7598B97BC(Hash collectableCategory, int p1) { return invoke<int>(0x755901C7598B97BC, collectableCategory, p1); } // 0x755901C7598B97BC b1207
 	// Accepts more hashes than 0xCC644BC1DD655269
+	// Such as: CAROLINA_PARAKEETS, DINO_BONES, EGRET_FEATHERS, ...
 	NATIVE_DECL Any _0xB9020EC89C07DF04(Hash collectableCategory, int p1, int index) { return invoke<Any>(0xB9020EC89C07DF04, collectableCategory, p1, index); } // 0xB9020EC89C07DF04 b1207
 	NATIVE_DECL BOOL _0xFC832B06127D8E99(Hash collectableCategory, int p1) { return invoke<BOOL>(0xFC832B06127D8E99, collectableCategory, p1); } // 0xFC832B06127D8E99 b1207
 	NATIVE_DECL void COLLECTABLE_CATEGORY_SET_HAS_RECEIVED_LIST(Any p0, Any p1, Any p2) { invoke<Void>(0x0B6D275D2F242E17, p0, p1, p2); } // 0x0B6D275D2F242E17 b1207
@@ -1198,6 +1210,7 @@ namespace COLLECTION
 	NATIVE_DECL BOOL _0x61BEFBA3CE7A3BC8(Hash collectableCategory, int p1) { return invoke<BOOL>(0x61BEFBA3CE7A3BC8, collectableCategory, p1); } // 0x61BEFBA3CE7A3BC8 b1232
 	NATIVE_DECL Any _0xC4AC39719C1BB559(Hash collectableCategory, Any p1) { return invoke<Any>(0xC4AC39719C1BB559, collectableCategory, p1); } // 0xC4AC39719C1BB559 b1232
 	NATIVE_DECL Any _0x93F2E7B5DB85657B(Any p0, Any p1) { return invoke<Any>(0x93F2E7B5DB85657B, p0, p1); } // 0x93F2E7B5DB85657B b1207
+	// collectableCategory: ANTIQUE_BOTTLES, BIRD_EGGS, ARROWHEADS, FAMILY_HEIRLOOMS, WILD_FLOWERS, COINS, LOST_JEWELRY_RINGS, LOST_JEWELRY_BRACELETS, LOST_JEWELRY_EARRINGS, LOST_JEWELRY_NECKLACES, TAROT_CARDS_CUPS, TAROT_CARDS_PENTACLES, TAROT_CARDS_SWORDS, TAROT_CARDS_WANDS, FOSSILS_COMMON, FOSSILS_UNCOMMON, FOSSILS_RARE
 	NATIVE_DECL Hash COLLECTABLE_GET_CATEGORY_ITEM_SET_BUY_AWARD(Hash collectableCategory, Hash p1) { return invoke<Hash>(0xCC644BC1DD655269, collectableCategory, p1); } // 0xCC644BC1DD655269 b1207
 	// Params: collectableCategory = WEEKLY_COLLECTABLES
 	NATIVE_DECL Hash _0x9ADEE485726025D4(Hash collectableCategory) { return invoke<Hash>(0x9ADEE485726025D4, collectableCategory); } // 0x9ADEE485726025D4 b1207
@@ -1502,10 +1515,10 @@ namespace DATAFILE
 	NATIVE_DECL void _PARSEDDATA_GET_FILE(Any* p0) { invoke<Void>(0x91DED5DD64BB2691, p0); } // 0x91DED5DD64BB2691 b1207
 	// Returns false when there are no entries.
 	NATIVE_DECL BOOL _PARSEDDATA_GET_ENTRIES(Any* p0) { return invoke<BOOL>(0xED4413CEE1BF142C, p0); } // 0xED4413CEE1BF142C b1207
-	NATIVE_DECL BOOL _0xB2B42607F7867576(Any* p0, Any* p1, Hash p2) { return invoke<BOOL>(0xB2B42607F7867576, p0, p1, p2); } // 0xB2B42607F7867576 b1207
-	NATIVE_DECL BOOL _0x52FC26D2D2FC2987(Any* p0, Any* p1, Hash p2) { return invoke<BOOL>(0x52FC26D2D2FC2987, p0, p1, p2); } // 0x52FC26D2D2FC2987 b1207
+	NATIVE_DECL BOOL _PARSEDDATA_GET_FLOAT(Any* p0, Any* p1, Hash p2) { return invoke<BOOL>(0xB2B42607F7867576, p0, p1, p2); } // 0xB2B42607F7867576 b1207
+	NATIVE_DECL BOOL _PARSEDDATA_GET_INT(Any* p0, Any* p1, Hash p2) { return invoke<BOOL>(0x52FC26D2D2FC2987, p0, p1, p2); } // 0x52FC26D2D2FC2987 b1207
 	NATIVE_DECL BOOL _PARSEDDATA_GET_SECTION(Any* p0, Any* p1, Hash section) { return invoke<BOOL>(0x44B3A36933AC009C, p0, p1, section); } // 0x44B3A36933AC009C b1207
-	NATIVE_DECL BOOL _0xA63CD20F19B961AB(Any* p0, Any* p1, Hash p2) { return invoke<BOOL>(0xA63CD20F19B961AB, p0, p1, p2); } // 0xA63CD20F19B961AB b1207
+	NATIVE_DECL BOOL _PARSEDDATA_GET_BOOL(BOOL* p0, Any* p1, Hash p2) { return invoke<BOOL>(0xA63CD20F19B961AB, p0, p1, p2); } // 0xA63CD20F19B961AB b1207
 }
 
 namespace DEBUG
@@ -1529,7 +1542,7 @@ namespace DECORATOR
 	// Sets property to int.
 	NATIVE_DECL BOOL DECOR_SET_INT(Entity entity, const char* propertyName, int value) { return invoke<BOOL>(0xE88F4D7F52A6090F, entity, propertyName, value); } // 0xE88F4D7F52A6090F 0xDB718B21 b1207
 	NATIVE_DECL BOOL _DECOR_SET_UINT8(Entity entity, const char* propertyName, int value) { return invoke<BOOL>(0x4BDC83150D43772D, entity, propertyName, value); } // 0x4BDC83150D43772D b1207
-	NATIVE_DECL BOOL _DECOR_SET_STRING(Entity entity, const char* propertyName, const char* value) { return invoke<BOOL>(0x0671C1A3FF7AFDFC, entity, propertyName, value); } // 0x0671C1A3FF7AFDFC b1207
+	NATIVE_DECL BOOL DECOR_SET_STRING(Entity entity, const char* propertyName, const char* value) { return invoke<BOOL>(0x0671C1A3FF7AFDFC, entity, propertyName, value); } // 0x0671C1A3FF7AFDFC b1207
 	NATIVE_DECL BOOL DECOR_GET_BOOL(Entity entity, const char* propertyName) { return invoke<BOOL>(0xDEF3F1B071ABB197, entity, propertyName); } // 0xDEF3F1B071ABB197 0xDBCE51E0 b1207
 	NATIVE_DECL float DECOR_GET_FLOAT(Entity entity, const char* propertyName) { return invoke<float>(0xE5FF70CD842CA9D4, entity, propertyName); } // 0xE5FF70CD842CA9D4 0x8DE5382F b1207
 	NATIVE_DECL int DECOR_GET_INT(Entity entity, const char* propertyName) { return invoke<int>(0x44DB62727762FD9B, entity, propertyName); } // 0x44DB62727762FD9B 0xDDDE59B5 b1207
@@ -1537,7 +1550,7 @@ namespace DECORATOR
 	// Returns whether or not the specified property is set for the entity.
 	NATIVE_DECL BOOL DECOR_EXIST_ON(Entity entity, const char* propertyName) { return invoke<BOOL>(0xD9D1CDBF3464DCDF, entity, propertyName); } // 0xD9D1CDBF3464DCDF 0x74EF9C40 b1207
 	NATIVE_DECL BOOL DECOR_REMOVE(Entity entity, const char* propertyName) { return invoke<BOOL>(0x2BA7F5877A088A1D, entity, propertyName); } // 0x2BA7F5877A088A1D 0xE0E2640B b1207
-	NATIVE_DECL BOOL _DECOR_REMOVE_ALL(Entity entity) { return invoke<BOOL>(0x88942780E0ADEA42, entity); } // 0x88942780E0ADEA42 b1207
+	NATIVE_DECL BOOL DECOR_REMOVE_ALL(Entity entity) { return invoke<BOOL>(0x88942780E0ADEA42, entity); } // 0x88942780E0ADEA42 b1207
 	NATIVE_DECL void DECOR_REGISTER(const char* propertyName, int type) { invoke<Void>(0x0B253D644E3C36B3, propertyName, type); } // 0x0B253D644E3C36B3 0x68BD42A9 b1207
 	NATIVE_DECL void _DECOR_REGISTER_2(const char* propertyName, int type, BOOL p2) { invoke<Void>(0x4587374F88B7F6C2, propertyName, type, p2); } // 0x4587374F88B7F6C2 b1207
 	// type: see DECOR_REGISTER
@@ -1643,13 +1656,9 @@ namespace ENTITY
 	NATIVE_DECL Vector3 _0x3AB3A77672F6473F(Any p0, Any p1, Any p2, Any p3) { return invoke<Vector3>(0x3AB3A77672F6473F, p0, p1, p2, p3); } // 0x3AB3A77672F6473F b1207
 	NATIVE_DECL Player GET_NEAREST_PLAYER_TO_ENTITY(Entity entity, Ped playerPedToIgnore, int flags) { return invoke<Player>(0x990E294FC387FB88, entity, playerPedToIgnore, flags); } // 0x990E294FC387FB88 0xCE17FDEC b1207
 	NATIVE_DECL Player GET_NEAREST_PLAYER_TO_ENTITY_ON_TEAM(Entity entity, int team, Ped playerPedToIgnore, int flags) { return invoke<Player>(0xB2C30C3B4AFF718C, entity, team, playerPedToIgnore, flags); } // 0xB2C30C3B4AFF718C 0xB1808F56 b1207
-	NATIVE_DECL Player _GET_NEAREST_PARTICIPANT_TO_ENTITY(Entity entity) { return invoke<Player>(0x6888A43C35A5F630, entity); } // 0x6888A43C35A5F630 b1207
+	NATIVE_DECL Player GET_NEAREST_PARTICIPANT_TO_ENTITY(Entity entity) { return invoke<Player>(0x6888A43C35A5F630, entity); } // 0x6888A43C35A5F630 b1207
 	NATIVE_DECL BOOL PLACE_ENTITY_ON_GROUND_PROPERLY(Entity entity, BOOL p1) { return invoke<BOOL>(0x9587913B9E772D29, entity, p1); } // 0x9587913B9E772D29 b1207
-	// Returns:
-	// 0 = no entity
-	// 1 = ped
-	// 2 = vehicle
-	// 3 = object
+	// Returns entityType: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eEntityType
 	NATIVE_DECL int GET_ENTITY_TYPE(Entity entity) { return invoke<int>(0x97F696ACA466B4E0, entity); } // 0x97F696ACA466B4E0 0x0B1BD08D b1207
 	NATIVE_DECL int GET_ENTITY_POPULATION_TYPE(Entity entity) { return invoke<int>(0xADE28862B6D7B85B, entity); } // 0xADE28862B6D7B85B 0xFC30DDFF b1207
 	NATIVE_DECL BOOL IS_AN_ENTITY(ScrHandle handle) { return invoke<BOOL>(0x27CFF3E5A286D3DF, handle); } // 0x27CFF3E5A286D3DF 0xD4B9715A b1207
@@ -1709,10 +1718,12 @@ namespace ENTITY
 	NATIVE_DECL BOOL _IS_ENTITY_ON_TRAIN_TRACK(Entity entity) { return invoke<BOOL>(0x857ACB0AB4BD0D55, entity); } // 0x857ACB0AB4BD0D55 b1207
 	NATIVE_DECL void _0xCDB682BB47C02F0A(Entity entity, Hash p1) { invoke<Void>(0xCDB682BB47C02F0A, entity, p1); } // 0xCDB682BB47C02F0A b1207
 	NATIVE_DECL void _0xE19035EB65AB2932(Any p0, Any p1) { invoke<Void>(0xE19035EB65AB2932, p0, p1); } // 0xE19035EB65AB2932 b1207
-	// Sets the loot table an entity will carry. Returns true if loot table has been successfully set.
-	NATIVE_DECL BOOL _0x8C03CD6B5E0E85E8(Entity entity, Hash lootTable) { return invoke<BOOL>(0x8C03CD6B5E0E85E8, entity, lootTable); } // 0x8C03CD6B5E0E85E8 b1207
-	NATIVE_DECL BOOL _0x1E804EA9B12030A4(Entity entity, Hash* p1) { return invoke<BOOL>(0x1E804EA9B12030A4, entity, p1); } // 0x1E804EA9B12030A4 b1207
-	NATIVE_DECL BOOL _0xA88E215CEB0435C0(Ped mount, Any* argStruct, Hash p2, int p3, int p4, BOOL p5) { return invoke<BOOL>(0xA88E215CEB0435C0, mount, argStruct, p2, p3, p4, p5); } // 0xA88E215CEB0435C0 b1207
+	// Sets the loot table an entity will carry. Returns true if loot table has been successfully set. Returns false if entity is not a ped or object.
+	// https://github.com/femga/rdr3_discoveries/blob/master/AI/EVENTS/loot_rewards.lua
+	NATIVE_DECL BOOL SCRIPT_OVERRIDE_ENTITY_LOOT_TABLE_PERMANENT(Entity entity, Hash lootTable) { return invoke<BOOL>(0x8C03CD6B5E0E85E8, entity, lootTable); } // 0x8C03CD6B5E0E85E8 b1207
+	// Returns false if entity is not a ped or object.
+	NATIVE_DECL BOOL _GET_SCRIPT_OVERRIDE_ENTITY_LOOT_TABLE_PERMANENT(Entity entity, Hash* lootTable) { return invoke<BOOL>(0x1E804EA9B12030A4, entity, lootTable); } // 0x1E804EA9B12030A4 b1207
+	NATIVE_DECL BOOL _REQUEST_ENTITY_LOOT_LIST(Ped mount, Any* argStruct, Hash visiblelootslotrequestType, int flag, int p4, BOOL p5) { return invoke<BOOL>(0xA88E215CEB0435C0, mount, argStruct, visiblelootslotrequestType, flag, p4, p5); } // 0xA88E215CEB0435C0 b1207
 	NATIVE_DECL Any _0xE31FC20319874CB3(Any p0, Any p1, Any p2) { return invoke<Any>(0xE31FC20319874CB3, p0, p1, p2); } // 0xE31FC20319874CB3 b1207
 	NATIVE_DECL Any _0x582F73ACFE969571(Any p0, Any p1, Any p2) { return invoke<Any>(0x582F73ACFE969571, p0, p1, p2); } // 0x582F73ACFE969571 b1207
 	NATIVE_DECL Any _0xBA2A089E60ED1163(Any p0, Any p1, Any p2, Any p3, Any p4) { return invoke<Any>(0xBA2A089E60ED1163, p0, p1, p2, p3, p4); } // 0xBA2A089E60ED1163 b1207
@@ -1744,11 +1755,13 @@ namespace ENTITY
 	NATIVE_DECL BOOL _IS_CARRIABLE_MODEL(Hash model) { return invoke<BOOL>(0x5AFFA9DDC87846F8, model); } // 0x5AFFA9DDC87846F8 b1207
 	// Returns a hash of an entity's name. (Alternative Name: _GET_ENTITY_PROMPT_NAME_HASH)
 	NATIVE_DECL Hash _GET_CARRIABLE_FROM_ENTITY(Entity entity) { return invoke<Hash>(0x31FEF6A20F00B963, entity); } // 0x31FEF6A20F00B963 b1207
+	// Changes type and quality of skins
+	// type hashes: https://pastebin.com/C1WvQjCy
 	NATIVE_DECL void _SET_ENTITY_CARCASS_TYPE(Entity entity, Hash type) { invoke<Void>(0x399657ED871B3A6C, entity, type); } // 0x399657ED871B3A6C b1207
 	NATIVE_DECL Any _0x2A77EF9BEC8518F4(Any p0) { return invoke<Any>(0x2A77EF9BEC8518F4, p0); } // 0x2A77EF9BEC8518F4 b1207
 	NATIVE_DECL void _DELETE_CARRIABLE(Entity* entity) { invoke<Void>(0x0D0DB2B6AF19A987, entity); } // 0x0D0DB2B6AF19A987 b1207
 	NATIVE_DECL BOOL _IS_ENTITY_FULLY_LOOTED(Entity entity) { return invoke<BOOL>(0x8DE41E9902E85756, entity); } // 0x8DE41E9902E85756 b1207
-	NATIVE_DECL void _0x6BCF5F3D8FFE988D(Entity entity, BOOL p1) { invoke<Void>(0x6BCF5F3D8FFE988D, entity, p1); } // 0x6BCF5F3D8FFE988D b1207
+	NATIVE_DECL void _SET_ENTITY_FULLY_LOOTED(Entity entity, BOOL looted) { invoke<Void>(0x6BCF5F3D8FFE988D, entity, looted); } // 0x6BCF5F3D8FFE988D b1207
 	NATIVE_DECL Any _0xEF2D9ED7CE684F08(Any p0) { return invoke<Any>(0xEF2D9ED7CE684F08, p0); } // 0xEF2D9ED7CE684F08 b1207
 	NATIVE_DECL Any _0x0CCEFC6C2C95DA2A(Any p0, Any p1, Any p2, Any p3) { return invoke<Any>(0x0CCEFC6C2C95DA2A, p0, p1, p2, p3); } // 0x0CCEFC6C2C95DA2A b1207
 	// Used when checking if ped is in water
@@ -1756,8 +1769,9 @@ namespace ENTITY
 	NATIVE_DECL Any _0x8E10DF0FFA63FB65(Any p0, Any p1, Any p2, Any p3, Any p4) { return invoke<Any>(0x8E10DF0FFA63FB65, p0, p1, p2, p3, p4); } // 0x8E10DF0FFA63FB65 b1207
 	// flagId: see _SET_ENTITY_CARRYING_FLAG
 	NATIVE_DECL BOOL _GET_ENTITY_CARRYING_FLAG(Entity entity, int flagId) { return invoke<BOOL>(0x808077647856DE62, entity, flagId); } // 0x808077647856DE62 b1207
-	// https://github.com/femga/rdr3_discoveries/tree/master/AI/CARRYING_FLAGS
-	// flagId:
+	// flagId: https://github.com/femga/rdr3_discoveries/tree/master/AI/CARRYING_FLAGS
+	// https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/CCarryingFlags__Flags
+	// 
 	// enum eCarryingFlag
 	// {
 	// 	CARRYING_FLAG_CAN_BE_CUT_FREE = 1,
@@ -1865,7 +1879,7 @@ namespace ENTITY
 	NATIVE_DECL void _0xAF7F3099B9FEB535(Entity entity, float p1, float p2, float p3) { invoke<Void>(0xAF7F3099B9FEB535, entity, p1, p2, p3); } // 0xAF7F3099B9FEB535 b1207
 	NATIVE_DECL void SET_ENTITY_IS_TARGET_PRIORITY(Entity entity, BOOL p1, float p2) { invoke<Void>(0x0A5D170C44CB2189, entity, p1, p2); } // 0x0A5D170C44CB2189 0x9729EE32 b1207
 	NATIVE_DECL void _0xB38A29CCD5447783(Any p0, Any p1, Any p2) { invoke<Void>(0xB38A29CCD5447783, p0, p1, p2); } // 0xB38A29CCD5447783 b1207
-	// tier: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/_SET_ENTITY_THREAT_TIER/README.md
+	// tier: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eEntityThreatTier
 	NATIVE_DECL void _SET_ENTITY_THREAT_TIER(Entity entity, int tier, BOOL p2) { invoke<Void>(0x4B436BAC8CBE9B07, entity, tier, p2); } // 0x4B436BAC8CBE9B07 b1207
 	NATIVE_DECL int _GET_ENTITY_THREAT_TIER(Entity entity) { return invoke<int>(0xE12F56CB25D9CE23, entity); } // 0xE12F56CB25D9CE23 b1207
 	NATIVE_DECL void _0x2D40BCBFE9305DEA(Any p0, Any p1) { invoke<Void>(0x2D40BCBFE9305DEA, p0, p1); } // 0x2D40BCBFE9305DEA b1207
@@ -1944,11 +1958,13 @@ namespace ENTITY
 	NATIVE_DECL BOOL HAS_ENTITY_ANIM_FINISHED(Entity entity, const char* animDict, const char* animName, int p3) { return invoke<BOOL>(0xAEB40615337EF1E3, entity, animDict, animName, p3); } // 0xAEB40615337EF1E3 0x1D9CAB92 b1207
 	// https://github.com/femga/rdr3_discoveries/tree/master/animations
 	NATIVE_DECL BOOL PLAY_ENTITY_ANIM(Entity entity, const char* animName, const char* animDict, float p3, BOOL loop, BOOL stayInAnim, BOOL p6, float delta, Any bitset) { return invoke<BOOL>(0xDC6D22FAB76D4874, entity, animName, animDict, p3, loop, stayInAnim, p6, delta, bitset); } // 0xDC6D22FAB76D4874 0x878753D5 b1207
+	// https://gfycat.com/amazingmiserlyamericanquarterhorse
 	NATIVE_DECL void _SET_ENTITY_ANIM_CURRENT_TIME(Entity entity, const char* animDict, const char* animName, float time) { invoke<Void>(0x11CDABDC7783B2BC, entity, animDict, animName, time); } // 0x11CDABDC7783B2BC b1207
 	NATIVE_DECL void _SET_ENTITY_ANIM_SPEED(Entity entity, const char* animDict, const char* animName, float speedMultiplier) { invoke<Void>(0xEAA885BA3CEA4E4A, entity, animDict, animName, speedMultiplier); } // 0xEAA885BA3CEA4E4A b1207
 	NATIVE_DECL Any STOP_ENTITY_ANIM(Entity entity, const char* animation, const char* animGroup, float p3) { return invoke<Any>(0x786591D986DE9159, entity, animation, animGroup, p3); } // 0x786591D986DE9159 0xC4769830 b1207
 	NATIVE_DECL void _0x669655FFB29EF1A9(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0x669655FFB29EF1A9, p0, p1, p2, p3); } // 0x669655FFB29EF1A9 b1207
 	NATIVE_DECL void _ADD_ENTITY_TRACKING_TRAILS(Entity entity) { invoke<Void>(0x1AD922AB5038DEF3, entity); } // 0x1AD922AB5038DEF3 b1207
+	// _REMOVE_DECALS_* - _REMOVE_FORCED*
 	NATIVE_DECL void _0x5826EFD6D73C4DE5(Entity entity) { invoke<Void>(0x5826EFD6D73C4DE5, entity); } // 0x5826EFD6D73C4DE5 b1207
 	NATIVE_DECL void _PAUSE_ENTITY_TRACKING(Entity entity, BOOL pause) { invoke<Void>(0x36EB4D34D4A092C5, entity, pause); } // 0x36EB4D34D4A092C5 b1207
 	NATIVE_DECL Any _CREATE_FOOTPATH_TRAIL(Any p0, const char* waypointRecord, BOOL bUseSnowOffset, float p3, float p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, BOOL bInit) { return invoke<Any>(0x29BA9F78321E5A6C, p0, waypointRecord, bUseSnowOffset, p3, p4, p5, p6, p7, p8, p9, p10, bInit); } // 0x29BA9F78321E5A6C b1207
@@ -1970,7 +1986,7 @@ namespace ENTITY
 namespace EVENT
 {
 	NATIVE_DECL void SET_DECISION_MAKER(Ped ped, Hash name) { invoke<Void>(0x8AE2F981CDDB8FA4, ped, name); } // 0x8AE2F981CDDB8FA4 0x19CEAC9E b1207
-	NATIVE_DECL void _SET_DECISION_MAKER_DEFAULT(Ped ped) { invoke<Void>(0x6B9C5C38838FB6E6, ped); } // 0x6B9C5C38838FB6E6 b1207
+	NATIVE_DECL void SET_DECISION_MAKER_TO_DEFAULT(Ped ped) { invoke<Void>(0x6B9C5C38838FB6E6, ped); } // 0x6B9C5C38838FB6E6 b1207
 	NATIVE_DECL ScrHandle _CREATE_SHOCKING_EVENT(Any* args) { return invoke<ScrHandle>(0xCA1315C33B9A2847, args); } // 0xCA1315C33B9A2847 b1207
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	// https://github.com/femga/rdr3_discoveries/blob/master/AI/EVENTS
@@ -1985,7 +2001,7 @@ namespace EVENT
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	NATIVE_DECL void _REMOVE_ALL_SHOCKING_EVENTS_OF_TYPE_IN_AREA(Hash eventType, float x, float y, float z, float radius, BOOL p5) { invoke<Void>(0x6A648D42BF271DC7, eventType, x, y, z, radius, p5); } // 0x6A648D42BF271DC7 b1207
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
-	NATIVE_DECL void _REMOVE_ALL_SHOCKING_EVENTS_OF_TYPE(Hash eventType, BOOL p1) { invoke<Void>(0x118873DD538490B4, eventType, p1); } // 0x118873DD538490B4 b1207
+	NATIVE_DECL void REMOVE_ALL_SHOCKING_EVENTS_OF_TYPE(Hash eventType, BOOL p1) { invoke<Void>(0x118873DD538490B4, eventType, p1); } // 0x118873DD538490B4 b1207
 	NATIVE_DECL void REMOVE_SHOCKING_EVENT_SPAWN_BLOCKING_AREAS() { invoke<Void>(0xDB249021652420C5); } // 0xDB249021652420C5 0xA0CE89C8 b1207
 	// _ADD* (_ADD_SHOCKING_EVENT_* ?)
 	NATIVE_DECL Any _0x36D0F2BA2C0D9BDE(Entity entity, int p1) { return invoke<Any>(0x36D0F2BA2C0D9BDE, entity, p1); } // 0x36D0F2BA2C0D9BDE b1207
@@ -2131,10 +2147,12 @@ namespace FLOCK
 	NATIVE_DECL float GET_SPECIES_TUNING_FLOAT_PARAM(Hash p0, int p1, int p2) { return invoke<float>(0xE108489621422F91, p0, p1, p2); } // 0xE108489621422F91 b1207
 	NATIVE_DECL void SET_SPECIES_TUNING_FLOAT_PARAM(Hash p0, int p1, int p2, float p3) { invoke<Void>(0x963240B6C252BA49, p0, p1, p2, p3); } // 0x963240B6C252BA49 b1207
 	NATIVE_DECL void SET_SPECIES_TUNING_BOOL_PARAM(Hash p0, int p1, int p2, BOOL p3) { invoke<Void>(0x6D1D94C2459B42EE, p0, p1, p2, p3); } // 0x6D1D94C2459B42EE b1207
+	// index: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eAnimalTuningFloats
 	// https://github.com/femga/rdr3_discoveries/tree/master/AI/ANIMAL_TUNING_FLOAT_PARAMS
 	NATIVE_DECL float GET_ANIMAL_TUNING_FLOAT_PARAM(Ped animal, int index) { return invoke<float>(0x4BC3ECFDA0297E27, animal, index); } // 0x4BC3ECFDA0297E27 b1207
 	NATIVE_DECL void SET_ANIMAL_TUNING_FLOAT_PARAM(Ped animal, int index, float value) { invoke<Void>(0xCBDA22C87977244F, animal, index, value); } // 0xCBDA22C87977244F b1207
 	NATIVE_DECL void RESET_ANIMAL_TUNING_FLOAT_PARAM(Ped animal, int index) { invoke<Void>(0xE776A195488FC520, animal, index); } // 0xE776A195488FC520 b1355
+	// index: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eAnimalTuningBools
 	// https://github.com/femga/rdr3_discoveries/tree/master/AI/ANIMAL_TUNING_BOOL_PARAMS
 	NATIVE_DECL BOOL GET_ANIMAL_TUNING_BOOL_PARAM(Ped animal, int index) { return invoke<BOOL>(0x1C1993824A396603, animal, index); } // 0x1C1993824A396603 b1207
 	NATIVE_DECL void SET_ANIMAL_TUNING_BOOL_PARAM(Ped animal, int index, BOOL value) { invoke<Void>(0x9FF1E042FA597187, animal, index, value); } // 0x9FF1E042FA597187 b1207
@@ -2193,7 +2211,8 @@ namespace GRAPHICS
 {
 	NATIVE_DECL void FREE_MEMORY_FOR_MISSION_CREATOR_PHOTO() { invoke<Void>(0x7DFF8F94937D2659); } // 0x7DFF8F94937D2659 0x9E553002 b1207
 	NATIVE_DECL BOOL LOAD_MISSION_CREATOR_PHOTO(Any* p0, Any p1, Any p2, Any p3) { return invoke<BOOL>(0x84F0BA7462FF8D58, p0, p1, p2, p3); } // 0x84F0BA7462FF8D58 0x56C1E488 b1207
-	NATIVE_DECL int GET_STATUS_OF_LOAD_MISSION_CREATOR_PHOTO(Any* p0) { return invoke<int>(0xC71B50AE58D07369, p0); } // 0xC71B50AE58D07369 0x226B08EA b1207
+	// contentId: returned by NETWORK::_UGC_QUERY_GET_CREATOR_PHOTO(uVar0, 0, sParam3)
+	NATIVE_DECL int GET_STATUS_OF_LOAD_MISSION_CREATOR_PHOTO(const char* contentId) { return invoke<int>(0xC71B50AE58D07369, contentId); } // 0xC71B50AE58D07369 0x226B08EA b1207
 	NATIVE_DECL BOOL BEGIN_TAKE_HIGH_QUALITY_PHOTO() { return invoke<BOOL>(0xA15BFFC0A01B34E1); } // 0xA15BFFC0A01B34E1 0x47B0C137 b1207
 	NATIVE_DECL int GET_STATUS_OF_TAKE_HIGH_QUALITY_PHOTO() { return invoke<int>(0x4A3DA74C3CCB1725); } // 0x4A3DA74C3CCB1725 0x65376C9B b1207
 	NATIVE_DECL void FREE_MEMORY_FOR_HIGH_QUALITY_PHOTO() { invoke<Void>(0xD45547D8396F002A); } // 0xD45547D8396F002A 0x9CBA682A b1207
@@ -2643,22 +2662,29 @@ namespace GANG
 	NATIVE_DECL BOOL NETWORK_IS_GANG_IN_SESSION(Any gangId) { return invoke<BOOL>(0x93A91A351A07360E, gangId); } // 0x93A91A351A07360E b1207
 	NATIVE_DECL BOOL NETWORK_IS_GANG_ACTIVE(Any gangId) { return invoke<BOOL>(0x0F99F6436528A089, gangId); } // 0x0F99F6436528A089 b1207
 	NATIVE_DECL BOOL _NETWORK_IS_GANG_OPEN(Any gangId) { return invoke<BOOL>(0xFCF96CCBD81B24C8, gangId); } // 0xFCF96CCBD81B24C8 b1207
-	NATIVE_DECL Any _0x9970AE8C3D706139() { return invoke<Any>(0x9970AE8C3D706139); } // 0x9970AE8C3D706139 b1207
-	NATIVE_DECL void _0xD1A226F2E05E58FC(Any p0, Any p1) { invoke<Void>(0xD1A226F2E05E58FC, p0, p1); } // 0xD1A226F2E05E58FC b1207
-	NATIVE_DECL Any _0xC5BF29F4035277C2(int p0) { return invoke<Any>(0xC5BF29F4035277C2, p0); } // 0xC5BF29F4035277C2 b1207
+	NATIVE_DECL int _NETWORK_GET_GANG_PRIVACY() { return invoke<int>(0x9970AE8C3D706139); } // 0x9970AE8C3D706139 b1207
+	// openStatus = true -> sets privacyType = 2 (PUBLIC_ADVERTISED)
+	// openStatus = false -> sets privacyType = 1 (INVITE_ONLY)
+	// 
+	// campSize: NET_CAMP_SIZE_SMALLEST = 4, NET_CAMP_SIZE_LARGEST = 7
+	NATIVE_DECL void _NETWORK_START_GANG(BOOL openStatus, int campSize) { invoke<Void>(0xD1A226F2E05E58FC, openStatus, campSize); } // 0xD1A226F2E05E58FC b1207
+	NATIVE_DECL BOOL _NETWORK_SET_GANG_PRIVACY(int privacyType) { return invoke<BOOL>(0xC5BF29F4035277C2, privacyType); } // 0xC5BF29F4035277C2 b1207
 	NATIVE_DECL void _NETWORK_LEAVE_GANG(BOOL disband) { invoke<Void>(0x0A04A07BC3074EDB, disband); } // 0x0A04A07BC3074EDB b1207
+	// banTimeSeconds is 120 in R* Scripts
 	NATIVE_DECL void _NETWORK_KICK_GANG_MEMBER(Player player, int banTimeSeconds) { invoke<Void>(0xCD9E2D9BC52FD80F, player, banTimeSeconds); } // 0xCD9E2D9BC52FD80F b1207
-	NATIVE_DECL Any _0xC0474C8BCF6787AD(Any p0) { return invoke<Any>(0xC0474C8BCF6787AD, p0); } // 0xC0474C8BCF6787AD b1207
+	// Returns true if join succeeded, false if failed.
+	NATIVE_DECL BOOL _NETWORK_REQUEST_GANG_JOIN(Any gangId) { return invoke<BOOL>(0xC0474C8BCF6787AD, gangId); } // 0xC0474C8BCF6787AD b1207
 	NATIVE_DECL BOOL NETWORK_IS_GANG_LEADER(Player player) { return invoke<BOOL>(0x424B17A7DC5C90BC, player); } // 0x424B17A7DC5C90BC b1207
 	NATIVE_DECL BOOL _NETWORK_IS_GANG_MEMBER(Any gangId, Player player) { return invoke<BOOL>(0x9BE7DCB22D32CCBE, gangId, player); } // 0x9BE7DCB22D32CCBE b1207
 	NATIVE_DECL BOOL NETWORK_IS_IN_SAME_GANG(Player player1, Player player2) { return invoke<BOOL>(0x3F59FE6F37869576, player1, player2); } // 0x3F59FE6F37869576 b1207
 	NATIVE_DECL BOOL _NETWORK_IS_IN_MY_GANG(Player player) { return invoke<BOOL>(0x81FB74C83C2ED69F, player); } // 0x81FB74C83C2ED69F b1207
 	NATIVE_DECL int NETWORK_GET_NUM_GANG_MEMBERS(Any gangId) { return invoke<int>(0x149A2751AB66AC02, gangId); } // 0x149A2751AB66AC02 b1207
 	NATIVE_DECL int _NETWORK_GET_GANG_SIZE(Any gangId) { return invoke<int>(0x853B0FA4D8732C57, gangId); } // 0x853B0FA4D8732C57 b1207
-	NATIVE_DECL Any _0x833D8268D51B4522(Any p0) { return invoke<Any>(0x833D8268D51B4522, p0); } // 0x833D8268D51B4522 b1207
+	NATIVE_DECL BOOL _NETWORK_SET_GANG_SIZE(int size) { return invoke<BOOL>(0x833D8268D51B4522, size); } // 0x833D8268D51B4522 b1207
 	NATIVE_DECL Any NETWORK_GET_GANG_ID(Player player) { return invoke<Any>(0x901E0DC25080C8B9, player); } // 0x901E0DC25080C8B9 b1207
 	NATIVE_DECL int _NETWORK_GET_GANG_MEMBERS(Any gangId, Any* memberHandles) { return invoke<int>(0xD1BF325C8252A982, gangId, memberHandles); } // 0xD1BF325C8252A982 b1207
-	NATIVE_DECL Any _0xDA801F7F6A5278D3(Any p0) { return invoke<Any>(0xDA801F7F6A5278D3, p0); } // 0xDA801F7F6A5278D3 b1207
+	// _NETWORK_GET_* or _NETWORK_IS_*
+	NATIVE_DECL BOOL _0xDA801F7F6A5278D3(Player player) { return invoke<BOOL>(0xDA801F7F6A5278D3, player); } // 0xDA801F7F6A5278D3 b1207
 	NATIVE_DECL Any _0x2F7EB8B6F6AFE79C(Any p0) { return invoke<Any>(0x2F7EB8B6F6AFE79C, p0); } // 0x2F7EB8B6F6AFE79C b1207
 	NATIVE_DECL Any _0x53A94294FDDCF98C(Any p0, Any p1) { return invoke<Any>(0x53A94294FDDCF98C, p0, p1); } // 0x53A94294FDDCF98C b1207
 	NATIVE_DECL Player NETWORK_GET_GANG_LEADER(Any gangId) { return invoke<Player>(0x4BE6C13A45CCA8EC, gangId); } // 0x4BE6C13A45CCA8EC b1207
@@ -2708,6 +2734,7 @@ namespace HUD
 	// Removes the loading prompt at the bottom right of the screen.
 	NATIVE_DECL void BUSYSPINNER_OFF() { invoke<Void>(0x58F441B90EA84D06); } // 0x58F441B90EA84D06 0x94119534 b1207
 	NATIVE_DECL BOOL BUSYSPINNER_IS_ON() { return invoke<BOOL>(0x823BF7B1DF613A21); } // 0x823BF7B1DF613A21 0xB8B3A5D0 b1207
+	// Note: you must use VAR_STRING. Byte code very similar to TEXT_COMMAND_DISPLAY_TEXT in V
 	// Old name: _GET_TEXT_SUBSTRING
 	NATIVE_DECL const char* GET_CHARACTER_FROM_AUDIO_CONVERSATION_FILENAME(const char* text, int position, int length) { return invoke<const char*>(0x9D7E12EC6A1EE4E5, text, position, length); } // 0x9D7E12EC6A1EE4E5 0x34A396EE b1207
 	// Gets a string literal from a label name.
@@ -2723,6 +2750,7 @@ namespace HUD
 	// Checks if the passed gxt name exists in the game files.
 	NATIVE_DECL BOOL DOES_TEXT_LABEL_EXIST(const char* label) { return invoke<BOOL>(0x73C258C68D6F55B6, label); } // 0x73C258C68D6F55B6 0x6ECAE560 b1207
 	NATIVE_DECL const char* _GET_LABEL_TEXT_2(const char* label) { return invoke<const char*>(0x3429670F9B9EF2D3, label); } // 0x3429670F9B9EF2D3 b1207
+	// Similar to 0x9D7E12EC6A1EE4E5(GET_TEXT_SUBSTRING) but starts at the beginning of the string
 	NATIVE_DECL const char* _GET_TEXT_SUBSTRING_2(const char* text, int length) { return invoke<const char*>(0xD8402B858F4DDD88, text, length); } // 0xD8402B858F4DDD88 b1207
 	NATIVE_DECL Any _0x806862E5D266CF38(Any p0, Any p1, Any p2) { return invoke<Any>(0x806862E5D266CF38, p0, p1, p2); } // 0x806862E5D266CF38 b1207
 	// Returns the length of the string passed (much like strlen).
@@ -2797,10 +2825,7 @@ namespace HUD
 	NATIVE_DECL Prompt _UI_PROMPT_CREATE(Hash inputHash, const char* labelName, Any p2, Any p3, Any p4, int p5) { return invoke<Prompt>(0x29FA7910726C3889, inputHash, labelName, p2, p3, p4, p5); } // 0x29FA7910726C3889 b1207
 	NATIVE_DECL Prompt _UI_PROMPT_REGISTER_BEGIN() { return invoke<Prompt>(0x04F97DE45A519419); } // 0x04F97DE45A519419 b1207
 	NATIVE_DECL void _UI_PROMPT_REGISTER_END(Prompt prompt) { invoke<Void>(0xF7AA2696A22AD8B9, prompt); } // 0xF7AA2696A22AD8B9 b1207
-	// PP_Low = 0,
-	// PP_Normal = 1,
-	// PP_High = 2,
-	// PP_MissionCritical = 3
+	// priority: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/ePromptPriority
 	NATIVE_DECL void _UI_PROMPT_SET_PRIORITY(Prompt prompt, int priority) { invoke<Void>(0xCA24F528D0D16289, prompt, priority); } // 0xCA24F528D0D16289 b1207
 	NATIVE_DECL Any _UI_PROMPT_SET_CONTROL_ACTION(Prompt prompt, Hash action) { return invoke<Any>(0xB5352B7494A08258, prompt, action); } // 0xB5352B7494A08258 b1207
 	NATIVE_DECL void _UI_PROMPT_SET_ALLOWED_ACTION(Prompt prompt, Hash action) { invoke<Void>(0x565C1CE183CB0EAF, prompt, action); } // 0x565C1CE183CB0EAF b1207
@@ -2885,7 +2910,7 @@ namespace HUD
 	NATIVE_DECL void _UI_PROMPT_SET_VISIBLE(Prompt prompt, BOOL toggle) { invoke<Void>(0x71215ACCFDE075EE, prompt, toggle); } // 0x71215ACCFDE075EE b1207
 	NATIVE_DECL void _UI_PROMPT_SET_ENABLED(Prompt prompt, BOOL toggle) { invoke<Void>(0x8A0FB4D03A630D21, prompt, toggle); } // 0x8A0FB4D03A630D21 b1207
 	NATIVE_DECL void _UI_PROMPT_SET_TEXT(Prompt prompt, const char* text) { invoke<Void>(0x5DD02A8318420DD7, prompt, text); } // 0x5DD02A8318420DD7 b1207
-	// attribute: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/_UI_PROMPT_SET_ATTRIBUTE/README.md
+	// attribute: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eUIPromptAttribute
 	NATIVE_DECL void _UI_PROMPT_SET_ATTRIBUTE(Prompt prompt, int attribute, BOOL enabled) { invoke<Void>(0x560E76D5E2E1803F, prompt, attribute, enabled); } // 0x560E76D5E2E1803F b1207
 	// Params: type = mostly 0, 6 (net_mission_intro_story_gvo), 7 (fm_mission_controller), 14 (net_ugc_end_flow_transition_online), 15 (net_main_[tlg_]offline)
 	NATIVE_DECL void _UI_PROMPT_SET_TYPE(Prompt prompt, int type) { invoke<Void>(0xF4A5C4509BF923B1, prompt, type); } // 0xF4A5C4509BF923B1 b1207
@@ -2934,7 +2959,7 @@ namespace HUD
 	NATIVE_DECL void _SET_MP_GAMER_TAG_TYPE(int gamerTagId, Hash type) { invoke<Void>(0x25B9C78A25105C35, gamerTagId, type); } // 0x25B9C78A25105C35 b1207
 	NATIVE_DECL void _SET_MP_GAMER_TAG_COLOUR(int gamerTagId, Hash colour) { invoke<Void>(0x84BD27DDF9575816, gamerTagId, colour); } // 0x84BD27DDF9575816 b1207
 	// nullsub, doesn't do anything
-	NATIVE_DECL void _0xEF7AB1A0E8C86170(int gamerTagId, BOOL allow) { invoke<Void>(0xEF7AB1A0E8C86170, gamerTagId, allow); } // 0xEF7AB1A0E8C86170 b1207
+	NATIVE_DECL void _SET_MP_GAMER_TAG_UNK_ALLOW_LOCALIZED(int gamerTagId, BOOL allow) { invoke<Void>(0xEF7AB1A0E8C86170, gamerTagId, allow); } // 0xEF7AB1A0E8C86170 b1207
 	NATIVE_DECL void SET_MP_GAMER_TAG_NAME(int gamerTagId, const char* string) { invoke<Void>(0xEA6F4B8D4B4B5B3E, gamerTagId, string); } // 0xEA6F4B8D4B4B5B3E 0x627A559B b1207
 	NATIVE_DECL void _SET_MP_GAMER_TAG_NAME_POSSE(int gamerTagId, const char* text) { invoke<Void>(0x1EA716E0628A6F44, gamerTagId, text); } // 0x1EA716E0628A6F44 b1207
 	NATIVE_DECL void SET_MP_GAMER_TAG_BIG_TEXT(int gamerTagId, const char* string) { invoke<Void>(0xA0D7CE5F83259663, gamerTagId, string); } // 0xA0D7CE5F83259663 0x939218AB b1207
@@ -3068,6 +3093,7 @@ namespace INVENTORY
 	NATIVE_DECL BOOL _INVENTORY_GET_INVENTORY_ITEM_HIDDEN(int inventoryId, Any* guid) { return invoke<BOOL>(0xF9933164965533B7, inventoryId, guid); } // 0xF9933164965533B7 b1207
 	NATIVE_DECL BOOL _INVENTORY_GET_INVENTORY_ITEM_IS_ANIMAL_PELT(Hash item) { return invoke<BOOL>(0x4AEF1FB5B9011D75, item); } // 0x4AEF1FB5B9011D75 b1207
 	NATIVE_DECL Hash _INVENTORY_GET_INVENTORY_ITEM_DESCRIPTION_HASH(Hash item) { return invoke<Hash>(0xA4550FE9C512E3DD, item); } // 0xA4550FE9C512E3DD b1207
+	// flag: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/ItemDatabaseItemFlags
 	// 2097152 (is item read?), 8388608 (is item sent/received/mailable?), 16777216 (is item consumable?)
 	NATIVE_DECL BOOL _INVENTORY_IS_INVENTORY_ITEM_FLAG_ENABLED(Hash item, int flag) { return invoke<BOOL>(0x245D07651B1D183B, item, flag); } // 0x245D07651B1D183B b1207
 	// eSoundType:
@@ -3288,16 +3314,18 @@ namespace ITEMDATABASE
 	NATIVE_DECL int _ITEMDATABASE_GET_NUMBER_OF_MODIFIERS(Any p0) { return invoke<int>(0x1289D8315235856D, p0); } // 0x1289D8315235856D b1207
 	NATIVE_DECL BOOL _ITEMDATABASE_FILLOUT_MODIFIER(Any p0, Any p1, Any p2) { return invoke<BOOL>(0x60614A0AB580A2B5, p0, p1, p2); } // 0x60614A0AB580A2B5 b1207
 	// _ITEMDATABASE_GET_* - _ITEMDATABASE_IS_*
-	NATIVE_DECL BOOL _0xEF254F1A4C08B7E6(Hash p0) { return invoke<BOOL>(0xEF254F1A4C08B7E6, p0); } // 0xEF254F1A4C08B7E6 b1207
-	NATIVE_DECL int _0x3FAA928A79591761(Hash p0) { return invoke<int>(0x3FAA928A79591761, p0); } // 0x3FAA928A79591761 b1207
+	NATIVE_DECL BOOL _ITEMDATABASE_GET_PRIORITY_ACCESS_AWARD(Hash award) { return invoke<BOOL>(0xEF254F1A4C08B7E6, award); } // 0xEF254F1A4C08B7E6 b1207
+	// Returns iAwardItemCount
+	NATIVE_DECL int _ITEMDATABASE_GET_AWARD_ITEM_COUNT(Hash award) { return invoke<int>(0x3FAA928A79591761, award); } // 0x3FAA928A79591761 b1207
 	// _ITEMDATABASE_GET_(A)* - _ITEMDATABASE_GET_(B)*
-	NATIVE_DECL int _0x48229CE0C7938237(Hash p0) { return invoke<int>(0x48229CE0C7938237, p0); } // 0x48229CE0C7938237 b1207
-	NATIVE_DECL BOOL _0x121D2005DD64496B(Hash p0, int index, Any p2) { return invoke<BOOL>(0x121D2005DD64496B, p0, index, p2); } // 0x121D2005DD64496B b1207
+	NATIVE_DECL int _0x48229CE0C7938237(Hash award) { return invoke<int>(0x48229CE0C7938237, award); } // 0x48229CE0C7938237 b1207
+	NATIVE_DECL BOOL _ITEMDATABASE_FILLOUT_AWARD_ITEM_INFO(Hash award, int index, Hash* currency) { return invoke<BOOL>(0x121D2005DD64496B, award, index, currency); } // 0x121D2005DD64496B b1207
 	// _ITEMDATABASE_FILLOUT_(A)* - _ITEMDATABASE_FILLOUT_(B)*
-	NATIVE_DECL BOOL _0x8D029948CA29409B(Hash p0, Any p1, Any p2) { return invoke<BOOL>(0x8D029948CA29409B, p0, p1, p2); } // 0x8D029948CA29409B b1207
+	NATIVE_DECL BOOL _0x8D029948CA29409B(Hash award, Any p1, Any p2) { return invoke<BOOL>(0x8D029948CA29409B, award, p1, p2); } // 0x8D029948CA29409B b1207
 	NATIVE_DECL BOOL _0xE81D0378A384E755(Any p0, Any p1) { return invoke<BOOL>(0xE81D0378A384E755, p0, p1); } // 0xE81D0378A384E755 b1232
 	NATIVE_DECL BOOL _0xD076DB9B96FAADF1(Any p0, Any p1) { return invoke<BOOL>(0xD076DB9B96FAADF1, p0, p1); } // 0xD076DB9B96FAADF1 b1311
 	NATIVE_DECL BOOL _ITEMDATABASE_DOES_ITEM_HAVE_TAG(Hash item, Hash tag, Hash tagType) { return invoke<BOOL>(0xFF5FB5605AD56856, item, tag, tagType); } // 0xFF5FB5605AD56856 b1207
+	// Params: tag = TAG_ITEM_PROPERTY (tagType(?))
 	NATIVE_DECL BOOL _ITEMDATABASE_DOES_BUNDLE_HAVE_TAG(Hash bundle, Hash tag, Hash tagType) { return invoke<BOOL>(0x99C6EA66DFE73757, bundle, tag, tagType); } // 0x99C6EA66DFE73757 b1207
 	NATIVE_DECL Hash _ITEMDATABASE_GET_ITEM_TAG_TYPE(Hash item, Hash tag) { return invoke<Hash>(0x6111B8F9413F413A, item, tag); } // 0x6111B8F9413F413A b1207
 	NATIVE_DECL int _0x8870895BA5ED9385(Any p0, Hash tagType, Any p2) { return invoke<int>(0x8870895BA5ED9385, p0, tagType, p2); } // 0x8870895BA5ED9385 b1232
@@ -3583,6 +3611,7 @@ namespace LAW
 	NATIVE_DECL int _0x7FC667F6DDFBCDCC(Player player) { return invoke<int>(0x7FC667F6DDFBCDCC, player); } // 0x7FC667F6DDFBCDCC b1207
 	NATIVE_DECL void _0x9C5BD8C562565CE6(Hash* crimeType) { invoke<Void>(0x9C5BD8C562565CE6, crimeType); } // 0x9C5BD8C562565CE6 b1207
 	NATIVE_DECL void _0xCBFB4951F2E3934C(Player player, Any p1) { invoke<Void>(0xCBFB4951F2E3934C, player, p1); } // 0xCBFB4951F2E3934C b1207
+	// behaviour: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/CLawBehavior__Flags
 	NATIVE_DECL void _SET_PED_LAW_BEHAVIOUR(Ped ped, int behaviour) { invoke<Void>(0x819ADD5EF1742F47, ped, behaviour); } // 0x819ADD5EF1742F47 b1207
 	NATIVE_DECL void _0x00DB0BC05E3FAA4E(Ped ped, int bitset) { invoke<Void>(0x00DB0BC05E3FAA4E, ped, bitset); } // 0x00DB0BC05E3FAA4E b1207
 	NATIVE_DECL void _0x0C392DB374655176(float x, float y, float z, float p3, ItemSet itemSet) { invoke<Void>(0x0C392DB374655176, x, y, z, p3, itemSet); } // 0x0C392DB374655176 b1207
@@ -3626,7 +3655,7 @@ namespace LAW
 namespace LOCALIZATION
 {
 	// Same return values as GET_CURRENT_LANGUAGE
-	NATIVE_DECL int _LOCALIZATION_GET_SYSTEM_LANGUAGE() { return invoke<int>(0x3C1A05F86AE6ACB5); } // 0x3C1A05F86AE6ACB5 b1207
+	NATIVE_DECL int LOCALIZATION_GET_SYSTEM_LANGUAGE() { return invoke<int>(0x3C1A05F86AE6ACB5); } // 0x3C1A05F86AE6ACB5 b1207
 	// 0 = american (en-US)
 	// 1 = french (fr-FR)
 	// 2 = german (de-DE)
@@ -3642,6 +3671,7 @@ namespace LOCALIZATION
 	// 12 = chinesesimp (zh-CN)
 	NATIVE_DECL int GET_CURRENT_LANGUAGE() { return invoke<int>(0xDB917DA5C6835FCC); } // 0xDB917DA5C6835FCC 0x761BE00B b1207
 	// Returns true if the current language is american, french, german, italian, spanish, brazilian or mexican.
+	// _DOES_*
 	NATIVE_DECL BOOL _0x45D50415E4D885FF() { return invoke<BOOL>(0x45D50415E4D885FF); } // 0x45D50415E4D885FF b1207
 	// 0 = DATE_FORMAT_DMY
 	// 1 = DATE_FORMAT_MDY
@@ -3736,9 +3766,12 @@ namespace MAP
 	NATIVE_DECL void SET_RADAR_AS_EXTERIOR_THIS_FRAME() { invoke<Void>(0xA8EBBAE986FB5457); } // 0xA8EBBAE986FB5457 0x39ABB10E b1207
 	// Reveals the entire minimap (FOW = Fog of War)
 	NATIVE_DECL void SET_MINIMAP_HIDE_FOW(BOOL toggle) { invoke<Void>(0x4B8F743A4A6D2FF8, toggle); } // 0x4B8F743A4A6D2FF8 0xD8D77733 b1207
+	// Used for GUARMA MODE; Enabled: toggle = false, 0; Disabled: toggle = true, 0
+	// Hash p1 seems to be unused, always 0
 	NATIVE_DECL void _SET_FOW_UPDATE_PLAYER_OVERRIDE(BOOL toggle, Hash p1) { invoke<Void>(0x63E7279D04160477, toggle, p1); } // 0x63E7279D04160477 b1207
 	NATIVE_DECL void _SET_MINIMAP_FOW_OVERRIDE_REVEAL_SCALE(float scale, Hash p1) { invoke<Void>(0xE5A7F70B7C0F3271, scale, p1); } // 0xE5A7F70B7C0F3271 b1207
 	NATIVE_DECL void _SET_MINIMAP_FOW_SHOULD_UPDATE(BOOL toggle, Hash p1) { invoke<Void>(0x632AA10BF7EA53D3, toggle, p1); } // 0x632AA10BF7EA53D3 b1207
+	// Up to eight coordinates may be revealed per frame
 	NATIVE_DECL void SET_MINIMAP_FOW_REVEAL_COORDINATE(float x, float y, float z, Hash p3) { invoke<Void>(0x73348402566ECB6E, x, y, z, p3); } // 0x73348402566ECB6E 0xE010F081 b1207
 	NATIVE_DECL void SET_MINIMAP_FOW_REVEAL_VOLUME(Volume volume, Hash p1) { invoke<Void>(0x63CBBD6CA6F321F9, volume, p1); } // 0x63CBBD6CA6F321F9 b1207
 	NATIVE_DECL void RESET_MINIMAP_FOW(Hash hash) { invoke<Void>(0xEB3CB3386C775D72, hash); } // 0xEB3CB3386C775D72 b1207
@@ -3829,6 +3862,7 @@ namespace MISC
 	NATIVE_DECL int GET_NUMBER_OF_FREE_STACKS_OF_THIS_SIZE(int stackSize) { return invoke<int>(0x40DC2907A9697EF7, stackSize); } // 0x40DC2907A9697EF7 0x11A178B8 b1207
 	NATIVE_DECL int _GET_NUMBER_OF_INSTRUCTIONS() { return invoke<int>(0x72904D3D62AF5839); } // 0x72904D3D62AF5839 b1207
 	NATIVE_DECL int _GET_MAX_NUM_INSTRUCTIONS() { return invoke<int>(0xC43CD2668B204419); } // 0xC43CD2668B204419 b1207
+	// magdemo = magazine demo, i. e. for magazines such as IGN, pre play phases to prepare articles etc. - example 2012 builds for V
 	// Hardcoded to return false.
 	NATIVE_DECL BOOL IS_MAG_DEMO_1_ACTIVE() { return invoke<BOOL>(0x5FC9357C26DAEFCE); } // 0x5FC9357C26DAEFCE b1207
 	NATIVE_DECL void SET_RANDOM_SEED(int seed) { invoke<Void>(0x5CD7A49104AFCB6B, seed); } // 0x5CD7A49104AFCB6B 0xDB3FEB5C b1207
@@ -3859,6 +3893,7 @@ namespace MISC
 	// nullsub, doesn't do anything
 	NATIVE_DECL void ACTIVITY_FEED_POST() { invoke<Void>(0xB16FC7B364D86585); } // 0xB16FC7B364D86585 b1207
 	NATIVE_DECL const char* _0xF81C53561D15F330() { return invoke<const char*>(0xF81C53561D15F330); } // 0xF81C53561D15F330 b1207
+	// _SET_MISSION_NAME_*(FOR_ACTIVITY?/MINIGAME?)
 	NATIVE_DECL void _0x1096603B519C905F(const char* name) { invoke<Void>(0x1096603B519C905F, name); } // 0x1096603B519C905F b1207
 	NATIVE_DECL void _0xCC3EDC5614B03F61(int p0) { invoke<Void>(0xCC3EDC5614B03F61, p0); } // 0xCC3EDC5614B03F61 b1207
 	NATIVE_DECL void INFORM_CODE_OF_CONTENT_ID_OF_CURRENT_UGC_MISSION(const char* p0) { invoke<Void>(0x708DF841B8F27AA2, p0); } // 0x708DF841B8F27AA2 0xE77199F7 b1207
@@ -3919,9 +3954,9 @@ namespace MISC
 	// Returns rage::fwTimer::sm_nonScaledClippedTime
 	NATIVE_DECL int _GET_GAME_TIMER_NON_SCALED_CLIPPED() { return invoke<int>(0x483B8C542103AD72); } // 0x483B8C542103AD72 b1207
 	NATIVE_DECL int GET_SYSTEM_TIME() { return invoke<int>(0xBE7F225417E35A7C); } // 0xBE7F225417E35A7C b1207
-	NATIVE_DECL int _GET_NUMBER_OF_MICROSECONDS_SINCE_LAST_CALL() { return invoke<int>(0xB0CE5E5ED8BB3581); } // 0xB0CE5E5ED8BB3581 b1207
-	NATIVE_DECL int _GET_SCRIPT_TIME_WITHIN_FRAME_IN_MICROSECONDS() { return invoke<int>(0x63219768C586667C); } // 0x63219768C586667C b1207
-	NATIVE_DECL void _RESET_SCRIPT_TIME_WITHIN_FRAME() { invoke<Void>(0x1411A7CBC3A6EB7B); } // 0x1411A7CBC3A6EB7B b1207
+	NATIVE_DECL int GET_NUMBER_OF_MICROSECONDS_SINCE_LAST_CALL() { return invoke<int>(0xB0CE5E5ED8BB3581); } // 0xB0CE5E5ED8BB3581 b1207
+	NATIVE_DECL int GET_SCRIPT_TIME_WITHIN_FRAME_IN_MICROSECONDS() { return invoke<int>(0x63219768C586667C); } // 0x63219768C586667C b1207
+	NATIVE_DECL void RESET_SCRIPT_TIME_WITHIN_FRAME() { invoke<Void>(0x1411A7CBC3A6EB7B); } // 0x1411A7CBC3A6EB7B b1207
 	NATIVE_DECL float GET_FRAME_TIME() { return invoke<float>(0x5E72022914CE3C38); } // 0x5E72022914CE3C38 0x96374262 b1207
 	// Old name: _GET_BENCHMARK_TIME
 	NATIVE_DECL float GET_SYSTEM_TIME_STEP() { return invoke<float>(0x3F3172FEAE3AFE1C); } // 0x3F3172FEAE3AFE1C b1207
@@ -4046,8 +4081,10 @@ namespace MISC
 	NATIVE_DECL Any _0xDC416CA762BC4F43(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0xDC416CA762BC4F43, p0, p1, p2, p3, p4, p5); } // 0xDC416CA762BC4F43 b1207
 	NATIVE_DECL Any _0x970339EFA4FDE518(Any p0, Any p1, Any p2) { return invoke<Any>(0x970339EFA4FDE518, p0, p1, p2); } // 0x970339EFA4FDE518 b1207
 	// Hardcoded to return false.
+	// Checks for PS4 Game Build.
 	NATIVE_DECL BOOL IS_ORBIS_VERSION() { return invoke<BOOL>(0x88CFAE250D3E0C71); } // 0x88CFAE250D3E0C71 0x40282018 b1207
 	// Hardcoded to return false.
+	// Checks for XBOXONE Game Build.
 	NATIVE_DECL BOOL IS_DURANGO_VERSION() { return invoke<BOOL>(0xD1CCC2A2639D325F); } // 0xD1CCC2A2639D325F 0x46FB06A5 b1207
 	// Hardcoded to return true.
 	NATIVE_DECL BOOL IS_PC_VERSION() { return invoke<BOOL>(0xB0FB6CFAA5A1C833); } // 0xB0FB6CFAA5A1C833 0x4D5D9EE3 b1207
@@ -4117,7 +4154,8 @@ namespace MISC
 	NATIVE_DECL Any _0x6C7B68D3CE60E8DE(Any p0) { return invoke<Any>(0x6C7B68D3CE60E8DE, p0); } // 0x6C7B68D3CE60E8DE b1207
 	NATIVE_DECL Any _0x627B68D9CE6EE8DE(Any p0) { return invoke<Any>(0x627B68D9CE6EE8DE, p0); } // 0x627B68D9CE6EE8DE b1207
 	NATIVE_DECL Any _0x7CF96F1250EF3221(Any p0) { return invoke<Any>(0x7CF96F1250EF3221, p0); } // 0x7CF96F1250EF3221 b1207
-	NATIVE_DECL void _COPY_MEMORY(Any* dst, Any* src, int size) { invoke<Void>(0xF7AC7DC0DEE7C9BE, dst, src, size); } // 0xF7AC7DC0DEE7C9BE b1207
+	// Old name: _COPY_MEMORY
+	NATIVE_DECL void COPY_SCRIPT_STRUCT(Any* dst, Any* src, int size) { invoke<Void>(0xF7AC7DC0DEE7C9BE, dst, src, size); } // 0xF7AC7DC0DEE7C9BE b1207
 	// enum DispatchType
 	// {
 	// 	DT_Invalid,
@@ -4204,10 +4242,10 @@ namespace MISC
 	NATIVE_DECL void NEXT_ONSCREEN_KEYBOARD_RESULT_WILL_DISPLAY_USING_THESE_FONTS(int p0) { invoke<Void>(0x5CB71EAA1429A358, p0); } // 0x5CB71EAA1429A358 0x3301EA47 b1207
 	// Appears to remove stealth kill action from memory (?)
 	NATIVE_DECL void ACTION_MANAGER_ENABLE_ACTION(Hash hash, BOOL enable) { invoke<Void>(0x7ACF124C12A2B045, hash, enable); } // 0x7ACF124C12A2B045 0x42B484ED b1207
-	NATIVE_DECL Any _0xFD0759658268FD8E(Any p0) { return invoke<Any>(0xFD0759658268FD8E, p0); } // 0xFD0759658268FD8E b1207
+	NATIVE_DECL BOOL ACTION_MANAGER_IS_ACTION_ENABLED(Hash hash) { return invoke<BOOL>(0xFD0759658268FD8E, hash); } // 0xFD0759658268FD8E b1207
 	// Returns GET_GAME_TIMER() / 1000
 	// Only used in rcm_pearson1.ysc
-	NATIVE_DECL int _GET_REAL_GAME_TIMER_IN_SECONDS() { return invoke<int>(0x2E036F0480B8BF02); } // 0x2E036F0480B8BF02 b1207
+	NATIVE_DECL int GET_REAL_WORLD_TIME() { return invoke<int>(0x2E036F0480B8BF02); } // 0x2E036F0480B8BF02 b1207
 	NATIVE_DECL void SET_SUPER_JUMP_THIS_FRAME(Player player) { invoke<Void>(0xB3E9BE963F10C445, player); } // 0xB3E9BE963F10C445 0x86745EF3 b1207
 	NATIVE_DECL void SCRIPT_RACE_INIT(int numCheckpoints, int numLaps, int numPlayers, Any p3) { invoke<Void>(0x8AE059F47158417E, numCheckpoints, numLaps, numPlayers, p3); } // 0x8AE059F47158417E 0x2D33F15A b1207
 	NATIVE_DECL void SCRIPT_RACE_SHUTDOWN() { invoke<Void>(0x334CE0DA4FAF330C); } // 0x334CE0DA4FAF330C 0xDF99925C b1207
@@ -4262,6 +4300,7 @@ namespace MISC
 	NATIVE_DECL int _GET_ITEM_TYPE(ScrHandle handle) { return invoke<int>(0xDC8D2FF478DF9553, handle); } // 0xDC8D2FF478DF9553 b1207
 	NATIVE_DECL BOOL _IS_BASE_A_PERSISTENT_CHARACTER(ScrHandle handle) { return invoke<BOOL>(0x716F17F8A0419F95, handle); } // 0x716F17F8A0419F95 b1207
 	NATIVE_DECL BOOL _IS_BASE_A_COVER_POINT(ScrHandle handle) { return invoke<BOOL>(0xFEC1D4B5C82C176F, handle); } // 0xFEC1D4B5C82C176F b1207
+	// UPDATE_PICKUP_COLLECTIBLE: set Eagle Eye fountain
 	// _J*, _K*, _L*
 	NATIVE_DECL void _0x553D67295DDD2309(Entity entity) { invoke<Void>(0x553D67295DDD2309, entity); } // 0x553D67295DDD2309 b1207
 	NATIVE_DECL Any _0xF18AF483DF70BBDE(Any p0) { return invoke<Any>(0xF18AF483DF70BBDE, p0); } // 0xF18AF483DF70BBDE b1207
@@ -4281,7 +4320,7 @@ namespace MISC
 	NATIVE_DECL BOOL _0x4B101DBCC9482F2D(Ped ped) { return invoke<BOOL>(0x4B101DBCC9482F2D, ped); } // 0x4B101DBCC9482F2D b1207
 	NATIVE_DECL BOOL _IS_MISSION_CREATOR_ACTIVE() { return invoke<BOOL>(0xF236C84C6ADFCB2F); } // 0xF236C84C6ADFCB2F b1207
 	NATIVE_DECL void _0xA3A8926951471C82() { invoke<Void>(0xA3A8926951471C82); } // 0xA3A8926951471C82 b1207
-	// aiMemoryType: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/_CREATE_AI_MEMORY/README.md
+	// aiMemoryType: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/_CREATE_AI_MEMORY
 	NATIVE_DECL void _CREATE_AI_MEMORY(Any* args, int aiMemoryType) { invoke<Void>(0x88BC5F4AEF77FC4E, args, aiMemoryType); } // 0x88BC5F4AEF77FC4E b1207
 	NATIVE_DECL BOOL _GET_AI_PED_DOES_HAVE_EVENT_MEMORY(Any* args, int p1) { return invoke<BOOL>(0xFDF38E2B711BF78E, args, p1); } // 0xFDF38E2B711BF78E b1207
 	// Not implemented.
@@ -4298,7 +4337,7 @@ namespace MISC
 	NATIVE_DECL void _0x94FCADCF9F0C368E(Any p0) { invoke<Void>(0x94FCADCF9F0C368E, p0); } // 0x94FCADCF9F0C368E b1207
 	NATIVE_DECL Any _0x0D0AE5081F88CFE1(Any p0) { return invoke<Any>(0x0D0AE5081F88CFE1, p0); } // 0x0D0AE5081F88CFE1 b1207
 	NATIVE_DECL void _0xAF3A84C7DE6A1DC5(Any p0, Any p1) { invoke<Void>(0xAF3A84C7DE6A1DC5, p0, p1); } // 0xAF3A84C7DE6A1DC5 b1207
-	NATIVE_DECL void _0x48E4D50F87A96AA5(Ped ped, BOOL p1, BOOL p2, Hash p3, Any* p4, Any p5) { invoke<Void>(0x48E4D50F87A96AA5, ped, p1, p2, p3, p4, p5); } // 0x48E4D50F87A96AA5 b1207
+	NATIVE_DECL void _LOOT_TABLES_GET_INFO(Ped ped, BOOL p1, BOOL p2, Hash lootTableKey, Any* p4, Any p5) { invoke<Void>(0x48E4D50F87A96AA5, ped, p1, p2, lootTableKey, p4, p5); } // 0x48E4D50F87A96AA5 b1207
 	NATIVE_DECL Any _0xB1F6665AA54DCD5C(Any p0) { return invoke<Any>(0xB1F6665AA54DCD5C, p0); } // 0xB1F6665AA54DCD5C b1207
 	NATIVE_DECL Any _0x8BB99B85444544D9(Any p0, Any p1) { return invoke<Any>(0x8BB99B85444544D9, p0, p1); } // 0x8BB99B85444544D9 b1207
 	NATIVE_DECL Any _0x6F02B5E50511721E(Any p0) { return invoke<Any>(0x6F02B5E50511721E, p0); } // 0x6F02B5E50511721E b1207
@@ -4315,7 +4354,7 @@ namespace MISC
 	NATIVE_DECL void _0x4647842FE8F31C1E(Any p0, Any p1) { invoke<Void>(0x4647842FE8F31C1E, p0, p1); } // 0x4647842FE8F31C1E b1207
 	// Event names in the scripts: MGBegin, MGEnd, ReadyForCut
 	NATIVE_DECL BOOL _GET_LOOTING_EVENT_HAS_FIRED(Ped ped, const char* eventName) { return invoke<BOOL>(0xF9B91C5129EABC08, ped, eventName); } // 0xF9B91C5129EABC08 b1207
-	NATIVE_DECL void _0x9B47971234169990(Ped ped, Any item) { invoke<Void>(0x9B47971234169990, ped, item); } // 0x9B47971234169990 b1207
+	NATIVE_DECL void _SET_LOOT_PELT_SATCHEL_ITEM(Ped ped, Any item) { invoke<Void>(0x9B47971234169990, ped, item); } // 0x9B47971234169990 b1207
 	NATIVE_DECL void _0x96282005C5C6801F(Any p0, Any p1) { invoke<Void>(0x96282005C5C6801F, p0, p1); } // 0x96282005C5C6801F b1311
 	NATIVE_DECL void _0xF63FA29D4A9ACA86(Any p0, Any p1) { invoke<Void>(0xF63FA29D4A9ACA86, p0, p1); } // 0xF63FA29D4A9ACA86 b1207
 	NATIVE_DECL void _0x8C0F6A3D7236DEEB(Any p0, Any p1) { invoke<Void>(0x8C0F6A3D7236DEEB, p0, p1); } // 0x8C0F6A3D7236DEEB b1207
@@ -4327,7 +4366,7 @@ namespace MISC
 	NATIVE_DECL BOOL GAME_FRAMEWORK_MANAGER_INIT(Hash transitionMode) { return invoke<BOOL>(0x4CABE596D632E4B0, transitionMode); } // 0x4CABE596D632E4B0 b1207
 	NATIVE_DECL void _GAME_FRAMEWORK_MANAGER_SHUTDOWN() { invoke<Void>(0xAFF2FD8ADD927585); } // 0xAFF2FD8ADD927585 b1207
 	NATIVE_DECL Hash _GAME_FRAMEWORK_MANAGER_GET_MODE() { return invoke<Hash>(0xFAED234C7F53ABEB); } // 0xFAED234C7F53ABEB b1207
-	NATIVE_DECL BOOL _0x36040772DF5E59A0() { return invoke<BOOL>(0x36040772DF5E59A0); } // 0x36040772DF5E59A0 b1355
+	NATIVE_DECL BOOL _IS_PLAYER_OWNING_STANDALONE_SP() { return invoke<BOOL>(0x36040772DF5E59A0); } // 0x36040772DF5E59A0 b1355
 	NATIVE_DECL Any _0x0358B8A41916C613(Any p0, Any p1, Any p2, Any p3) { return invoke<Any>(0x0358B8A41916C613, p0, p1, p2, p3); } // 0x0358B8A41916C613 b1207
 	// Note: this native was added in build 1232.56
 	NATIVE_DECL void _SET_GAME_LOGIC_PAUSED() { invoke<Void>(0x550F05CFFBD63C8C); } // 0x550F05CFFBD63C8C b1232
@@ -4532,7 +4571,7 @@ namespace NETWORK
 	NATIVE_DECL int _NETWORK_SESSION_GET_SESSION_REQUEST_RESULT(Any* sessionRequestId, int* p1) { return invoke<int>(0x0DD051B1BF4B8BD6, sessionRequestId, p1); } // 0x0DD051B1BF4B8BD6 b1207
 	NATIVE_DECL BOOL NETWORK_SESSION_IS_REQUEST_PENDING_TRANSITION(Any* sessionRequestId) { return invoke<BOOL>(0xCCF878D50F8AB10D, sessionRequestId); } // 0xCCF878D50F8AB10D b1207
 	NATIVE_DECL BOOL _NETWORK_SESSION_TRANSITION_TO_SESSION(Any* sessionRequestId) { return invoke<BOOL>(0xF20B18A330E6DB5C, sessionRequestId); } // 0xF20B18A330E6DB5C b1207
-	NATIVE_DECL BOOL _0x0F44A5C78D114922(Any* sessionRequestId) { return invoke<BOOL>(0x0F44A5C78D114922, sessionRequestId); } // 0x0F44A5C78D114922 b1207
+	NATIVE_DECL BOOL _NETWORK_SESSION_IS_NSRR_SUCCESS(Any* sessionRequestId) { return invoke<BOOL>(0x0F44A5C78D114922, sessionRequestId); } // 0x0F44A5C78D114922 b1207
 	NATIVE_DECL BOOL NETWORK_SESSION_LEFT_QUEUE_OR_REQUESTED_SESSION(Any* sessionRequestId) { return invoke<BOOL>(0xECE6A0C1B59CD8BE, sessionRequestId); } // 0xECE6A0C1B59CD8BE b1207
 	NATIVE_DECL BOOL NETWORK_SESSION_LEAVE_SESSION() { return invoke<BOOL>(0x17C21B7319A05047); } // 0x17C21B7319A05047 b1207
 	NATIVE_DECL BOOL NETWORK_SESSION_IS_TRANSITIONING() { return invoke<BOOL>(0xF2CBC969C4F090C7); } // 0xF2CBC969C4F090C7 b1207
@@ -4574,8 +4613,7 @@ namespace NETWORK
 	NATIVE_DECL BOOL _NETWORK_IS_IN_SESSION_LOBBY() { return invoke<BOOL>(0xC5196C42DE19F646); } // 0xC5196C42DE19F646 b1207
 	NATIVE_DECL BOOL NETWORK_IS_SESSION_STARTED() { return invoke<BOOL>(0x9DE624D2FC4B603F); } // 0x9DE624D2FC4B603F 0x9D854A37 b1207
 	NATIVE_DECL BOOL NETWORK_CAN_SESSION_END() { return invoke<BOOL>(0x4EEBC3694E49C572); } // 0x4EEBC3694E49C572 0xE1FCCDBA b1207
-	// _NETWORK_GET_G*
-	NATIVE_DECL int _0x225640E09EFFDC3F() { return invoke<int>(0x225640E09EFFDC3F); } // 0x225640E09EFFDC3F b1207
+	NATIVE_DECL int NETWORK_GET_GAME_MODE() { return invoke<int>(0x225640E09EFFDC3F); } // 0x225640E09EFFDC3F b1207
 	// enum eSessionFlags
 	// {
 	// 	SESSION_FLAG_NONE = 0,
@@ -4639,7 +4677,7 @@ namespace NETWORK
 	NATIVE_DECL BOOL _NETWORK_ARE_ONLINE_NOTIFICATIONS_SHOWN_IN_STORY_MODE() { return invoke<BOOL>(0xF5C5929E07512F80); } // 0xF5C5929E07512F80 b1207
 	// Hardcoded to return false.
 	NATIVE_DECL BOOL NETWORK_IS_IN_PLATFORM_PARTY() { return invoke<BOOL>(0x2FC5650B0271CB57); } // 0x2FC5650B0271CB57 0xA812B6CB b1207
-	NATIVE_DECL BOOL _0x11820D1AE80DEA39(Any p0, Any p1) { return invoke<BOOL>(0x11820D1AE80DEA39, p0, p1); } // 0x11820D1AE80DEA39 b1207
+	NATIVE_DECL BOOL _NETWORK_ARE_PLAYERS_IN_SAME_PLATFORM_PARTY(Any* gamerHandle1, Any* gamerHandle2) { return invoke<BOOL>(0x11820D1AE80DEA39, gamerHandle1, gamerHandle2); } // 0x11820D1AE80DEA39 b1207
 	// Hardcoded to return false.
 	NATIVE_DECL BOOL NETWORK_IS_IN_PLATFORM_PARTY_CHAT() { return invoke<BOOL>(0xFD8B834A8BA05048); } // 0xFD8B834A8BA05048 0xC6609191 b1207
 	NATIVE_DECL void NETWORK_SEED_RANDOM_NUMBER_GENERATOR(int seed) { invoke<Void>(0xF1B84178F8674195, seed); } // 0xF1B84178F8674195 0x41702C8A b1207
@@ -4675,7 +4713,7 @@ namespace NETWORK
 	NATIVE_DECL BOOL NETWORK_IS_HOST_OF_THIS_SCRIPT() { return invoke<BOOL>(0x83CD99A1E6061AB5); } // 0x83CD99A1E6061AB5 0x6970BA94 b1207
 	NATIVE_DECL Player NETWORK_GET_HOST_OF_THIS_SCRIPT() { return invoke<Player>(0xC7B4D79B01FA7A5C); } // 0xC7B4D79B01FA7A5C 0x89EA7B54 b1232
 	NATIVE_DECL Player NETWORK_GET_HOST_OF_SCRIPT(const char* scriptName, int p1, int p2) { return invoke<Player>(0x1D6A14F1F9A736FC, scriptName, p1, p2); } // 0x1D6A14F1F9A736FC 0x9C95D0BB b1436
-	NATIVE_DECL Player _NETWORK_GET_HOST_OF_THREAD(int threadId) { return invoke<Player>(0xB4A25351D79B444C, threadId); } // 0xB4A25351D79B444C b1207
+	NATIVE_DECL Player NETWORK_GET_HOST_OF_THREAD(int threadId) { return invoke<Player>(0xB4A25351D79B444C, threadId); } // 0xB4A25351D79B444C b1207
 	NATIVE_DECL void NETWORK_SET_MISSION_FINISHED() { invoke<Void>(0x3B3D11CD9FFCDFC9); } // 0x3B3D11CD9FFCDFC9 0x3083FAD7 b1207
 	NATIVE_DECL BOOL NETWORK_IS_SCRIPT_ACTIVE(const char* scriptName, int p1, BOOL p2, int p3) { return invoke<BOOL>(0x9D40DF90FAD26098, scriptName, p1, p2, p3); } // 0x9D40DF90FAD26098 0x4A65250C b1207
 	NATIVE_DECL BOOL NETWORK_IS_SCRIPT_ACTIVE_BY_HASH(Hash scriptHash, int p1, BOOL p2, int p3) { return invoke<BOOL>(0x1B89BC43B6E69107, scriptHash, p1, p2, p3); } // 0x1B89BC43B6E69107 b1207
@@ -4811,8 +4849,8 @@ namespace NETWORK
 	NATIVE_DECL void _0xD78A26024BB13E08(Player player) { invoke<Void>(0xD78A26024BB13E08, player); } // 0xD78A26024BB13E08 b1207
 	NATIVE_DECL void SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(int netId, BOOL toggle) { invoke<Void>(0xE05E81A888FA63C8, netId, toggle); } // 0xE05E81A888FA63C8 0x68D486B2 b1207
 	NATIVE_DECL void SET_NETWORK_ID_ALWAYS_EXISTS_FOR_PLAYER(int netId, Player player, BOOL toggle) { invoke<Void>(0xA8A024587329F36A, netId, player, toggle); } // 0xA8A024587329F36A 0x4D15FDB1 b1207
-	NATIVE_DECL void _0x9ED3108D6847760A(int netHandle, Any p1) { invoke<Void>(0x9ED3108D6847760A, netHandle, p1); } // 0x9ED3108D6847760A b1207
-	NATIVE_DECL void _0xD785864798258032(Entity entity, BOOL toggle) { invoke<Void>(0xD785864798258032, entity, toggle); } // 0xD785864798258032 b1207
+	NATIVE_DECL void SET_NETWORK_ID_STOP_CLONING(int networkId, BOOL bStopCloning) { invoke<Void>(0x9ED3108D6847760A, networkId, bStopCloning); } // 0x9ED3108D6847760A b1207
+	NATIVE_DECL void NETWORK_SET_ENTITY_REMAINS_WHEN_UNNETWORKED(Entity entity, BOOL toggle) { invoke<Void>(0xD785864798258032, entity, toggle); } // 0xD785864798258032 b1207
 	// if set to true other network players can't see it
 	// if set to false other network player can see it
 	// =========================================
@@ -4863,7 +4901,8 @@ namespace NETWORK
 	NATIVE_DECL int GET_NUM_CREATED_MISSION_PEDS(BOOL p0) { return invoke<int>(0xCB215C4B56A7FAE7, p0); } // 0xCB215C4B56A7FAE7 0xD8FEC4F8 b1207
 	NATIVE_DECL int GET_NUM_CREATED_MISSION_VEHICLES(BOOL p0) { return invoke<int>(0x0CD9AB83489430EA, p0); } // 0x0CD9AB83489430EA 0x20527695 b1207
 	NATIVE_DECL int _GET_NUM_CREATED_MISSION_PICKUPS(BOOL p0) { return invoke<int>(0xD2BA051B94CA9BCC, p0); } // 0xD2BA051B94CA9BCC b1207
-	NATIVE_DECL void _0x99AAC89C510DEB0D(int threadId, int* p1, int* p2, int* p3, int* p4, int* p5, int* p6) { invoke<Void>(0x99AAC89C510DEB0D, threadId, p1, p2, p3, p4, p5, p6); } // 0x99AAC89C510DEB0D b1491
+	// Only used in R* Script net_stable_manager
+	NATIVE_DECL void _GET_RESERVED_MISSION_ENTITIES_FOR_THREAD(int threadId, int* pedMax, int* vehicleMax, int* unkMax, int* pedMin, int* vehicleMin, int* unkMin) { invoke<Void>(0x99AAC89C510DEB0D, threadId, pedMax, vehicleMax, unkMax, pedMin, vehicleMin, unkMin); } // 0x99AAC89C510DEB0D b1491
 	// Used in Script Function NET_ACE_CLIENT_VERIFY_ENTITY_RESERVATIONS
 	// Coords: Slot world position
 	// 
@@ -4950,10 +4989,11 @@ namespace NETWORK
 	NATIVE_DECL void SET_LOCAL_PLAYER_AS_GHOST(BOOL toggle) { invoke<Void>(0x5FFE9B4144F9712F, toggle); } // 0x5FFE9B4144F9712F b1207
 	// Old name: _IS_ENTITY_GHOSTED_TO_LOCAL_PLAYER
 	NATIVE_DECL BOOL IS_ENTITY_A_GHOST(Entity entity) { return invoke<BOOL>(0x21D04D7BC538C146, entity); } // 0x21D04D7BC538C146 b1207
-	NATIVE_DECL void _0xDCA6ABDB9288FBE4(Player player, BOOL disabled) { invoke<Void>(0xDCA6ABDB9288FBE4, player, disabled); } // 0xDCA6ABDB9288FBE4 b1207
+	// _SET_PLAYER_V* - _SET_S*
+	NATIVE_DECL void _SET_PLAYER_VISIBILITY_TO_LOCAL_PLAYER_DISABLED(Player player, BOOL disabled) { invoke<Void>(0xDCA6ABDB9288FBE4, player, disabled); } // 0xDCA6ABDB9288FBE4 b1207
 	NATIVE_DECL void _SET_ENTITY_GHOSTED_TO_LOCAL_PLAYER(Entity entity, BOOL toggle) { invoke<Void>(0xEE5AE9956743BA20, entity, toggle); } // 0xEE5AE9956743BA20 b1207
 	// Note: this native was added in build 1311.16
-	NATIVE_DECL BOOL _IS_OBJECT_REASSIGNMENT_IN_PROGRESS() { return invoke<BOOL>(0x8FE9EB11EC9CC23A); } // 0x8FE9EB11EC9CC23A b1311
+	NATIVE_DECL BOOL IS_OBJECT_REASSIGNMENT_IN_PROGRESS() { return invoke<BOOL>(0x8FE9EB11EC9CC23A); } // 0x8FE9EB11EC9CC23A b1311
 	// Note: this native was added in build 1311.23
 	NATIVE_DECL int _0x039AD6B57D5179FF() { return invoke<int>(0x039AD6B57D5179FF); } // 0x039AD6B57D5179FF b1311
 	// Note: this native was added in build 1311.16
@@ -4964,8 +5004,8 @@ namespace NETWORK
 	NATIVE_DECL int _GET_NUM_PEER_NEGOTIATION_RESPONSES() { return invoke<int>(0x4FE932E84FE932E8); } // 0x4FE932E84FE932E8 b1311
 	// Must be called from a background script, otherwise it will do nothing.
 	NATIVE_DECL void _NETWORK_DEBUG_REQUEST_ENTITY_POSITION(Any* p0) { invoke<Void>(0xFA38B52F91B59075, p0); } // 0xFA38B52F91B59075 b1207
-	NATIVE_DECL int _NETWORK_GET_NETWORK_ID_FROM_ROPE(int ropeId) { return invoke<int>(0x42871327315EDAE8, ropeId); } // 0x42871327315EDAE8 b1207
-	NATIVE_DECL int _NETWORK_GET_ROPE_FROM_NETWORK_ID(int netId) { return invoke<int>(0xEB1A4DD8352EC828, netId); } // 0xEB1A4DD8352EC828 b1207
+	NATIVE_DECL int NETWORK_GET_NETWORK_ID_FROM_ROPE_ID(int ropeId) { return invoke<int>(0x42871327315EDAE8, ropeId); } // 0x42871327315EDAE8 b1207
+	NATIVE_DECL int NETWORK_GET_ROPE_ID_FROM_NETWORK_ID(int netId) { return invoke<int>(0xEB1A4DD8352EC828, netId); } // 0xEB1A4DD8352EC828 b1207
 	NATIVE_DECL void _NETWORK_SPAWN_CONFIG_ADD_SPAWN_POINT(float x, float y, float z, float heading) { invoke<Void>(0xFD1AC0B3858F224C, x, y, z, heading); } // 0xFD1AC0B3858F224C b1207
 	NATIVE_DECL void _0xA63E4F050F20021F() { invoke<Void>(0xA63E4F050F20021F); } // 0xA63E4F050F20021F b1207
 	NATIVE_DECL void _NETWORK_SPAWN_CONFIG_ADD_EXCLUSION_VOLUME(Volume volume) { invoke<Void>(0xEEB7818B1D307212, volume); } // 0xEEB7818B1D307212 b1207
@@ -5022,17 +5062,17 @@ namespace NETWORK
 	NATIVE_DECL BOOL NETWORK_DOES_TUNABLE_EXIST(Hash tunableContext, Hash tunableName) { return invoke<BOOL>(0x85E5F8B9B898B20A, tunableContext, tunableName); } // 0x85E5F8B9B898B20A 0x9FCE9C9A b1207
 	NATIVE_DECL BOOL NETWORK_ACCESS_TUNABLE_INT(Hash tunableContext, Hash tunableName, int* value) { return invoke<BOOL>(0x8BE1146DFD5D4468, tunableContext, tunableName, value); } // 0x8BE1146DFD5D4468 0xE4B3726A b1207
 	NATIVE_DECL BOOL NETWORK_ACCESS_TUNABLE_BOOL(Hash tunableContext, Hash tunableName) { return invoke<BOOL>(0xAA6A47A573ABB75A, tunableContext, tunableName); } // 0xAA6A47A573ABB75A 0x8A04E1FE b1207
-	NATIVE_DECL int _NETWORK_TRY_ACCESS_TUNABLE_INT(Hash tunableContext, Hash tunableName, int defaultValue) { return invoke<int>(0xA25E006B36719774, tunableContext, tunableName, defaultValue); } // 0xA25E006B36719774 b1207
-	NATIVE_DECL float _NETWORK_TRY_ACCESS_TUNABLE_FLOAT(Hash tunableContext, Hash tunableName, float defaultValue) { return invoke<float>(0xA18393089C05E49C, tunableContext, tunableName, defaultValue); } // 0xA18393089C05E49C b1207
-	NATIVE_DECL BOOL _NETWORK_TRY_ACCESS_TUNABLE_BOOL(Hash tunableContext, Hash tunableName, BOOL defaultValue) { return invoke<BOOL>(0xB2AD5D29A99D4B26, tunableContext, tunableName, defaultValue); } // 0xB2AD5D29A99D4B26 b1207
+	NATIVE_DECL int NETWORK_TRY_ACCESS_TUNABLE_INT_HASH(Hash tunableContext, Hash tunableName, int defaultValue) { return invoke<int>(0xA25E006B36719774, tunableContext, tunableName, defaultValue); } // 0xA25E006B36719774 b1207
+	NATIVE_DECL float NETWORK_TRY_ACCESS_TUNABLE_FLOAT_HASH(Hash tunableContext, Hash tunableName, float defaultValue) { return invoke<float>(0xA18393089C05E49C, tunableContext, tunableName, defaultValue); } // 0xA18393089C05E49C b1207
+	NATIVE_DECL BOOL NETWORK_TRY_ACCESS_TUNABLE_BOOL_HASH(Hash tunableContext, Hash tunableName, BOOL defaultValue) { return invoke<BOOL>(0xB2AD5D29A99D4B26, tunableContext, tunableName, defaultValue); } // 0xB2AD5D29A99D4B26 b1207
 	NATIVE_DECL void _0x894B5ECAB45D2342(int netHandle, Any p1) { invoke<Void>(0x894B5ECAB45D2342, netHandle, p1); } // 0x894B5ECAB45D2342 b1207
 	NATIVE_DECL void NETWORK_DISABLE_PROXIMITY_MIGRATION(int netID) { invoke<Void>(0x407091CF6037118E, netID); } // 0x407091CF6037118E 0x9F82917F b1207
-	NATIVE_DECL int _0xCE5E79D9E303628E() { return invoke<int>(0xCE5E79D9E303628E); } // 0xCE5E79D9E303628E b1355
-	NATIVE_DECL BOOL _0xDBC754CB6CCB9378() { return invoke<BOOL>(0xDBC754CB6CCB9378); } // 0xDBC754CB6CCB9378 b1232
+	NATIVE_DECL BOOL _COMMERCE_STORE_IS_OPEN() { return invoke<BOOL>(0xCE5E79D9E303628E); } // 0xCE5E79D9E303628E b1355
+	NATIVE_DECL BOOL _COMMERCE_STORE_IS_ENABLED() { return invoke<BOOL>(0xDBC754CB6CCB9378); } // 0xDBC754CB6CCB9378 b1232
 	NATIVE_DECL BOOL CLOUD_HAS_REQUEST_COMPLETED(int id) { return invoke<BOOL>(0x4C61B39930D045DA, id); } // 0x4C61B39930D045DA 0xBAF52DD8 b1207
 	NATIVE_DECL BOOL CLOUD_DID_REQUEST_SUCCEED(int id) { return invoke<BOOL>(0x3A3D5568AF297CD5, id); } // 0x3A3D5568AF297CD5 0x9B9AFFF1 b1207
 	NATIVE_DECL BOOL _GET_LAUNCH_PARAM_EXISTS(const char* paramName) { return invoke<BOOL>(0x02E97CE283648CD9, paramName); } // 0x02E97CE283648CD9 b1207
-	NATIVE_DECL const char* _GET_LAUNCH_PARAM_VALUE(const char* paramName) { return invoke<const char*>(0x65E65CA6A0FE59D4, paramName); } // 0x65E65CA6A0FE59D4 b1207
+	NATIVE_DECL const char* GET_LAUNCH_PARAM_VALUE(const char* paramName) { return invoke<const char*>(0x65E65CA6A0FE59D4, paramName); } // 0x65E65CA6A0FE59D4 b1207
 	NATIVE_DECL void _SET_LAUNCH_PARAM_VALUE(const char* paramName, const char* value) { invoke<Void>(0x668AF6E4933AC13F, paramName, value); } // 0x668AF6E4933AC13F b1207
 	NATIVE_DECL void _CLEAR_LAUNCH_PARAM(const char* paramName) { invoke<Void>(0x782C94DB6469634D, paramName); } // 0x782C94DB6469634D b1207
 	NATIVE_DECL const char* _GET_LAUNCH_PARAM_STRING() { return invoke<const char*>(0xC59AB6A04333C502); } // 0xC59AB6A04333C502 b1207
@@ -5059,7 +5099,8 @@ namespace NETWORK
 	NATIVE_DECL const char* _UGC_QUERY_GET_ROOT_CONTENT_ID(Any p0, int index) { return invoke<const char*>(0x566CEB0542EF5ECF, p0, index); } // 0x566CEB0542EF5ECF b1207
 	NATIVE_DECL const char* _UGC_QUERY_GET_PLAYLIST_NAME(Any p0, int index) { return invoke<const char*>(0xCAF50048C8D0FBA0, p0, index); } // 0xCAF50048C8D0FBA0 b1207
 	NATIVE_DECL Hash _UGC_QUERY_GET_MISSION_DESC_HASH(Any p0, int index) { return invoke<Hash>(0xA6BF569956C60A60, p0, index); } // 0xA6BF569956C60A60 b1207
-	NATIVE_DECL Any _UGC_QUERY_GET_CREATOR_PHOTO(Any p0, int p1, Any p2) { return invoke<Any>(0x409FE0CA6A4D1D49, p0, p1, p2); } // 0x409FE0CA6A4D1D49 b1207
+	// Returns string for GET_STATUS_OF_LOAD_MISSION_CREATOR_PHOTO
+	NATIVE_DECL const char* _UGC_QUERY_GET_CREATOR_PHOTO(Any p0, int p1, Any p2) { return invoke<const char*>(0x409FE0CA6A4D1D49, p0, p1, p2); } // 0x409FE0CA6A4D1D49 b1207
 	NATIVE_DECL void _UGC_QUERY_GET_DATE(Any p0, int index, Any* p2) { invoke<Void>(0xE0CB4AB15CB32710, p0, index, p2); } // 0xE0CB4AB15CB32710 b1207
 	NATIVE_DECL int _UGC_QUERY_GET_POSIX_UPDATED_DATE(Any p0, Any p1) { return invoke<int>(0x21A99A72B00D8002, p0, p1); } // 0x21A99A72B00D8002 b1207
 	NATIVE_DECL int _UGC_QUERY_GET_POSIX_PUBLISHED_DATE(Any p0, Any p1) { return invoke<int>(0x104080CA9E519B00, p0, p1); } // 0x104080CA9E519B00 b1207
@@ -5233,7 +5274,7 @@ namespace NETWORK
 	NATIVE_DECL void _0xD637D327080CD86E(int p0) { invoke<Void>(0xD637D327080CD86E, p0); } // 0xD637D327080CD86E b1207
 	NATIVE_DECL void _0x564552C6AF1EEAB1() { invoke<Void>(0x564552C6AF1EEAB1); } // 0x564552C6AF1EEAB1 b1207
 	NATIVE_DECL void NETWORK_ACTIVITY_RESET_TO_IDLE() { invoke<Void>(0x3FE141FDB990E3D1); } // 0x3FE141FDB990E3D1 b1207
-	NATIVE_DECL void NETWORK_ACTIVITY_SET_CURRENT(int p0) { invoke<Void>(0x9ADAC065D9F6706F, p0); } // 0x9ADAC065D9F6706F b1207
+	NATIVE_DECL void NETWORK_ACTIVITY_SET_CURRENT(int netPlaylistActivity) { invoke<Void>(0x9ADAC065D9F6706F, netPlaylistActivity); } // 0x9ADAC065D9F6706F b1207
 	// Returns CGameConfig->ConfigOnlineServices->RosTitleName (see gameconfig.xml)
 	NATIVE_DECL const char* _NETWORK_GET_ROS_TITLE_NAME() { return invoke<const char*>(0xAC6153A0722F524C); } // 0xAC6153A0722F524C b1207
 	NATIVE_DECL void _REPORT_PLAYER(Player player, int reportType, const char* description, const char* horseName) { invoke<Void>(0xA197C35F73AC0F12, player, reportType, description, horseName); } // 0xA197C35F73AC0F12 b1207
@@ -5350,9 +5391,12 @@ namespace OBJECT
 	NATIVE_DECL int GET_STATE_OF_RAYFIRE_MAP_OBJECT(Object object) { return invoke<int>(0x899BA936634A322E, object); } // 0x899BA936634A322E 0xF1B8817A b1207
 	NATIVE_DECL BOOL DOES_RAYFIRE_MAP_OBJECT_EXIST(Object object) { return invoke<BOOL>(0x52AF537A0C5B8AAD, object); } // 0x52AF537A0C5B8AAD 0xE08C834D b1207
 	NATIVE_DECL float GET_RAYFIRE_MAP_OBJECT_ANIM_PHASE(Object object) { return invoke<float>(0x260EE4FDBDF4DB01, object); } // 0x260EE4FDBDF4DB01 0x020497DE b1207
+	// https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/Placement%20Flags
 	// https://github.com/femga/rdr3_discoveries/blob/master/objects/pickup_list.lua
 	NATIVE_DECL Pickup CREATE_PICKUP(Hash pickupHash, float x, float y, float z, int flags, int p5, BOOL p6, Hash modelHash, int p8, float p9, Any p10) { return invoke<Pickup>(0xFBA08C503DD5FA58, pickupHash, x, y, z, flags, p5, p6, modelHash, p8, p9, p10); } // 0xFBA08C503DD5FA58 0x5E14DF68 b1207
+	// flags: see CREATE_PICKUP
 	NATIVE_DECL Pickup CREATE_PICKUP_ROTATE(Hash pickupHash, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, int flags, int p8, int p9, BOOL p10, Hash modelHash, int p12, float p13, Any p14) { return invoke<Pickup>(0x891804727E0A98B7, pickupHash, posX, posY, posZ, rotX, rotY, rotZ, flags, p8, p9, p10, modelHash, p12, p13, p14); } // 0x891804727E0A98B7 0xF015BFE2 b1207
+	// flags: see CREATE_PICKUP
 	NATIVE_DECL Object CREATE_AMBIENT_PICKUP(Hash pickupHash, float x, float y, float z, int flags, int value, Hash modelHash, BOOL p7, BOOL p8, int p9, float p10) { return invoke<Object>(0x673966A0C0FD7171, pickupHash, x, y, z, flags, value, modelHash, p7, p8, p9, p10); } // 0x673966A0C0FD7171 0x17B99CE7 b1207
 	NATIVE_DECL Object CREATE_PORTABLE_PICKUP(Hash pickupHash, float x, float y, float z, BOOL placeOnGround, Hash modelHash) { return invoke<Object>(0x2EAF1FDB2FB55698, pickupHash, x, y, z, placeOnGround, modelHash); } // 0x2EAF1FDB2FB55698 0x8C886BE5 b1207
 	NATIVE_DECL void ATTACH_PORTABLE_PICKUP_TO_PED(Object pickupObject, Ped ped) { invoke<Void>(0x8DC39368BDD57755, pickupObject, ped); } // 0x8DC39368BDD57755 0x184F6AB3 b1207
@@ -5375,14 +5419,16 @@ namespace OBJECT
 	NATIVE_DECL BOOL DOES_PICKUP_OF_TYPE_EXIST_IN_AREA(Hash pickupHash, float x, float y, float z, float radius) { return invoke<BOOL>(0xF9C36251F6E48E33, pickupHash, x, y, z, radius); } // 0xF9C36251F6E48E33 0xF139681B b1207
 	NATIVE_DECL void SET_PICKUP_REGENERATION_TIME(Pickup pickup, int duration) { invoke<Void>(0x78015C9B4B3ECC9D, pickup, duration); } // 0x78015C9B4B3ECC9D 0xAB11267D b1207
 	NATIVE_DECL void FORCE_PICKUP_REGENERATE(Any p0) { invoke<Void>(0x758A5C1B3B1E1990, p0); } // 0x758A5C1B3B1E1990 b1207
-	NATIVE_DECL void _0x94F3D956BFAEAE18(Any p0, Any p1, Any p2) { invoke<Void>(0x94F3D956BFAEAE18, p0, p1, p2); } // 0x94F3D956BFAEAE18 b1207
+	// Params: p2 controls whether to make pickups usable/collectable or not in networked games
+	NATIVE_DECL void _SET_NETWORK_PICKUP_USABLE_FOR_PLAYER(Player player, Hash pickupHash, BOOL isUsable) { invoke<Void>(0x94F3D956BFAEAE18, player, pickupHash, isUsable); } // 0x94F3D956BFAEAE18 b1207
 	// Maximum amount of pickup models that can be disallowed is 10.
 	// 
 	// Old name: _SET_LOCAL_PLAYER_CAN_USE_PICKUPS_WITH_THIS_MODEL
 	NATIVE_DECL void SET_LOCAL_PLAYER_PERMITTED_TO_COLLECT_PICKUPS_WITH_MODEL(Hash modelHash, BOOL toggle) { invoke<Void>(0x88EAEC617CD26926, modelHash, toggle); } // 0x88EAEC617CD26926 0x3A8F1BF7 b1207
 	NATIVE_DECL void BLOCK_PICKUP_FROM_PLAYER_COLLECTION(Any p0, Any p1) { invoke<Void>(0xB8F5062070BB6DBD, p0, p1); } // 0xB8F5062070BB6DBD b1207
 	NATIVE_DECL void SET_PICKUP_NOT_LOOTABLE(Any p0, Any p1) { invoke<Void>(0x92E87F60F21A0C3A, p0, p1); } // 0x92E87F60F21A0C3A b1207
-	NATIVE_DECL void _0x1F5E07E14A86FAFC(Any p0) { invoke<Void>(0x1F5E07E14A86FAFC, p0); } // 0x1F5E07E14A86FAFC b1207
+	// _SET_A(MBIENT_PICKUP_?)*
+	NATIVE_DECL void _0x1F5E07E14A86FAFC(BOOL p0) { invoke<Void>(0x1F5E07E14A86FAFC, p0); } // 0x1F5E07E14A86FAFC b1207
 	NATIVE_DECL void SET_TEAM_PICKUP_OBJECT(Object object, Any p1, BOOL p2) { invoke<Void>(0x53E0DF1A2A3CF0CA, object, p1, p2); } // 0x53E0DF1A2A3CF0CA 0x77687DC5 b1207
 	NATIVE_DECL Any _0x9F52AD67D1A91BAD(Any p0, Any p1) { return invoke<Any>(0x9F52AD67D1A91BAD, p0, p1); } // 0x9F52AD67D1A91BAD b1207
 	NATIVE_DECL void PREVENT_COLLECTION_OF_PORTABLE_PICKUP(Object object, BOOL p1, BOOL p2) { invoke<Void>(0x92AEFB5F6E294023, object, p1, p2); } // 0x92AEFB5F6E294023 0xCBB5F9B6 b1207
@@ -5961,7 +6007,7 @@ namespace PED
 	// _SET_PED_MO*
 	NATIVE_DECL void _0x3A5697B80FED5EBE(Ped ped, float p1, float p2, float p3, float p4) { invoke<Void>(0x3A5697B80FED5EBE, ped, p1, p2, p3, p4); } // 0x3A5697B80FED5EBE b1207
 	// Not implemented.
-	NATIVE_DECL void SET_PED_STEALTH_MOVEMENT(Ped ped, Any p1, Any p2, Any p3) { invoke<Void>(0x88CBB5CEB96B7BD2, ped, p1, p2, p3); } // 0x88CBB5CEB96B7BD2 0x67E28E1D b1207
+	NATIVE_DECL void SET_PED_STEALTH_MOVEMENT(Ped ped, BOOL toggle, Any p2, Any p3) { invoke<Void>(0x88CBB5CEB96B7BD2, ped, toggle, p2, p3); } // 0x88CBB5CEB96B7BD2 0x67E28E1D b1207
 	// Returns whether the entity is in stealth mode
 	NATIVE_DECL BOOL GET_PED_STEALTH_MOVEMENT(Ped ped) { return invoke<BOOL>(0x7C2AC9CA66575FBF, ped); } // 0x7C2AC9CA66575FBF 0x40321B83 b1207
 	NATIVE_DECL void _SET_PED_CROUCH_MOVEMENT(Ped ped, BOOL state, int p2, BOOL immediately) { invoke<Void>(0x7DE9692C6F64CFE8, ped, state, p2, immediately); } // 0x7DE9692C6F64CFE8 b1207
@@ -6368,6 +6414,7 @@ namespace PED
 	// Gets the closest ped in a radius.
 	NATIVE_DECL BOOL GET_CLOSEST_PED(float x, float y, float z, float radius, BOOL p4, BOOL p5, Ped* outPed, BOOL p7, BOOL p8, BOOL p9, int pedType) { return invoke<BOOL>(0xC33AB876A77F8164, x, y, z, radius, p4, p5, outPed, p7, p8, p9, pedType); } // 0xC33AB876A77F8164 0x8F6C1F55 b1207
 	NATIVE_DECL BOOL CAN_PED_RAGDOLL(Ped ped) { return invoke<BOOL>(0x128F79EDCECE4FD5, ped); } // 0x128F79EDCECE4FD5 0xC0EFB7A3 b1207
+	// Params: p6 = DraggedByCart in R* SP Script marston8
 	NATIVE_DECL BOOL SET_PED_TO_RAGDOLL(Ped ped, int timeMin, int timeMax, int ragdollType, BOOL p4, BOOL p5, const char* p6) { return invoke<BOOL>(0xAE99FB955581844A, ped, timeMin, timeMax, ragdollType, p4, p5, p6); } // 0xAE99FB955581844A 0x83CB5052 b1207
 	NATIVE_DECL BOOL SET_PED_TO_RAGDOLL_WITH_FALL(Ped ped, int timeMin, int timeMax, int ragdollType, float falldirX, float falldirY, float falldirZ, float p7, float p8, float p9, float p10, float p11, float p12, float p13) { return invoke<BOOL>(0xD76632D99E4966C8, ped, timeMin, timeMax, ragdollType, falldirX, falldirY, falldirZ, p7, p8, p9, p10, p11, p12, p13); } // 0xD76632D99E4966C8 0xFA12E286 b1207
 	// Causes Ped to ragdoll on collision with any object (e.g Running into trashcan). If applied to player you will sometimes trip on the sidewalk.
@@ -6516,7 +6563,7 @@ namespace PED
 	// offsetY: The Y-component of the offset to add to the position relative to the bone's rotation.
 	// offsetZ: The Z-component of the offset to add to the position relative to the bone's rotation.
 	NATIVE_DECL Vector3 GET_PED_BONE_COORDS(Ped ped, int boneId, float offsetX, float offsetY, float offsetZ) { return invoke<Vector3>(0x17C07FC640E86B4E, ped, boneId, offsetX, offsetY, offsetZ); } // 0x17C07FC640E86B4E 0x4579CAB1 b1207
-	// blockingFlags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/ADD_SCENARIO_BLOCKING_AREA/README.md
+	// blockingFlags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eScenarioBlockingFlags
 	NATIVE_DECL int ADD_SCENARIO_BLOCKING_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL p6, int blockingFlags) { return invoke<int>(0x1B5C85C612E5256E, x1, y1, z1, x2, y2, z2, p6, blockingFlags); } // 0x1B5C85C612E5256E 0xA38C0234 b1207
 	NATIVE_DECL void REMOVE_SCENARIO_BLOCKING_AREAS() { invoke<Void>(0xD37401D78A929A49); } // 0xD37401D78A929A49 0x4DDF845F b1207
 	NATIVE_DECL void REMOVE_SCENARIO_BLOCKING_AREA(Any p0, BOOL p1) { invoke<Void>(0x31D16B74C6E29D66, p0, p1); } // 0x31D16B74C6E29D66 0x4483EF06 b1207
@@ -6619,7 +6666,7 @@ namespace PED
 	NATIVE_DECL BOOL _IS_THIS_MODEL_A_HORSE(Hash model) { return invoke<BOOL>(0x772A1969F649E902, model); } // 0x772A1969F649E902 b1207
 	NATIVE_DECL void SET_PED_MODEL_IS_SUPPRESSED(Ped ped, BOOL toggle) { invoke<Void>(0xE163A4BCE4DE6F11, ped, toggle); } // 0xE163A4BCE4DE6F11 0x7820CA43 b1207
 	NATIVE_DECL BOOL _IS_PED_MODEL_SUPPRESSED(Hash model) { return invoke<BOOL>(0xAA9F048DCF69B6DC, model); } // 0xAA9F048DCF69B6DC b1207
-	NATIVE_DECL void _0x7ABBD9E449E0DB00(Any p0, Any p1) { invoke<Void>(0x7ABBD9E449E0DB00, p0, p1); } // 0x7ABBD9E449E0DB00 b1207
+	NATIVE_DECL void _0x7ABBD9E449E0DB00(Ped ped, BOOL p1) { invoke<Void>(0x7ABBD9E449E0DB00, ped, p1); } // 0x7ABBD9E449E0DB00 b1207
 	// Disables being able to kick move ped.
 	NATIVE_DECL void _SET_PED_DISABLE_KICK_MOVE(Ped ped, BOOL disable) { invoke<Void>(0xADD31A5C7A5FAA73, ped, disable); } // 0xADD31A5C7A5FAA73 b1207
 	NATIVE_DECL void SET_PED_CAN_RAGDOLL_FROM_PLAYER_IMPACT(Ped ped, BOOL toggle) { invoke<Void>(0xDF993EE5E90ABA25, ped, toggle); } // 0xDF993EE5E90ABA25 0xE9BD733A b1207
@@ -6868,7 +6915,7 @@ namespace PED
 	NATIVE_DECL void _0x5FCF25D584065BFD(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0x5FCF25D584065BFD, p0, p1, p2, p3); } // 0x5FCF25D584065BFD b1207
 	// _SET_PED_*
 	NATIVE_DECL void _0xA2116C1E4ED85C24(Ped ped, BOOL inverted) { invoke<Void>(0xA2116C1E4ED85C24, ped, inverted); } // 0xA2116C1E4ED85C24 b1207
-	// motionStateHash: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/FORCE_PED_MOTION_STATE#readme
+	// motionStateHash: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/FORCE_PED_MOTION_STATE
 	NATIVE_DECL BOOL FORCE_PED_MOTION_STATE(Ped ped, Hash motionStateHash, BOOL p2, int p3, BOOL p4) { return invoke<BOOL>(0xF28965D04F570DCA, ped, motionStateHash, p2, p3, p4); } // 0xF28965D04F570DCA 0x164DDEFF b1207
 	NATIVE_DECL void _0x75D3333409CD33CE(Any p0, Any p1, Any p2) { invoke<Void>(0x75D3333409CD33CE, p0, p1, p2); } // 0x75D3333409CD33CE b1207
 	// Old name: _GET_PED_CURRENT_MOVEMENT_SPEED
@@ -6948,6 +6995,7 @@ namespace PED
 	// _IS_PED_S* - _IS_PED_U*
 	NATIVE_DECL BOOL _0x913D04A5176F84C9(Ped ped) { return invoke<BOOL>(0x913D04A5176F84C9, ped); } // 0x913D04A5176F84C9 b1207
 	NATIVE_DECL BOOL IS_PED_HOGTYING(Ped ped) { return invoke<BOOL>(0x42429C674B61238B, ped); } // 0x42429C674B61238B b1207
+	// https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/Lasso%20Hogtie%20Flags
 	// https://github.com/femga/rdr3_discoveries/tree/master/AI/LASSO_HOGTIE_FLAG
 	NATIVE_DECL BOOL _GET_PED_LASSO_HOGTIE_FLAG(Ped ped, int flagId) { return invoke<BOOL>(0x2C76FA0E01681F8D, ped, flagId); } // 0x2C76FA0E01681F8D b1207
 	NATIVE_DECL void SET_PED_LASSO_HOGTIE_FLAG(Ped ped, int flagId, BOOL value) { invoke<Void>(0xAE6004120C18DF97, ped, flagId, value); } // 0xAE6004120C18DF97 b1207
@@ -6970,6 +7018,7 @@ namespace PED
 	NATIVE_DECL Entity _GET_LASSOER_OF_PED(Ped ped) { return invoke<Entity>(0x833F0053340EF413, ped); } // 0x833F0053340EF413 b1207
 	NATIVE_DECL Entity _GET_LASSO_TARGET(Ped ped) { return invoke<Entity>(0xB65A4DAB460A19BD, ped); } // 0xB65A4DAB460A19BD b1207
 	NATIVE_DECL Ped _GET_LASSOED_LASSOER(Ped ped) { return invoke<Ped>(0x0C31C51168E80365, ped); } // 0x0C31C51168E80365 b1207
+	// https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/CLootingFlags__Flags
 	// https://github.com/femga/rdr3_discoveries/tree/master/AI/LOOTING_FLAGS
 	// 
 	// lootFlag:
@@ -6983,16 +7032,21 @@ namespace PED
 	// lootFlag: see SET_LOOTING_FLAG
 	NATIVE_DECL BOOL _GET_LOOTING_FLAG(Ped ped, int lootFlag) { return invoke<BOOL>(0xE4C11F104620DDCE, ped, lootFlag); } // 0xE4C11F104620DDCE b1207
 	// Returns loot state
-	// LAP_NONE = 0,
-	// LAP_RESUMING,
-	// LAP_GETTING_ON_FOOT,
-	// LAP_DISTANT_NAV,
-	// LAP_CHOOSING_ACTION,
-	// LAP_APPROACHING,
-	// LAP_ENTERING,
-	// LAP_LOOTING,
-	// LAP_EXITING
-	NATIVE_DECL int _0x5463C962BC7777C3(Ped ped, int p1, Ped* lootTarget, int p3, int p4) { return invoke<int>(0x5463C962BC7777C3, ped, p1, lootTarget, p3, p4); } // 0x5463C962BC7777C3 b1207
+	// enum eLootState
+	// {
+	// 	LAP_NONE,
+	// 	LAP_RESUMING,
+	// 	LAP_GETTING_ON_FOOT,
+	// 	LAP_DISTANT_NAV,
+	// 	LAP_CHOOSING_ACTION,
+	// 	LAP_APPROACHING,
+	// 	LAP_ENTERING,
+	// 	LAP_LOOTING,
+	// 	LAP_EXITING
+	// };
+	// 
+	// _POSSE_* - _REGISTER_HATED*
+	NATIVE_DECL int _REFRESH_LOOT_STATE_FOR_PED(Ped ped, int p1, Ped* lootTarget, int p3, int p4) { return invoke<int>(0x5463C962BC7777C3, ped, p1, lootTarget, p3, p4); } // 0x5463C962BC7777C3 b1207
 	// enum ePedLootStatus
 	// {
 	// 	PLS_NONE,
@@ -7025,7 +7079,9 @@ namespace PED
 	NATIVE_DECL void _0x2E5B5D1F1453E08E(Ped ped, int p1) { invoke<Void>(0x2E5B5D1F1453E08E, ped, p1); } // 0x2E5B5D1F1453E08E b1207
 	// _SET_PED_K* or _SET_PED_L*
 	NATIVE_DECL void _0x29924EB8EE9DB926(Ped ped, float p1) { invoke<Void>(0x29924EB8EE9DB926, ped, p1); } // 0x29924EB8EE9DB926 b1207
-	NATIVE_DECL void _0xB285AD0EC870B2DF(Any p0, Any p1) { invoke<Void>(0xB285AD0EC870B2DF, p0, p1); } // 0xB285AD0EC870B2DF b1207
+	// Params: hash - ARTHUR or JOHN
+	// _SET_PED_(A-D)*
+	NATIVE_DECL void _0xB285AD0EC870B2DF(Ped ped, Hash hash) { invoke<Void>(0xB285AD0EC870B2DF, ped, hash); } // 0xB285AD0EC870B2DF b1207
 	NATIVE_DECL Any _0xCB86D3E3E3708901(Any p0, Any p1, Any p2, Any p3, Any p4) { return invoke<Any>(0xCB86D3E3E3708901, p0, p1, p2, p3, p4); } // 0xCB86D3E3E3708901 b1207
 	NATIVE_DECL void _0x633F83B301C87994(Any p0, Any p1) { invoke<Void>(0x633F83B301C87994, p0, p1); } // 0x633F83B301C87994 b1207
 	NATIVE_DECL BOOL _0x5203038FF8BAE577(Ped ped, int p1, int p2) { return invoke<BOOL>(0x5203038FF8BAE577, ped, p1, p2); } // 0x5203038FF8BAE577 b1207
@@ -7036,7 +7092,7 @@ namespace PED
 	// _GET_PED_G* - _GET_PED_I*
 	NATIVE_DECL BOOL _0xC3995D396F1D97B6(Ped ped, int p1, int p2) { return invoke<BOOL>(0xC3995D396F1D97B6, ped, p1, p2); } // 0xC3995D396F1D97B6 b1207
 	NATIVE_DECL void _0x15F4732C357B1D6D(Any p0, Any p1, Any p2) { invoke<Void>(0x15F4732C357B1D6D, p0, p1, p2); } // 0x15F4732C357B1D6D b1207
-	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/PED___0x947E43F544B6AB34/README.md 
+	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/0x947E43F544B6AB34
 	// _GET_PED_G* - _GET_PED_I(NTERACTION?)*
 	NATIVE_DECL BOOL _0x947E43F544B6AB34(Ped ped, Player player, int flag, int ms) { return invoke<BOOL>(0x947E43F544B6AB34, ped, player, flag, ms); } // 0x947E43F544B6AB34 b1207
 	NATIVE_DECL Any _0x32417CB860A3BDC4(Any p0, Any p1) { return invoke<Any>(0x32417CB860A3BDC4, p0, p1); } // 0x32417CB860A3BDC4 b1207
@@ -7205,7 +7261,8 @@ namespace PED
 	NATIVE_DECL void _SET_RANDOM_OUTFIT_VARIATION(Ped ped, BOOL p1) { invoke<Void>(0x283978A15512B2FE, ped, p1); } // 0x283978A15512B2FE b1207
 	NATIVE_DECL int GET_NUM_META_PED_OUTFITS(Ped ped) { return invoke<int>(0x10C70A515BC03707, ped); } // 0x10C70A515BC03707 b1207
 	// Sets the outfit preset for the ped. The presetId is an index which determines its preset outfit. p2 is always false in the scripts.
-	// If p2 is true as player, then certain components like facial hair and hair will not be removed
+	// If p2 is true as player, then certain components like facial hair and hair will not be removed.
+	// Old name: _SET_PED_OUTFIT_PRESET
 	NATIVE_DECL void _EQUIP_META_PED_OUTFIT_PRESET(Ped ped, int presetId, BOOL p2) { invoke<Void>(0x77FF8D35EEC6BBC4, ped, presetId, p2); } // 0x77FF8D35EEC6BBC4 b1207
 	// Changes Multiplayer ped face and body type components, they can be stacked
 	// Params: p3 = 1
@@ -7431,7 +7488,9 @@ namespace PED
 	NATIVE_DECL Any _GET_SHOP_PED_HAT_COMPONENT(Ped ped, int metapedType, BOOL p2) { return invoke<Any>(0x7E02E4218D916B94, ped, metapedType, p2); } // 0x7E02E4218D916B94 b1207
 	// p1 is always 1
 	NATIVE_DECL void _REFRESH_META_PED_SHOP_ITEMS(Ped ped, int p1) { invoke<Void>(0x59BD177A1A48600A, ped, p1); } // 0x59BD177A1A48600A b1207
-	NATIVE_DECL void _0xD103F6DBB5442BE8(Any p0, Any p1) { invoke<Void>(0xD103F6DBB5442BE8, p0, p1); } // 0xD103F6DBB5442BE8 b1207
+	// Params: p1 either a 1 or 0, so perhaps BOOL
+	// _SET_PED_A*
+	NATIVE_DECL void _0xD103F6DBB5442BE8(Ped ped, int p1) { invoke<Void>(0xD103F6DBB5442BE8, ped, p1); } // 0xD103F6DBB5442BE8 b1207
 	NATIVE_DECL void _SET_PED_PROMPT_NAME_FROM_GXT_ENTRY(Ped ped, Hash gxtEntryHash) { invoke<Void>(0xFCA8FB9E15FA80D3, ped, gxtEntryHash); } // 0xFCA8FB9E15FA80D3 b1207
 	NATIVE_DECL void _SET_PED_PROMPT_NAME(Ped ped, const char* name) { invoke<Void>(0x4A48B6E03BABB4AC, ped, name); } // 0x4A48B6E03BABB4AC b1207
 	NATIVE_DECL void _0xC2745D9261664901(Any p0, Any p1) { invoke<Void>(0xC2745D9261664901, p0, p1); } // 0xC2745D9261664901 b1207
@@ -7563,6 +7622,7 @@ namespace PERSISTENCE
 	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED(int scenario) { return invoke<BOOL>(0xFB7CF1DE938A3E22, scenario); } // 0xFB7CF1DE938A3E22 b1207
 	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED_AT_COORDS(float x, float y, float z) { return invoke<BOOL>(0xB6E1A185C2B9319A, x, y, z); } // 0xB6E1A185C2B9319A b1207
 	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED_AT_COORDS_WITH_MODEL(float x, float y, float z, Hash model) { return invoke<BOOL>(0x188313616D184213, x, y, z, model); } // 0x188313616D184213 b1207
+	// _PERSISTENCE_*
 	NATIVE_DECL void _0x66DAA3A9274E8E82() { invoke<Void>(0x66DAA3A9274E8E82); } // 0x66DAA3A9274E8E82 b1232
 }
 
@@ -7617,7 +7677,10 @@ namespace PHYSICS
 	NATIVE_DECL void _0xC89E7410A93AC19A(int ropeId, float p1) { invoke<Void>(0xC89E7410A93AC19A, ropeId, p1); } // 0xC89E7410A93AC19A b1207
 	NATIVE_DECL void _0x1D97DA8ACB5D2582(int ropeId, int p1) { invoke<Void>(0x1D97DA8ACB5D2582, ropeId, p1); } // 0x1D97DA8ACB5D2582 b1207
 	// Combining this with ADD_ROPE enables winding
-	NATIVE_DECL void _0x3C6490D940FF5D0B(int ropeId, Any p1, const char* ropeModelType, float length, BOOL p4) { invoke<Void>(0x3C6490D940FF5D0B, ropeId, p1, ropeModelType, length, p4); } // 0x3C6490D940FF5D0B b1207
+	// p1: mostly empty (0)
+	// ropeModelType: RB_L_Wrist02, RB_R_Wrist02, ropeAttach, noose01x_Rope_03, SKEL_Neck0, SKEL_L_FOOT, SKEL_Neck1, Root_s_meatbit_Chunck_Xlarge01x
+	// _CREATE_*
+	NATIVE_DECL void _CREATE_ROPE_WINDING_ABILITY(int ropeId, const char* p1, const char* ropeModelType, float length, BOOL p4) { invoke<Void>(0x3C6490D940FF5D0B, ropeId, p1, ropeModelType, length, p4); } // 0x3C6490D940FF5D0B b1207
 	NATIVE_DECL Vector3 GET_ROPE_LAST_VERTEX_COORD(int ropeId) { return invoke<Vector3>(0x21BB0FBD3E217C2D, ropeId); } // 0x21BB0FBD3E217C2D 0x91F6848B b1207
 	NATIVE_DECL Vector3 GET_ROPE_VERTEX_COORD(int ropeId, int vertex) { return invoke<Vector3>(0xEA61CA8E80F09E4D, ropeId, vertex); } // 0xEA61CA8E80F09E4D 0x84374452 b1207
 	NATIVE_DECL void START_ROPE_WINDING(int ropeId) { invoke<Void>(0x1461C72C889E343E, ropeId); } // 0x1461C72C889E343E 0x5187BED3 b1207
@@ -7679,7 +7742,7 @@ namespace PLAYER
 	// nullsub, doesn't do anything
 	NATIVE_DECL void CLEAR_PLAYER_WANTED_LEVEL(Player player) { invoke<Void>(0x4E4B996C928C7AA6, player); } // 0x4E4B996C928C7AA6 0x54EA5BCC b1207
 	NATIVE_DECL BOOL IS_PLAYER_DEAD(Player player) { return invoke<BOOL>(0x2E9C3FCB6798F397, player); } // 0x2E9C3FCB6798F397 0x140CA5A8 b1207
-	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/SET_PLAYER_CONTROL/README.md
+	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eSetPlayerControlFlags
 	NATIVE_DECL void SET_PLAYER_CONTROL(Player player, BOOL toggle, int flags, BOOL bPreventHeadingChange) { invoke<Void>(0x4D51E59243281D80, player, toggle, flags, bPreventHeadingChange); } // 0x4D51E59243281D80 0xD17AFCD8 b1207
 	NATIVE_DECL int GET_PLAYER_WANTED_LEVEL(Player player) { return invoke<int>(0xABC532F9098BFD9D, player); } // 0xABC532F9098BFD9D 0xBDCDD163 b1207
 	NATIVE_DECL void SET_MAX_WANTED_LEVEL(int maxWantedLevel) { invoke<Void>(0x28A4BD2CEE236E19, maxWantedLevel); } // 0x28A4BD2CEE236E19 0x665A06F5 b1207
@@ -7694,7 +7757,7 @@ namespace PLAYER
 	NATIVE_DECL BOOL IS_PLAYER_PLAYING(Player player) { return invoke<BOOL>(0xBFFB35986CAAE58C, player); } // 0xBFFB35986CAAE58C 0xE15D777F b1207
 	NATIVE_DECL void SET_EVERYONE_IGNORE_PLAYER(Player player, BOOL toggle) { invoke<Void>(0x34630A768925B852, player, toggle); } // 0x34630A768925B852 0xC915285E b1207
 	NATIVE_DECL BOOL GET_IS_PLAYER_UI_PROMPT_ACTIVE(Player player, int p1) { return invoke<BOOL>(0x51BEA356B1C60225, player, p1); } // 0x51BEA356B1C60225 b1207
-	// Params: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/_MODIFY_PLAYER_UI_PROMPT/README.md
+	// Params: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/ePromptType
 	// promptType is mostly 34 (PP_TRACK_ANIMAL), promptMode = 0 (PP_MODE_BLOCK) in R* Scripts
 	NATIVE_DECL void _MODIFY_PLAYER_UI_PROMPT(Player player, int promptType, int promptMode, BOOL disabled) { invoke<Void>(0x0751D461F06E41CE, player, promptType, promptMode, disabled); } // 0x0751D461F06E41CE b1207
 	// Returns false if PromptType is enabled
@@ -7708,6 +7771,7 @@ namespace PLAYER
 	NATIVE_DECL void _0x93624B36E8851B42(Player player) { invoke<Void>(0x93624B36E8851B42, player); } // 0x93624B36E8851B42 b1207
 	NATIVE_DECL void _0x9073EC5456651A90(Any p0, Any p1) { invoke<Void>(0x9073EC5456651A90, p0, p1); } // 0x9073EC5456651A90 b1207
 	NATIVE_DECL void _0x2E67707BEC52CA4B(Any p0) { invoke<Void>(0x2E67707BEC52CA4B, p0); } // 0x2E67707BEC52CA4B b1207
+	// Sets whether all random peds will run away from player if they are agitated (threatened) (bool=true), or some peds can stand up for themselves (bool=false).
 	NATIVE_DECL void SET_ALL_RANDOM_PEDS_FLEE(Player player, BOOL toggle) { invoke<Void>(0xE705309B8C6445A4, player, toggle); } // 0xE705309B8C6445A4 0x49EAE968 b1207
 	NATIVE_DECL void SET_ALL_RANDOM_PEDS_FLEE_THIS_FRAME(Player player) { invoke<Void>(0xD5C198A62F1DEB0A, player); } // 0xD5C198A62F1DEB0A 0xBF974891 b1207
 	NATIVE_DECL void SET_ALL_NEUTRAL_RANDOM_PEDS_FLEE_THIS_FRAME(Player player) { invoke<Void>(0x16752DAA7E6D3F72, player); } // 0x16752DAA7E6D3F72 0x02DF7AF4 b1207
@@ -7751,8 +7815,10 @@ namespace PLAYER
 	// Sets whether this player can take cover.
 	NATIVE_DECL void SET_PLAYER_CAN_USE_COVER(Player player, BOOL toggle) { invoke<Void>(0x5EDA520F7A3BAF4E, player, toggle); } // 0x5EDA520F7A3BAF4E 0x13CAFAFA b1207
 	NATIVE_DECL void _0xD1A70C1E8D1031FE(Any p0, Any p1) { invoke<Void>(0xD1A70C1E8D1031FE, p0, p1); } // 0xD1A70C1E8D1031FE b1207
+	// _SET_PLAYER_CAN_BE_* - _SET_PLAYER_CAN_USE_*
 	NATIVE_DECL void _0xACA45DDCEF6071C4(Player player, BOOL p1) { invoke<Void>(0xACA45DDCEF6071C4, player, p1); } // 0xACA45DDCEF6071C4 b1207
 	// Params: p1 is mostly 15, sometimes 1 in R* Scripts (Function: PLAYER_TOGGLE_PICK_UP_HATS)
+	// _SET_PLAYER_*
 	NATIVE_DECL void _0xA0C683284DF027C7(Player player, int p1, BOOL enable) { invoke<Void>(0xA0C683284DF027C7, player, p1, enable); } // 0xA0C683284DF027C7 b1207
 	NATIVE_DECL void _SET_PLAYER_CAN_MERCY_KILL(Player player, BOOL toggle) { invoke<Void>(0x39363DFD04E91496, player, toggle); } // 0x39363DFD04E91496 b1311
 	NATIVE_DECL void _0x4EC8BE63B8A5D4EF(Player player, int p1) { invoke<Void>(0x4EC8BE63B8A5D4EF, player, p1); } // 0x4EC8BE63B8A5D4EF b1207
@@ -7776,10 +7842,10 @@ namespace PLAYER
 	// _IS_PLAYER_I* - _IS_PLAYER_P*
 	NATIVE_DECL BOOL _0xB331D8A73F9D2BDF(Player player, Any* p1) { return invoke<BOOL>(0xB331D8A73F9D2BDF, player, p1); } // 0xB331D8A73F9D2BDF b1207
 	// Used in script function: NET_AUTO_FOLLOW_UPDATE_LEADER_VALUES
-	NATIVE_DECL void _0xAC22AA6DF4D1C1DE(Player player, Ped ped, float p2, float p3, Any followMode, Any followPriority, Any p6) { invoke<Void>(0xAC22AA6DF4D1C1DE, player, ped, p2, p3, followMode, followPriority, p6); } // 0xAC22AA6DF4D1C1DE b1207
+	NATIVE_DECL void _ADD_PLAYER_AS_FOLLOW_TARGET(Player player, Ped ped, float p2, float p3, int followMode, int followPriority, BOOL p6) { invoke<Void>(0xAC22AA6DF4D1C1DE, player, ped, p2, p3, followMode, followPriority, p6); } // 0xAC22AA6DF4D1C1DE b1207
 	NATIVE_DECL void _REMOVE_PLAYER_AS_FOLLOW_TARGET(Player player, Ped ped) { invoke<Void>(0x0C6B89876262A99D, player, ped); } // 0x0C6B89876262A99D b1207
 	NATIVE_DECL void _0x12E09E278C6C29B7(Any p0) { invoke<Void>(0x12E09E278C6C29B7, p0); } // 0x12E09E278C6C29B7 b1207
-	NATIVE_DECL void _0xDD33A82352C4652F(Player player, Ped ped, Any p2) { invoke<Void>(0xDD33A82352C4652F, player, ped, p2); } // 0xDD33A82352C4652F b1207
+	NATIVE_DECL void _0xDD33A82352C4652F(Player player, Ped ped, int p2) { invoke<Void>(0xDD33A82352C4652F, player, ped, p2); } // 0xDD33A82352C4652F b1207
 	NATIVE_DECL void _0x1FDA57E8908F2609(Player player, Ped ped, BOOL useSteerassist) { invoke<Void>(0x1FDA57E8908F2609, player, ped, useSteerassist); } // 0x1FDA57E8908F2609 b1207
 	NATIVE_DECL void _0x84481018E668E1B8(Player player, Ped ped, Any p2) { invoke<Void>(0x84481018E668E1B8, player, ped, p2); } // 0x84481018E668E1B8 b1207
 	// _IS_PLAYER_F*
@@ -7874,7 +7940,8 @@ namespace PLAYER
 	NATIVE_DECL BOOL _0x1A6E84F13C952094(Player player, int p1, Any* p2) { return invoke<BOOL>(0x1A6E84F13C952094, player, p1, p2); } // 0x1A6E84F13C952094 b1207
 	// damageInfo: STANDARD_PED_DAMAGE, STANDARD_FEMALE_PED_DAMAGE, STANDARD_PLAYER_PED_DAMAGE_MP, STANDARD_FEMALE_PLAYER_PED_DAMAGE_MP
 	NATIVE_DECL void _SET_PLAYER_DAMAGE_INFO_OVERRIDE(Player player, const char* damageInfo) { invoke<Void>(0x78B3D19AF6391A55, player, damageInfo); } // 0x78B3D19AF6391A55 b1207
-	NATIVE_DECL void _0x1F488807BC8E0630(Any p0) { invoke<Void>(0x1F488807BC8E0630, p0); } // 0x1F488807BC8E0630 b1207
+	// _RESET_PLAYER_A* - _RESET_PLAYER_I*
+	NATIVE_DECL void _0x1F488807BC8E0630(Player player) { invoke<Void>(0x1F488807BC8E0630, player); } // 0x1F488807BC8E0630 b1207
 	// This can be between 1.0f - 50.0f
 	NATIVE_DECL void SET_AIR_DRAG_MULTIPLIER_FOR_PLAYERS_VEHICLE(Player player, float multiplier) { invoke<Void>(0x5DA6500FE849DA16, player, multiplier); } // 0x5DA6500FE849DA16 0xF20F72E5 b1207
 	// Swim speed multiplier.
@@ -7898,8 +7965,8 @@ namespace PLAYER
 	NATIVE_DECL void _SPECIAL_ABILITY_SET_DISABLED(Player player, BOOL disabled) { invoke<Void>(0xAE637BB8EF017875, player, disabled); } // 0xAE637BB8EF017875 b1207
 	NATIVE_DECL BOOL _IS_SPECIAL_ABILITY_ACTIVE(Player player) { return invoke<BOOL>(0xB16223CB7DA965F0, player); } // 0xB16223CB7DA965F0 b1207
 	// Toggle handles wether Deadeye and Eagleeye are infinite or not.
-	NATIVE_DECL void _MODIFY_INFINITE_TRAIL_VISION(Ped ped, BOOL toggle) { invoke<Void>(0x28A13BF6B05C3D83, ped, toggle); } // 0x28A13BF6B05C3D83 b1207
-	NATIVE_DECL void _SPECIAL_ABILITY_SET_EAGLE_EYE_DISABLED(Ped ped) { invoke<Void>(0xC0B21F235C02139C, ped); } // 0xC0B21F235C02139C b1207
+	NATIVE_DECL void _MODIFY_INFINITE_TRAIL_VISION(Player player, BOOL toggle) { invoke<Void>(0x28A13BF6B05C3D83, player, toggle); } // 0x28A13BF6B05C3D83 b1207
+	NATIVE_DECL void _SPECIAL_ABILITY_SET_EAGLE_EYE_DISABLED(Player player) { invoke<Void>(0xC0B21F235C02139C, player); } // 0xC0B21F235C02139C b1207
 	// Restores Deadeye by given amount.
 	// Params: p2, p3, p4 = 0, 0, 1 in R* Scripts
 	NATIVE_DECL void _SPECIAL_ABILITY_RESTORE_BY_AMOUNT(Player player, float amount, int p2, int p3, int p4) { invoke<Void>(0x51345AE20F22C261, player, amount, p2, p3, p4); } // 0x51345AE20F22C261 b1207
@@ -7974,13 +8041,15 @@ namespace PLAYER
 	NATIVE_DECL Ped _GET_TEMP_PLAYER_HORSE(Player player) { return invoke<Ped>(0xD3F7445CEA2E5035, player); } // 0xD3F7445CEA2E5035 b1207
 	// nullsub, doesn't do anything
 	NATIVE_DECL void _0x77B0B6D17A3AC9AA(Any p0, Any p1) { invoke<Void>(0x77B0B6D17A3AC9AA, p0, p1); } // 0x77B0B6D17A3AC9AA b1207
-	NATIVE_DECL void _0xDF93973251FB2CA5(Any p0, Any p1) { invoke<Void>(0xDF93973251FB2CA5, p0, p1); } // 0xDF93973251FB2CA5 b1207
+	// _SET_PLAYER_*
+	NATIVE_DECL void _0xDF93973251FB2CA5(Player player, BOOL p1) { invoke<Void>(0xDF93973251FB2CA5, player, p1); } // 0xDF93973251FB2CA5 b1207
 	NATIVE_DECL void _0x694FFA4308060CD1(Any p0, Any p1) { invoke<Void>(0x694FFA4308060CD1, p0, p1); } // 0x694FFA4308060CD1 b1207
 	NATIVE_DECL void BOOST_PLAYER_HORSE_SPEED_FOR_TIME(Player player, float speedBoost, int duration) { invoke<Void>(0x09C28F828EE674FA, player, speedBoost, duration); } // 0x09C28F828EE674FA b1207
 	// This modifies the damage value of your weapon. Whether it is a multiplier or base damage is unknown.
 	NATIVE_DECL void SET_PLAYER_WEAPON_DAMAGE_MODIFIER(Player player, float modifier) { invoke<Void>(0x94D529F7B73D7A85, player, modifier); } // 0x94D529F7B73D7A85 0xB02C2F39 b1207
 	NATIVE_DECL void SET_PLAYER_WEAPON_DEFENSE_MODIFIER(Player player, float modifier) { invoke<Void>(0xD15CC2D493160BE3, player, modifier); } // 0xD15CC2D493160BE3 0xAE446344 b1207
-	NATIVE_DECL void _0x818241B3EDA84191(Any p0, Any p1) { invoke<Void>(0x818241B3EDA84191, p0, p1); } // 0x818241B3EDA84191 b1207
+	// _SET_PLAYER_DAMAGE_* - _SET_PLAYER_DEFENSE_*
+	NATIVE_DECL void _0x818241B3EDA84191(Player player, BOOL p1) { invoke<Void>(0x818241B3EDA84191, player, p1); } // 0x818241B3EDA84191 b1207
 	NATIVE_DECL void SET_PLAYER_MELEE_WEAPON_DAMAGE_MODIFIER(Player player, float modifier) { invoke<Void>(0xE4CB5A3F18170381, player, modifier); } // 0xE4CB5A3F18170381 0x362E69AD b1207
 	NATIVE_DECL void _SET_PLAYER_EXPLOSIVE_WEAPON_DAMAGE_MODIFIER(Player player, float modifier) { invoke<Void>(0x2D3ACE3DE0A2B622, player, modifier); } // 0x2D3ACE3DE0A2B622 b1207
 	NATIVE_DECL void _0x83C989D5B5B5B466(Any p0, Any p1) { invoke<Void>(0x83C989D5B5B5B466, p0, p1); } // 0x83C989D5B5B5B466 b1207
@@ -8059,7 +8128,8 @@ namespace PLAYER
 	NATIVE_DECL void _REGISTER_EAGLE_EYE_TRAILS_FOR_ENTITY(Player player, Entity entity, Any p2) { invoke<Void>(0xAC67098A1E54ABB0, player, entity, p2); } // 0xAC67098A1E54ABB0 b1207
 	NATIVE_DECL void _UNREGISTER_EAGLE_EYE_FOR_ENTITY(Player player, Entity entity) { invoke<Void>(0x9DAE1380CC5C6451, player, entity); } // 0x9DAE1380CC5C6451 b1207
 	NATIVE_DECL void _UNREGISTER_EAGLE_EYE_TRAILS_FOR_ENTITY(Player player, Entity entity, Any p2) { invoke<Void>(0x9A957912CE2EABD1, player, entity, p2); } // 0x9A957912CE2EABD1 b1207
-	NATIVE_DECL void _0xE5D3EB37ABC1EB03(Any p0) { invoke<Void>(0xE5D3EB37ABC1EB03, p0); } // 0xE5D3EB37ABC1EB03 b1207
+	// _CLEAR_FACIAL_* - _CLEAR_PED_BLOOD*
+	NATIVE_DECL void _0xE5D3EB37ABC1EB03(Player player) { invoke<Void>(0xE5D3EB37ABC1EB03, player); } // 0xE5D3EB37ABC1EB03 b1207
 	NATIVE_DECL BOOL _IS_EAGLE_EYE_REGISTERED_FOR_ENTITY(Player player, Entity entity) { return invoke<BOOL>(0x0E6846476906C9DD, player, entity); } // 0x0E6846476906C9DD b1207
 	NATIVE_DECL Any _0x6852288340B43239(Any p0, Any p1) { return invoke<Any>(0x6852288340B43239, p0, p1); } // 0x6852288340B43239 b1207
 	NATIVE_DECL Any _0xE50A67C33514A390(Any p0, Any p1) { return invoke<Any>(0xE50A67C33514A390, p0, p1); } // 0xE50A67C33514A390 b1207
@@ -8088,7 +8158,8 @@ namespace PLAYER
 	NATIVE_DECL void EAGLE_EYE_SET_CUSTOM_ENTITY_TINT(Entity entity, int red, int green, int blue) { invoke<Void>(0x62ED71E133B6C9F1, entity, red, green, blue); } // 0x62ED71E133B6C9F1 b1207
 	NATIVE_DECL void _0xBC02B3D151D3859F(Entity entity, Any p1) { invoke<Void>(0xBC02B3D151D3859F, entity, p1); } // 0xBC02B3D151D3859F b1207
 	NATIVE_DECL void _EAGLE_EYE_SET_CUSTOM_DISTANCE(Entity entity, float distance) { invoke<Void>(0x907B16B3834C69E2, entity, distance); } // 0x907B16B3834C69E2 b1207
-	NATIVE_DECL void _0xF21C7A3F3FFBA629(Any p0) { invoke<Void>(0xF21C7A3F3FFBA629, p0); } // 0xF21C7A3F3FFBA629 b1207
+	// _CLEAR_FACIAL_* - _CLEAR_PED_BLOOD*
+	NATIVE_DECL void _0xF21C7A3F3FFBA629(Player player) { invoke<Void>(0xF21C7A3F3FFBA629, player); } // 0xF21C7A3F3FFBA629 b1207
 	NATIVE_DECL void _SET_PLAYER_MANAGE_BUFF_SUPER_JUMP(Player player, float p1) { invoke<Void>(0x292F0B6EDC82E3A4, player, p1); } // 0x292F0B6EDC82E3A4 b1207
 	// see personaabilities.meta
 	// enum ePersonaAbilityFlag
@@ -8185,15 +8256,16 @@ namespace PLAYER
 	// Only applies to HUNTERCART01
 	NATIVE_DECL void _SET_PLAYER_HUNTING_WAGON(Player player, Vehicle wagon) { invoke<Void>(0x6A4404BDFA62CE2C, player, wagon); } // 0x6A4404BDFA62CE2C b1207
 	NATIVE_DECL void _0x9044835BE9D9DBFE(Any p0, Any p1) { invoke<Void>(0x9044835BE9D9DBFE, p0, p1); } // 0x9044835BE9D9DBFE b1207
-	NATIVE_DECL Any GET_DISCOVERABLE_NAME_HASH_AND_TYPE_FOR_ENTITY(Any p0, Any p1) { return invoke<Any>(0x0139637A3BFF8B6D, p0, p1); } // 0x0139637A3BFF8B6D b1207
+	// Returns name hash (name) and outHash includes the type.
+	NATIVE_DECL Hash GET_DISCOVERABLE_NAME_HASH_AND_TYPE_FOR_ENTITY(Entity entity, Hash* type) { return invoke<Hash>(0x0139637A3BFF8B6D, entity, type); } // 0x0139637A3BFF8B6D b1207
 	// p0: mostly Ped Hashes
 	NATIVE_DECL Hash _GET_CONSTRUCTED_DISCOVERED_CHARACTER_NAME(Hash p0, BOOL model, BOOL outfit) { return invoke<Hash>(0x8E84119A23C16623, p0, model, outfit); } // 0x8E84119A23C16623 b1207
 	NATIVE_DECL Hash GET_TARGET_CHARACTER_NAME_SCRIPT_OVERRIDE_HASH(Ped ped) { return invoke<Hash>(0x0335106F3ACABBED, ped); } // 0x0335106F3ACABBED b1207
 	NATIVE_DECL const char* GET_TARGET_CHARACTER_NAME_SCRIPT_OVERRIDE_RAW_STRING(Ped ped) { return invoke<const char*>(0x755E08680F21EF30, ped); } // 0x755E08680F21EF30 b1207
 	NATIVE_DECL Hash GET_TARGET_CHARACTER_NAME_FOR_LOCAL_PLAYER(Ped ped) { return invoke<Hash>(0x36E3D8B5A6552FE8, ped); } // 0x36E3D8B5A6552FE8 b1207
 	NATIVE_DECL Any _0xDA9D7BE231FE865F(Any p0, Any p1, Any p2) { return invoke<Any>(0xDA9D7BE231FE865F, p0, p1, p2); } // 0xDA9D7BE231FE865F b1207
-	NATIVE_DECL void _0x946D46CD6DFB9742(Any p0, Any p1, Any p2) { invoke<Void>(0x946D46CD6DFB9742, p0, p1, p2); } // 0x946D46CD6DFB9742 b1207
-	NATIVE_DECL Any _0x0772F87D7B07719A(Any p0, Any p1, Any p2) { return invoke<Any>(0x0772F87D7B07719A, p0, p1, p2); } // 0x0772F87D7B07719A b1207
+	NATIVE_DECL void _SET_PLAYER_HAS_DISCOVERED_CHARACTER_NAME_SP(Player player, int p1, Hash discoveryHash) { invoke<Void>(0x946D46CD6DFB9742, player, p1, discoveryHash); } // 0x946D46CD6DFB9742 b1207
+	NATIVE_DECL BOOL _GET_HAS_PLAYER_DISCOVERED_CHARACTER_NAME_SP(Player player, int p1, Hash discoveryHash) { return invoke<BOOL>(0x0772F87D7B07719A, player, p1, discoveryHash); } // 0x0772F87D7B07719A b1207
 	NATIVE_DECL void _0xCDDD4B74660E2335(Any p0, Any p1, Any p2) { invoke<Void>(0xCDDD4B74660E2335, p0, p1, p2); } // 0xCDDD4B74660E2335 b1207
 	NATIVE_DECL void _0x77E83C315A3B31CA(Any p0) { invoke<Void>(0x77E83C315A3B31CA, p0); } // 0x77E83C315A3B31CA b1207
 	NATIVE_DECL void _SET_PLAYER_HAS_DISCOVERED_CHARACTER_NAME_MP(Hash discoveryHash) { invoke<Void>(0x7C32191D9FB2BDEA, discoveryHash); } // 0x7C32191D9FB2BDEA b1207
@@ -8241,19 +8313,18 @@ namespace POPULATION
 	NATIVE_DECL void SET_SPAWNER_INFO_PRIORITY(Hash p0, Hash p1, int priority) { invoke<Void>(0x60CDE717A6D47769, p0, p1, priority); } // 0x60CDE717A6D47769 b1207
 	NATIVE_DECL void CLEAR_SPAWNER_INFO_PRIORITY(Hash p0, Hash p1) { invoke<Void>(0x217A54DE2D200305, p0, p1); } // 0x217A54DE2D200305 b1207
 	NATIVE_DECL void _0x638FCFC6042A9473(Any p0, Any p1) { invoke<Void>(0x638FCFC6042A9473, p0, p1); } // 0x638FCFC6042A9473 b1207
-	// include/exclude flags: PFF_AllAnimals = 2016,
-	// PFF_Humans = 8192
+	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/PedFilterFlags
 	NATIVE_DECL void _ADD_AMBIENT_AVOIDANCE_RESTRICTION(Volume volume, int includeFlags, int excludeFlags, Hash p3, Hash p4, Hash p5, int p6) { invoke<Void>(0xB56D41A694E42E86, volume, includeFlags, excludeFlags, p3, p4, p5, p6); } // 0xB56D41A694E42E86 b1207
+	// flags: see 0xB56D41A694E42E86
 	NATIVE_DECL void _REMOVE_AMBIENT_AVOIDANCE_RESTRICTION(Volume volume) { invoke<Void>(0x74C2B3DC0B294102, volume); } // 0x74C2B3DC0B294102 b1207
-	// include/exclude flags: PFF_AllAnimals = 2016,
-	// PFF_Humans = 8192
+	// flags: see 0xB56D41A694E42E86
 	NATIVE_DECL void _ADD_AMBIENT_SPAWN_RESTRICTION(Volume volume, int includeFlags, int excludeFlags, Hash p3, Hash p4, Hash p5, int p6) { invoke<Void>(0x18262CAFEBB5FBE1, volume, includeFlags, excludeFlags, p3, p4, p5, p6); } // 0x18262CAFEBB5FBE1 b1207
 	NATIVE_DECL void _REMOVE_AMBIENT_SPAWN_RESTRICTION(Volume volume) { invoke<Void>(0xA1CFB35069D23C23, volume); } // 0xA1CFB35069D23C23 b1207
 	NATIVE_DECL void _0x2161278C6322F740(int includeFlags, int excludeFlags, int p2, Hash p3, int p4, Volume volume) { invoke<Void>(0x2161278C6322F740, includeFlags, excludeFlags, p2, p3, p4, volume); } // 0x2161278C6322F740 b1207
 	NATIVE_DECL void _0xF45E46DEECF7DF6E(int bitFlag, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0xF45E46DEECF7DF6E, bitFlag, p1, p2, p3, p4); } // 0xF45E46DEECF7DF6E b1207
 	NATIVE_DECL void _0x8EC7CD701F872F87(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { invoke<Void>(0x8EC7CD701F872F87, p0, p1, p2, p3, p4, p5); } // 0x8EC7CD701F872F87 b1207
 	NATIVE_DECL void _0xC4533E3E87125C9E(Any p0) { invoke<Void>(0xC4533E3E87125C9E, p0); } // 0xC4533E3E87125C9E b1207
-	// p1: 0 = Disable avoidance, 1 = Enabled avoidance, 2 = Enabled avoidance (?)
+	// Params: p1 = 1 & 2 in R* Scripts, 0 = Disable avoidance, 1 = Enabled avoidance, 2 = Enabled avoidance (?)
 	NATIVE_DECL void _SET_PED_SHOULD_IGNORE_AVOIDANCE_VOLUMES(Ped ped, int p1) { invoke<Void>(0xF74E134F40192884, ped, p1); } // 0xF74E134F40192884 b1207
 	NATIVE_DECL void _0xDBBF12EA7C1029B2(Any p0, Any p1) { invoke<Void>(0xDBBF12EA7C1029B2, p0, p1); } // 0xDBBF12EA7C1029B2 b1207
 	NATIVE_DECL void _0x247F86595D396344(Any p0) { invoke<Void>(0x247F86595D396344, p0); } // 0x247F86595D396344 b1207
@@ -8714,10 +8785,10 @@ namespace STATS
 	// Calculation: (value / 1000) / 60 % 60
 	NATIVE_DECL int _STAT_CALCULATE_COOLDOWN(int value) { return invoke<int>(0x1E7384AB5D4F4581, value); } // 0x1E7384AB5D4F4581 b1207
 	// statId: see STAT_ID_IS_VALID
-	NATIVE_DECL BOOL _0x5420D398A42917FC(Entity entity, Any* statId) { return invoke<BOOL>(0x5420D398A42917FC, entity, statId); } // 0x5420D398A42917FC b1311
+	NATIVE_DECL BOOL _STAT_PHEROMONE_COOLDOWN_LEGENDARY_ANIMAL(Entity entity, Any* statId) { return invoke<BOOL>(0x5420D398A42917FC, entity, statId); } // 0x5420D398A42917FC b1311
 	NATIVE_DECL void _STAT_ITEM_FISH_CAUGHT(Ped fish, float weight, Hash category, Hash subcategory) { invoke<Void>(0xDA26263C87CCE9C1, fish, weight, category, subcategory); } // 0xDA26263C87CCE9C1 b1207
-	NATIVE_DECL void _0x831BF01C56149A8A(Ped ped) { invoke<Void>(0x831BF01C56149A8A, ped); } // 0x831BF01C56149A8A b1207
-	NATIVE_DECL void _0x7C2ABF6E556B21FC(int item, int slot, Any p2, Any p3) { invoke<Void>(0x7C2ABF6E556B21FC, item, slot, p2, p3); } // 0x7C2ABF6E556B21FC b1207
+	NATIVE_DECL void _STAT_CARRIED_SATCHEL_ITEM_FROM_PED(Ped ped) { invoke<Void>(0x831BF01C56149A8A, ped); } // 0x831BF01C56149A8A b1207
+	NATIVE_DECL void _STAT_DONATE_INCREMENT_ITEM(int item, int slot, Any p2, Any p3) { invoke<Void>(0x7C2ABF6E556B21FC, item, slot, p2, p3); } // 0x7C2ABF6E556B21FC b1207
 	// Only used in R* SP Scripts
 	NATIVE_DECL void _0x8312F09C56149A8A(Hash animalType) { invoke<Void>(0x8312F09C56149A8A, animalType); } // 0x8312F09C56149A8A b1207
 	NATIVE_DECL void _0x378D3B1B11D9385B(int p0) { invoke<Void>(0x378D3B1B11D9385B, p0); } // 0x378D3B1B11D9385B b1207
@@ -8727,17 +8798,17 @@ namespace STATS
 	NATIVE_DECL void _0xA59590050F80FF2E(Any p0, BOOL p1, BOOL p2, BOOL p3) { invoke<Void>(0xA59590050F80FF2E, p0, p1, p2, p3); } // 0xA59590050F80FF2E b1207
 	NATIVE_DECL void _0x90E9A5DADBABC918(Hash animalType) { invoke<Void>(0x90E9A5DADBABC918, animalType); } // 0x90E9A5DADBABC918 b1355
 	NATIVE_DECL void _0xF8181B5EF156862C(Ped ped) { invoke<Void>(0xF8181B5EF156862C, ped); } // 0xF8181B5EF156862C b1207
-	NATIVE_DECL void STAT_ADD_BOUNTY_TARGET(Hash p0, Ped ped) { invoke<Void>(0x6B1044FDC2B09101, p0, ped); } // 0x6B1044FDC2B09101 b1207
+	NATIVE_DECL void STAT_ADD_BOUNTY_TARGET(Hash unlockHash, Ped ped) { invoke<Void>(0x6B1044FDC2B09101, unlockHash, ped); } // 0x6B1044FDC2B09101 b1207
 	NATIVE_DECL void _0x8C889E4CBB4B2356(Any p0, Ped ped) { invoke<Void>(0x8C889E4CBB4B2356, p0, ped); } // 0x8C889E4CBB4B2356 b1207
 	NATIVE_DECL void STAT_BOUNTY_CAPTURED(Entity entity) { invoke<Void>(0x262EF7CF49CF1EB9, entity); } // 0x262EF7CF49CF1EB9 b1207
 	NATIVE_DECL void _0xA596890CF55B5095(Ped ped, BOOL p1) { invoke<Void>(0xA596890CF55B5095, ped, p1); } // 0xA596890CF55B5095 b1436
 	NATIVE_DECL void STAT_BOUNTY_ESCAPED(Ped ped) { invoke<Void>(0xB22F05732F72F70C, ped); } // 0xB22F05732F72F70C b1207
 	NATIVE_DECL void _0xF21A5D66874FCEDD(Any p0, Hash p1, Hash p2) { invoke<Void>(0xF21A5D66874FCEDD, p0, p1, p2); } // 0xF21A5D66874FCEDD b1207
-	NATIVE_DECL void _0x3EB2791A1FBC8A42(Hash p0, int p1) { invoke<Void>(0x3EB2791A1FBC8A42, p0, p1); } // 0x3EB2791A1FBC8A42 b1207
+	NATIVE_DECL void _0x3EB2791A1FBC8A42(Hash statItem, int p1) { invoke<Void>(0x3EB2791A1FBC8A42, statItem, p1); } // 0x3EB2791A1FBC8A42 b1207
 	NATIVE_DECL void _0xDF95DF488A645CE7() { invoke<Void>(0xDF95DF488A645CE7); } // 0xDF95DF488A645CE7 b1207
 	NATIVE_DECL void STAT_PHOTOGRAPH_TAKEN(ItemSet itemset) { invoke<Void>(0x4D31051A4CA83787, itemset); } // 0x4D31051A4CA83787 b1311
-	NATIVE_DECL void _0xBE66B26B6529E943(Hash p0, Ped ped, Hash p2) { invoke<Void>(0xBE66B26B6529E943, p0, ped, p2); } // 0xBE66B26B6529E943 b1311
-	NATIVE_DECL void _0xF2B5ABDE09958689(Hash p0, Ped ped1, Ped ped2) { invoke<Void>(0xF2B5ABDE09958689, p0, ped1, ped2); } // 0xF2B5ABDE09958689 b1311
+	NATIVE_DECL void _0xBE66B26B6529E943(Hash unlockHash, Ped ped, Hash animalType) { invoke<Void>(0xBE66B26B6529E943, unlockHash, ped, animalType); } // 0xBE66B26B6529E943 b1311
+	NATIVE_DECL void _0xF2B5ABDE09958689(Hash unlockHash, Ped ped1, Ped ped2) { invoke<Void>(0xF2B5ABDE09958689, unlockHash, ped1, ped2); } // 0xF2B5ABDE09958689 b1311
 	NATIVE_DECL void STAT_REGISTER_LEGENDARY_ANIMAL_DEED(Hash deedHash) { invoke<Void>(0xCD0D69C65BB0E8B9, deedHash); } // 0xCD0D69C65BB0E8B9 b1311
 	// statId: see STAT_ID_IS_VALID
 	NATIVE_DECL BOOL _0x302E71C1D9EE75B9(Any* statId, Hash p1, int* p2) { return invoke<BOOL>(0x302E71C1D9EE75B9, statId, p1, p2); } // 0x302E71C1D9EE75B9 b1207
@@ -8745,7 +8816,7 @@ namespace STATS
 	NATIVE_DECL void _0x6123E2832C34243D(Any p0, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0x6123E2832C34243D, p0, p1, p2, p3, p4); } // 0x6123E2832C34243D b1207
 	NATIVE_DECL void _0xCA41E86545413B5B(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0xCA41E86545413B5B, p0, p1, p2, p3, p4, p5, p6); } // 0xCA41E86545413B5B b1207
 	NATIVE_DECL void STATSTRACKER_DEED_STARTED(Hash p0, Any p1) { invoke<Void>(0xB2A38826E5886E83, p0, p1); } // 0xB2A38826E5886E83 b1207
-	NATIVE_DECL void _0xD5910ECF81A2278C(int p0, Hash p1, int p2, Any* p3) { invoke<Void>(0xD5910ECF81A2278C, p0, p1, p2, p3); } // 0xD5910ECF81A2278C b1207
+	NATIVE_DECL void _0xD5910ECF81A2278C(int deedType, Hash deedHash, int missionStatus, Any* p3) { invoke<Void>(0xD5910ECF81A2278C, deedType, deedHash, missionStatus, p3); } // 0xD5910ECF81A2278C b1207
 	NATIVE_DECL void _0x99230691875FC218(Any p0, Hash p1, float x, float y, float z) { invoke<Void>(0x99230691875FC218, p0, p1, x, y, z); } // 0x99230691875FC218 b1207
 	NATIVE_DECL void _0x025E98E317652CDD(int p0) { invoke<Void>(0x025E98E317652CDD, p0); } // 0x025E98E317652CDD b1207
 	NATIVE_DECL void _0xE5A680A5D8B1F687(int p0) { invoke<Void>(0xE5A680A5D8B1F687, p0); } // 0xE5A680A5D8B1F687 b1207
@@ -8910,6 +8981,7 @@ namespace STREAMING
 	NATIVE_DECL void _0xB9B9E47EDB9D63DB() { invoke<Void>(0xB9B9E47EDB9D63DB); } // 0xB9B9E47EDB9D63DB b1207
 	NATIVE_DECL void _0xBE8DAA9D8D01DA6A(Any p0, Any p1, Any p2) { invoke<Void>(0xBE8DAA9D8D01DA6A, p0, p1, p2); } // 0xBE8DAA9D8D01DA6A b1207
 	NATIVE_DECL Any _0x53764309C4618087(Any p0) { return invoke<Any>(0x53764309C4618087, p0); } // 0x53764309C4618087 b1207
+	// _SET_E* or _SET_F*
 	NATIVE_DECL void _0x032A14D082A9B269(Hash p0) { invoke<Void>(0x032A14D082A9B269, p0); } // 0x032A14D082A9B269 b1207
 	NATIVE_DECL void _0xAFA87A7D41EE346A(Any p0) { invoke<Void>(0xAFA87A7D41EE346A, p0); } // 0xAFA87A7D41EE346A b1207
 	NATIVE_DECL void _0x6A6E79FBE8678C98() { invoke<Void>(0x6A6E79FBE8678C98); } // 0x6A6E79FBE8678C98 b1207
@@ -8957,7 +9029,7 @@ namespace TASK
 	NATIVE_DECL void _TASK_BOARD_VEHICLE_2(Ped ped, Any p1, Any p2, float p3, int flags) { invoke<Void>(0xE41A09C8DDFF7AA4, ped, p1, p2, p3, flags); } // 0xE41A09C8DDFF7AA4 b1207
 	// flags: See TASK_ENTER_VEHICLE
 	NATIVE_DECL void TASK_DISEMBARK_NEAREST_TRAIN_CARRIAGE(Ped ped, float p1, int flags) { invoke<Void>(0x0A11F3BDEC03ED5F, ped, p1, flags); } // 0x0A11F3BDEC03ED5F b1207
-	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/ECF%20Flags/README.md
+	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eEnterExitVehicleFlags
 	NATIVE_DECL void TASK_ENTER_VEHICLE(Ped ped, Vehicle vehicle, int timeout, int seat, float speed, int flag, Any p6) { invoke<Void>(0xC20E50AA46D09CA8, ped, vehicle, timeout, seat, speed, flag, p6); } // 0xC20E50AA46D09CA8 0xB8689B4E b1207
 	// flags: See TASK_ENTER_VEHICLE
 	NATIVE_DECL void TASK_LEAVE_VEHICLE(Ped ped, Vehicle vehicle, int flags, Ped unkPed) { invoke<Void>(0xD3DBCE61A490BE02, ped, vehicle, flags, unkPed); } // 0xD3DBCE61A490BE02 0x7B1141C6 b1207
@@ -9026,21 +9098,24 @@ namespace TASK
 	NATIVE_DECL Any _0x78D8C1D4EB80C588(Any p0) { return invoke<Any>(0x78D8C1D4EB80C588, p0); } // 0x78D8C1D4EB80C588 b1207
 	NATIVE_DECL void TASK_LEAD_HORSE(Ped ped, Ped horse) { invoke<Void>(0x9A7A4A54596FE09D, ped, horse); } // 0x9A7A4A54596FE09D b1207
 	NATIVE_DECL void TASK_STOP_LEADING_HORSE(Ped ped) { invoke<Void>(0xED27560703F37258, ped); } // 0xED27560703F37258 b1207
+	// fleeType: see TASK_FLEE_COORD
 	NATIVE_DECL void _TASK_FLEE_FROM_COORD(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11) { invoke<Void>(0x6879FF208ED87F2A, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11); } // 0x6879FF208ED87F2A b1207
+	// fleeType: see TASK_FLEE_COORD
 	NATIVE_DECL void _TASK_FLEE_FROM_PED(Ped ped, Ped fleeFromTarget, float x, float y, float z, float distance, int p6, int p7, float p8, Ped targetPed) { invoke<Void>(0x7B74D8EEDE9B5727, ped, fleeFromTarget, x, y, z, distance, p6, p7, p8, targetPed); } // 0x7B74D8EEDE9B5727 b1207
 	// Makes the specified ped flee the specified distance from the specified position.
+	// fleeType: see TASK_FLEE_COORD
 	NATIVE_DECL void TASK_SMART_FLEE_COORD(Ped ped, float x, float y, float z, float distance, int time, int fleeType, float fleeSpeed) { invoke<Void>(0x94587F17E9C365D5, ped, x, y, z, distance, time, fleeType, fleeSpeed); } // 0x94587F17E9C365D5 0xB2E686FC b1207
 	// Makes a ped run away from another ped (fleeFromTarget)
 	// 
 	// fleeDistance = ped will flee this distance
 	// fleeTime = ped will flee for this amount of time, set to "-1" to flee forever
-	// fleeType = can be 0, R* Scripts: fm_mission/race_controller: 66048; fme_escaped_convicts: 2260992, 2523136, 2359296; la_alligator/fox: 2097152; net_fetch: 17301536; net_stable_mount: 540928
+	// fleeType = see TASK_FLEE_COORD, can be 0, R* Scripts: fm_mission/race_controller: 66048; fme_escaped_convicts: 2260992, 2523136, 2359296; la_alligator/fox: 2097152; net_fetch: 17301536; net_stable_mount: 540928
 	// fleeSpeed = mostly 3f, rarely 1f in R* Scripts
 	NATIVE_DECL void TASK_SMART_FLEE_PED(Ped ped, Ped fleeFromTarget, float fleeDistance, int fleeTime, int fleeType, float fleeSpeed, Ped targetPed) { invoke<Void>(0x22B0D0E37CCB840D, ped, fleeFromTarget, fleeDistance, fleeTime, fleeType, fleeSpeed, targetPed); } // 0x22B0D0E37CCB840D 0xE52EB560 b1207
 	NATIVE_DECL void _0x673A8779D229BA5A(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { invoke<Void>(0x673A8779D229BA5A, p0, p1, p2, p3, p4, p5); } // 0x673A8779D229BA5A b1207
 	NATIVE_DECL void _0x2E1D6D87346BB7D2(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0x2E1D6D87346BB7D2, p0, p1, p2, p3); } // 0x2E1D6D87346BB7D2 b1207
 	// Params: p5 = some flag?, p6 = -1.0f, p8 = 0 in R* Scripts
-	// fleeStyle: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/eFleeStyle/README.md
+	// fleeStyle: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eFleeStyle
 	NATIVE_DECL void TASK_FLEE_COORD(Ped ped, float x, float y, float z, int fleeStyle, int p5, float p6, int duration, int p8) { invoke<Void>(0x58428248BF4B64E4, ped, x, y, z, fleeStyle, p5, p6, duration, p8); } // 0x58428248BF4B64E4 b1207
 	// Params: p4 = -1.0f, p5 = -1, p6 = 0 in R* Scripts
 	// fleeStyle: see TASK_FLEE_COORD
@@ -9121,7 +9196,11 @@ namespace TASK
 	NATIVE_DECL void TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS(Ped ped, float x, float y, float z, float speed, Any p5, BOOL p6, int walkingStyle, float p8, Any p9, Any p10, Any p11, Any p12) { invoke<Void>(0x1DD45F9ECFDB1BC9, ped, x, y, z, speed, p5, p6, walkingStyle, p8, p9, p10, p11, p12); } // 0x1DD45F9ECFDB1BC9 0x094B75EF b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS_WITH_CRUISE_SPEED(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14) { invoke<Void>(0xB8ECD61F531A7B02, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0xB8ECD61F531A7B02 0x86DC03F9 b1207
 	// https://github.com/femga/rdr3_discoveries/tree/master/animations
-	NATIVE_DECL void TASK_PLAY_ANIM(Ped ped, const char* animDict, const char* animName, float speed, float speedMultiplier, int duration, int flags, float playbackRate, BOOL p8, int p9, BOOL p10, const char* taskFilter, BOOL p12) { invoke<Void>(0xEA47FE3719165B94, ped, animDict, animName, speed, speedMultiplier, duration, flags, playbackRate, p8, p9, p10, taskFilter, p12); } // 0xEA47FE3719165B94 0x5AB552C6 b1207
+	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eScriptedAnimFlags
+	// ikFlags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eIkControlFlags 
+	NATIVE_DECL void TASK_PLAY_ANIM(Ped ped, const char* animDict, const char* animName, float speed, float speedMultiplier, int duration, int flags, float playbackRate, BOOL p8, int ikFlags, BOOL p10, const char* taskFilter, BOOL p12) { invoke<Void>(0xEA47FE3719165B94, ped, animDict, animName, speed, speedMultiplier, duration, flags, playbackRate, p8, ikFlags, p10, taskFilter, p12); } // 0xEA47FE3719165B94 0x5AB552C6 b1207
+	// flags: see TASK_PLAY_ANIM
+	// ikFlags: see TASK_PLAY_ANIM
 	NATIVE_DECL void TASK_PLAY_ANIM_ADVANCED(Ped ped, const char* animDict, const char* animName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float speed, float speedMultiplier, int duration, int flags, float p13, int p14, int p15, int p16) { invoke<Void>(0x83CDB10EA29B370B, ped, animDict, animName, posX, posY, posZ, rotX, rotY, rotZ, speed, speedMultiplier, duration, flags, p13, p14, p15, p16); } // 0x83CDB10EA29B370B 0x3DDEB0E6 b1207
 	NATIVE_DECL void TASK_PLAY_UPPER_ANIM_FACING_ENTITY(Ped ped, const char* animDict, const char* animName, Entity entity, int p4, float p5, float p6, int p7, float p8, BOOL p9, BOOL p10, float p11, const char* p12, int p13, float p14) { invoke<Void>(0xAD67214236AB1CFE, ped, animDict, animName, entity, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0xAD67214236AB1CFE b1207
 	NATIVE_DECL void STOP_ANIM_TASK(Ped ped, const char* animDictionary, const char* animationName, float p3) { invoke<Void>(0x97FF36A1D40EA00A, ped, animDictionary, animationName, p3); } // 0x97FF36A1D40EA00A 0x2B520A57 b1207
@@ -9137,23 +9216,30 @@ namespace TASK
 	NATIVE_DECL void _TASK_ITEM_INTERACTION_2(Ped ped, Hash propNameGxt, Object prop, Hash propId, Hash itemInteractionState, int p5, Any p6, float p7) { invoke<Void>(0x72F52AA2D2B172CC, ped, propNameGxt, prop, propId, itemInteractionState, p5, p6, p7); } // 0x72F52AA2D2B172CC b1207
 	// Params: p3, p4, p5, p6: 0, 0, 0, -1.0f in R* Scripts
 	NATIVE_DECL void _TASK_ITEM_INTERACTION_3(Ped ped, Hash item, Any* guid, Any p3, Any p4, Any p5, float p6) { invoke<Void>(0xD61D5E1AD9876DEB, ped, item, guid, p3, p4, p5, p6); } // 0xD61D5E1AD9876DEB b1207
-	NATIVE_DECL void _0xB35370D5353995CB(Any p0, Any p1, Any p2) { invoke<Void>(0xB35370D5353995CB, p0, p1, p2); } // 0xB35370D5353995CB b1207
+	NATIVE_DECL void _0xB35370D5353995CB(Ped ped, Hash item, float p2) { invoke<Void>(0xB35370D5353995CB, ped, item, p2); } // 0xB35370D5353995CB b1207
 	NATIVE_DECL Hash GET_ITEM_INTERACTION_STATE(Ped ped) { return invoke<Hash>(0x6AA3DCA2C6F5EB6D, ped); } // 0x6AA3DCA2C6F5EB6D b1207
 	NATIVE_DECL Hash GET_ITEM_INTERACTION_ITEM_ID(Ped ped) { return invoke<Hash>(0x804425C4BBD00883, ped); } // 0x804425C4BBD00883 b1207
 	NATIVE_DECL BOOL IS_PED_RUNNING_INSPECTION_TASK(Ped ped) { return invoke<BOOL>(0x038B1F1674F0E242, ped); } // 0x038B1F1674F0E242 b1207
 	NATIVE_DECL BOOL IS_PED_RUNNING_TASK_ITEM_INTERACTION(Ped ped) { return invoke<BOOL>(0xEC7E480FF8BD0BED, ped); } // 0xEC7E480FF8BD0BED b1207
 	// item hashes: PRIMARYITEM, P_MUGCOFFEE01X_PH_R_HAND, P_BOTTLEBEER01X_PH_R_HAND
+	// http://prntscr.com/1qtp3bz
+	// https://github.com/femga/rdr3_discoveries/tree/master/tasks/TASK_ITEM_INTERACTION
 	NATIVE_DECL Entity _GET_ITEM_INTERACTION_ENTITY_FROM_PED(Ped ped, Hash item) { return invoke<Entity>(0x05A0100EA714DB68, ped, item); } // 0x05A0100EA714DB68 b1207
 	NATIVE_DECL float GET_ITEM_INTERACTION_PROMPT_PROGRESS(Ped ped, Hash inputContext) { return invoke<float>(0xBC864A70AD55E0C1, ped, inputContext); } // 0xBC864A70AD55E0C1 b1207
-	NATIVE_DECL Any _0x678D3226CF70B9C8(Any p0, Any p1) { return invoke<Any>(0x678D3226CF70B9C8, p0, p1); } // 0x678D3226CF70B9C8 b1207
-	NATIVE_DECL void TASK_EVASIVE_ANIM(Ped ped, Any p1, Any p2) { invoke<Void>(0x5F22926E1BCE9B08, ped, p1, p2); } // 0x5F22926E1BCE9B08 b1207
+	// Only used in R* SP Script beat_washed_ashore
+	// Returns Object prop for TASK::_TASK_ITEM_INTERACTION_2
+	NATIVE_DECL Object _0x678D3226CF70B9C8(Ped ped, BOOL p1) { return invoke<Object>(0x678D3226CF70B9C8, ped, p1); } // 0x678D3226CF70B9C8 b1207
+	// Params: p2 is returned by BUILTIN::SHIFT_LEFT
+	NATIVE_DECL void TASK_EVASIVE_ANIM(Ped ped1, Ped ped2, int p2) { invoke<Void>(0x5F22926E1BCE9B08, ped1, ped2, p2); } // 0x5F22926E1BCE9B08 b1207
 	NATIVE_DECL void TASK_LOOK_AT_COORD(Ped ped, float x, float y, float z, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x6FA46612594F7973, ped, x, y, z, p4, p5, p6, p7); } // 0x6FA46612594F7973 0x7B784DD8 b1207
 	// param3: duration in ms, use -1 to look forever
 	// param4: using 2048 is fine
 	// param5: using 3 is fine
 	NATIVE_DECL void TASK_LOOK_AT_ENTITY(Ped ped, Entity lookAtTarget, int duration, int p3, int p4, int p5) { invoke<Void>(0x69F4BE8C8CC4796C, ped, lookAtTarget, duration, p3, p4, p5); } // 0x69F4BE8C8CC4796C 0x991D6619 b1207
 	NATIVE_DECL void TASK_CLEAR_LOOK_AT(Ped ped) { invoke<Void>(0x0F804F1DB19B9689, ped); } // 0x0F804F1DB19B9689 0x60EB4054 b1207
-	NATIVE_DECL Any _0x508F5053E3F6F0C4(Any p0, Any p1, Any p2, Any p3, Any p4) { return invoke<Any>(0x508F5053E3F6F0C4, p0, p1, p2, p3, p4); } // 0x508F5053E3F6F0C4 b1207
+	// Only used in R* SP Scripts
+	// Params: p4 = 1.0f - 30.0f
+	NATIVE_DECL BOOL _0x508F5053E3F6F0C4(Ped ped, float x, float y, float z, float p4) { return invoke<BOOL>(0x508F5053E3F6F0C4, ped, x, y, z, p4); } // 0x508F5053E3F6F0C4 b1207
 	NATIVE_DECL void _0x23767D80C7EED7C6(Any p0, Any p1) { invoke<Void>(0x23767D80C7EED7C6, p0, p1); } // 0x23767D80C7EED7C6 b1311
 	NATIVE_DECL void OPEN_SEQUENCE_TASK(int* taskSequenceId) { invoke<Void>(0xE8854A4326B9E12B, taskSequenceId); } // 0xE8854A4326B9E12B 0xABA6923E b1207
 	NATIVE_DECL void CLOSE_SEQUENCE_TASK(int taskSequenceId) { invoke<Void>(0x39E72BC99E6360CB, taskSequenceId); } // 0x39E72BC99E6360CB 0x1A7CEBD0 b1207
@@ -9190,6 +9276,7 @@ namespace TASK
 	NATIVE_DECL void REACT_LOOK_AT_END(Ped ped, int exitAnimation, BOOL p2) { invoke<Void>(0x541E5B41DCA45828, ped, exitAnimation, p2); } // 0x541E5B41DCA45828 b1207
 	NATIVE_DECL BOOL IS_PED_SCENARIO_REACT_LOOKING(Ped ped, BOOL p1) { return invoke<BOOL>(0x916B8E075ABC8B4E, ped, p1); } // 0x916B8E075ABC8B4E b1207
 	NATIVE_DECL int GET_ACTIVE_VEHICLE_MISSION_TYPE(Vehicle vehicle) { return invoke<int>(0x534AEBA6E5ED4CAB, vehicle); } // 0x534AEBA6E5ED4CAB 0xAFA914EF b1207
+	// flags: See TASK_ENTER_VEHICLE
 	NATIVE_DECL void TASK_LEAVE_ANY_VEHICLE(Ped ped, int p1, int taskFlag) { invoke<Void>(0x504D54DF3F6F2247, ped, p1, taskFlag); } // 0x504D54DF3F6F2247 0xDBDD79FA b1207
 	NATIVE_DECL Any _0xBD70108D01875299(Any p0) { return invoke<Any>(0xBD70108D01875299, p0); } // 0xBD70108D01875299 b1207
 	NATIVE_DECL void TASK_USE_RANDOM_SCENARIO_IN_GROUP(Ped ped, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0x14747F4A5971DE4E, ped, p1, p2, p3, p4); } // 0x14747F4A5971DE4E b1207
@@ -9365,7 +9452,7 @@ namespace TASK
 	// Old name: _GET_SCENARIO_POINT_ENTITY
 	NATIVE_DECL Entity GET_PROP_FOR_SCENARIO_POINT(int scenarioPoint, const char* name) { return invoke<Entity>(0x295514F198EFD0CA, scenarioPoint, name); } // 0x295514F198EFD0CA b1207
 	NATIVE_DECL BOOL _ASSOCIATE_PROP_WITH_SCENARIO(int scenario, Entity entity, const char* propName, BOOL p3) { return invoke<BOOL>(0x8360C47380B6F351, scenario, entity, propName, p3); } // 0x8360C47380B6F351 b1207
-	// flag: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/blob/main/_SET_SCENARIO_POINT_FLAG/README.md
+	// flag: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/CScenarioPointFlags__Flags
 	NATIVE_DECL void _SET_SCENARIO_POINT_FLAG(int scenario, int flag, BOOL value) { invoke<Void>(0x5AF19B6CC2115D34, scenario, flag, value); } // 0x5AF19B6CC2115D34 b1207
 	NATIVE_DECL BOOL _IS_SCENARIO_POINT_FLAG_SET(int scenario, int flag) { return invoke<BOOL>(0x8569C38D2FB80650, scenario, flag); } // 0x8569C38D2FB80650 b1207
 	// _SET_SCENARIO_POINT_*
@@ -9995,8 +10082,7 @@ namespace UIFEED
 	NATIVE_DECL int _UI_FEED_POST_THREE_TEXT_SHARD(Any* p0, Any* p1, BOOL p2, BOOL p3, BOOL p4) { return invoke<int>(0x02BCC0FE9EBA3529, p0, p1, p2, p3, p4); } // 0x02BCC0FE9EBA3529 b1207
 	NATIVE_DECL int _UI_FEED_POST_GAME_UPDATE_SHARD(Any* p0, Any* p1, BOOL p2) { return invoke<int>(0x8D1249BD28791878, p0, p1, p2); } // 0x8D1249BD28791878 b1207
 	NATIVE_DECL int _UI_FEED_POST_VOICE_CHAT_FEED(Any* p0, Any* p1, BOOL p2) { return invoke<int>(0xC48152BC6B3E821C, p0, p1, p2); } // 0xC48152BC6B3E821C b1207
-	// kFeedChannel_Help = 1,
-	// kFeedChannel_Location / kFeedChannel_MissionName = 9
+	// feedChannel: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eUIFeedChannel
 	NATIVE_DECL void UI_FEED_CLEAR_CHANNEL(int feedChannel, BOOL p1, BOOL p2) { invoke<Void>(0xDD1232B332CBB9E7, feedChannel, p1, p2); } // 0xDD1232B332CBB9E7 b1207
 	// Hides Toast Notifications
 	NATIVE_DECL void _UI_FEED_CLEAR_ALL_CHANNELS() { invoke<Void>(0x6035E8FBCA32AC5E); } // 0x6035E8FBCA32AC5E b1207
@@ -10008,8 +10094,9 @@ namespace UIFEED
 	// Only used in R* SP Script beat_animal_attack
 	// Returns feedMessage
 	NATIVE_DECL int _0x0FD07141AD048AAE(Any* p0, BOOL p1) { return invoke<int>(0x0FD07141AD048AAE, p0, p1); } // 0x0FD07141AD048AAE b1207
-	// See 0x07954320D77F6A3D
+	// Returns messageState, see https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eUIMessageState
 	NATIVE_DECL int _UI_FEED_GET_MESSAGE_STATE(int feedMessage) { return invoke<int>(0x59FA676177DBE4C9, feedMessage); } // 0x59FA676177DBE4C9 b1207
+	// feedChannel: see UI_FEED_CLEAR_CHANNEL
 	// Returns feedMessage
 	NATIVE_DECL int UI_FEED_GET_CURRENT_MESSAGE(int feedChannel) { return invoke<int>(0xC17F69E1418CD11F, feedChannel); } // 0xC17F69E1418CD11F b1207
 	NATIVE_DECL BOOL _0xB7223B91CD6B7E07(int feedChannel) { return invoke<BOOL>(0xB7223B91CD6B7E07, feedChannel); } // 0xB7223B91CD6B7E07 b1207
@@ -10112,18 +10199,10 @@ namespace UISTICKYFEED
 	// Example: https://pastebin.com/nDrJyWq2
 	NATIVE_DECL void _UI_STICKY_FEED_UPDATE_MESSAGE(int msgId, Any* p1, BOOL p2) { invoke<Void>(0xBC6F454E310124DA, msgId, p1, p2); } // 0xBC6F454E310124DA b1207
 	NATIVE_DECL void _UI_STICKY_FEED_CLEAR_MESSAGE(int msgId) { invoke<Void>(0x00A15B94CBA4F76F, msgId); } // 0x00A15B94CBA4F76F b1207
-	// kStickyFeedChannel_StatusAlert = 1
+	// stickyFeedChannel: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eUIStickyFeedChannel
 	NATIVE_DECL BOOL _UI_STICKY_FEED_IS_CHANNEL_ACTIVE(int stickyFeedChannel) { return invoke<BOOL>(0xC5C395C60B542A3C, stickyFeedChannel); } // 0xC5C395C60B542A3C b1207
 	NATIVE_DECL BOOL _UI_STICKY_FEED_IS_ALERT_SCREEN_ACTIVE() { return invoke<BOOL>(0xF8806EC3FF840FDC); } // 0xF8806EC3FF840FDC b1207
-	// Returns state of sticky feed message:
-	// 0 - INITIALIZING
-	// 1 - IN QUEUE
-	// 2 - WAITING TO SHOW
-	// 3 - ENTERING
-	// 4 - SHOWING
-	// 5 - EXITING
-	// 6 - COMPLETE
-	// 7 - COUNT
+	// Returns state of sticky feed message, see 0x59FA676177DBE4C9
 	NATIVE_DECL int _UI_STICKY_FEED_GET_MESSAGE_STATE(int msgId) { return invoke<int>(0x07954320D77F6A3D, msgId); } // 0x07954320D77F6A3D b1207
 }
 
@@ -10443,6 +10522,7 @@ namespace VEHICLE
 	NATIVE_DECL void SET_DOOR_ALLOWED_TO_BE_BROKEN_OFF(Vehicle vehicle, int doorId, BOOL isBreakable) { invoke<Void>(0x081FB9D6422F804C, vehicle, doorId, isBreakable); } // 0x081FB9D6422F804C 0x065B92B3 b1207
 	NATIVE_DECL BOOL IS_VEHICLE_ON_ALL_WHEELS(Vehicle vehicle) { return invoke<BOOL>(0x0D5D119529654EE0, vehicle); } // 0x0D5D119529654EE0 0x10089F8E b1207
 	NATIVE_DECL BOOL _GET_TRAIN_DIRECTION(Vehicle train) { return invoke<BOOL>(0x3C9628A811CBD724, train); } // 0x3C9628A811CBD724 b1207
+	// https://i.imgur.com/1rHibjW.jpg
 	NATIVE_DECL BOOL _GET_TRAIN_DIRECTION_FROM_INDEX(int trackIndex) { return invoke<BOOL>(0x67995318F5FAA496, trackIndex); } // 0x67995318F5FAA496 b1207
 	// _RESET_VEHICLE_*
 	NATIVE_DECL Any _0x09034479E6E3E269(Vehicle train, Hash* trainTrack, int* junctionIndex) { return invoke<Any>(0x09034479E6E3E269, train, trainTrack, junctionIndex); } // 0x09034479E6E3E269 b1207
@@ -10881,14 +10961,14 @@ namespace VOLUME
 	NATIVE_DECL Any _0xAA9EE2AAFC717623(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0xAA9EE2AAFC717623, p0, p1, p2, p3, p4, p5); } // 0xAA9EE2AAFC717623 b1207
 	NATIVE_DECL Any _0x870E9981ED27C815(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0x870E9981ED27C815, p0, p1, p2, p3, p4, p5); } // 0x870E9981ED27C815 b1207
 	NATIVE_DECL BOOL DOES_VOLUME_COLLIDE_WITH_ANY_VOLUME_LOCK(float x, float y, float z, float radius, BOOL p4, int p5, int p6) { return invoke<BOOL>(0x397769175A7DBB30, x, y, z, radius, p4, p5, p6); } // 0x397769175A7DBB30 b1207
-	NATIVE_DECL Any _0x769BB7626B8CDB06(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { return invoke<Any>(0x769BB7626B8CDB06, p0, p1, p2, p3, p4, p5, p6); } // 0x769BB7626B8CDB06 b1207
+	NATIVE_DECL BOOL _IS_POINT_NEAR_VOLUME_LOCK_CENTER(float x, float y, float z, float radius, int p4, int p5, int flags) { return invoke<BOOL>(0x769BB7626B8CDB06, x, y, z, radius, p4, p5, flags); } // 0x769BB7626B8CDB06 b1207
 	NATIVE_DECL Any _0x51E52C9687FCDEEC(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { return invoke<Any>(0x51E52C9687FCDEEC, p0, p1, p2, p3, p4, p5, p6); } // 0x51E52C9687FCDEEC b1207
 	NATIVE_DECL int _FIND_VOLUME_LOCK_REQUEST_ID_WITH_ARGS(Any* args) { return invoke<int>(0x77A6E4AD0C496F81, args); } // 0x77A6E4AD0C496F81 b1207
-	NATIVE_DECL void _0xEC43C2FFB70E3F30(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0xEC43C2FFB70E3F30, p0, p1, p2, p3); } // 0xEC43C2FFB70E3F30 b1207
+	NATIVE_DECL void _MODIFY_VOLUME_LOCK_LOCATION(int volLock, float x, float y, float z) { invoke<Void>(0xEC43C2FFB70E3F30, volLock, x, y, z); } // 0xEC43C2FFB70E3F30 b1207
 	NATIVE_DECL void _0x695DAC2DB928F308(Any p0, Any p1) { invoke<Void>(0x695DAC2DB928F308, p0, p1); } // 0x695DAC2DB928F308 b1207
 	NATIVE_DECL void _RELEASE_LOCK_VOLUME(int volLockRequestId) { invoke<Void>(0xFDFECC6EE4491E11, volLockRequestId); } // 0xFDFECC6EE4491E11 b1207
 	NATIVE_DECL void _0xAC355980681A7F89(Any p0) { invoke<Void>(0xAC355980681A7F89, p0); } // 0xAC355980681A7F89 b1207
-	NATIVE_DECL BOOL _0x58D3803FA639A3BB(Any* p0) { return invoke<BOOL>(0x58D3803FA639A3BB, p0); } // 0x58D3803FA639A3BB b1311
+	NATIVE_DECL BOOL _ADD_ENTRY_VOLUME_LOCK(Any* args) { return invoke<BOOL>(0x58D3803FA639A3BB, args); } // 0x58D3803FA639A3BB b1311
 	NATIVE_DECL void _0xC61E2FD926DBB406() { invoke<Void>(0xC61E2FD926DBB406); } // 0xC61E2FD926DBB406 b1311
 	NATIVE_DECL int REQUEST_VOLUME_LOCK(float x, float y, float z, float radius, int p4, int p5) { return invoke<int>(0xF14BCEF290F869E1, x, y, z, radius, p4, p5); } // 0xF14BCEF290F869E1 b1207
 	NATIVE_DECL int REQUEST_VOLUME_LOCK_WITH_ARGS(Any* args) { return invoke<int>(0x183C0B6CFEFFCAE4, args); } // 0x183C0B6CFEFFCAE4 b1207
@@ -10995,8 +11075,11 @@ namespace WEAPON
 	NATIVE_DECL void _REMOVE_AMMO_FROM_PED_BY_TYPE(Ped ped, Hash ammoHash, int amount, Hash removeReason) { invoke<Void>(0xB6CFEC32E3742779, ped, ammoHash, amount, removeReason); } // 0xB6CFEC32E3742779 b1207
 	NATIVE_DECL void _REMOVE_ALL_PED_AMMO(Ped ped) { invoke<Void>(0x1B83C0DEEBCBB214, ped); } // 0x1B83C0DEEBCBB214 b1207
 	NATIVE_DECL void SET_PED_AMMO(Ped ped, Hash weaponHash, int ammo) { invoke<Void>(0x14E56BC5B5DB6A19, ped, weaponHash, ammo); } // 0x14E56BC5B5DB6A19 0xBF90DF1A b1207
-	NATIVE_DECL void _0x8A779706DA5CA3DD(Any p0, Any p1, Any p2) { invoke<Void>(0x8A779706DA5CA3DD, p0, p1, p2); } // 0x8A779706DA5CA3DD b1207
-	NATIVE_DECL void _0x9409C62504A8F9E9(Any p0, Any p1) { invoke<Void>(0x9409C62504A8F9E9, p0, p1); } // 0x9409C62504A8F9E9 b1207
+	// Only used in R* SP Scripts native_son2, native_son3 and smuggler2
+	// Params: p2 = -1
+	NATIVE_DECL void _0x8A779706DA5CA3DD(Ped ped, BOOL p1, int p2) { invoke<Void>(0x8A779706DA5CA3DD, ped, p1, p2); } // 0x8A779706DA5CA3DD b1207
+	// Only used in R* SP Script guama3
+	NATIVE_DECL void _0x9409C62504A8F9E9(Vehicle vehicle, BOOL p1) { invoke<Void>(0x9409C62504A8F9E9, vehicle, p1); } // 0x9409C62504A8F9E9 b1207
 	NATIVE_DECL void _SET_VEHICLE_WEAPON_HEADING_LIMITS(Vehicle vehicle, int p1, float minHeading, float maxHeading) { invoke<Void>(0x56CB3B4305A4F7CE, vehicle, p1, minHeading, maxHeading); } // 0x56CB3B4305A4F7CE b1207
 	NATIVE_DECL Any _SET_VEHICLE_WEAPON_HEADING_LIMITS_2(Vehicle vehicle, int p1, float minHeading, float maxHeading) { return invoke<Any>(0xBF5987E1CDE63501, vehicle, p1, minHeading, maxHeading); } // 0xBF5987E1CDE63501 b1207
 	NATIVE_DECL void SET_VEHICLE_WEAPON_HEADING(Vehicle vehicle, int seatIndex, float heading, BOOL p3) { invoke<Void>(0x194D877FC5597B7D, vehicle, seatIndex, heading, p3); } // 0x194D877FC5597B7D b1207
@@ -11164,7 +11247,8 @@ namespace WEAPON
 	NATIVE_DECL BOOL _HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON(Entity entity, Hash weaponName, int weaponType) { return invoke<BOOL>(0xDCF06D0CDFF68424, entity, weaponName, weaponType); } // 0xDCF06D0CDFF68424 b1207
 	NATIVE_DECL void SET_PED_DROPS_INVENTORY_WEAPON(Ped ped, Hash weaponHash, float xOffset, float yOffset, float zOffset, int ammoCount) { invoke<Void>(0x208A1888007FC0E6, ped, weaponHash, xOffset, yOffset, zOffset, ammoCount); } // 0x208A1888007FC0E6 0x81FFB874 b1207
 	NATIVE_DECL void _0xB0FB9B196A3D13F0(Any p0, Any p1, Any p2) { invoke<Void>(0xB0FB9B196A3D13F0, p0, p1, p2); } // 0xB0FB9B196A3D13F0 b1207
-	NATIVE_DECL void _0x2EBF70E1D8C06683(Any p0, Any p1) { invoke<Void>(0x2EBF70E1D8C06683, p0, p1); } // 0x2EBF70E1D8C06683 b1207
+	// _SET_A* - _SET_B*
+	NATIVE_DECL void _0x2EBF70E1D8C06683(Ped ped, Hash p1) { invoke<Void>(0x2EBF70E1D8C06683, ped, p1); } // 0x2EBF70E1D8C06683 b1207
 	// Only used in R* Script fme_escaped_convicts, p0 = 0
 	NATIVE_DECL void _0x63B83A526329AFBC(Any p0) { invoke<Void>(0x63B83A526329AFBC, p0); } // 0x63B83A526329AFBC b1207
 	NATIVE_DECL Any _MAKE_PED_RELOAD(Ped ped) { return invoke<Any>(0x79E1E511FF7EFB13, ped); } // 0x79E1E511FF7EFB13 b1207
@@ -11248,7 +11332,8 @@ namespace WEAPON
 	// _STOP_* - _TEST_*
 	NATIVE_DECL void _SET_GUN_SPINNING_INVENTORY_SLOT_ID_ACTIVATE(Ped ped, int emoteType) { invoke<Void>(0x408CF580C5E96D49, ped, emoteType); } // 0x408CF580C5E96D49 b1355
 	NATIVE_DECL BOOL _GET_CAN_TWIRL_WEAPON(Hash weaponHash) { return invoke<BOOL>(0x6554ECCE226F2A2A, weaponHash); } // 0x6554ECCE226F2A2A b1207
-	NATIVE_DECL BOOL _0xCD356B42C57BFE01(Ped ped, Any* p1) { return invoke<BOOL>(0xCD356B42C57BFE01, ped, p1); } // 0xCD356B42C57BFE01 b1355
+	// _GET_BEST_* - _GET_CLOSEST_*
+	NATIVE_DECL BOOL _GET_CORRECT_KIT_EMOTE_TWIRL_GUN(Ped ped, Any* weaponGuid) { return invoke<BOOL>(0xCD356B42C57BFE01, ped, weaponGuid); } // 0xCD356B42C57BFE01 b1355
 	NATIVE_DECL Any _0xBC9444F2FF94A9C0(Any p0) { return invoke<Any>(0xBC9444F2FF94A9C0, p0); } // 0xBC9444F2FF94A9C0 b1355
 	// Returns weaponCollection Hash
 	// Example: RE_POLICECHASE_MALES_01: Carbine Repeater + Knife, LO_AGRO_PED
