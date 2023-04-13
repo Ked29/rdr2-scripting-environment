@@ -9,6 +9,7 @@
 #include <vector>
 #include "keyboard.h"
 #include "global.h"
+#include "local_natives.hpp"
 
 
 using namespace std;
