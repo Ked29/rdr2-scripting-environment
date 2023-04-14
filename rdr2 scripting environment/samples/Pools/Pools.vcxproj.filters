@@ -4,7 +4,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="script.cpp" />
     <ClCompile Include="keyboard.cpp" />
-    <ClCompile Include="scriptmenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\inc\enums.h">
@@ -21,7 +20,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="keyboard.h" />
-    <ClInclude Include="scriptmenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
