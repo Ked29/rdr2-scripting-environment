@@ -29,7 +29,7 @@ int func_cped(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation 
 /*
 Slightly modified version of SgtJoe's script kill code
 only difference is this can kill multiple scripts at once
-Example param -> vector<Hash> killscripts = {joaat("carmodydell"), joaat("beat_bear_trap"), joaat("campfire_gang")};
+Example param -> std::vector<Hash> killscripts = {joaat("carmodydell"), joaat("beat_bear_trap"), joaat("campfire_gang")};
 */
 void kill_scripts(std::vector<Hash> scripts);
 Prompt promptHandler(const char* promptText, Hash controlAction, int promptType);
