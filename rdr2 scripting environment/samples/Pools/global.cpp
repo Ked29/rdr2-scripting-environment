@@ -151,7 +151,7 @@ Ped getClosestEnemy(float distance)
 {
 	Ped worldPeds[1024];
 	int worldPedCount = worldGetAllPeds(worldPeds, 1024);
-	vector<std::pair<int, float>> pv;
+	std::vector<std::pair<int, float>> pv;
 	pv.clear();
 	int p;
 	float f;
