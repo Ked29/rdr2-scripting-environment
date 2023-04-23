@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 
 #define IMPORT __declspec(dllimport)
 
@@ -41,24 +41,29 @@ static void TERMINATE() { WAIT(MAXDWORD); }
 // Returns pointer to global variable
 // make sure that you check game version before accessing globals because
 // ids may differ between patches
-IMPORT UINT64 *getGlobalPtr(int globalId);
+IMPORT UINT64* getGlobalPtr(int globalId);
+//IMPORT UINT64 *getStaticPtr(const char* scriptName, int staticIndex);
+//IMPORT void switchLabel(const char* oldLabel, const char* newLabel);
+//IMPORT void* getCommandFromHash(uint64_t hash);
+
 
 /* world */
 
 // Get entities from internal pools
 // return value represents filled array elements count
 // can be called only in the same thread as natives
-IMPORT int worldGetAllVehicles(int *arr, int arrSize);
-IMPORT int worldGetAllPeds(int *arr, int arrSize);
-IMPORT int worldGetAllObjects(int *arr, int arrSize);
-IMPORT int worldGetAllPickups(int *arr, int arrSize);
+IMPORT int worldGetAllVehicles(int* arr, int arrSize);
+IMPORT int worldGetAllPeds(int* arr, int arrSize);
+IMPORT int worldGetAllObjects(int* arr, int arrSize);
+IMPORT int worldGetAllPickups(int* arr, int arrSize);
+
 
 /* misc */
 
 // Returns base object pointer using it's script handle
 // make sure that you check game version before accessing object fields because
 // offsets may differ between patches
-IMPORT BYTE *getScriptHandleBaseAddress(int handle);
+IMPORT BYTE* getScriptHandleBaseAddress(int handle);
 
 enum eGameVersion : int
 {
