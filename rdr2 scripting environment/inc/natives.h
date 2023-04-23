@@ -1,17 +1,18 @@
 #pragma once
 
-// Generated Sat, 03 Dec 2022 20:03:01 GMT
+// Generated Sun, 23 Apr 2023 06:21:11 GMT
 // https://alloc8or.re/rdr3/nativedb/
 
 #ifndef NATIVE_DECL
 #if defined(_MSC_VER)
 #define NATIVE_DECL __forceinline
 #elif defined(__clang__) || defined(__GNUC__)
-#define NATIVE_DECL __attribute__((always_inline))
+#define NATIVE_DECL __attribute__((always_inline)) inline
 #else
 #define NATIVE_DECL inline
 #endif
 #endif
+
 #include "types.h"
 #include "nativeCaller.h"
 
@@ -33,14 +34,18 @@ namespace BUILTIN
 	NATIVE_DECL float LOG10(float value) { return invoke<float>(0xE816E655DE37FE20, value); } // 0xE816E655DE37FE20 b1232
 	// Calculates the magnitude of a vector.
 	NATIVE_DECL float VMAG(float x, float y, float z) { return invoke<float>(0x652D2EEEF1D3E62C, x, y, z); } // 0x652D2EEEF1D3E62C 0x1FCF1ECD b1207
+	NATIVE_DECL float VMAG(Vector3 vec) { return invoke<float>(0x652D2EEEF1D3E62C, vec.x, vec.y, vec.z); } // 0x652D2EEEF1D3E62C 0x1FCF1ECD b1207
 	// Calculates the magnitude of a vector but does not perform Sqrt operations. (Its way faster)
 	NATIVE_DECL float VMAG2(float x, float y, float z) { return invoke<float>(0xA8CEACB4F35AE058, x, y, z); } // 0xA8CEACB4F35AE058 0xE796E629 b1207
+	NATIVE_DECL float VMAG2(Vector3 vec) { return invoke<float>(0xA8CEACB4F35AE058, vec.x, vec.y, vec.z); } // 0xA8CEACB4F35AE058 0xE796E629 b1207
 	// Calculates distance between vectors.
 	// The value returned will be in meters.
 	NATIVE_DECL float VDIST(float x1, float y1, float z1, float x2, float y2, float z2) { return invoke<float>(0x2A488C176D52CCA5, x1, y1, z1, x2, y2, z2); } // 0x2A488C176D52CCA5 0x3C08ECB7 b1207
+	NATIVE_DECL float VDIST(Vector3 vec1, Vector3 vec2) { return invoke<float>(0x2A488C176D52CCA5, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z); } // 0x2A488C176D52CCA5 0x3C08ECB7 b1207
 	// Calculates distance between vectors but does not perform Sqrt operations. (Its way faster)
 	// The value returned will be in RAGE units.
 	NATIVE_DECL float VDIST2(float x1, float y1, float z1, float x2, float y2, float z2) { return invoke<float>(0xB7A628320EFF8E47, x1, y1, z1, x2, y2, z2); } // 0xB7A628320EFF8E47 0xC85DEF1F b1207
+	NATIVE_DECL float VDIST2(Vector3 vec1, Vector3 vec2) { return invoke<float>(0xB7A628320EFF8E47, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z); } // 0xB7A628320EFF8E47 0xC85DEF1F b1207
 	NATIVE_DECL int SHIFT_LEFT(int value, int bitShift) { return invoke<int>(0xEDD95A39E5544DE8, value, bitShift); } // 0xEDD95A39E5544DE8 0x314CC6CD b1207
 	NATIVE_DECL int SHIFT_RIGHT(int value, int bitShift) { return invoke<int>(0x97EF1E5BCE9DC075, value, bitShift); } // 0x97EF1E5BCE9DC075 0x352633CA b1207
 	// Rounds a float value down to the next whole number
@@ -210,6 +215,7 @@ namespace ANIMSCENE
 	NATIVE_DECL void FADE_ANIM_SCENE_AUDIO_OUT(AnimScene animScene, float p1) { invoke<Void>(0x323E3AD772BA5D57, animScene, p1); } // 0x323E3AD772BA5D57 b1207
 	NATIVE_DECL void BLOCK_ANIM_SCENE_FADING_NEXT_FRAME(BOOL p0, BOOL p1) { invoke<Void>(0x1B70811D3BF75DB9, p0, p1); } // 0x1B70811D3BF75DB9 b1207
 	NATIVE_DECL void SET_ANIM_SCENE_ORIGIN(AnimScene animScene, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, int order) { invoke<Void>(0x020894BF17A02EF2, animScene, posX, posY, posZ, rotX, rotY, rotZ, order); } // 0x020894BF17A02EF2 b1207
+	NATIVE_DECL void SET_ANIM_SCENE_ORIGIN(AnimScene animScene, Vector3 pos, Vector3 rot, int order) { invoke<Void>(0x020894BF17A02EF2, animScene, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, order); } // 0x020894BF17A02EF2 b1207
 	NATIVE_DECL void GET_ANIM_SCENE_ORIGIN(AnimScene animScene, Vector3* position, Vector3* rotation, int order) { invoke<Void>(0xADF1D53F3B1FE0A7, animScene, position, rotation, order); } // 0xADF1D53F3B1FE0A7 b1207
 	NATIVE_DECL void SET_ANIM_SCENE_PAUSED(AnimScene animScene, BOOL toggle) { invoke<Void>(0xD6824B7D24DC0CE0, animScene, toggle); } // 0xD6824B7D24DC0CE0 b1207
 	NATIVE_DECL BOOL _IS_ANIM_SCENE_PAUSED(AnimScene animScene) { return invoke<BOOL>(0x4B4038796F0D6566, animScene); } // 0x4B4038796F0D6566 b1207
@@ -495,6 +501,7 @@ namespace AUDIO
 	NATIVE_DECL void _PLAY_SOUND_FROM_ITEM(Hash item, Hash soundSet, Any p2) { invoke<Void>(0xE8EAFF7B41EDD291, item, soundSet, p2); } // 0xE8EAFF7B41EDD291 b1207
 	NATIVE_DECL void PLAY_SOUND_FROM_ENTITY(const char* audioName, Entity entity, const char* audioRef, BOOL isNetwork, Any p4, Any p5) { invoke<Void>(0x6FB1DA3CA9DA7D90, audioName, entity, audioRef, isNetwork, p4, p5); } // 0x6FB1DA3CA9DA7D90 b1207
 	NATIVE_DECL void _PLAY_SOUND_FROM_POSITION(const char* audioName, float x, float y, float z, const char* audioRef, BOOL isNetwork, Any p6, BOOL p7, Any p8) { invoke<Void>(0xCCE219C922737BFA, audioName, x, y, z, audioRef, isNetwork, p6, p7, p8); } // 0xCCE219C922737BFA b1207
+	NATIVE_DECL void _PLAY_SOUND_FROM_POSITION(const char* audioName, Vector3 vec, const char* audioRef, BOOL isNetwork, Any p6, BOOL p7, Any p8) { invoke<Void>(0xCCE219C922737BFA, audioName, vec.x, vec.y, vec.z, audioRef, isNetwork, p6, p7, p8); } // 0xCCE219C922737BFA b1207
 	NATIVE_DECL void _STOP_SOUND_WITH_NAME(const char* audioName, const char* audioRef) { invoke<Void>(0x0F2A2175734926D8, audioName, audioRef); } // 0x0F2A2175734926D8 b1207
 	// _IS_SOUND_RUNNING(?)
 	NATIVE_DECL BOOL _0x580D71DFE0088E34(const char* audioName, const char* audioRef) { return invoke<BOOL>(0x580D71DFE0088E34, audioName, audioRef); } // 0x580D71DFE0088E34 b1207
@@ -513,8 +520,10 @@ namespace AUDIO
 	// Starts Audio Loop
 	// _PLAY_SOUND_FROM_ENTITY* - _PLAY_SOUND_FRONTEND*
 	NATIVE_DECL void _PLAY_SOUND_FROM_POSITION_WITH_ID(int soundId, const char* soundName, float x, float y, float z, const char* soundsetName, BOOL p6, int p7, BOOL p8) { invoke<Void>(0xDCF5BA95BBF0FABA, soundId, soundName, x, y, z, soundsetName, p6, p7, p8); } // 0xDCF5BA95BBF0FABA b1207
+	NATIVE_DECL void _PLAY_SOUND_FROM_POSITION_WITH_ID(int soundId, const char* soundName, Vector3 vec, const char* soundsetName, BOOL p6, int p7, BOOL p8) { invoke<Void>(0xDCF5BA95BBF0FABA, soundId, soundName, vec.x, vec.y, vec.z, soundsetName, p6, p7, p8); } // 0xDCF5BA95BBF0FABA b1207
 	// Only used in R* SP Scripts
 	NATIVE_DECL void _UPDATE_SOUND_POSITION(int soundId, float x, float y, float z) { invoke<Void>(0x0286617C8FC50A53, soundId, x, y, z); } // 0x0286617C8FC50A53 b1207
+	NATIVE_DECL void _UPDATE_SOUND_POSITION(int soundId, Vector3 vec) { invoke<Void>(0x0286617C8FC50A53, soundId, vec.x, vec.y, vec.z); } // 0x0286617C8FC50A53 b1207
 	NATIVE_DECL void _STOP_SOUND_WITH_ID(int soundId) { invoke<Void>(0x3210BCB36AF7621B, soundId); } // 0x3210BCB36AF7621B b1207
 	NATIVE_DECL void _SET_VARIABLE_ON_SOUND_WITH_ID(int soundId, const char* variableName, float variableValue) { invoke<Void>(0x503703EC1781B7D6, soundId, variableName, variableValue); } // 0x503703EC1781B7D6 b1207
 	NATIVE_DECL BOOL PREPARE_SOUND(const char* soundName, const char* soundsetName, int soundId) { return invoke<BOOL>(0xE368E8422C860BA7, soundName, soundsetName, soundId); } // 0xE368E8422C860BA7 b1207
@@ -551,6 +560,7 @@ namespace AUDIO
 	NATIVE_DECL BOOL PLAY_PED_AMBIENT_SPEECH_NATIVE(Ped speaker, Any* params) { return invoke<BOOL>(0x8E04FEDD28D42462, speaker, params); } // 0x8E04FEDD28D42462 0x5C57B85D b1207
 	// Old name: _PLAY_AMBIENT_SPEECH_AT_COORDS
 	NATIVE_DECL BOOL PLAY_AMBIENT_SPEECH_FROM_POSITION_NATIVE(float x, float y, float z, Any* params) { return invoke<BOOL>(0xED640017ED337E45, x, y, z, params); } // 0xED640017ED337E45 0xA1A1402E b1207
+	NATIVE_DECL BOOL PLAY_AMBIENT_SPEECH_FROM_POSITION_NATIVE(Vector3 vec, Any* params) { return invoke<BOOL>(0xED640017ED337E45, vec.x, vec.y, vec.z, params); } // 0xED640017ED337E45 0xA1A1402E b1207
 	NATIVE_DECL Any _0x72E4D1C4639BC465(Entity p0, Any p1) { return invoke<Any>(0x72E4D1C4639BC465, p0, p1); } // 0x72E4D1C4639BC465 b1207
 	NATIVE_DECL Any _0xB18FEC133C7C6C69(Any p0) { return invoke<Any>(0xB18FEC133C7C6C69, p0); } // 0xB18FEC133C7C6C69 b1207
 	NATIVE_DECL void _0xDC93F0948F2C28F4(Any p0) { invoke<Void>(0xDC93F0948F2C28F4, p0); } // 0xDC93F0948F2C28F4 b1207
@@ -599,6 +609,7 @@ namespace AUDIO
 	NATIVE_DECL void PLAY_END_CREDITS_MUSIC(BOOL play) { invoke<Void>(0xCD536C4D33DCC900, play); } // 0xCD536C4D33DCC900 0x8E88B3CC b1207
 	NATIVE_DECL Any _0x7678FE0455ED1145(Any p0, Any p1, Any p2) { return invoke<Any>(0x7678FE0455ED1145, p0, p1, p2); } // 0x7678FE0455ED1145 b1207
 	NATIVE_DECL Any _0xFFE9C53DEEA3DB0B(Any p0, Any p1, float x, float y, float z, BOOL isSrlLoaded, Any p6) { return invoke<Any>(0xFFE9C53DEEA3DB0B, p0, p1, x, y, z, isSrlLoaded, p6); } // 0xFFE9C53DEEA3DB0B b1207
+	NATIVE_DECL Any _0xFFE9C53DEEA3DB0B(Any p0, Any p1, Vector3 vec, BOOL isSrlLoaded, Any p6) { return invoke<Any>(0xFFE9C53DEEA3DB0B, p0, p1, vec.x, vec.y, vec.z, isSrlLoaded, p6); } // 0xFFE9C53DEEA3DB0B b1207
 	NATIVE_DECL void _0x5E3CCF03995388B5(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0x5E3CCF03995388B5, p0, p1, p2, p3); } // 0x5E3CCF03995388B5 b1207
 	NATIVE_DECL void _0x43037ABFE214A851() { invoke<Void>(0x43037ABFE214A851); } // 0x43037ABFE214A851 b1207
 	NATIVE_DECL void SET_AMBIENT_ZONE_STATE(const char* zoneName, BOOL isEnabled, BOOL p2) { invoke<Void>(0xBDA07E5950085E46, zoneName, isEnabled, p2); } // 0xBDA07E5950085E46 0x2849CAC9 b1207
@@ -608,6 +619,7 @@ namespace AUDIO
 	NATIVE_DECL void SET_AMBIENT_ZONE_STATE_PERSISTENT(const char* ambientZone, BOOL p1, BOOL p2) { invoke<Void>(0x1D6650420CEC9D3B, ambientZone, p1, p2); } // 0x1D6650420CEC9D3B 0xC1FFB672 b1207
 	NATIVE_DECL void SET_AMBIENT_ZONE_LIST_STATE_PERSISTENT(const char* ambientZone, BOOL p1, BOOL p2) { invoke<Void>(0xF3638DAE8C4045E1, ambientZone, p1, p2); } // 0xF3638DAE8C4045E1 0x5F5A2605 b1207
 	NATIVE_DECL void _SET_AMBIENT_ZONE_POSITION(const char* ambientZone, float x, float y, float z, float heading) { invoke<Void>(0x3743CE6948194349, ambientZone, x, y, z, heading); } // 0x3743CE6948194349 b1207
+	NATIVE_DECL void _SET_AMBIENT_ZONE_POSITION(const char* ambientZone, Vector3 vec, float heading) { invoke<Void>(0x3743CE6948194349, ambientZone, vec.x, vec.y, vec.z, heading); } // 0x3743CE6948194349 b1207
 	// Checks whether the horn of a vehicle is currently played.
 	NATIVE_DECL BOOL IS_HORN_ACTIVE(Vehicle vehicle) { return invoke<BOOL>(0x9D6BFC12B05C6121, vehicle); } // 0x9D6BFC12B05C6121 0x20E2BDD0 b1207
 	NATIVE_DECL void _0xFD461D0ABA5559B1(Any p0, Any p1) { invoke<Void>(0xFD461D0ABA5559B1, p0, p1); } // 0xFD461D0ABA5559B1 b1207
@@ -616,6 +628,7 @@ namespace AUDIO
 	NATIVE_DECL void PLAY_STREAM_FROM_PED(Ped ped, int streamId) { invoke<Void>(0x89049DD63C08B5D1, ped, streamId); } // 0x89049DD63C08B5D1 0xA1D7FABE b1207
 	NATIVE_DECL void PLAY_STREAM_FRONTEND(int streamId) { invoke<Void>(0x58FCE43488F9F5F4, streamId); } // 0x58FCE43488F9F5F4 0x2C2A16BC b1207
 	NATIVE_DECL void PLAY_STREAM_FROM_POSITION(float x, float y, float z, int streamId) { invoke<Void>(0x21442F412E8DE56B, x, y, z, streamId); } // 0x21442F412E8DE56B 0x6FE5D865 b1207
+	NATIVE_DECL void PLAY_STREAM_FROM_POSITION(Vector3 vec, int streamId) { invoke<Void>(0x21442F412E8DE56B, vec.x, vec.y, vec.z, streamId); } // 0x21442F412E8DE56B 0x6FE5D865 b1207
 	NATIVE_DECL void _0x3A3BE6B920525237(Any p0, Any p1) { invoke<Void>(0x3A3BE6B920525237, p0, p1); } // 0x3A3BE6B920525237 b1207
 	NATIVE_DECL void STOP_STREAM(int streamId) { invoke<Void>(0xA4718A1419D18151, streamId); } // 0xA4718A1419D18151 0xD1E364DE b1207
 	NATIVE_DECL void STOP_PED_SPEAKING(Ped ped, BOOL shaking) { invoke<Void>(0x9D64D7405520E3D3, ped, shaking); } // 0x9D64D7405520E3D3 0xFF92B49D b1207
@@ -711,6 +724,7 @@ namespace AUDIO
 	NATIVE_DECL void _0x569ABC36E28DDEAA() { invoke<Void>(0x569ABC36E28DDEAA); } // 0x569ABC36E28DDEAA b1207
 	NATIVE_DECL void _0x839C9F124BE74D94(Any p0, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0x839C9F124BE74D94, p0, p1, p2, p3, p4); } // 0x839C9F124BE74D94 b1207
 	NATIVE_DECL void AUDIO_TRIGGER_EXPLOSION(const char* name, float x, float y, float z) { invoke<Void>(0x374F0E716BFCDE82, name, x, y, z); } // 0x374F0E716BFCDE82 b1207
+	NATIVE_DECL void AUDIO_TRIGGER_EXPLOSION(const char* name, Vector3 vec) { invoke<Void>(0x374F0E716BFCDE82, name, vec.x, vec.y, vec.z); } // 0x374F0E716BFCDE82 b1207
 	NATIVE_DECL void _0x3E98AC9D8C56C62C(Any p0) { invoke<Void>(0x3E98AC9D8C56C62C, p0); } // 0x3E98AC9D8C56C62C b1207
 	NATIVE_DECL void _0xCBF2BEBB468A34F3(Any p0) { invoke<Void>(0xCBF2BEBB468A34F3, p0); } // 0xCBF2BEBB468A34F3 b1207
 	NATIVE_DECL void _0xA2B851605748AD0E() { invoke<Void>(0xA2B851605748AD0E); } // 0xA2B851605748AD0E b1207
@@ -806,8 +820,10 @@ namespace CAM
 	NATIVE_DECL void STOP_RENDERING_SCRIPT_CAMS_USING_CATCH_UP(BOOL render, float distance, int blendBackSmoothingType, BOOL p3, BOOL p4, BOOL p5) { invoke<Void>(0x8C7C7FF7CF0E5153, render, distance, blendBackSmoothingType, p3, p4, p5); } // 0x8C7C7FF7CF0E5153 0xD3C08183 b1207
 	NATIVE_DECL Cam CREATE_CAM(const char* camName, BOOL p1) { return invoke<Cam>(0xE72CDBA7F0A02DD6, camName, p1); } // 0xE72CDBA7F0A02DD6 0xE9BF2A7D b1207
 	NATIVE_DECL Cam CREATE_CAM_WITH_PARAMS(const char* camName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fov, BOOL p8, int p9) { return invoke<Cam>(0x40C23491CE83708E, camName, posX, posY, posZ, rotX, rotY, rotZ, fov, p8, p9); } // 0x40C23491CE83708E 0x23B02F15 b1207
+	NATIVE_DECL Cam CREATE_CAM_WITH_PARAMS(const char* camName, Vector3 pos, Vector3 rot, float fov, BOOL p8, int p9) { return invoke<Cam>(0x40C23491CE83708E, camName, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, fov, p8, p9); } // 0x40C23491CE83708E 0x23B02F15 b1207
 	NATIVE_DECL Cam CREATE_CAMERA(Hash camHash, BOOL p1) { return invoke<Cam>(0x57CDF879EA466C46, camHash, p1); } // 0x57CDF879EA466C46 0x5D6739AE b1207
 	NATIVE_DECL Cam CREATE_CAMERA_WITH_PARAMS(Hash camHash, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fov, BOOL p8, Any p9) { return invoke<Cam>(0x98B99B9F27E2D60B, camHash, posX, posY, posZ, rotX, rotY, rotZ, fov, p8, p9); } // 0x98B99B9F27E2D60B 0x0688BE9A b1207
+	NATIVE_DECL Cam CREATE_CAMERA_WITH_PARAMS(Hash camHash, Vector3 pos, Vector3 rot, float fov, BOOL p8, Any p9) { return invoke<Cam>(0x98B99B9F27E2D60B, camHash, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, fov, p8, p9); } // 0x98B99B9F27E2D60B 0x0688BE9A b1207
 	// BOOL param indicates whether the cam should be destroyed if it belongs to the calling script.
 	NATIVE_DECL void DESTROY_CAM(Cam cam, BOOL p1) { invoke<Void>(0x4E67E0B6D7FD5145, cam, p1); } // 0x4E67E0B6D7FD5145 0xC39302BD b1207
 	// BOOL param indicates whether the cam should be destroyed if it belongs to the calling script.
@@ -825,10 +841,13 @@ namespace CAM
 	NATIVE_DECL Vector3 GET_CAM_ROT(Cam cam, int rotationOrder) { return invoke<Vector3>(0x9BF96B57254E7889, cam, rotationOrder); } // 0x9BF96B57254E7889 0xDAC84C9F b1207
 	NATIVE_DECL float GET_CAM_FOV(Cam cam) { return invoke<float>(0x8101D32A0A6B0F60, cam); } // 0x8101D32A0A6B0F60 0xD6E9FCF5 b1207
 	NATIVE_DECL void SET_CAM_PARAMS(Cam cam, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float fieldOfView, Any p8, int p9, int p10, int p11, Any p12, Any p13) { invoke<Void>(0xA47BBFFFB83D4D0A, cam, posX, posY, posZ, rotX, rotY, rotZ, fieldOfView, p8, p9, p10, p11, p12, p13); } // 0xA47BBFFFB83D4D0A 0x2167CEBF b1207
+	NATIVE_DECL void SET_CAM_PARAMS(Cam cam, Vector3 pos, Vector3 rot, float fieldOfView, Any p8, int p9, int p10, int p11, Any p12, Any p13) { invoke<Void>(0xA47BBFFFB83D4D0A, cam, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, fieldOfView, p8, p9, p10, p11, p12, p13); } // 0xA47BBFFFB83D4D0A 0x2167CEBF b1207
 	// Sets the position of the cam.
 	NATIVE_DECL void SET_CAM_COORD(Cam cam, float posX, float posY, float posZ) { invoke<Void>(0xF9EE7D419EE49DE6, cam, posX, posY, posZ); } // 0xF9EE7D419EE49DE6 0x7A8053AF b1207
+	NATIVE_DECL void SET_CAM_COORD(Cam cam, Vector3 pos) { invoke<Void>(0xF9EE7D419EE49DE6, cam, pos.x, pos.y, pos.z); } // 0xF9EE7D419EE49DE6 0x7A8053AF b1207
 	// Sets the rotation of the cam.
 	NATIVE_DECL void SET_CAM_ROT(Cam cam, float rotX, float rotY, float rotZ, int rotationOrder) { invoke<Void>(0x63DFA6810AD78719, cam, rotX, rotY, rotZ, rotationOrder); } // 0x63DFA6810AD78719 0xEE38B3C1 b1207
+	NATIVE_DECL void SET_CAM_ROT(Cam cam, Vector3 rot, int rotationOrder) { invoke<Void>(0x63DFA6810AD78719, cam, rot.x, rot.y, rot.z, rotationOrder); } // 0x63DFA6810AD78719 0xEE38B3C1 b1207
 	// Sets the field of view of the cam.
 	// 
 	// Min: 1.0f
@@ -842,10 +861,13 @@ namespace CAM
 	NATIVE_DECL void _0x1FC6C727D30FFDDE(Any p0) { invoke<Void>(0x1FC6C727D30FFDDE, p0); } // 0x1FC6C727D30FFDDE b1207
 	// Last param determines if its relative to the Entity
 	NATIVE_DECL void ATTACH_CAM_TO_ENTITY(Cam cam, Entity entity, float xOffset, float yOffset, float zOffset, BOOL isRelative) { invoke<Void>(0xFDC0DF7F6FB0A592, cam, entity, xOffset, yOffset, zOffset, isRelative); } // 0xFDC0DF7F6FB0A592 0xAD7C45F6 b1207
+	NATIVE_DECL void ATTACH_CAM_TO_ENTITY(Cam cam, Entity entity, Vector3 offset, BOOL isRelative) { invoke<Void>(0xFDC0DF7F6FB0A592, cam, entity, offset.x, offset.y, offset.z, isRelative); } // 0xFDC0DF7F6FB0A592 0xAD7C45F6 b1207
 	// boneIndex: https://github.com/femga/rdr3_discoveries/tree/master/boneNames
 	NATIVE_DECL void ATTACH_CAM_TO_PED_BONE(Cam cam, Ped ped, int boneIndex, float x, float y, float z, BOOL heading) { invoke<Void>(0xDFC1E4A44C0324CA, cam, ped, boneIndex, x, y, z, heading); } // 0xDFC1E4A44C0324CA 0x506BB35C b1207
+	NATIVE_DECL void ATTACH_CAM_TO_PED_BONE(Cam cam, Ped ped, int boneIndex, Vector3 vec, BOOL heading) { invoke<Void>(0xDFC1E4A44C0324CA, cam, ped, boneIndex, vec.x, vec.y, vec.z, heading); } // 0xDFC1E4A44C0324CA 0x506BB35C b1207
 	NATIVE_DECL void DETACH_CAM(Cam cam) { invoke<Void>(0x05B41DDBEB559556, cam); } // 0x05B41DDBEB559556 0xF4FBF14A b1207
 	NATIVE_DECL void POINT_CAM_AT_COORD(Cam cam, float x, float y, float z) { invoke<Void>(0x948B39341C3A40C2, cam, x, y, z); } // 0x948B39341C3A40C2 0x914BC21A b1207
+	NATIVE_DECL void POINT_CAM_AT_COORD(Cam cam, Vector3 vec) { invoke<Void>(0x948B39341C3A40C2, cam, vec.x, vec.y, vec.z); } // 0x948B39341C3A40C2 0x914BC21A b1207
 	NATIVE_DECL void POINT_CAM_AT_ENTITY(Cam cam, Entity entity, float p2, float p3, float p4, BOOL p5) { invoke<Void>(0xFC2867E6074D3A61, cam, entity, p2, p3, p4, p5); } // 0xFC2867E6074D3A61 0x7597A0F7 b1207
 	NATIVE_DECL void STOP_CAM_POINTING(Cam cam) { invoke<Void>(0xCA1B30A3357C71F1, cam); } // 0xCA1B30A3357C71F1 0x5435F6A5 b1207
 	NATIVE_DECL void _SET_CAM_FOCUS_DISTANCE(Cam cam, float distance) { invoke<Void>(0x11F32BB61B756732, cam, distance); } // 0x11F32BB61B756732 b1207
@@ -860,6 +882,7 @@ namespace CAM
 	// 
 	// p9 != 0 seems to override the rotation/pitch (bool?)
 	NATIVE_DECL void ADD_CAM_SPLINE_NODE(Cam camera, float x, float y, float z, float xRot, float yRot, float zRot, int length, int p8, int p9) { invoke<Void>(0xF1F57F9D230F9CD1, camera, x, y, z, xRot, yRot, zRot, length, p8, p9); } // 0xF1F57F9D230F9CD1 0xAD3C7EAA b1207
+	NATIVE_DECL void ADD_CAM_SPLINE_NODE(Cam camera, Vector3 vec, Vector3 rot, int length, int p8, int p9) { invoke<Void>(0xF1F57F9D230F9CD1, camera, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, length, p8, p9); } // 0xF1F57F9D230F9CD1 0xAD3C7EAA b1207
 	NATIVE_DECL void SET_CAM_SPLINE_PHASE(Cam cam, float p1) { invoke<Void>(0xF1898A68E7C15636, cam, p1); } // 0xF1898A68E7C15636 0xF0AED233 b1207
 	// Can use this with SET_CAM_SPLINE_PHASE to set the float it this native returns.
 	// 
@@ -873,6 +896,7 @@ namespace CAM
 	NATIVE_DECL BOOL IS_CAM_SHAKING(Cam cam) { return invoke<BOOL>(0x2EEB402BD7320159, cam); } // 0x2EEB402BD7320159 0x0961FD9B b1207
 	NATIVE_DECL void STOP_CAM_SHAKING(Cam cam, BOOL p1) { invoke<Void>(0xB78CC4B4706614B0, cam, p1); } // 0xB78CC4B4706614B0 0x40D0EB87 b1207
 	NATIVE_DECL BOOL PLAY_CAM_ANIM(Cam cam, const char* animName, const char* animDictionary, float x, float y, float z, float xRot, float yRot, float zRot, BOOL p9, int p10) { return invoke<BOOL>(0xA263DDF694D563F6, cam, animName, animDictionary, x, y, z, xRot, yRot, zRot, p9, p10); } // 0xA263DDF694D563F6 0xBCEFB87E b1207
+	NATIVE_DECL BOOL PLAY_CAM_ANIM(Cam cam, const char* animName, const char* animDictionary, Vector3 vec, Vector3 rot, BOOL p9, int p10) { return invoke<BOOL>(0xA263DDF694D563F6, cam, animName, animDictionary, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, p9, p10); } // 0xA263DDF694D563F6 0xBCEFB87E b1207
 	NATIVE_DECL void _0xCF69EA05CD9C33C9() { invoke<Void>(0xCF69EA05CD9C33C9); } // 0xCF69EA05CD9C33C9 b1207
 	// Only used in R* Script camera_photomode
 	NATIVE_DECL BOOL _IS_ANIM_SCENE_CAM_ACTIVE() { return invoke<BOOL>(0x20389408F0E93B9A); } // 0x20389408F0E93B9A b1207
@@ -958,6 +982,7 @@ namespace CAM
 	NATIVE_DECL void _0x3C8F74E8FE751614() { invoke<Void>(0x3C8F74E8FE751614); } // 0x3C8F74E8FE751614 b1207
 	NATIVE_DECL void _0x06557F6D96C86881() { invoke<Void>(0x06557F6D96C86881); } // 0x06557F6D96C86881 b1207
 	NATIVE_DECL BOOL IS_SPHERE_VISIBLE(float x, float y, float z, float radius) { return invoke<BOOL>(0x2E941B5FFA2989C6, x, y, z, radius); } // 0x2E941B5FFA2989C6 0xDD1329E2 b1207
+	NATIVE_DECL BOOL IS_SPHERE_VISIBLE(Vector3 vec, float radius) { return invoke<BOOL>(0x2E941B5FFA2989C6, vec.x, vec.y, vec.z, radius); } // 0x2E941B5FFA2989C6 0xDD1329E2 b1207
 	NATIVE_DECL Any _0x190F7DA1AC09A8EF() { return invoke<Any>(0x190F7DA1AC09A8EF); } // 0x190F7DA1AC09A8EF b1207
 	// Used in Script Function SHOP_CAMERA_SUPPORT_START_NEW_ORBIT
 	NATIVE_DECL void _SET_GAMEPLAY_CAM_INITIAL_ZOOM(float camInitialZoom) { invoke<Void>(0xBCDA0BA8762FACB9, camInitialZoom); } // 0xBCDA0BA8762FACB9 b1207
@@ -1020,11 +1045,14 @@ namespace CAM
 	NATIVE_DECL Vector3 GET_FINAL_RENDERED_CAM_ROT(int rotationOrder) { return invoke<Vector3>(0x602685BD85DD26CA, rotationOrder); } // 0x602685BD85DD26CA 0x1FFBEFC5 b1207
 	NATIVE_DECL float GET_FINAL_RENDERED_CAM_FOV() { return invoke<float>(0x04AF77971E508F6A); } // 0x04AF77971E508F6A 0x721B763B b1207
 	NATIVE_DECL void SET_GAMEPLAY_COORD_HINT(float x, float y, float z, int duration, int blendOutDuration, int blendInDuration, int unk) { invoke<Void>(0xFA33B8C69A4A6A0F, x, y, z, duration, blendOutDuration, blendInDuration, unk); } // 0xFA33B8C69A4A6A0F 0xF27483C9 b1207
+	NATIVE_DECL void SET_GAMEPLAY_COORD_HINT(Vector3 vec, int duration, int blendOutDuration, int blendInDuration, int unk) { invoke<Void>(0xFA33B8C69A4A6A0F, vec.x, vec.y, vec.z, duration, blendOutDuration, blendInDuration, unk); } // 0xFA33B8C69A4A6A0F 0xF27483C9 b1207
 	NATIVE_DECL void SET_GAMEPLAY_PED_HINT(Ped p0, float x1, float y1, float z1, BOOL p4, Any p5, Any p6, Any p7) { invoke<Void>(0x90FB951648851733, p0, x1, y1, z1, p4, p5, p6, p7); } // 0x90FB951648851733 0x7C27343E b1207
+	NATIVE_DECL void SET_GAMEPLAY_PED_HINT(Ped p0, Vector3 vec1, BOOL p4, Any p5, Any p6, Any p7) { invoke<Void>(0x90FB951648851733, p0, vec1.x, vec1.y, vec1.z, p4, p5, p6, p7); } // 0x90FB951648851733 0x7C27343E b1207
 	NATIVE_DECL void SET_GAMEPLAY_VEHICLE_HINT(Any p0, float p1, float p2, float p3, BOOL p4, Any p5, Any p6, Any p7) { invoke<Void>(0xE2B2BB7DAC280515, p0, p1, p2, p3, p4, p5, p6, p7); } // 0xE2B2BB7DAC280515 0x2C9A11D8 b1207
 	NATIVE_DECL void SET_GAMEPLAY_OBJECT_HINT(Any p0, float p1, float p2, float p3, BOOL p4, Any p5, Any p6, Any p7) { invoke<Void>(0xC40551D65F2BF297, p0, p1, p2, p3, p4, p5, p6, p7); } // 0xC40551D65F2BF297 0x2ED5E2F8 b1207
 	// p6 & p7 - possibly length or time
 	NATIVE_DECL void SET_GAMEPLAY_ENTITY_HINT(Entity entity, float xOffset, float yOffset, float zOffset, BOOL p4, int p5, int p6, int p7, Any p8) { invoke<Void>(0xD1F7F32640ADFD12, entity, xOffset, yOffset, zOffset, p4, p5, p6, p7, p8); } // 0xD1F7F32640ADFD12 0x66C32306 b1207
+	NATIVE_DECL void SET_GAMEPLAY_ENTITY_HINT(Entity entity, Vector3 offset, BOOL p4, int p5, int p6, int p7, Any p8) { invoke<Void>(0xD1F7F32640ADFD12, entity, offset.x, offset.y, offset.z, p4, p5, p6, p7, p8); } // 0xD1F7F32640ADFD12 0x66C32306 b1207
 	NATIVE_DECL BOOL IS_GAMEPLAY_HINT_ACTIVE() { return invoke<BOOL>(0x2E04AB5FEE042D4A); } // 0x2E04AB5FEE042D4A 0xAD8DA205 b1207
 	NATIVE_DECL void STOP_GAMEPLAY_HINT(BOOL p0) { invoke<Void>(0x1BCEC33D54CFCA8A, p0); } // 0x1BCEC33D54CFCA8A 0x1BC28B7B b1207
 	NATIVE_DECL void STOP_CODE_GAMEPLAY_HINT(BOOL p0) { invoke<Void>(0x93759A83D0D844E7, p0); } // 0x93759A83D0D844E7 b1207
@@ -1114,6 +1142,7 @@ namespace CAM
 	NATIVE_DECL BOOL _0xC3AEBB276825A359(const char* dictionary, const char* shotName, int duration) { return invoke<BOOL>(0xC3AEBB276825A359, dictionary, shotName, duration); } // 0xC3AEBB276825A359 b1436
 	NATIVE_DECL BOOL _0x1D931B7CC0EE3956(const char* dictionary, const char* shotName, const char* cameraName) { return invoke<BOOL>(0x1D931B7CC0EE3956, dictionary, shotName, cameraName); } // 0x1D931B7CC0EE3956 b1436
 	NATIVE_DECL void _CINEMATIC_LOCATION_SET_LOCATION_AND_ROTATION(const char* name, float x, float y, float z, float rotX, float rotY, float rotZ) { invoke<Void>(0x0E94C95EC3185FA9, name, x, y, z, rotX, rotY, rotZ); } // 0x0E94C95EC3185FA9 b1207
+	NATIVE_DECL void _CINEMATIC_LOCATION_SET_LOCATION_AND_ROTATION(const char* name, Vector3 vec, Vector3 rot) { invoke<Void>(0x0E94C95EC3185FA9, name, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z); } // 0x0E94C95EC3185FA9 b1207
 	// Only used in R* Script fm_mission_controller
 	NATIVE_DECL void CINEMATIC_LOCATION_OVERRIDE_TARGET_ENTITY_THIS_UPDATE(const char* name, Entity entity) { invoke<Void>(0x0B0F914459731F60, name, entity); } // 0x0B0F914459731F60 b1311
 	NATIVE_DECL void _LOAD_CAMERA_DATA_DICT(const char* cameraDictionary) { invoke<Void>(0x6A4D224FC7643941, cameraDictionary); } // 0x6A4D224FC7643941 b1207
@@ -1270,6 +1299,7 @@ namespace COMPENDIUM
 	NATIVE_DECL int COMPENDIUM_GET_ENTRY_BY_STAT_ITEM(Hash category, Hash animalType) { return invoke<int>(0x66EC938394D76C85, category, animalType); } // 0x66EC938394D76C85 b1355
 	NATIVE_DECL Any COMPENDIUM_GET_SUBCATEGORY_TOAST_APP_ID(Hash category, Hash subcategory) { return invoke<Any>(0x2BF30D9D4D680112, category, subcategory); } // 0x2BF30D9D4D680112 b1311
 	NATIVE_DECL Hash COMPENDIUM_GET_MAP_DISCOVERABLE_FROM_STAT_ITEM(Hash animalStatItem, float x, float y, float z) { return invoke<Hash>(0x729D54121A5E9E20, animalStatItem, x, y, z); } // 0x729D54121A5E9E20 b1207
+	NATIVE_DECL Hash COMPENDIUM_GET_MAP_DISCOVERABLE_FROM_STAT_ITEM(Hash animalStatItem, Vector3 vec) { return invoke<Hash>(0x729D54121A5E9E20, animalStatItem, vec.x, vec.y, vec.z); } // 0x729D54121A5E9E20 b1207
 	NATIVE_DECL void COMPENDIUM_ANIMAL_OBSERVED_BY_STAT_NAME(Hash animalType, BOOL disableCompendiumToast) { invoke<Void>(0x725D52F26A5E9E10, animalType, disableCompendiumToast); } // 0x725D52F26A5E9E10 b1207
 	NATIVE_DECL BOOL COMPENDIUM_WAS_ANIMAL_OBSERVED(Ped ped) { return invoke<BOOL>(0x23B5E9C5160BC04F, ped); } // 0x23B5E9C5160BC04F b1311
 	NATIVE_DECL void COMPENDIUM_ANIMAL_SET_DISCOVERED(int compendiumEntry) { invoke<Void>(0x67F35C7C9F2BDCFE, compendiumEntry); } // 0x67F35C7C9F2BDCFE b1311
@@ -1291,6 +1321,7 @@ namespace COMPENDIUM
 	// herbType: https://alloc8or.re/rdr3/doc/enums/eHerbType.txt
 	// Vector3: Player Location
 	NATIVE_DECL void COMPENDIUM_HERB_PICKED(Hash herbType, float x, float y, float z) { invoke<Void>(0x725D52F21A5E9E09, herbType, x, y, z); } // 0x725D52F21A5E9E09 b1207
+	NATIVE_DECL void COMPENDIUM_HERB_PICKED(Hash herbType, Vector3 vec) { invoke<Void>(0x725D52F21A5E9E09, herbType, vec.x, vec.y, vec.z); } // 0x725D52F21A5E9E09 b1207
 	NATIVE_DECL void COMPENDIUM_HORSE_BONDING(Ped ped, int bondingLevel) { invoke<Void>(0x725D52F21A5E9E50, ped, bondingLevel); } // 0x725D52F21A5E9E50 b1207
 	// NET_PLAYER_HORSE_PROCESS_EVENT_HORSE_BREAKING
 	NATIVE_DECL void COMPENDIUM_HORSE_WILD_BROKEN(Ped ped) { invoke<Void>(0x725852D21A2E9E50, ped); } // 0x725852D21A2E9E50 b1207
@@ -1309,6 +1340,7 @@ namespace CRASHLOG
 	NATIVE_DECL BOOL _0xE72E234B30DA7B7A(int p0) { return invoke<BOOL>(0xE72E234B30DA7B7A, p0); } // 0xE72E234B30DA7B7A b1207
 	NATIVE_DECL BOOL _0x87F005C969EF1563(float p0) { return invoke<BOOL>(0x87F005C969EF1563, p0); } // 0x87F005C969EF1563 b1207
 	NATIVE_DECL BOOL _0x23CCAB8F40B9CBEE(float x, float y, float z) { return invoke<BOOL>(0x23CCAB8F40B9CBEE, x, y, z); } // 0x23CCAB8F40B9CBEE b1207
+	NATIVE_DECL BOOL _0x23CCAB8F40B9CBEE(Vector3 vec) { return invoke<BOOL>(0x23CCAB8F40B9CBEE, vec.x, vec.y, vec.z); } // 0x23CCAB8F40B9CBEE b1207
 	NATIVE_DECL BOOL _0xF0D545C1EEAD614A() { return invoke<BOOL>(0xF0D545C1EEAD614A); } // 0xF0D545C1EEAD614A b1207
 	NATIVE_DECL BOOL _0x33C1D63E55FA4284(const char* p0) { return invoke<BOOL>(0x33C1D63E55FA4284, p0); } // 0x33C1D63E55FA4284 b1207
 	NATIVE_DECL void _0x4E42CA5BCD45444A() { invoke<Void>(0x4E42CA5BCD45444A); } // 0x4E42CA5BCD45444A b1207
@@ -1581,6 +1613,7 @@ namespace ENTITY
 	NATIVE_DECL Entity _0xAF72EC7E1B54539B(Entity entity) { return invoke<Entity>(0xAF72EC7E1B54539B, entity); } // 0xAF72EC7E1B54539B b1311
 	NATIVE_DECL BOOL HAS_ENTITY_CLEAR_LOS_TO_ENTITY(Entity entity1, Entity entity2, int traceType) { return invoke<BOOL>(0xFCDFF7B72D23A1AC, entity1, entity2, traceType); } // 0xFCDFF7B72D23A1AC 0x53576FA7 b1207
 	NATIVE_DECL BOOL HAS_ENTITY_CLEAR_LOS_TO_COORD(Entity entity, float x, float y, float z, int flags) { return invoke<BOOL>(0x0C9DBF48C6BA6E4C, entity, x, y, z, flags); } // 0x0C9DBF48C6BA6E4C b1207
+	NATIVE_DECL BOOL HAS_ENTITY_CLEAR_LOS_TO_COORD(Entity entity, Vector3 vec, int flags) { return invoke<BOOL>(0x0C9DBF48C6BA6E4C, entity, vec.x, vec.y, vec.z, flags); } // 0x0C9DBF48C6BA6E4C b1207
 	// Has the entity1 got a clear line of sight to the other entity2 from the direction entity1 is facing.
 	NATIVE_DECL BOOL HAS_ENTITY_CLEAR_LOS_TO_ENTITY_IN_FRONT(Entity entity1, Entity entity2, int traceType) { return invoke<BOOL>(0xE88F19660651D566, entity1, entity2, traceType); } // 0xE88F19660651D566 0x210D87C8 b1207
 	NATIVE_DECL BOOL HAS_ENTITY_COLLIDED_WITH_ANYTHING(Entity entity) { return invoke<BOOL>(0xDF18751EC74F90FF, entity); } // 0xDF18751EC74F90FF 0x662A2F41 b1207
@@ -1612,6 +1645,7 @@ namespace ENTITY
 	NATIVE_DECL int GET_ENTITY_MAX_HEALTH(Entity entity, BOOL p1) { return invoke<int>(0x15D757606D170C3C, entity, p1); } // 0x15D757606D170C3C 0xC7AE6AA1 b1207
 	NATIVE_DECL void SET_ENTITY_MAX_HEALTH(Entity entity, int value) { invoke<Void>(0x166E7CF68597D8B5, entity, value); } // 0x166E7CF68597D8B5 0x96F84DF8 b1207
 	NATIVE_DECL float GET_ENTITY_HEIGHT(Entity entity, float X, float Y, float Z, BOOL atTop, BOOL inWorldCoords) { return invoke<float>(0x296DEBC84474B375, entity, X, Y, Z, atTop, inWorldCoords); } // 0x296DEBC84474B375 0xEE443481 b1207
+	NATIVE_DECL float GET_ENTITY_HEIGHT(Entity entity, Vector3 vec, BOOL atTop, BOOL inWorldCoords) { return invoke<float>(0x296DEBC84474B375, entity, vec.x, vec.y, vec.z, atTop, inWorldCoords); } // 0x296DEBC84474B375 0xEE443481 b1207
 	NATIVE_DECL float GET_ENTITY_HEIGHT_ABOVE_GROUND(Entity entity) { return invoke<float>(0x0D3B5BAEA08F63E9, entity); } // 0x0D3B5BAEA08F63E9 0x57F56A4D b1207
 	NATIVE_DECL void _GET_ENTITY_WORLD_POSITION_OF_DIMENSIONS(Entity entity, Vector3* minimum, Vector3* maximum) { invoke<Void>(0xF3FDA9A617A15145, entity, minimum, maximum); } // 0xF3FDA9A617A15145 b1207
 	NATIVE_DECL void GET_ENTITY_MATRIX(Entity entity, Vector3* rightVector, Vector3* forwardVector, Vector3* upVector, Vector3* position) { invoke<Void>(0x3A9B1120AF13FBF2, entity, rightVector, forwardVector, upVector, position); } // 0x3A9B1120AF13FBF2 0xEB9EB001 b1207
@@ -1624,12 +1658,14 @@ namespace ENTITY
 	NATIVE_DECL BOOL _GET_IS_BIRD(Entity entity) { return invoke<BOOL>(0xC346A546612C49A9, entity); } // 0xC346A546612C49A9 b1207
 	NATIVE_DECL BOOL _GET_IS_PREDATOR(Entity entity) { return invoke<BOOL>(0x5594AFE9DE0C01B7, entity); } // 0x5594AFE9DE0C01B7 b1207
 	NATIVE_DECL Vector3 GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS(Entity entity, float posX, float posY, float posZ) { return invoke<Vector3>(0x497C6B1A2C9AE69C, entity, posX, posY, posZ); } // 0x497C6B1A2C9AE69C 0x6477EC9E b1207
+	NATIVE_DECL Vector3 GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS(Entity entity, Vector3 pos) { return invoke<Vector3>(0x497C6B1A2C9AE69C, entity, pos.x, pos.y, pos.z); } // 0x497C6B1A2C9AE69C 0x6477EC9E b1207
 	// Offset values are relative to the entity.
 	// 
 	// x = left/right
 	// y = forward/backward
 	// z = up/down
 	NATIVE_DECL Vector3 GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Entity entity, float offsetX, float offsetY, float offsetZ) { return invoke<Vector3>(0x1899F328B0E12848, entity, offsetX, offsetY, offsetZ); } // 0x1899F328B0E12848 0xABCF043A b1207
+	NATIVE_DECL Vector3 GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Entity entity, Vector3 offset) { return invoke<Vector3>(0x1899F328B0E12848, entity, offset.x, offset.y, offset.z); } // 0x1899F328B0E12848 0xABCF043A b1207
 	NATIVE_DECL float GET_ENTITY_PITCH(Entity entity) { return invoke<float>(0xEF355ABEFF7F5005, entity); } // 0xEF355ABEFF7F5005 0xFCE6ECE5 b1207
 	// Displays the current ROLL axis of the entity [-180.0000/180.0000+]
 	// (Sideways Roll) such as a vehicle tipped on its side
@@ -1670,10 +1706,12 @@ namespace ENTITY
 	// 
 	// Last three are unknown ints, almost always p7 = 0, p8 = 1, p9 = 0
 	NATIVE_DECL BOOL IS_ENTITY_AT_COORD(Entity entity, float xPos, float yPos, float zPos, float xSize, float ySize, float zSize, BOOL p7, BOOL p8, int p9) { return invoke<BOOL>(0x5E58342602E94718, entity, xPos, yPos, zPos, xSize, ySize, zSize, p7, p8, p9); } // 0x5E58342602E94718 0xD749B606 b1207
+	NATIVE_DECL BOOL IS_ENTITY_AT_COORD(Entity entity, Vector3 pos, Vector3 size, BOOL p7, BOOL p8, int p9) { return invoke<BOOL>(0x5E58342602E94718, entity, pos.x, pos.y, pos.z, size.x, size.y, size.z, p7, p8, p9); } // 0x5E58342602E94718 0xD749B606 b1207
 	// Checks if entity1 is within the box defined by x/y/zSize of entity2.
 	// 
 	// Last three parameters are almost always p5 = 0, p6 = 1, p7 = 0
 	NATIVE_DECL BOOL IS_ENTITY_AT_ENTITY(Entity entity1, Entity entity2, float xSize, float ySize, float zSize, BOOL p5, BOOL p6, int p7) { return invoke<BOOL>(0xC057F02B837A27F6, entity1, entity2, xSize, ySize, zSize, p5, p6, p7); } // 0xC057F02B837A27F6 0xDABDCB52 b1207
+	NATIVE_DECL BOOL IS_ENTITY_AT_ENTITY(Entity entity1, Entity entity2, Vector3 size, BOOL p5, BOOL p6, int p7) { return invoke<BOOL>(0xC057F02B837A27F6, entity1, entity2, size.x, size.y, size.z, p5, p6, p7); } // 0xC057F02B837A27F6 0xDABDCB52 b1207
 	NATIVE_DECL BOOL IS_ENTITY_ATTACHED(Entity entity) { return invoke<BOOL>(0xEE6AD63ABF59C0B7, entity); } // 0xEE6AD63ABF59C0B7 0xEC1479D5 b1207
 	NATIVE_DECL BOOL IS_ENTITY_ATTACHED_TO_ANY_OBJECT(Entity entity) { return invoke<BOOL>(0x306C1F6178F01AB3, entity); } // 0x306C1F6178F01AB3 0x0B5DE340 b1207
 	NATIVE_DECL BOOL IS_ENTITY_ATTACHED_TO_ANY_PED(Entity entity) { return invoke<BOOL>(0xC841153DED2CA89A, entity); } // 0xC841153DED2CA89A 0x9D7A609C b1207
@@ -1686,7 +1724,9 @@ namespace ENTITY
 	// 
 	// Angle is measured in degrees.
 	NATIVE_DECL BOOL IS_ENTITY_IN_ANGLED_AREA(Entity entity, float originX, float originY, float originZ, float edgeX, float edgeY, float edgeZ, float angle, BOOL p8, BOOL p9, Any p10) { return invoke<BOOL>(0xD3151E53134595E5, entity, originX, originY, originZ, edgeX, edgeY, edgeZ, angle, p8, p9, p10); } // 0xD3151E53134595E5 0x883622FA b1207
+	NATIVE_DECL BOOL IS_ENTITY_IN_ANGLED_AREA(Entity entity, Vector3 origin, Vector3 edge, float angle, BOOL p8, BOOL p9, Any p10) { return invoke<BOOL>(0xD3151E53134595E5, entity, origin.x, origin.y, origin.z, edge.x, edge.y, edge.z, angle, p8, p9, p10); } // 0xD3151E53134595E5 0x883622FA b1207
 	NATIVE_DECL BOOL IS_ENTITY_IN_AREA(Entity entity, float x1, float y1, float z1, float x2, float y2, float z2, BOOL p7, BOOL p8, Any p9) { return invoke<BOOL>(0x0C2634C40A16193E, entity, x1, y1, z1, x2, y2, z2, p7, p8, p9); } // 0x0C2634C40A16193E 0x8C2DFA9D b1207
+	NATIVE_DECL BOOL IS_ENTITY_IN_AREA(Entity entity, Vector3 vec1, Vector3 vec2, BOOL p7, BOOL p8, Any p9) { return invoke<BOOL>(0x0C2634C40A16193E, entity, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, p7, p8, p9); } // 0x0C2634C40A16193E 0x8C2DFA9D b1207
 	NATIVE_DECL BOOL IS_ENTITY_IN_VOLUME(Entity entity, ScrHandle volume, BOOL p2, int p3) { return invoke<BOOL>(0x5A5526BC09C06623, entity, volume, p2, p3); } // 0x5A5526BC09C06623 b1207
 	NATIVE_DECL BOOL IS_ENTITY_IN_WATER(Entity entity) { return invoke<BOOL>(0xDDE5C125AC446723, entity); } // 0xDDE5C125AC446723 0x4C3C2508 b1207
 	NATIVE_DECL BOOL _IS_ENTITY_UNDERWATER(Entity entity, BOOL p1) { return invoke<BOOL>(0xD4E5C1E93C466127, entity, p1); } // 0xD4E5C1E93C466127 b1207
@@ -1714,6 +1754,7 @@ namespace ENTITY
 	NATIVE_DECL BOOL _IS_TRACKED_ENTITY_VISIBLE(Entity entity) { return invoke<BOOL>(0xC8CCDB712FBCBA92, entity); } // 0xC8CCDB712FBCBA92 b1207
 	NATIVE_DECL BOOL IS_ENTITY_OCCLUDED(Entity entity) { return invoke<BOOL>(0x140188E884645624, entity); } // 0x140188E884645624 0x46BC5B40 b1207
 	NATIVE_DECL BOOL WOULD_ENTITY_BE_OCCLUDED(Hash entityModelHash, float x, float y, float z, BOOL p4) { return invoke<BOOL>(0x3546FAB293FF2981, entityModelHash, x, y, z, p4); } // 0x3546FAB293FF2981 0xEA127CBC b1207
+	NATIVE_DECL BOOL WOULD_ENTITY_BE_OCCLUDED(Hash entityModelHash, Vector3 vec, BOOL p4) { return invoke<BOOL>(0x3546FAB293FF2981, entityModelHash, vec.x, vec.y, vec.z, p4); } // 0x3546FAB293FF2981 0xEA127CBC b1207
 	NATIVE_DECL BOOL IS_ENTITY_WAITING_FOR_WORLD_COLLISION(Entity entity) { return invoke<BOOL>(0x5E1CC2E8DC3111DD, entity); } // 0x5E1CC2E8DC3111DD 0x00AB7A4A b1207
 	NATIVE_DECL BOOL _IS_ENTITY_ON_TRAIN_TRACK(Entity entity) { return invoke<BOOL>(0x857ACB0AB4BD0D55, entity); } // 0x857ACB0AB4BD0D55 b1207
 	NATIVE_DECL void _0xCDB682BB47C02F0A(Entity entity, Hash p1) { invoke<Void>(0xCDB682BB47C02F0A, entity, p1); } // 0xCDB682BB47C02F0A b1207
@@ -1809,7 +1850,9 @@ namespace ENTITY
 	// p6/relative - makes the xyz force not relative to world coords, but to something else
 	// p7/highForce - setting false will make the force really low
 	NATIVE_DECL void APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Entity entity, int forceType, float x, float y, float z, BOOL p5, BOOL isDirectionRel, BOOL isForceRel, BOOL p8) { invoke<Void>(0x31DA7CEC5334DB37, entity, forceType, x, y, z, p5, isDirectionRel, isForceRel, p8); } // 0x31DA7CEC5334DB37 0x28924E98 b1207
+	NATIVE_DECL void APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Entity entity, int forceType, Vector3 vec, BOOL p5, BOOL isDirectionRel, BOOL isForceRel, BOOL p8) { invoke<Void>(0x31DA7CEC5334DB37, entity, forceType, vec.x, vec.y, vec.z, p5, isDirectionRel, isForceRel, p8); } // 0x31DA7CEC5334DB37 0x28924E98 b1207
 	NATIVE_DECL void APPLY_FORCE_TO_ENTITY(Entity entity, int forceFlags, float x, float y, float z, float offX, float offY, float offZ, int boneIndex, BOOL isDirectionRel, BOOL ignoreUpVec, BOOL isForceRel, BOOL p12, BOOL p13) { invoke<Void>(0xF15E8F5D333F09C4, entity, forceFlags, x, y, z, offX, offY, offZ, boneIndex, isDirectionRel, ignoreUpVec, isForceRel, p12, p13); } // 0xF15E8F5D333F09C4 0xC1C0855A b1207
+	NATIVE_DECL void APPLY_FORCE_TO_ENTITY(Entity entity, int forceFlags, Vector3 vec, Vector3 off, int boneIndex, BOOL isDirectionRel, BOOL ignoreUpVec, BOOL isForceRel, BOOL p12, BOOL p13) { invoke<Void>(0xF15E8F5D333F09C4, entity, forceFlags, vec.x, vec.y, vec.z, off.x, off.y, off.z, boneIndex, isDirectionRel, ignoreUpVec, isForceRel, p12, p13); } // 0xF15E8F5D333F09C4 0xC1C0855A b1207
 	// Attaches entity1 to bone (boneIndex) of entity2.
 	// 
 	// boneIndex - this is different to boneID, use GET_PED_BONE_INDEX to get the index from the ID. use the index for attaching to specific bones. entity1 will be attached to entity2's centre if bone index given doesn't correspond to bone indexes for that entity type.
@@ -1821,7 +1864,9 @@ namespace ENTITY
 	// vertexIndex - position of vertex
 	// fixedRot - if false it ignores entity vector
 	NATIVE_DECL void ATTACH_ENTITY_TO_ENTITY(Entity entity1, Entity entity2, int boneIndex, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, BOOL p9, BOOL useSoftPinning, BOOL collision, BOOL isPed, int vertexIndex, BOOL fixedRot, BOOL p15, BOOL p16) { invoke<Void>(0x6B9BBD38AB0796DF, entity1, entity2, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot, p15, p16); } // 0x6B9BBD38AB0796DF 0xEC024237 b1207
+	NATIVE_DECL void ATTACH_ENTITY_TO_ENTITY(Entity entity1, Entity entity2, int boneIndex, Vector3 pos, Vector3 rot, BOOL p9, BOOL useSoftPinning, BOOL collision, BOOL isPed, int vertexIndex, BOOL fixedRot, BOOL p15, BOOL p16) { invoke<Void>(0x6B9BBD38AB0796DF, entity1, entity2, boneIndex, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot, p15, p16); } // 0x6B9BBD38AB0796DF 0xEC024237 b1207
 	NATIVE_DECL void ATTACH_ENTITY_TO_ENTITY_PHYSICALLY(Entity entity1, Entity entity2, int p2, int boneIndex, float offsetX, float offsetY, float offsetZ, float p7, float p8, float p9, float p10, float p11, float p12, float p13, BOOL p14, BOOL p15, BOOL p16, BOOL p17, int p18, BOOL p19, float p20, float p21) { invoke<Void>(0xB629A43CA1643481, entity1, entity2, p2, boneIndex, offsetX, offsetY, offsetZ, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21); } // 0xB629A43CA1643481 0x0547417F b1207
+	NATIVE_DECL void ATTACH_ENTITY_TO_ENTITY_PHYSICALLY(Entity entity1, Entity entity2, int p2, int boneIndex, Vector3 offset, float p7, float p8, float p9, float p10, float p11, float p12, float p13, BOOL p14, BOOL p15, BOOL p16, BOOL p17, int p18, BOOL p19, float p20, float p21) { invoke<Void>(0xB629A43CA1643481, entity1, entity2, p2, boneIndex, offset.x, offset.y, offset.z, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21); } // 0xB629A43CA1643481 0x0547417F b1207
 	NATIVE_DECL void _0x445D7D8EA66E373E(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14, Any p15) { invoke<Void>(0x445D7D8EA66E373E, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15); } // 0x445D7D8EA66E373E b1207
 	NATIVE_DECL void _0x16908E859C3AB698(Any p0, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0x16908E859C3AB698, p0, p1, p2, p3, p4); } // 0x16908E859C3AB698 b1207
 	NATIVE_DECL int GET_ENTITY_BONE_INDEX_BY_NAME(Entity entity, const char* boneName) { return invoke<int>(0xBACA8FE9C76C124E, entity, boneName); } // 0xBACA8FE9C76C124E 0xE4ECAC22 b1207
@@ -1865,12 +1910,16 @@ namespace ENTITY
 	NATIVE_DECL void SET_ENTITY_COLLISION(Entity entity, BOOL toggle, BOOL keepPhysics) { invoke<Void>(0xF66F820909453B8C, entity, toggle, keepPhysics); } // 0xF66F820909453B8C 0x139FD37D b1207
 	NATIVE_DECL void SET_ENTITY_COMPLETELY_DISABLE_COLLISION(Entity entity, BOOL toggle, BOOL keepPhysics) { invoke<Void>(0xE0580EC84813875A, entity, toggle, keepPhysics); } // 0xE0580EC84813875A 0xBD0D4831 b1207
 	NATIVE_DECL void SET_ENTITY_COORDS(Entity entity, float xPos, float yPos, float zPos, BOOL xAxis, BOOL yAxis, BOOL zAxis, BOOL clearArea) { invoke<Void>(0x06843DA7060A026B, entity, xPos, yPos, zPos, xAxis, yAxis, zAxis, clearArea); } // 0x06843DA7060A026B 0xDF70B41B b1207
+	NATIVE_DECL void SET_ENTITY_COORDS(Entity entity, Vector3 pos, BOOL xAxis, BOOL yAxis, BOOL zAxis, BOOL clearArea) { invoke<Void>(0x06843DA7060A026B, entity, pos.x, pos.y, pos.z, xAxis, yAxis, zAxis, clearArea); } // 0x06843DA7060A026B 0xDF70B41B b1207
 	// Axis - Invert Axis Flags
 	NATIVE_DECL void SET_ENTITY_COORDS_NO_OFFSET(Entity entity, float xPos, float yPos, float zPos, BOOL xAxis, BOOL yAxis, BOOL zAxis) { invoke<Void>(0x239A3351AC1DA385, entity, xPos, yPos, zPos, xAxis, yAxis, zAxis); } // 0x239A3351AC1DA385 0x4C83DE8D b1207
+	NATIVE_DECL void SET_ENTITY_COORDS_NO_OFFSET(Entity entity, Vector3 pos, BOOL xAxis, BOOL yAxis, BOOL zAxis) { invoke<Void>(0x239A3351AC1DA385, entity, pos.x, pos.y, pos.z, xAxis, yAxis, zAxis); } // 0x239A3351AC1DA385 0x4C83DE8D b1207
 	NATIVE_DECL void SET_ENTITY_DYNAMIC(Entity entity, BOOL toggle) { invoke<Void>(0xFBFC4473F66CE344, entity, toggle); } // 0xFBFC4473F66CE344 0x236F525B b1207
 	NATIVE_DECL void SET_ENTITY_HEADING(Entity entity, float heading) { invoke<Void>(0xCF2B9C0645C4651B, entity, heading); } // 0xCF2B9C0645C4651B 0xE0FF064D b1207
 	NATIVE_DECL void _SET_ENTITY_COORDS_AND_HEADING(Entity entity, float xPos, float yPos, float zPos, float heading, BOOL xAxis, BOOL yAxis, BOOL zAxis) { invoke<Void>(0x203BEFFDBE12E96A, entity, xPos, yPos, zPos, heading, xAxis, yAxis, zAxis); } // 0x203BEFFDBE12E96A b1207
+	NATIVE_DECL void _SET_ENTITY_COORDS_AND_HEADING(Entity entity, Vector3 pos, float heading, BOOL xAxis, BOOL yAxis, BOOL zAxis) { invoke<Void>(0x203BEFFDBE12E96A, entity, pos.x, pos.y, pos.z, heading, xAxis, yAxis, zAxis); } // 0x203BEFFDBE12E96A b1207
 	NATIVE_DECL void _SET_ENTITY_COORDS_AND_HEADING_NO_OFFSET(Entity entity, float xPos, float yPos, float zPos, float heading, BOOL p5, BOOL p6) { invoke<Void>(0x0918E3565C20F03C, entity, xPos, yPos, zPos, heading, p5, p6); } // 0x0918E3565C20F03C b1207
+	NATIVE_DECL void _SET_ENTITY_COORDS_AND_HEADING_NO_OFFSET(Entity entity, Vector3 pos, float heading, BOOL p5, BOOL p6) { invoke<Void>(0x0918E3565C20F03C, entity, pos.x, pos.y, pos.z, heading, p5, p6); } // 0x0918E3565C20F03C b1207
 	// Sets the entity's health. healthAmount sets the health value to that, and sets the maximum health core value. Setting healthAmount to 0 will kill the entity. entityKilledBy parameter can also be 0
 	NATIVE_DECL void SET_ENTITY_HEALTH(Entity entity, int healthAmount, Entity entityKilledBy) { invoke<Void>(0xAC2767ED8BDFAB15, entity, healthAmount, entityKilledBy); } // 0xAC2767ED8BDFAB15 b1207
 	// Sets a ped or an object totally invincible. It doesn't take any kind of damage. Peds will not ragdoll on explosions.
@@ -1888,6 +1937,7 @@ namespace ENTITY
 	NATIVE_DECL BOOL HAS_COLLISION_LOADED_AROUND_ENTITY(Entity entity) { return invoke<BOOL>(0xBEB1600952B9CF5C, entity); } // 0xBEB1600952B9CF5C 0x851687F9 b1207
 	// Old name: _HAS_COLLISION_LOADED_AT_COORDS
 	NATIVE_DECL BOOL HAS_COLLISION_LOADED_AROUND_POSITION(float xPos, float yPos, float zPos) { return invoke<BOOL>(0x6BFBDC46139C45AB, xPos, yPos, zPos); } // 0x6BFBDC46139C45AB b1207
+	NATIVE_DECL BOOL HAS_COLLISION_LOADED_AROUND_POSITION(Vector3 pos) { return invoke<BOOL>(0x6BFBDC46139C45AB, pos.x, pos.y, pos.z); } // 0x6BFBDC46139C45AB b1207
 	NATIVE_DECL void SET_ENTITY_ONLY_DAMAGED_BY_PLAYER(Entity entity, BOOL toggle) { invoke<Void>(0x473598683095D430, entity, toggle); } // 0x473598683095D430 0x4B707F50 b1207
 	NATIVE_DECL void SET_ENTITY_ONLY_DAMAGED_BY_RELATIONSHIP_GROUP(Entity entity, BOOL p1, Hash relationshipGroup) { invoke<Void>(0x6C1F6AA2F0ADD104, entity, p1, relationshipGroup); } // 0x6C1F6AA2F0ADD104 0x202237E2 b1207
 	// https://github.com/femga/rdr3_discoveries/tree/master/AI/ENTITY_PROOFS
@@ -1903,6 +1953,7 @@ namespace ENTITY
 	NATIVE_DECL void _0x9C6906EF8CB20C5F(Entity entity) { invoke<Void>(0x9C6906EF8CB20C5F, entity); } // 0x9C6906EF8CB20C5F b1436
 	// Note that the third parameter(denoted as z) is "up and down" with positive numbers encouraging upwards movement.
 	NATIVE_DECL void SET_ENTITY_VELOCITY(Entity entity, float x, float y, float z) { invoke<Void>(0x1C99BB7B6E96D16F, entity, x, y, z); } // 0x1C99BB7B6E96D16F 0xFF5A1988 b1207
+	NATIVE_DECL void SET_ENTITY_VELOCITY(Entity entity, Vector3 vec) { invoke<Void>(0x1C99BB7B6E96D16F, entity, vec.x, vec.y, vec.z); } // 0x1C99BB7B6E96D16F 0xFF5A1988 b1207
 	NATIVE_DECL void SET_ENTITY_HAS_GRAVITY(Entity entity, BOOL toggle) { invoke<Void>(0x0CEDB728A1083FA7, entity, toggle); } // 0x0CEDB728A1083FA7 0xE2F262BF b1207
 	// LOD distance can be 0 to 0xFFFF (higher values will result in 0xFFFF) as it is actually stored as a 16-bit value (aka uint16_t).
 	NATIVE_DECL void SET_ENTITY_LOD_DIST(Entity entity, int value) { invoke<Void>(0x5FB407F0A7C877BF, entity, value); } // 0x5FB407F0A7C877BF 0xD7ACC7AD b1207
@@ -1922,12 +1973,17 @@ namespace ENTITY
 	NATIVE_DECL void _0xA9E6D8F2DDFC4DB9(Any p0, Any p1) { invoke<Void>(0xA9E6D8F2DDFC4DB9, p0, p1); } // 0xA9E6D8F2DDFC4DB9 b1207
 	// Only works with objects!
 	NATIVE_DECL void CREATE_MODEL_SWAP(float x, float y, float z, float radius, Hash originalModel, Hash newModel, BOOL p6) { invoke<Void>(0x10B2218320B6F5AC, x, y, z, radius, originalModel, newModel, p6); } // 0x10B2218320B6F5AC 0x0BC12F9E b1207
+	NATIVE_DECL void CREATE_MODEL_SWAP(Vector3 vec, float radius, Hash originalModel, Hash newModel, BOOL p6) { invoke<Void>(0x10B2218320B6F5AC, vec.x, vec.y, vec.z, radius, originalModel, newModel, p6); } // 0x10B2218320B6F5AC 0x0BC12F9E b1207
 	NATIVE_DECL void REMOVE_MODEL_SWAP(float x, float y, float z, float radius, Hash originalModel, Hash newModel, BOOL p6) { invoke<Void>(0x824E1C26A14CB817, x, y, z, radius, originalModel, newModel, p6); } // 0x824E1C26A14CB817 0xCE0AA8BC b1207
+	NATIVE_DECL void REMOVE_MODEL_SWAP(Vector3 vec, float radius, Hash originalModel, Hash newModel, BOOL p6) { invoke<Void>(0x824E1C26A14CB817, vec.x, vec.y, vec.z, radius, originalModel, newModel, p6); } // 0x824E1C26A14CB817 0xCE0AA8BC b1207
 	NATIVE_DECL void CREATE_MODEL_HIDE(float x, float y, float z, float radius, Hash model, BOOL p5) { invoke<Void>(0x069848B3FB3C4426, x, y, z, radius, model, p5); } // 0x069848B3FB3C4426 0x7BD5CF2F b1207
+	NATIVE_DECL void CREATE_MODEL_HIDE(Vector3 vec, float radius, Hash model, BOOL p5) { invoke<Void>(0x069848B3FB3C4426, vec.x, vec.y, vec.z, radius, model, p5); } // 0x069848B3FB3C4426 0x7BD5CF2F b1207
 	NATIVE_DECL void CREATE_MODEL_HIDE_EXCLUDING_SCRIPT_OBJECTS(float x, float y, float z, float radius, Hash model, BOOL p5) { invoke<Void>(0xD136090A9AAAB17D, x, y, z, radius, model, p5); } // 0xD136090A9AAAB17D 0x07AAF22C b1207
+	NATIVE_DECL void CREATE_MODEL_HIDE_EXCLUDING_SCRIPT_OBJECTS(Vector3 vec, float radius, Hash model, BOOL p5) { invoke<Void>(0xD136090A9AAAB17D, vec.x, vec.y, vec.z, radius, model, p5); } // 0xD136090A9AAAB17D 0x07AAF22C b1207
 	NATIVE_DECL void REMOVE_MODEL_HIDE(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { invoke<Void>(0x3F38A98576F6213A, p0, p1, p2, p3, p4, p5); } // 0x3F38A98576F6213A 0x993DBC10 b1207
 	NATIVE_DECL Any _0xD4636C2EDB0DEA8A(Any p0) { return invoke<Any>(0xD4636C2EDB0DEA8A, p0); } // 0xD4636C2EDB0DEA8A b1207
 	NATIVE_DECL void CREATE_FORCED_OBJECT(float x, float y, float z, Any p3, Hash modelHash, BOOL p5) { invoke<Void>(0x0961A905AFBC34C7, x, y, z, p3, modelHash, p5); } // 0x0961A905AFBC34C7 0x335190A2 b1207
+	NATIVE_DECL void CREATE_FORCED_OBJECT(Vector3 vec, Any p3, Hash modelHash, BOOL p5) { invoke<Void>(0x0961A905AFBC34C7, vec.x, vec.y, vec.z, p3, modelHash, p5); } // 0x0961A905AFBC34C7 0x335190A2 b1207
 	NATIVE_DECL void REMOVE_FORCED_OBJECT(Any p0, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0x553FA683F2BCD814, p0, p1, p2, p3, p4); } // 0x553FA683F2BCD814 0xAED73ADD b1207
 	NATIVE_DECL void SET_ENTITY_NO_COLLISION_ENTITY(Entity entity1, Entity entity2, BOOL thisFrameOnly) { invoke<Void>(0xE037BF068223C38D, entity1, entity2, thisFrameOnly); } // 0xE037BF068223C38D 0x1E11BFE9 b1207
 	NATIVE_DECL void SET_ENTITY_MOTION_BLUR(Entity entity, BOOL toggle) { invoke<Void>(0x516C6ABD18322B63, entity, toggle); } // 0x516C6ABD18322B63 0xE90005B8 b1207
@@ -1936,6 +1992,7 @@ namespace ENTITY
 	// Old name: _SET_ENTITY_DECALS_DISABLED
 	NATIVE_DECL void SET_ENTITY_NOWEAPONDECALS(Entity entity, BOOL toggle) { invoke<Void>(0xC64E597783BE9A1D, entity, toggle); } // 0xC64E597783BE9A1D b1207
 	NATIVE_DECL int _GET_ENTITIES_NEAR_POINT(float x, float y, float z, float radius, ItemSet itemSet, int p5) { return invoke<int>(0x59B57C4B06531E1E, x, y, z, radius, itemSet, p5); } // 0x59B57C4B06531E1E b1207
+	NATIVE_DECL int _GET_ENTITIES_NEAR_POINT(Vector3 vec, float radius, ItemSet itemSet, int p5) { return invoke<int>(0x59B57C4B06531E1E, vec.x, vec.y, vec.z, radius, itemSet, p5); } // 0x59B57C4B06531E1E b1207
 	NATIVE_DECL int GET_MATCHING_ENTITIES(Volume volume, ItemSet itemSet, int entityType, Any p3, Hash p4, const char* p5) { return invoke<int>(0x84CCF9A12942C83D, volume, itemSet, entityType, p3, p4, p5); } // 0x84CCF9A12942C83D b1207
 	NATIVE_DECL int _GET_ENTITIES_IN_VOLUME(Volume volume, ItemSet itemSet, int entityType) { return invoke<int>(0x886171A12F400B89, volume, itemSet, entityType); } // 0x886171A12F400B89 b1207
 	// Alternative Name: _GET_ENTITY_FROM_MAP_OBJECT; You can get existing objects and manipulate them using this native.
@@ -1973,6 +2030,7 @@ namespace ENTITY
 	NATIVE_DECL void _0xF41E2979D5BC5370(Any p0) { invoke<Void>(0xF41E2979D5BC5370, p0); } // 0xF41E2979D5BC5370 b1207
 	NATIVE_DECL Any _0xAAACB74442C1BED3(Any p0) { return invoke<Any>(0xAAACB74442C1BED3, p0); } // 0xAAACB74442C1BED3 b1207
 	NATIVE_DECL Any PIN_CLOSEST_MAP_ENTITY(Hash modelHash, float x, float y, float z, int flags) { return invoke<Any>(0x6F3068258A499E52, modelHash, x, y, z, flags); } // 0x6F3068258A499E52 b1207
+	NATIVE_DECL Any PIN_CLOSEST_MAP_ENTITY(Hash modelHash, Vector3 vec, int flags) { return invoke<Any>(0x6F3068258A499E52, modelHash, vec.x, vec.y, vec.z, flags); } // 0x6F3068258A499E52 b1207
 	NATIVE_DECL void _UNPIN_MAP_ENTITY(Entity entity) { invoke<Void>(0xD2B9C78537ED5759, entity); } // 0xD2B9C78537ED5759 b1207
 	NATIVE_DECL BOOL IS_MAP_ENTITY_PINNED(Any p0) { return invoke<BOOL>(0x1FF441D7954F8709, p0); } // 0x1FF441D7954F8709 b1207
 	NATIVE_DECL Entity _GET_PINNED_MAP_ENTITY(Any p0) { return invoke<Entity>(0x4735E2A4BB83D9DA, p0); } // 0x4735E2A4BB83D9DA b1207
@@ -1991,15 +2049,19 @@ namespace EVENT
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	// https://github.com/femga/rdr3_discoveries/blob/master/AI/EVENTS
 	NATIVE_DECL ScrHandle ADD_SHOCKING_EVENT_AT_POSITION(Hash eventType, float x, float y, float z, float p4, float p5, float p6, float p7, float p8, int p9, int p10) { return invoke<ScrHandle>(0xD9F8455409B525E9, eventType, x, y, z, p4, p5, p6, p7, p8, p9, p10); } // 0xD9F8455409B525E9 0x0B30F779 b1207
+	NATIVE_DECL ScrHandle ADD_SHOCKING_EVENT_AT_POSITION(Hash eventType, Vector3 vec, float p4, float p5, float p6, float p7, float p8, int p9, int p10) { return invoke<ScrHandle>(0xD9F8455409B525E9, eventType, vec.x, vec.y, vec.z, p4, p5, p6, p7, p8, p9, p10); } // 0xD9F8455409B525E9 0x0B30F779 b1207
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	NATIVE_DECL ScrHandle ADD_SHOCKING_EVENT_FOR_ENTITY(Hash eventType, Entity entity, float p2, float p3, float p4, float p5, float p6, float p7, BOOL p8, BOOL p9, int p10, int p11) { return invoke<ScrHandle>(0x7FD8F3BE76F89422, eventType, entity, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11); } // 0x7FD8F3BE76F89422 0xA81B5B71 b1207
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	NATIVE_DECL BOOL IS_SHOCKING_EVENT_IN_SPHERE(Hash eventType, float x, float y, float z, float radius) { return invoke<BOOL>(0x9DB47E16060D6354, eventType, x, y, z, radius); } // 0x9DB47E16060D6354 0x2F98823E b1207
+	NATIVE_DECL BOOL IS_SHOCKING_EVENT_IN_SPHERE(Hash eventType, Vector3 vec, float radius) { return invoke<BOOL>(0x9DB47E16060D6354, eventType, vec.x, vec.y, vec.z, radius); } // 0x9DB47E16060D6354 0x2F98823E b1207
 	NATIVE_DECL BOOL REMOVE_SHOCKING_EVENT(ScrHandle event) { return invoke<BOOL>(0xE8BB3CC253A34559, event); } // 0xE8BB3CC253A34559 0xF82D5A87 b1207
 	NATIVE_DECL void REMOVE_ALL_SHOCKING_EVENTS(BOOL p0) { invoke<Void>(0xD47A168C2AB90DC4, p0); } // 0xD47A168C2AB90DC4 0x64DF6282 b1207
 	NATIVE_DECL void _REMOVE_ALL_SHOCKING_EVENTS_IN_AREA(float x, float y, float z, float radius, BOOL p4) { invoke<Void>(0xB4C71BA9CAB097BD, x, y, z, radius, p4); } // 0xB4C71BA9CAB097BD b1207
+	NATIVE_DECL void _REMOVE_ALL_SHOCKING_EVENTS_IN_AREA(Vector3 vec, float radius, BOOL p4) { invoke<Void>(0xB4C71BA9CAB097BD, vec.x, vec.y, vec.z, radius, p4); } // 0xB4C71BA9CAB097BD b1207
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	NATIVE_DECL void _REMOVE_ALL_SHOCKING_EVENTS_OF_TYPE_IN_AREA(Hash eventType, float x, float y, float z, float radius, BOOL p5) { invoke<Void>(0x6A648D42BF271DC7, eventType, x, y, z, radius, p5); } // 0x6A648D42BF271DC7 b1207
+	NATIVE_DECL void _REMOVE_ALL_SHOCKING_EVENTS_OF_TYPE_IN_AREA(Hash eventType, Vector3 vec, float radius, BOOL p5) { invoke<Void>(0x6A648D42BF271DC7, eventType, vec.x, vec.y, vec.z, radius, p5); } // 0x6A648D42BF271DC7 b1207
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	NATIVE_DECL void REMOVE_ALL_SHOCKING_EVENTS_OF_TYPE(Hash eventType, BOOL p1) { invoke<Void>(0x118873DD538490B4, eventType, p1); } // 0x118873DD538490B4 b1207
 	NATIVE_DECL void REMOVE_SHOCKING_EVENT_SPAWN_BLOCKING_AREAS() { invoke<Void>(0xDB249021652420C5); } // 0xDB249021652420C5 0xA0CE89C8 b1207
@@ -2058,15 +2120,20 @@ namespace FIRE
 	// maxChildren: The max amount of times a fire can spread to other objects. Must be 25 or less, or the function will do nothing.
 	// isGasFire: Whether or not the fire is powered by gasoline.
 	NATIVE_DECL FireId START_SCRIPT_FIRE(float x, float y, float z, int p3, float p4, BOOL p5, const char* soundsetName, float p7, int p8) { return invoke<FireId>(0x6B83617E04503888, x, y, z, p3, p4, p5, soundsetName, p7, p8); } // 0x6B83617E04503888 0xE7529357 b1207
+	NATIVE_DECL FireId START_SCRIPT_FIRE(Vector3 vec, int p3, float p4, BOOL p5, const char* soundsetName, float p7, int p8) { return invoke<FireId>(0x6B83617E04503888, vec.x, vec.y, vec.z, p3, p4, p5, soundsetName, p7, p8); } // 0x6B83617E04503888 0xE7529357 b1207
 	NATIVE_DECL void REMOVE_SCRIPT_FIRE(FireId fireHandle) { invoke<Void>(0x790125C36E194069, fireHandle); } // 0x790125C36E194069 0x6B21FE26 b1207
 	NATIVE_DECL void START_ENTITY_FIRE(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0xC4DC7418A44D6822, p0, p1, p2, p3); } // 0xC4DC7418A44D6822 0x8928428E b1207
 	NATIVE_DECL void STOP_ENTITY_FIRE(Any p0, Any p1) { invoke<Void>(0x8390751DC40C1E98, p0, p1); } // 0x8390751DC40C1E98 0xCE8C9066 b1207
 	NATIVE_DECL BOOL IS_ENTITY_ON_FIRE(Entity entity) { return invoke<BOOL>(0x1BD7C371CE257C3E, entity); } // 0x1BD7C371CE257C3E 0x8C73E64F b1207
 	NATIVE_DECL void _0x754937C28271BC65(Any p0) { invoke<Void>(0x754937C28271BC65, p0); } // 0x754937C28271BC65 b1207
 	NATIVE_DECL int GET_NUMBER_OF_FIRES_IN_RANGE(float x, float y, float z, float radius) { return invoke<int>(0xF9617BC6FAE61E08, x, y, z, radius); } // 0xF9617BC6FAE61E08 0x654D93B7 b1207
+	NATIVE_DECL int GET_NUMBER_OF_FIRES_IN_RANGE(Vector3 vec, float radius) { return invoke<int>(0xF9617BC6FAE61E08, vec.x, vec.y, vec.z, radius); } // 0xF9617BC6FAE61E08 0x654D93B7 b1207
 	NATIVE_DECL void STOP_FIRE_IN_RANGE(float x, float y, float z, float radius) { invoke<Void>(0xDB38F247BD421708, x, y, z, radius); } // 0xDB38F247BD421708 0x725C7205 b1207
+	NATIVE_DECL void STOP_FIRE_IN_RANGE(Vector3 vec, float radius) { invoke<Void>(0xDB38F247BD421708, vec.x, vec.y, vec.z, radius); } // 0xDB38F247BD421708 0x725C7205 b1207
 	NATIVE_DECL void _STOP_FIRE_IN_BOX(float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) { invoke<Void>(0xB7C7BDC375AEA9A4, posX, posY, posZ, rotX, rotY, rotZ, scaleX, scaleY, scaleZ); } // 0xB7C7BDC375AEA9A4 b1207
+	NATIVE_DECL void _STOP_FIRE_IN_BOX(Vector3 pos, Vector3 rot, Vector3 scale) { invoke<Void>(0xB7C7BDC375AEA9A4, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z); } // 0xB7C7BDC375AEA9A4 b1207
 	NATIVE_DECL BOOL GET_CLOSEST_FIRE_POS(Vector3* outPosition, float x, float y, float z) { return invoke<BOOL>(0xB646FB657F448261, outPosition, x, y, z); } // 0xB646FB657F448261 0xC4977B47 b1207
+	NATIVE_DECL BOOL GET_CLOSEST_FIRE_POS(Vector3* outPosition, Vector3 vec) { return invoke<BOOL>(0xB646FB657F448261, outPosition, vec.x, vec.y, vec.z); } // 0xB646FB657F448261 0xC4977B47 b1207
 	NATIVE_DECL Any _0x559FC1D310813031(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9) { return invoke<Any>(0x559FC1D310813031, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9); } // 0x559FC1D310813031 b1232
 	NATIVE_DECL Any _0x41B87A6495EE13DD(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9) { return invoke<Any>(0x41B87A6495EE13DD, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9); } // 0x41B87A6495EE13DD b1232
 	NATIVE_DECL Any _0xA4454592DCF7C992(Any p0) { return invoke<Any>(0xA4454592DCF7C992, p0); } // 0xA4454592DCF7C992 b1207
@@ -2115,27 +2182,37 @@ namespace FIRE
 	// 	EXP_TAG_POISON_BOTTLE
 	// };
 	NATIVE_DECL void ADD_EXPLOSION(float x, float y, float z, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0x7D6F58F69DA92530, x, y, z, explosionType, damageScale, isAudible, isInvisible, cameraShake); } // 0x7D6F58F69DA92530 0x10AF5258 b1207
+	NATIVE_DECL void ADD_EXPLOSION(Vector3 vec, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0x7D6F58F69DA92530, vec.x, vec.y, vec.z, explosionType, damageScale, isAudible, isInvisible, cameraShake); } // 0x7D6F58F69DA92530 0x10AF5258 b1207
 	// explosionType: see ADD_EXPLOSION
 	NATIVE_DECL void ADD_OWNED_EXPLOSION(Ped ped, float x, float y, float z, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0xD84A917A64D4D016, ped, x, y, z, explosionType, damageScale, isAudible, isInvisible, cameraShake); } // 0xD84A917A64D4D016 0x27EE0D67 b1207
+	NATIVE_DECL void ADD_OWNED_EXPLOSION(Ped ped, Vector3 vec, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0xD84A917A64D4D016, ped, vec.x, vec.y, vec.z, explosionType, damageScale, isAudible, isInvisible, cameraShake); } // 0xD84A917A64D4D016 0x27EE0D67 b1207
 	// _ADD_EXPLOSION_*(ON ENTITY?)
 	NATIVE_DECL void _0xB7DF150605EEDC9B(Entity entity, int p1, float x, float y, float z, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0xB7DF150605EEDC9B, entity, p1, x, y, z, explosionType, damageScale, isAudible, isInvisible, cameraShake); } // 0xB7DF150605EEDC9B b1207
+	NATIVE_DECL void _0xB7DF150605EEDC9B(Entity entity, int p1, Vector3 vec, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0xB7DF150605EEDC9B, entity, p1, vec.x, vec.y, vec.z, explosionType, damageScale, isAudible, isInvisible, cameraShake); } // 0xB7DF150605EEDC9B b1207
 	// explosionType: see ADD_EXPLOSION
 	// Change explosionFx (Visual Effect) for specified explosionType
 	NATIVE_DECL void ADD_EXPLOSION_WITH_USER_VFX(float x, float y, float z, int explosionType, Hash explosionFx, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0x53BA259F3A67A99E, x, y, z, explosionType, explosionFx, damageScale, isAudible, isInvisible, cameraShake); } // 0x53BA259F3A67A99E 0xCF358946 b1207
+	NATIVE_DECL void ADD_EXPLOSION_WITH_USER_VFX(Vector3 vec, int explosionType, Hash explosionFx, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0x53BA259F3A67A99E, vec.x, vec.y, vec.z, explosionType, explosionFx, damageScale, isAudible, isInvisible, cameraShake); } // 0x53BA259F3A67A99E 0xCF358946 b1207
 	NATIVE_DECL void _0x34AE85C7CA4857AA(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10) { invoke<Void>(0x34AE85C7CA4857AA, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10); } // 0x34AE85C7CA4857AA b1207
 	// explosionType: see ADD_EXPLOSION
 	NATIVE_DECL BOOL IS_EXPLOSION_IN_AREA(int explosionType, float x1, float y1, float z1, float x2, float y2, float z2) { return invoke<BOOL>(0x8391BA4313A25AD3, explosionType, x1, y1, z1, x2, y2, z2); } // 0x8391BA4313A25AD3 0xFB40075B b1207
+	NATIVE_DECL BOOL IS_EXPLOSION_IN_AREA(int explosionType, Vector3 vec1, Vector3 vec2) { return invoke<BOOL>(0x8391BA4313A25AD3, explosionType, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z); } // 0x8391BA4313A25AD3 0xFB40075B b1207
 	// explosionType: see ADD_EXPLOSION
 	NATIVE_DECL BOOL IS_EXPLOSION_ACTIVE_IN_AREA(int explosionType, float x1, float y1, float z1, float x2, float y2, float z2) { return invoke<BOOL>(0xD96E82AEBFFAAFF0, explosionType, x1, y1, z1, x2, y2, z2); } // 0xD96E82AEBFFAAFF0 0x37C388DB b1207
+	NATIVE_DECL BOOL IS_EXPLOSION_ACTIVE_IN_AREA(int explosionType, Vector3 vec1, Vector3 vec2) { return invoke<BOOL>(0xD96E82AEBFFAAFF0, explosionType, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z); } // 0xD96E82AEBFFAAFF0 0x37C388DB b1207
 	// explosionType: see ADD_EXPLOSION
 	NATIVE_DECL BOOL IS_EXPLOSION_IN_SPHERE(int explosionType, float x, float y, float z, float radius) { return invoke<BOOL>(0xD62DD846D82CBB90, explosionType, x, y, z, radius); } // 0xD62DD846D82CBB90 0xD455A7F3 b1207
+	NATIVE_DECL BOOL IS_EXPLOSION_IN_SPHERE(int explosionType, Vector3 vec, float radius) { return invoke<BOOL>(0xD62DD846D82CBB90, explosionType, vec.x, vec.y, vec.z, radius); } // 0xD62DD846D82CBB90 0xD455A7F3 b1207
 	// explosionType: see ADD_EXPLOSION
 	NATIVE_DECL BOOL IS_EXPLOSION_IN_ANGLED_AREA(int explosionType, float x1, float y1, float z1, float x2, float y2, float z2, float angle) { return invoke<BOOL>(0x5AE661ECD18524C9, explosionType, x1, y1, z1, x2, y2, z2, angle); } // 0x5AE661ECD18524C9 0x0128FED9 b1207
+	NATIVE_DECL BOOL IS_EXPLOSION_IN_ANGLED_AREA(int explosionType, Vector3 vec1, Vector3 vec2, float angle) { return invoke<BOOL>(0x5AE661ECD18524C9, explosionType, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, angle); } // 0x5AE661ECD18524C9 0x0128FED9 b1207
 	// explosionType: see ADD_EXPLOSION
 	NATIVE_DECL BOOL _IS_EXPLOSION_IN_VOLUME(int explosionType, Volume volume) { return invoke<BOOL>(0xE24822A4CFC9107A, explosionType, volume); } // 0xE24822A4CFC9107A b1207
 	// explosionType: see ADD_EXPLOSION
 	NATIVE_DECL Entity GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA(int explosionType, float x1, float y1, float z1, float x2, float y2, float z2, float radius) { return invoke<Entity>(0x8002DDAB58594D78, explosionType, x1, y1, z1, x2, y2, z2, radius); } // 0x8002DDAB58594D78 0xAEC0D176 b1207
+	NATIVE_DECL Entity GET_OWNER_OF_EXPLOSION_IN_ANGLED_AREA(int explosionType, Vector3 vec1, Vector3 vec2, float radius) { return invoke<Entity>(0x8002DDAB58594D78, explosionType, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, radius); } // 0x8002DDAB58594D78 0xAEC0D176 b1207
 	NATIVE_DECL void _0x68F6A75FDF5A70D6(float x, float y, float z, float p3) { invoke<Void>(0x68F6A75FDF5A70D6, x, y, z, p3); } // 0x68F6A75FDF5A70D6 b1207
+	NATIVE_DECL void _0x68F6A75FDF5A70D6(Vector3 vec, float p3) { invoke<Void>(0x68F6A75FDF5A70D6, vec.x, vec.y, vec.z, p3); } // 0x68F6A75FDF5A70D6 b1207
 	// Only used in R* SP Related Camp Scripts
 	NATIVE_DECL void _0x24DB6B9F2B719043(float p0) { invoke<Void>(0x24DB6B9F2B719043, p0); } // 0x24DB6B9F2B719043 b1207
 	// Tested with fire & dynamite. Only returns true using value p1 = 1 and when the ped is affected by fire.
@@ -2164,6 +2241,7 @@ namespace FLOCK
 	NATIVE_DECL void _0xC3D581A34BC0A1F0(Any p0, Any p1) { invoke<Void>(0xC3D581A34BC0A1F0, p0, p1); } // 0xC3D581A34BC0A1F0 b1207
 	// species: SPECIES_BIRD_CROW
 	NATIVE_DECL void _0xF2CCA7B68CFAB2B9(Hash species, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float p10, float p11, float p12, float p13) { invoke<Void>(0xF2CCA7B68CFAB2B9, species, x1, y1, z1, x2, y2, z2, x3, y3, z3, p10, p11, p12, p13); } // 0xF2CCA7B68CFAB2B9 b1207
+	NATIVE_DECL void _0xF2CCA7B68CFAB2B9(Hash species, Vector3 vec1, Vector3 vec2, Vector3 vec3, float p10, float p11, float p12, float p13) { invoke<Void>(0xF2CCA7B68CFAB2B9, species, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, vec3.x, vec3.y, vec3.z, p10, p11, p12, p13); } // 0xF2CCA7B68CFAB2B9 b1207
 	NATIVE_DECL void _0xFB16F08F47B83B4C(Any p0) { invoke<Void>(0xFB16F08F47B83B4C, p0); } // 0xFB16F08F47B83B4C b1207
 	// Ped (horse) will run away from players and mounting will trigger them to buck until disabled.
 	// Used for: REL_DOMESTICATED_ANIMAL
@@ -2249,6 +2327,7 @@ namespace GRAPHICS
 	// 2 = failed
 	NATIVE_DECL int GET_STATUS_OF_SORTED_LIST_OPERATION() { return invoke<int>(0xB28894CD7408BD0C); } // 0xB28894CD7408BD0C 0x596B900D b1207
 	NATIVE_DECL void DRAW_LIGHT_WITH_RANGE(float posX, float posY, float posZ, int colorR, int colorG, int colorB, float range, float intensity) { invoke<Void>(0xD2D9E04C0DF927F4, posX, posY, posZ, colorR, colorG, colorB, range, intensity); } // 0xD2D9E04C0DF927F4 0x6A396E9A b1207
+	NATIVE_DECL void DRAW_LIGHT_WITH_RANGE(Vector3 pos, int colorR, int colorG, int colorB, float range, float intensity) { invoke<Void>(0xD2D9E04C0DF927F4, pos.x, pos.y, pos.z, colorR, colorG, colorB, range, intensity); } // 0xD2D9E04C0DF927F4 0x6A396E9A b1207
 	NATIVE_DECL void UPDATE_LIGHTS_ON_ENTITY(Entity entity) { invoke<Void>(0xBDBACB52A03CC760, entity); } // 0xBDBACB52A03CC760 0xC12AC47A b1207
 	// https://gfycat.com/meagerfaireyra
 	NATIVE_DECL void _SET_LIGHTS_COLOR_FOR_ENTITY(Entity entity, int red, int green, int blue) { invoke<Void>(0x6EC2A67962296F49, entity, red, green, blue); } // 0x6EC2A67962296F49 b1207
@@ -2257,7 +2336,9 @@ namespace GRAPHICS
 	NATIVE_DECL void _SET_LIGHTS_TYPE_FOR_ENTITY(Entity entity, int type) { invoke<Void>(0xAB72C67163DC4DB4, entity, type); } // 0xAB72C67163DC4DB4 b1207
 	// https://github.com/femga/rdr3_discoveries/blob/master/graphics/markers/marker_types.lua
 	NATIVE_DECL void _DRAW_MARKER(Hash type, float posX, float posY, float posZ, float dirX, float dirY, float dirZ, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ, int red, int green, int blue, int alpha, BOOL bobUpAndDown, BOOL faceCamera, int p19, BOOL rotate, const char* textureDict, const char* textureName, BOOL drawOnEnts) { invoke<Void>(0x2A32FAA57B937173, type, posX, posY, posZ, dirX, dirY, dirZ, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, red, green, blue, alpha, bobUpAndDown, faceCamera, p19, rotate, textureDict, textureName, drawOnEnts); } // 0x2A32FAA57B937173 b1207
+	NATIVE_DECL void _DRAW_MARKER(Hash type, Vector3 pos, Vector3 dir, Vector3 rot, Vector3 scale, int red, int green, int blue, int alpha, BOOL bobUpAndDown, BOOL faceCamera, int p19, BOOL rotate, const char* textureDict, const char* textureName, BOOL drawOnEnts) { invoke<Void>(0x2A32FAA57B937173, type, pos.x, pos.y, pos.z, dir.x, dir.y, dir.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z, red, green, blue, alpha, bobUpAndDown, faceCamera, p19, rotate, textureDict, textureName, drawOnEnts); } // 0x2A32FAA57B937173 b1207
 	NATIVE_DECL int CREATE_CHECKPOINT_WITH_NAMEHASH(Hash typeHash, float posX1, float posY1, float posZ1, float posX2, float posY2, float posZ2, float radius, int red, int green, int blue, int alpha, int reserved) { return invoke<int>(0x175668836B44CBB0, typeHash, posX1, posY1, posZ1, posX2, posY2, posZ2, radius, red, green, blue, alpha, reserved); } // 0x175668836B44CBB0 b1207
+	NATIVE_DECL int CREATE_CHECKPOINT_WITH_NAMEHASH(Hash typeHash, Vector3 pos1, Vector3 pos2, float radius, int red, int green, int blue, int alpha, int reserved) { return invoke<int>(0x175668836B44CBB0, typeHash, pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z, radius, red, green, blue, alpha, reserved); } // 0x175668836B44CBB0 b1207
 	NATIVE_DECL BOOL _DOES_CHECKPOINT_HAVE_FX(int checkpoint) { return invoke<BOOL>(0x4C11CCACB7C02B6E, checkpoint); } // 0x4C11CCACB7C02B6E b1207
 	// Sets the checkpoint color.
 	NATIVE_DECL void SET_CHECKPOINT_RGBA(int checkpoint, int red, int green, int blue, int alpha) { invoke<Void>(0xCAAFC225E33B1D15, checkpoint, red, green, blue, alpha); } // 0xCAAFC225E33B1D15 0xEF9C8CB3 b1207
@@ -2316,6 +2397,7 @@ namespace GRAPHICS
 	NATIVE_DECL Any _0xC28F62AC9774FC1B() { return invoke<Any>(0xC28F62AC9774FC1B); } // 0xC28F62AC9774FC1B b1207
 	NATIVE_DECL void _0xEB48CE48EEC41FD4(Any p0) { invoke<Void>(0xEB48CE48EEC41FD4, p0); } // 0xEB48CE48EEC41FD4 b1207
 	NATIVE_DECL BOOL GET_SCREEN_COORD_FROM_WORLD_COORD(float worldX, float worldY, float worldZ, float* screenX, float* screenY) { return invoke<BOOL>(0xCB50D7AFCC8B0EC6, worldX, worldY, worldZ, screenX, screenY); } // 0xCB50D7AFCC8B0EC6 0x1F950E4B b1207
+	NATIVE_DECL BOOL GET_SCREEN_COORD_FROM_WORLD_COORD(Vector3 world, float* screenX, float* screenY) { return invoke<BOOL>(0xCB50D7AFCC8B0EC6, world.x, world.y, world.z, screenX, screenY); } // 0xCB50D7AFCC8B0EC6 0x1F950E4B b1207
 	NATIVE_DECL BOOL _IS_TEXTURE_IN_DICT(Hash txdHash, Hash dict) { return invoke<BOOL>(0xA2A51869BDED733B, txdHash, dict); } // 0xA2A51869BDED733B b1207
 	// Does not affect weapons, particles, fire/explosions, flashlights or the sun.
 	// When set to true, all emissive textures (including ped components that have light effects), street lights, building lights, vehicle lights, etc will all be turned off.
@@ -2330,6 +2412,7 @@ namespace GRAPHICS
 	// Creates a tracked point, useful for checking the visibility of a 3D point on screen.
 	NATIVE_DECL int CREATE_TRACKED_POINT() { return invoke<int>(0xFB405CB357C69CB9); } // 0xFB405CB357C69CB9 0x3129C31A b1207
 	NATIVE_DECL void SET_TRACKED_POINT_INFO(int point, float x, float y, float z, float radius) { invoke<Void>(0xF6FDA3D4404D4F2C, point, x, y, z, radius); } // 0xF6FDA3D4404D4F2C 0x28689AA4 b1207
+	NATIVE_DECL void SET_TRACKED_POINT_INFO(int point, Vector3 vec, float radius) { invoke<Void>(0xF6FDA3D4404D4F2C, point, vec.x, vec.y, vec.z, radius); } // 0xF6FDA3D4404D4F2C 0x28689AA4 b1207
 	NATIVE_DECL BOOL IS_TRACKED_POINT_VISIBLE(int point) { return invoke<BOOL>(0xCBB056BA159FB48D, point); } // 0xCBB056BA159FB48D 0x0BFC4F64 b1207
 	// Returns iNumPixels, iPixelsVisible
 	NATIVE_DECL int _0xDFE332A5DA6FE7C9(int iTrackedPoint) { return invoke<int>(0xDFE332A5DA6FE7C9, iTrackedPoint); } // 0xDFE332A5DA6FE7C9 b1207
@@ -2337,12 +2420,14 @@ namespace GRAPHICS
 	NATIVE_DECL BOOL _IS_TRACKED_POINT_VALID(int point) { return invoke<BOOL>(0xF2FDDCC8C6BAE1B3, point); } // 0xF2FDDCC8C6BAE1B3 b1207
 	// Returns handle to be used with REMOVE_GRASS_CULL_SPHERE
 	NATIVE_DECL int SET_GRASS_CULL_SPHERE(float x, float y, float z, float p3, int p4) { return invoke<int>(0x27219300C36A8D40, x, y, z, p3, p4); } // 0x27219300C36A8D40 b1207
+	NATIVE_DECL int SET_GRASS_CULL_SPHERE(Vector3 vec, float p3, int p4) { return invoke<int>(0x27219300C36A8D40, vec.x, vec.y, vec.z, p3, p4); } // 0x27219300C36A8D40 b1207
 	NATIVE_DECL void REMOVE_GRASS_CULL_SPHERE(int handle) { invoke<Void>(0xAE7BF7CA9E4BA48D, handle); } // 0xAE7BF7CA9E4BA48D b1207
 	// Adds Vegetation Blocking Zone, Added Snow Flattening veg mod Zone
 	// Returns veg modifier handle
 	NATIVE_DECL int _ADD_VEG_MODIFIER_ZONE(Volume volume, int p1, int flags, int p3) { return invoke<int>(0xBD3324281E8B9933, volume, p1, flags, p3); } // 0xBD3324281E8B9933 b1207
 	// Returns veg modifier handle
 	NATIVE_DECL int ADD_VEG_MODIFIER_SPHERE(float x, float y, float z, float radius, int modType, int flags, int p6) { return invoke<int>(0xFA50F79257745E74, x, y, z, radius, modType, flags, p6); } // 0xFA50F79257745E74 b1207
+	NATIVE_DECL int ADD_VEG_MODIFIER_SPHERE(Vector3 vec, float radius, int modType, int flags, int p6) { return invoke<int>(0xFA50F79257745E74, vec.x, vec.y, vec.z, radius, modType, flags, p6); } // 0xFA50F79257745E74 b1207
 	NATIVE_DECL void REMOVE_VEG_MODIFIER_SPHERE(int vegModifierHandle, int p1) { invoke<Void>(0x9CF1836C03FB67A2, vegModifierHandle, p1); } // 0x9CF1836C03FB67A2 b1207
 	NATIVE_DECL void _ENABLE_STATIC_VEG_MODIFIER(Hash p0) { invoke<Void>(0xDFEA23EC90113657, p0); } // 0xDFEA23EC90113657 b1207
 	NATIVE_DECL void _DISABLE_STATIC_VEG_MODIFIER(Hash p0) { invoke<Void>(0xDD0BC0EDCB2162F6, p0); } // 0xDD0BC0EDCB2162F6 b1207
@@ -2406,24 +2491,37 @@ namespace GRAPHICS
 	NATIVE_DECL void _0x9229ED770975BD9E() { invoke<Void>(0x9229ED770975BD9E); } // 0x9229ED770975BD9E b1311
 	// https://github.com/femga/rdr3_discoveries/blob/master/graphics/ptfx/ptfx_assets_non_looped.lua
 	NATIVE_DECL int START_PARTICLE_FX_NON_LOOPED_AT_COORD(const char* effectName, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0x2E80BF72EF7C87AC, effectName, xPos, yPos, zPos, xRot, yRot, zRot, scale, xAxis, yAxis, zAxis); } // 0x2E80BF72EF7C87AC 0xDD79D679 b1207
+	NATIVE_DECL int START_PARTICLE_FX_NON_LOOPED_AT_COORD(const char* effectName, Vector3 pos, Vector3 rot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0x2E80BF72EF7C87AC, effectName, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, scale, xAxis, yAxis, zAxis); } // 0x2E80BF72EF7C87AC 0xDD79D679 b1207
 	NATIVE_DECL BOOL START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(const char* effectName, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<BOOL>(0xFB97618457994A62, effectName, xPos, yPos, zPos, xRot, yRot, zRot, scale, xAxis, yAxis, zAxis); } // 0xFB97618457994A62 0x633F8C48 b1207
+	NATIVE_DECL BOOL START_NETWORKED_PARTICLE_FX_NON_LOOPED_AT_COORD(const char* effectName, Vector3 pos, Vector3 rot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<BOOL>(0xFB97618457994A62, effectName, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, scale, xAxis, yAxis, zAxis); } // 0xFB97618457994A62 0x633F8C48 b1207
 	NATIVE_DECL BOOL START_PARTICLE_FX_NON_LOOPED_ON_PED_BONE(const char* effectName, Ped ped, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0x3FAA72BD940C3AC0, effectName, ped, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, boneIndex, scale, axisX, axisY, axisZ); } // 0x3FAA72BD940C3AC0 0x53DAEF4E b1207
+	NATIVE_DECL BOOL START_PARTICLE_FX_NON_LOOPED_ON_PED_BONE(const char* effectName, Ped ped, Vector3 offset, Vector3 rot, int boneIndex, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0x3FAA72BD940C3AC0, effectName, ped, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, boneIndex, scale, axisX, axisY, axisZ); } // 0x3FAA72BD940C3AC0 0x53DAEF4E b1207
 	NATIVE_DECL BOOL START_PARTICLE_FX_NON_LOOPED_ON_ENTITY(const char* effectName, Entity entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0xFF4C64C513388C12, effectName, entity, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, scale, axisX, axisY, axisZ); } // 0xFF4C64C513388C12 0x9604DAD4 b1207
+	NATIVE_DECL BOOL START_PARTICLE_FX_NON_LOOPED_ON_ENTITY(const char* effectName, Entity entity, Vector3 offset, Vector3 rot, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0xFF4C64C513388C12, effectName, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, scale, axisX, axisY, axisZ); } // 0xFF4C64C513388C12 0x9604DAD4 b1207
 	NATIVE_DECL BOOL START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(const char* effectName, Entity entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0xE6CFE43937061143, effectName, entity, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, scale, axisX, axisY, axisZ); } // 0xE6CFE43937061143 0x469A2B4A b1207
+	NATIVE_DECL BOOL START_NETWORKED_PARTICLE_FX_NON_LOOPED_ON_ENTITY(const char* effectName, Entity entity, Vector3 offset, Vector3 rot, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0xE6CFE43937061143, effectName, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, scale, axisX, axisY, axisZ); } // 0xE6CFE43937061143 0x469A2B4A b1207
 	NATIVE_DECL BOOL _START_PARTICLE_FX_NON_LOOPED_ON_PED_BONE_2(const char* effectName, Ped ped, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int boneIndex, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0xC695870B8A149B96, effectName, ped, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, boneIndex, scale, axisX, axisY, axisZ); } // 0xC695870B8A149B96 b1207
+	NATIVE_DECL BOOL _START_PARTICLE_FX_NON_LOOPED_ON_PED_BONE_2(const char* effectName, Ped ped, Vector3 offset, Vector3 rot, int boneIndex, float scale, BOOL axisX, BOOL axisY, BOOL axisZ) { return invoke<BOOL>(0xC695870B8A149B96, effectName, ped, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, boneIndex, scale, axisX, axisY, axisZ); } // 0xC695870B8A149B96 b1207
 	NATIVE_DECL void SET_PARTICLE_FX_NON_LOOPED_COLOUR(float r, float g, float b) { invoke<Void>(0x60B85BED6577A35B, r, g, b); } // 0x60B85BED6577A35B 0x7B689E20 b1207
 	NATIVE_DECL void SET_PARTICLE_FX_NON_LOOPED_ALPHA(float alpha) { invoke<Void>(0xE8A35938A7026CEA, alpha); } // 0xE8A35938A7026CEA 0x497EAFF2 b1311
 	NATIVE_DECL void _SET_PARTICLE_FX_NON_LOOPED_EMITTER_SCALE(float p0, float p1, float p2) { invoke<Void>(0x56C392C2BD78B024, p0, p1, p2); } // 0x56C392C2BD78B024 b1311
 	// https://github.com/femga/rdr3_discoveries/blob/master/graphics/ptfx/ptfx_assets_looped.lua
 	NATIVE_DECL int START_PARTICLE_FX_LOOPED_AT_COORD(const char* effectName, float x, float y, float z, float xRot, float yRot, float zRot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis, BOOL p11) { return invoke<int>(0xBA32867E86125D3A, effectName, x, y, z, xRot, yRot, zRot, scale, xAxis, yAxis, zAxis, p11); } // 0xBA32867E86125D3A 0xD348E3E6 b1207
+	NATIVE_DECL int START_PARTICLE_FX_LOOPED_AT_COORD(const char* effectName, Vector3 vec, Vector3 rot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis, BOOL p11) { return invoke<int>(0xBA32867E86125D3A, effectName, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale, xAxis, yAxis, zAxis, p11); } // 0xBA32867E86125D3A 0xD348E3E6 b1207
 	NATIVE_DECL int START_PARTICLE_FX_LOOPED_ON_PED_BONE(const char* effectName, Ped ped, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0xE689C1B1432BB8AF, effectName, ped, xOffset, yOffset, zOffset, xRot, yRot, zRot, boneIndex, scale, xAxis, yAxis, zAxis); } // 0xE689C1B1432BB8AF 0xF8FC196F b1207
+	NATIVE_DECL int START_PARTICLE_FX_LOOPED_ON_PED_BONE(const char* effectName, Ped ped, Vector3 offset, Vector3 rot, int boneIndex, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0xE689C1B1432BB8AF, effectName, ped, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, boneIndex, scale, xAxis, yAxis, zAxis); } // 0xE689C1B1432BB8AF 0xF8FC196F b1207
 	NATIVE_DECL int START_PARTICLE_FX_LOOPED_ON_ENTITY(const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0xBD41E1440CE39800, effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, scale, xAxis, yAxis, zAxis); } // 0xBD41E1440CE39800 0x0D06FF62 b1207
+	NATIVE_DECL int START_PARTICLE_FX_LOOPED_ON_ENTITY(const char* effectName, Entity entity, Vector3 offset, Vector3 rot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0xBD41E1440CE39800, effectName, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, scale, xAxis, yAxis, zAxis); } // 0xBD41E1440CE39800 0x0D06FF62 b1207
 	NATIVE_DECL int START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0xD3BA6EC7F2FBD5E9, effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, boneIndex, scale, xAxis, yAxis, zAxis); } // 0xD3BA6EC7F2FBD5E9 0x23BF0F9B b1207
+	NATIVE_DECL int START_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(const char* effectName, Entity entity, Vector3 offset, Vector3 rot, int boneIndex, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0xD3BA6EC7F2FBD5E9, effectName, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, boneIndex, scale, xAxis, yAxis, zAxis); } // 0xD3BA6EC7F2FBD5E9 0x23BF0F9B b1207
 	NATIVE_DECL int START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0x8F90AB32E1944BDE, effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, scale, xAxis, yAxis, zAxis); } // 0x8F90AB32E1944BDE 0x110752B2 b1207
+	NATIVE_DECL int START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY(const char* effectName, Entity entity, Vector3 offset, Vector3 rot, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0x8F90AB32E1944BDE, effectName, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, scale, xAxis, yAxis, zAxis); } // 0x8F90AB32E1944BDE 0x110752B2 b1207
 	NATIVE_DECL int START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(const char* effectName, Entity entity, float xOffset, float yOffset, float zOffset, float xRot, float yRot, float zRot, int boneIndex, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0x9C56621462FFE7A6, effectName, entity, xOffset, yOffset, zOffset, xRot, yRot, zRot, boneIndex, scale, xAxis, yAxis, zAxis); } // 0x9C56621462FFE7A6 0xF478EFCF b1207
+	NATIVE_DECL int START_NETWORKED_PARTICLE_FX_LOOPED_ON_ENTITY_BONE(const char* effectName, Entity entity, Vector3 offset, Vector3 rot, int boneIndex, float scale, BOOL xAxis, BOOL yAxis, BOOL zAxis) { return invoke<int>(0x9C56621462FFE7A6, effectName, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, boneIndex, scale, xAxis, yAxis, zAxis); } // 0x9C56621462FFE7A6 0xF478EFCF b1207
 	NATIVE_DECL void STOP_PARTICLE_FX_LOOPED(int ptfxHandle, BOOL p1) { invoke<Void>(0x22970F3A088B133B, ptfxHandle, p1); } // 0x22970F3A088B133B 0xD245455B b1207
 	NATIVE_DECL BOOL DOES_PARTICLE_FX_LOOPED_EXIST(int ptfxHandle) { return invoke<BOOL>(0x9DD5AFF561E88F2A, ptfxHandle); } // 0x9DD5AFF561E88F2A 0xCBF91D2A b1207
 	NATIVE_DECL void SET_PARTICLE_FX_LOOPED_OFFSETS(int ptfxHandle, float x, float y, float z, float rotX, float rotY, float rotZ) { invoke<Void>(0xD3A4A95FC94FE83B, ptfxHandle, x, y, z, rotX, rotY, rotZ); } // 0xD3A4A95FC94FE83B 0x641F7790 b1207
+	NATIVE_DECL void SET_PARTICLE_FX_LOOPED_OFFSETS(int ptfxHandle, Vector3 vec, Vector3 rot) { invoke<Void>(0xD3A4A95FC94FE83B, ptfxHandle, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z); } // 0xD3A4A95FC94FE83B 0x641F7790 b1207
 	NATIVE_DECL void SET_PARTICLE_FX_LOOPED_EVOLUTION(int ptfxHandle, const char* propertyName, float amount, BOOL noNetwork) { invoke<Void>(0x3674F389B0FACD80, ptfxHandle, propertyName, amount, noNetwork); } // 0x3674F389B0FACD80 0x1CBC1373 b1207
 	NATIVE_DECL void SET_PARTICLE_FX_LOOPED_COLOUR(int ptfxHandle, float r, float g, float b, BOOL p4) { invoke<Void>(0x239879FC61C610CC, ptfxHandle, r, g, b, p4); } // 0x239879FC61C610CC 0x5219D530 b1207
 	NATIVE_DECL void SET_PARTICLE_FX_LOOPED_ALPHA(int ptfxHandle, float alpha) { invoke<Void>(0x88786E76234F7054, ptfxHandle, alpha); } // 0x88786E76234F7054 0x5ED49BE1 b1207
@@ -2434,6 +2532,7 @@ namespace GRAPHICS
 	NATIVE_DECL void REMOVE_PARTICLE_FX(int ptfxHandle, BOOL p1) { invoke<Void>(0x459598F579C98929, ptfxHandle, p1); } // 0x459598F579C98929 0x6BA48C7E b1207
 	NATIVE_DECL void REMOVE_PARTICLE_FX_FROM_ENTITY(Entity entity) { invoke<Void>(0x92884B4A49D81325, entity); } // 0x92884B4A49D81325 0xCEDE52E9 b1207
 	NATIVE_DECL void REMOVE_PARTICLE_FX_IN_RANGE(float X, float Y, float Z, float radius) { invoke<Void>(0x87B5905ECA623B68, X, Y, Z, radius); } // 0x87B5905ECA623B68 0x7EB8F275 b1207
+	NATIVE_DECL void REMOVE_PARTICLE_FX_IN_RANGE(Vector3 vec, float radius) { invoke<Void>(0x87B5905ECA623B68, vec.x, vec.y, vec.z, radius); } // 0x87B5905ECA623B68 0x7EB8F275 b1207
 	// fxName: see data_0/data/effects/ptfx/fxlists/
 	NATIVE_DECL void USE_PARTICLE_FX_ASSET(const char* fxName) { invoke<Void>(0xA10DB07FC234DD12, fxName); } // 0xA10DB07FC234DD12 0x9C720B61 b1207
 	NATIVE_DECL void SET_PARTICLE_FX_OVERRIDE(const char* oldAsset, const char* newAsset) { invoke<Void>(0xBE711A169E9C7E95, oldAsset, newAsset); } // 0xBE711A169E9C7E95 0xC92719A7 b1207
@@ -2465,19 +2564,23 @@ namespace GRAPHICS
 	NATIVE_DECL void _SET_PEARLESCENT_FX_ENABLED(Object object, BOOL toggle) { invoke<Void>(0x72E30372E7CC4415, object, toggle); } // 0x72E30372E7CC4415 b1207
 	// Removes all decals in range from a position, it includes the bullet holes, blood pools, petrol...
 	NATIVE_DECL void REMOVE_DECALS_IN_RANGE(float x, float y, float z, float range) { invoke<Void>(0x86DE59FA02902B40, x, y, z, range); } // 0x86DE59FA02902B40 0x06A619A0 b1207
+	NATIVE_DECL void REMOVE_DECALS_IN_RANGE(Vector3 vec, float range) { invoke<Void>(0x86DE59FA02902B40, vec.x, vec.y, vec.z, range); } // 0x86DE59FA02902B40 0x06A619A0 b1207
 	NATIVE_DECL void REMOVE_DECALS_FROM_OBJECT(Object obj) { invoke<Void>(0xFB8972BAE0013140, obj); } // 0xFB8972BAE0013140 0x8B67DCA7 b1207
 	NATIVE_DECL int ADD_DECAL(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14, Any p15, Any p16, Any p17, Any p18, Any p19, Any p20, Any p21) { return invoke<int>(0x57CB267624EF85C0, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21); } // 0x57CB267624EF85C0 0xEAD0C412 b1207
 	// https://i.imgur.com/ULQU9US.jpg
 	// More rounded and small puddle
 	NATIVE_DECL void _ADD_BLOOD_POOL(float x, float y, float z, BOOL unused) { invoke<Void>(0xFA2ECC78A6014D4F, x, y, z, unused); } // 0xFA2ECC78A6014D4F b1207
+	NATIVE_DECL void _ADD_BLOOD_POOL(Vector3 vec, BOOL unused) { invoke<Void>(0xFA2ECC78A6014D4F, vec.x, vec.y, vec.z, unused); } // 0xFA2ECC78A6014D4F b1207
 	// https://i.imgur.com/rPITUCV.jpg
 	// More customizable and more like quadrants
 	NATIVE_DECL void _ADD_BLOOD_POOL_2(float x, float y, float z, float p3, float size, float p5, BOOL permanent, float p7, BOOL p8) { invoke<Void>(0xF708298675ABDC6A, x, y, z, p3, size, p5, permanent, p7, p8); } // 0xF708298675ABDC6A b1207
+	NATIVE_DECL void _ADD_BLOOD_POOL_2(Vector3 vec, float p3, float size, float p5, BOOL permanent, float p7, BOOL p8) { invoke<Void>(0xF708298675ABDC6A, vec.x, vec.y, vec.z, p3, size, p5, permanent, p7, p8); } // 0xF708298675ABDC6A b1207
 	// Creates blood pools for the given ped in some interval for a few seconds.
 	NATIVE_DECL void _ADD_BLOOD_POOLS_FOR_PED(Ped ped) { invoke<Void>(0xDFCE8CE9F3EBE93F, ped); } // 0xDFCE8CE9F3EBE93F b1207
 	NATIVE_DECL void _ADD_BLOOD_POOLS_FOR_PED_WITH_PARAMS(Ped ped, float p1, float size, float p3) { invoke<Void>(0xC349EE1E6EFA494B, ped, p1, size, p3); } // 0xC349EE1E6EFA494B b1207
 	NATIVE_DECL void START_PETROL_TRAIL_DECALS(Any p0, Any p1) { invoke<Void>(0x46F246D6504F0031, p0, p1); } // 0x46F246D6504F0031 0xE3938B0B b1207
 	NATIVE_DECL void ADD_PETROL_TRAIL_DECAL_INFO(float x, float y, float z, float p3) { invoke<Void>(0x73354FB6D03D2E8A, x, y, z, p3); } // 0x73354FB6D03D2E8A 0xBAEC6ADD b1207
+	NATIVE_DECL void ADD_PETROL_TRAIL_DECAL_INFO(Vector3 vec, float p3) { invoke<Void>(0x73354FB6D03D2E8A, vec.x, vec.y, vec.z, p3); } // 0x73354FB6D03D2E8A 0xBAEC6ADD b1207
 	NATIVE_DECL void END_PETROL_TRAIL_DECALS() { invoke<Void>(0x0E126AAE933F3B56); } // 0x0E126AAE933F3B56 0xCCCA6855 b1207
 	NATIVE_DECL Any _0xE63D68F455CA0B47(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { return invoke<Any>(0xE63D68F455CA0B47, p0, p1, p2, p3, p4, p5, p6); } // 0xE63D68F455CA0B47 b1207
 	NATIVE_DECL void REMOVE_DECAL(int decal) { invoke<Void>(0x49A720552EB0BB88, decal); } // 0x49A720552EB0BB88 0xA4363188 b1207
@@ -2492,12 +2595,14 @@ namespace GRAPHICS
 	// p1: 0.3f in R* Scripts
 	NATIVE_DECL void _BLOOD_TRAIL_FOR_WAYPOINT(const char* waypointRecording, float p1) { invoke<Void>(0xB9C92616929CC25D, waypointRecording, p1); } // 0xB9C92616929CC25D b1207
 	NATIVE_DECL void _ADD_BLOOD_TRAIL_POINT(float x, float y, float z) { invoke<Void>(0xDD9DC1AB63D513CE, x, y, z); } // 0xDD9DC1AB63D513CE b1207
+	NATIVE_DECL void _ADD_BLOOD_TRAIL_POINT(Vector3 vec) { invoke<Void>(0xDD9DC1AB63D513CE, vec.x, vec.y, vec.z); } // 0xDD9DC1AB63D513CE b1207
 	// Used in CREATE_BEZIER_BLOOD_TRAIL_OF_TYPE
 	// _ENABLE_*
 	NATIVE_DECL void _0x812C1563185C6FB2() { invoke<Void>(0x812C1563185C6FB2); } // 0x812C1563185C6FB2 b1207
 	// Used in CREATE_BEZIER_BLOOD_TRAIL_OF_TYPE
 	NATIVE_DECL void _0x4BD66B4E3427689B(const char* p0) { invoke<Void>(0x4BD66B4E3427689B, p0); } // 0x4BD66B4E3427689B b1207
 	NATIVE_DECL void _ADD_BLOOD_TRAIL_SPLAT(float x, float y, float z) { invoke<Void>(0xF5E45CB1CF965D2D, x, y, z); } // 0xF5E45CB1CF965D2D b1207
+	NATIVE_DECL void _ADD_BLOOD_TRAIL_SPLAT(Vector3 vec) { invoke<Void>(0xF5E45CB1CF965D2D, vec.x, vec.y, vec.z); } // 0xF5E45CB1CF965D2D b1207
 	NATIVE_DECL void _0xF2F543D48F319A3A() { invoke<Void>(0xF2F543D48F319A3A); } // 0xF2F543D48F319A3A b1207
 	// _RESET_*
 	NATIVE_DECL void _0x1460B644397453EB() { invoke<Void>(0x1460B644397453EB); } // 0x1460B644397453EB b1207
@@ -2612,6 +2717,7 @@ namespace GRAPHICS
 	NATIVE_DECL void _0xA1A86055792FB249(int personaPhotoLocalCacheType) { invoke<Void>(0xA1A86055792FB249, personaPhotoLocalCacheType); } // 0xA1A86055792FB249 b1207
 	// Only used in R* SP Script spd_agnesdown1
 	NATIVE_DECL BOOL _0x402E1A61D2587FCD(Any p0, float x, float y, float z, float p4, float p5, float heading) { return invoke<BOOL>(0x402E1A61D2587FCD, p0, x, y, z, p4, p5, heading); } // 0x402E1A61D2587FCD b1207
+	NATIVE_DECL BOOL _0x402E1A61D2587FCD(Any p0, Vector3 vec, float p4, float p5, float heading) { return invoke<BOOL>(0x402E1A61D2587FCD, p0, vec.x, vec.y, vec.z, p4, p5, heading); } // 0x402E1A61D2587FCD b1207
 	// Only used in R* SP Script spd_agnesdown1
 	NATIVE_DECL Any _0x5C9C3A466B3296A8(Any p0) { return invoke<Any>(0x5C9C3A466B3296A8, p0); } // 0x5C9C3A466B3296A8 b1207
 	NATIVE_DECL Any _0xA15CCAB8AD038291(Any p0, Any p1, Any p2, Any p3) { return invoke<Any>(0xA15CCAB8AD038291, p0, p1, p2, p3); } // 0xA15CCAB8AD038291 b1207
@@ -2625,9 +2731,11 @@ namespace GRAPHICS
 	NATIVE_DECL void _0xC489FE31AC726512(Any p0, Any p1) { invoke<Void>(0xC489FE31AC726512, p0, p1); } // 0xC489FE31AC726512 b1207
 	NATIVE_DECL void _SET_CLOUD_LAYER(float x, float y, int p2) { invoke<Void>(0xB8C984C0D47F4F07, x, y, p2); } // 0xB8C984C0D47F4F07 b1207
 	NATIVE_DECL void _SET_CLOUD_NOISE(float x, float y, float z) { invoke<Void>(0xFE7966DF01452F32, x, y, z); } // 0xFE7966DF01452F32 b1207
+	NATIVE_DECL void _SET_CLOUD_NOISE(Vector3 vec) { invoke<Void>(0xFE7966DF01452F32, vec.x, vec.y, vec.z); } // 0xFE7966DF01452F32 b1207
 	// Only used in finale2, smuggler2, winter4
 	// _SET_CLOUD_A* - _SET_CLOUD_H*
 	NATIVE_DECL void _SET_CLOUD_POSITION(float x, float y, float z) { invoke<Void>(0x10C1767B93257480, x, y, z); } // 0x10C1767B93257480 b1207
+	NATIVE_DECL void _SET_CLOUD_POSITION(Vector3 vec) { invoke<Void>(0x10C1767B93257480, vec.x, vec.y, vec.z); } // 0x10C1767B93257480 b1207
 	NATIVE_DECL void _SET_CLOUD_HEIGHT(float height) { invoke<Void>(0xC332C91388F5580B, height); } // 0xC332C91388F5580B b1207
 	NATIVE_DECL void _0x085C5B61A0114F32(Any p0, Any p1) { invoke<Void>(0x085C5B61A0114F32, p0, p1); } // 0x085C5B61A0114F32 b1207
 	NATIVE_DECL void _0x1FF8731BE1DFC0C0(Any p0, Any p1) { invoke<Void>(0x1FF8731BE1DFC0C0, p0, p1); } // 0x1FF8731BE1DFC0C0 b1207
@@ -2798,6 +2906,7 @@ namespace HUD
 	NATIVE_DECL void SET_MISSION_NAME_FOR_UGC_MISSION(BOOL p0, const char* name) { invoke<Void>(0xD98630CE73C61E98, p0, name); } // 0xD98630CE73C61E98 0x8D9A1734 b1207
 	NATIVE_DECL void _0xCE0D2F5586627CCE(Any p0, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0xCE0D2F5586627CCE, p0, p1, p2, p3, p4); } // 0xCE0D2F5586627CCE b1207
 	NATIVE_DECL BOOL GET_HUD_SCREEN_POSITION_FROM_WORLD_POSITION(float worldX, float worldY, float worldZ, float* screenX, float* screenY) { return invoke<BOOL>(0xB39C81628EF10B42, worldX, worldY, worldZ, screenX, screenY); } // 0xB39C81628EF10B42 0xFE9A39F8 b1207
+	NATIVE_DECL BOOL GET_HUD_SCREEN_POSITION_FROM_WORLD_POSITION(Vector3 world, float* screenX, float* screenY) { return invoke<BOOL>(0xB39C81628EF10B42, world.x, world.y, world.z, screenX, screenY); } // 0xB39C81628EF10B42 0xFE9A39F8 b1207
 	NATIVE_DECL void _HIDE_HUD_THIS_FRAME() { invoke<Void>(0xBF4F34A85CA2970D); } // 0xBF4F34A85CA2970D b1207
 	NATIVE_DECL void DISABLE_FRONTEND_THIS_FRAME() { invoke<Void>(0x56CE42A528156A67); } // 0x56CE42A528156A67 0xD86A029E b1207
 	NATIVE_DECL void _0x5651516D947ABC53() { invoke<Void>(0x5651516D947ABC53); } // 0x5651516D947ABC53 b1207
@@ -2919,6 +3028,7 @@ namespace HUD
 	// Attaches a Volume
 	NATIVE_DECL void _UI_PROMPT_CONTEXT_SET_VOLUME(Prompt prompt, Volume volume) { invoke<Void>(0x4D107406667423BE, prompt, volume); } // 0x4D107406667423BE b1207
 	NATIVE_DECL void _UI_PROMPT_CONTEXT_SET_POINT(Prompt prompt, float x, float y, float z) { invoke<Void>(0xAE84C5EE2C384FB3, prompt, x, y, z); } // 0xAE84C5EE2C384FB3 b1207
+	NATIVE_DECL void _UI_PROMPT_CONTEXT_SET_POINT(Prompt prompt, Vector3 vec) { invoke<Void>(0xAE84C5EE2C384FB3, prompt, vec.x, vec.y, vec.z); } // 0xAE84C5EE2C384FB3 b1207
 	NATIVE_DECL void _UI_PROMPT_CONTEXT_SET_RADIUS(Prompt prompt, float radius) { invoke<Void>(0x0C718001B77CA468, prompt, radius); } // 0x0C718001B77CA468 b1207
 	NATIVE_DECL BOOL _UI_PROMPT_IS_PRESSED(Prompt prompt) { return invoke<BOOL>(0x21E60E230086697F, prompt); } // 0x21E60E230086697F b1207
 	NATIVE_DECL BOOL _UI_PROMPT_IS_JUST_PRESSED(Prompt prompt) { return invoke<BOOL>(0x2787CC611D3FACC5, prompt); } // 0x2787CC611D3FACC5 b1207
@@ -3028,6 +3138,7 @@ namespace INTERIOR
 	NATIVE_DECL void CLEAR_ROOM_FOR_GAME_VIEWPORT() { invoke<Void>(0x951A049765E0D450); } // 0x951A049765E0D450 0x617DC75D b1207
 	NATIVE_DECL Interior GET_INTERIOR_FROM_PRIMARY_VIEW() { return invoke<Interior>(0xBC8A281FF125C655); } // 0xBC8A281FF125C655 b1207
 	NATIVE_DECL Interior GET_INTERIOR_AT_COORDS(float x, float y, float z) { return invoke<Interior>(0xCDD36C9E5C469070, x, y, z); } // 0xCDD36C9E5C469070 0xA17FBF37 b1207
+	NATIVE_DECL Interior GET_INTERIOR_AT_COORDS(Vector3 vec) { return invoke<Interior>(0xCDD36C9E5C469070, vec.x, vec.y, vec.z); } // 0xCDD36C9E5C469070 0xA17FBF37 b1207
 	NATIVE_DECL void PIN_INTERIOR_IN_MEMORY(Interior interior) { invoke<Void>(0xBD3D33EABF680168, interior); } // 0xBD3D33EABF680168 0x3ADA414E b1207
 	// Does something similar to INTERIOR::DISABLE_INTERIOR.
 	// 
@@ -3037,11 +3148,15 @@ namespace INTERIOR
 	// Actually returns void in IDA but the script header defines a BOOL return type
 	NATIVE_DECL BOOL SET_INTERIOR_IN_USE(Interior interior) { return invoke<BOOL>(0xB5EF6FEF2DC9EBED, interior); } // 0xB5EF6FEF2DC9EBED b1207
 	NATIVE_DECL Interior GET_INTERIOR_AT_COORDS_WITH_TYPE(float x, float y, float z, const char* interiorType) { return invoke<Interior>(0xAAD6170AA33B13C0, x, y, z, interiorType); } // 0xAAD6170AA33B13C0 0x96525B06 b1207
+	NATIVE_DECL Interior GET_INTERIOR_AT_COORDS_WITH_TYPE(Vector3 vec, const char* interiorType) { return invoke<Interior>(0xAAD6170AA33B13C0, vec.x, vec.y, vec.z, interiorType); } // 0xAAD6170AA33B13C0 0x96525B06 b1207
 	// Hashed version of GET_INTERIOR_AT_COORDS_WITH_TYPE
 	NATIVE_DECL Interior GET_INTERIOR_AT_COORDS_WITH_TYPEHASH(float x, float y, float z, Hash typeHash) { return invoke<Interior>(0x3543AEA1816D1D2B, x, y, z, typeHash); } // 0x3543AEA1816D1D2B 0x11718507 b1207
+	NATIVE_DECL Interior GET_INTERIOR_AT_COORDS_WITH_TYPEHASH(Vector3 vec, Hash typeHash) { return invoke<Interior>(0x3543AEA1816D1D2B, vec.x, vec.y, vec.z, typeHash); } // 0x3543AEA1816D1D2B 0x11718507 b1207
 	// Returns true if the collision at the specified coords is marked as being outside (false if there's an interior)
 	NATIVE_DECL BOOL IS_COLLISION_MARKED_OUTSIDE(float x, float y, float z) { return invoke<BOOL>(0xF291396B517E25B2, x, y, z); } // 0xF291396B517E25B2 0x7762249C b1207
+	NATIVE_DECL BOOL IS_COLLISION_MARKED_OUTSIDE(Vector3 vec) { return invoke<BOOL>(0xF291396B517E25B2, vec.x, vec.y, vec.z); } // 0xF291396B517E25B2 0x7762249C b1207
 	NATIVE_DECL int GET_INTERIOR_FROM_COLLISION(float x, float y, float z) { return invoke<int>(0x5054D1A5218FA696, x, y, z); } // 0x5054D1A5218FA696 0x7ED33DC1 b1207
+	NATIVE_DECL int GET_INTERIOR_FROM_COLLISION(Vector3 vec) { return invoke<int>(0x5054D1A5218FA696, vec.x, vec.y, vec.z); } // 0x5054D1A5218FA696 0x7ED33DC1 b1207
 	// https://github.com/femga/rdr3_discoveries/tree/master/interiors/interior_sets
 	NATIVE_DECL void ACTIVATE_INTERIOR_ENTITY_SET(Interior interior, const char* entitySetName, int p2) { invoke<Void>(0x174D0AAB11CED739, interior, entitySetName, p2); } // 0x174D0AAB11CED739 0xC80A5DDF b1207
 	NATIVE_DECL void DEACTIVATE_INTERIOR_ENTITY_SET(Interior interior, const char* entitySetName, BOOL p2) { invoke<Void>(0x33B81A2C07A51FFF, interior, entitySetName, p2); } // 0x33B81A2C07A51FFF 0xDBA768A1 b1207
@@ -3516,10 +3631,12 @@ namespace LAW
 	// _SET_C* - _SET_D*
 	NATIVE_DECL void _0xEDFC6C1FD1C964F5(Player player, Hash crimeType, int bounty, float p3, float p4, BOOL p5, float p6, float p7, Any p8) { invoke<Void>(0xEDFC6C1FD1C964F5, player, crimeType, bounty, p3, p4, p5, p6, p7, p8); } // 0xEDFC6C1FD1C964F5 b1207
 	NATIVE_DECL BOOL _LAW_WITNESS_RESPONSE_TASK(Ped pedGroup1, Ped ped, Ped pedGroup2, float x, float y, float z, Hash crimeType) { return invoke<BOOL>(0xF0B67BAD53C35BD9, pedGroup1, ped, pedGroup2, x, y, z, crimeType); } // 0xF0B67BAD53C35BD9 b1207
+	NATIVE_DECL BOOL _LAW_WITNESS_RESPONSE_TASK(Ped pedGroup1, Ped ped, Ped pedGroup2, Vector3 vec, Hash crimeType) { return invoke<BOOL>(0xF0B67BAD53C35BD9, pedGroup1, ped, pedGroup2, vec.x, vec.y, vec.z, crimeType); } // 0xF0B67BAD53C35BD9 b1207
 	NATIVE_DECL Any _0x018F30D762E62DF8(Ped ped, Any* p1) { return invoke<Any>(0x018F30D762E62DF8, ped, p1); } // 0x018F30D762E62DF8 b1207
 	// Only used in R* SP Script av_amb_camp_robbery
 	NATIVE_DECL Any _0x318F0F9A4426CFA2(Ped ped, Any* p1) { return invoke<Any>(0x318F0F9A4426CFA2, ped, p1); } // 0x318F0F9A4426CFA2 b1207
 	NATIVE_DECL Any _0x95878B13E272EF1F(Entity entity, Ped ped, BOOL p2, float x, float y, float z, Hash crimeType) { return invoke<Any>(0x95878B13E272EF1F, entity, ped, p2, x, y, z, crimeType); } // 0x95878B13E272EF1F b1207
+	NATIVE_DECL Any _0x95878B13E272EF1F(Entity entity, Ped ped, BOOL p2, Vector3 vec, Hash crimeType) { return invoke<Any>(0x95878B13E272EF1F, entity, ped, p2, vec.x, vec.y, vec.z, crimeType); } // 0x95878B13E272EF1F b1207
 	NATIVE_DECL void _ADD_WITNESS_RESPONSE(Player player, Hash crimeType, Ped pedGroup) { invoke<Void>(0x10827B5A0AAC56A7, player, crimeType, pedGroup); } // 0x10827B5A0AAC56A7 b1207
 	// Only used in R* SP Scripts
 	// Params: p2 either 1 or 2
@@ -3567,6 +3684,7 @@ namespace LAW
 	NATIVE_DECL void _SET_CUSTOM_LAW_DISPATCH_RESPONSE(Hash dispatchResponseHash) { invoke<Void>(0x009CF9A29972C298, dispatchResponseHash); } // 0x009CF9A29972C298 b1207
 	// dispatchResponseHash: see common/data/dispatchresponses/..
 	NATIVE_DECL Any _CREATE_LAW_DISPATCH_RESPONSE_FOR_COORDS(float x, float y, float z, Hash dispatchResponseHash) { return invoke<Any>(0x75CBF20BA47E4F89, x, y, z, dispatchResponseHash); } // 0x75CBF20BA47E4F89 b1207
+	NATIVE_DECL Any _CREATE_LAW_DISPATCH_RESPONSE_FOR_COORDS(Vector3 vec, Hash dispatchResponseHash) { return invoke<Any>(0x75CBF20BA47E4F89, vec.x, vec.y, vec.z, dispatchResponseHash); } // 0x75CBF20BA47E4F89 b1207
 	// Force clears local player's wanted level
 	NATIVE_DECL void _SET_BOUNTY_HUNTER_PURSUIT_CLEARED() { invoke<Void>(0x55F37F5F3F2475E1); } // 0x55F37F5F3F2475E1 b1207
 	// Called together with REPORT_POLICE_SPOTTED_PLAYER
@@ -3615,6 +3733,7 @@ namespace LAW
 	NATIVE_DECL void _SET_PED_LAW_BEHAVIOUR(Ped ped, int behaviour) { invoke<Void>(0x819ADD5EF1742F47, ped, behaviour); } // 0x819ADD5EF1742F47 b1207
 	NATIVE_DECL void _0x00DB0BC05E3FAA4E(Ped ped, int bitset) { invoke<Void>(0x00DB0BC05E3FAA4E, ped, bitset); } // 0x00DB0BC05E3FAA4E b1207
 	NATIVE_DECL void _0x0C392DB374655176(float x, float y, float z, float p3, ItemSet itemSet) { invoke<Void>(0x0C392DB374655176, x, y, z, p3, itemSet); } // 0x0C392DB374655176 b1207
+	NATIVE_DECL void _0x0C392DB374655176(Vector3 vec, float p3, ItemSet itemSet) { invoke<Void>(0x0C392DB374655176, vec.x, vec.y, vec.z, p3, itemSet); } // 0x0C392DB374655176 b1207
 	NATIVE_DECL Any _0xC687A23E166DCF68(Any* p0) { return invoke<Any>(0xC687A23E166DCF68, p0); } // 0xC687A23E166DCF68 b1207
 	NATIVE_DECL void _SET_DISPATCH_MULTIPLIER_OVERRIDE(float multiplier) { invoke<Void>(0x002BABE0B7D53136, multiplier); } // 0x002BABE0B7D53136 b1207
 	NATIVE_DECL BOOL _0x26934083D3F2579C(Player player) { return invoke<BOOL>(0x26934083D3F2579C, player); } // 0x26934083D3F2579C b1207
@@ -3643,13 +3762,16 @@ namespace LAW
 	NATIVE_DECL BOOL _IS_GUARD_PED_INVESTIGATING(Ped ped) { return invoke<BOOL>(0xD743C4293F47AFAD, ped); } // 0xD743C4293F47AFAD b1207
 	// Returns true when investigation creation was successful
 	NATIVE_DECL BOOL _CREATE_GUARD_ZONE_FOR_ENTITY(const char* guardZoneName, Entity entity, float x, float y, float z) { return invoke<BOOL>(0x0D4B77E862475ED3, guardZoneName, entity, x, y, z); } // 0x0D4B77E862475ED3 b1311
+	NATIVE_DECL BOOL _CREATE_GUARD_ZONE_FOR_ENTITY(const char* guardZoneName, Entity entity, Vector3 vec) { return invoke<BOOL>(0x0D4B77E862475ED3, guardZoneName, entity, vec.x, vec.y, vec.z); } // 0x0D4B77E862475ED3 b1311
 	NATIVE_DECL void _SET_GUARD_ZONE_VOLUME_REGISTRATION_START(const char* name, Volume volume) { invoke<Void>(0x8C598A930F471938, name, volume); } // 0x8C598A930F471938 b1207
 	NATIVE_DECL void _SET_GUARD_ZONE_VOLUME_RESTRICTED(const char* name, Volume volume) { invoke<Void>(0x35815F372D43E1E5, name, volume); } // 0x35815F372D43E1E5 b1207
 	NATIVE_DECL void _SET_GUARD_ZONE_VOLUME_THREAT(const char* name, Volume volume) { invoke<Void>(0xA1B0E6301E2E02A6, name, volume); } // 0xA1B0E6301E2E02A6 b1207
 	NATIVE_DECL void _SET_GUARD_ZONE_VOLUME_WARNING(const char* name, Volume volume) { invoke<Void>(0xAD3E07C37A7C1ADC, name, volume); } // 0xAD3E07C37A7C1ADC b1207
 	NATIVE_DECL void _SET_GUARD_ZONE_VOLUME_REGISTRATION_END(const char* name, Volume volume) { invoke<Void>(0xA8A74AA79FB67159, name, volume); } // 0xA8A74AA79FB67159 b1207
 	NATIVE_DECL void _SET_GUARD_ZONE_POSITION(const char* name, float x, float y, float z) { invoke<Void>(0x7E7BF59F89FC6C6D, name, x, y, z); } // 0x7E7BF59F89FC6C6D b1207
+	NATIVE_DECL void _SET_GUARD_ZONE_POSITION(const char* name, Vector3 vec) { invoke<Void>(0x7E7BF59F89FC6C6D, name, vec.x, vec.y, vec.z); } // 0x7E7BF59F89FC6C6D b1207
 	NATIVE_DECL void _SET_GUARD_ZONE_POSITION_2(const char* name, float x, float y, float z) { invoke<Void>(0x2F9005E2EA4E5EE4, name, x, y, z); } // 0x2F9005E2EA4E5EE4 b1207
+	NATIVE_DECL void _SET_GUARD_ZONE_POSITION_2(const char* name, Vector3 vec) { invoke<Void>(0x2F9005E2EA4E5EE4, name, vec.x, vec.y, vec.z); } // 0x2F9005E2EA4E5EE4 b1207
 }
 
 namespace LOCALIZATION
@@ -3690,10 +3812,13 @@ namespace MAP
 	// https://github.com/femga/rdr3_discoveries/tree/master/useful_info_from_rpfs/textures/blips
 	// https://github.com/femga/rdr3_discoveries/tree/master/useful_info_from_rpfs/textures/blips_mp
 	NATIVE_DECL Blip BLIP_ADD_FOR_COORDS(Hash blipHash, float x, float y, float z) { return invoke<Blip>(0x554D9D53F696D002, blipHash, x, y, z); } // 0x554D9D53F696D002 b1207
+	NATIVE_DECL Blip BLIP_ADD_FOR_COORDS(Hash blipHash, Vector3 vec) { return invoke<Blip>(0x554D9D53F696D002, blipHash, vec.x, vec.y, vec.z); } // 0x554D9D53F696D002 b1207
 	NATIVE_DECL Blip BLIP_ADD_FOR_ENTITY(Hash blipHash, Entity entity) { return invoke<Blip>(0x23F74C2FDA6E7C61, blipHash, entity); } // 0x23F74C2FDA6E7C61 b1207
 	NATIVE_DECL Blip BLIP_ADD_FOR_PICKUP_PLACEMENT(Hash blipHash, Pickup pickup) { return invoke<Blip>(0xA486008892065FB9, blipHash, pickup); } // 0xA486008892065FB9 b1207
 	NATIVE_DECL Blip BLIP_ADD_FOR_RADIUS(Hash blipHash, float x, float y, float z, float radius) { return invoke<Blip>(0x45F13B7E0A15C880, blipHash, x, y, z, radius); } // 0x45F13B7E0A15C880 b1207
+	NATIVE_DECL Blip BLIP_ADD_FOR_RADIUS(Hash blipHash, Vector3 vec, float radius) { return invoke<Blip>(0x45F13B7E0A15C880, blipHash, vec.x, vec.y, vec.z, radius); } // 0x45F13B7E0A15C880 b1207
 	NATIVE_DECL Blip _BLIP_ADD_FOR_AREA(Hash blipHash, float x, float y, float z, float scaleX, float scaleY, float scaleZ, int p7) { return invoke<Blip>(0xEC174ADBCB611ECC, blipHash, x, y, z, scaleX, scaleY, scaleZ, p7); } // 0xEC174ADBCB611ECC b1207
+	NATIVE_DECL Blip _BLIP_ADD_FOR_AREA(Hash blipHash, Vector3 vec, Vector3 scale, int p7) { return invoke<Blip>(0xEC174ADBCB611ECC, blipHash, vec.x, vec.y, vec.z, scale.x, scale.y, scale.z, p7); } // 0xEC174ADBCB611ECC b1207
 	NATIVE_DECL Blip _BLIP_ADD_FOR_VOLUME(Hash blipHash, Volume volume) { return invoke<Blip>(0xA6EF0C54A3443E70, blipHash, volume); } // 0xA6EF0C54A3443E70 b1207
 	// https://github.com/femga/rdr3_discoveries/tree/master/useful_info_from_rpfs/blip_styles
 	// Removes any existing modifiers and sets the style.
@@ -3710,9 +3835,11 @@ namespace MAP
 	NATIVE_DECL void SET_BLIP_FLASH_TIMER(Blip blip, int blipType, Hash blipHash) { invoke<Void>(0x02FF4CF43B7209D1, blip, blipType, blipHash); } // 0x02FF4CF43B7209D1 0x8D5DF611 b1207
 	NATIVE_DECL BOOL SET_BLIP_FLASHES(Blip blip, int* p1, Hash* p2) { return invoke<BOOL>(0x0DF2B55F717DDB10, blip, p1, p2); } // 0x0DF2B55F717DDB10 0xC0047F15 b1207
 	NATIVE_DECL void TRIGGER_SONAR_BLIP(Hash typeHash, float x, float y, float z) { invoke<Void>(0x72DD432F3CDFC0EE, typeHash, x, y, z); } // 0x72DD432F3CDFC0EE 0xBF25E7B2 b1207
+	NATIVE_DECL void TRIGGER_SONAR_BLIP(Hash typeHash, Vector3 vec) { invoke<Void>(0x72DD432F3CDFC0EE, typeHash, vec.x, vec.y, vec.z); } // 0x72DD432F3CDFC0EE 0xBF25E7B2 b1207
 	NATIVE_DECL void _TRIGGER_SONAR_BLIP_ON_ENTITY(Hash typeHash, Entity entity) { invoke<Void>(0x0C7A2289A5C4D7C9, typeHash, entity); } // 0x0C7A2289A5C4D7C9 b1207
 	NATIVE_DECL void ALLOW_SONAR_BLIPS(BOOL toggle) { invoke<Void>(0x6E6E64788C07D2E0, toggle); } // 0x6E6E64788C07D2E0 0xE7E1E32B b1207
 	NATIVE_DECL void SET_BLIP_COORDS(Blip blip, float posX, float posY, float posZ) { invoke<Void>(0x4FF674F5E23D49CE, blip, posX, posY, posZ); } // 0x4FF674F5E23D49CE 0x680A34D4 b1207
+	NATIVE_DECL void SET_BLIP_COORDS(Blip blip, Vector3 pos) { invoke<Void>(0x4FF674F5E23D49CE, blip, pos.x, pos.y, pos.z); } // 0x4FF674F5E23D49CE 0x680A34D4 b1207
 	NATIVE_DECL Vector3 GET_BLIP_COORDS(Blip blip) { return invoke<Vector3>(0x201C319797BDA603, blip); } // 0x201C319797BDA603 0xEF6FF47B b1207
 	NATIVE_DECL void SET_BLIP_SPRITE(Blip blip, Hash hash, BOOL p2) { invoke<Void>(0x74F74D3207ED525C, blip, hash, p2); } // 0x74F74D3207ED525C 0x8DBBB0B9 b1207
 	// _CLEAR*
@@ -3740,6 +3867,7 @@ namespace MAP
 	NATIVE_DECL void CLEAR_GPS_CUSTOM_ROUTE() { invoke<Void>(0x1EAA5674B4D181C5); } // 0x1EAA5674B4D181C5 0xCF2E3E24 b1207
 	NATIVE_DECL void START_GPS_MULTI_ROUTE(Hash colorNameHash, BOOL onFoot, BOOL inVehicle) { invoke<Void>(0x3D3D15AF7BCAAF83, colorNameHash, onFoot, inVehicle); } // 0x3D3D15AF7BCAAF83 0xC3DCBEDB b1207
 	NATIVE_DECL void ADD_POINT_TO_GPS_MULTI_ROUTE(float x, float y, float z, BOOL p3) { invoke<Void>(0x64C59DD6834FA942, x, y, z, p3); } // 0x64C59DD6834FA942 0xFE485135 b1207
+	NATIVE_DECL void ADD_POINT_TO_GPS_MULTI_ROUTE(Vector3 vec, BOOL p3) { invoke<Void>(0x64C59DD6834FA942, vec.x, vec.y, vec.z, p3); } // 0x64C59DD6834FA942 0xFE485135 b1207
 	NATIVE_DECL void SET_GPS_MULTI_ROUTE_RENDER(BOOL toggle) { invoke<Void>(0x4426D65E029A4DC0, toggle); } // 0x4426D65E029A4DC0 0xE87CBE4C b1207
 	// Does the same as SET_GPS_MULTI_ROUTE_RENDER(false);
 	NATIVE_DECL void CLEAR_GPS_MULTI_ROUTE() { invoke<Void>(0x9E0AB9AAEE87CE28); } // 0x9E0AB9AAEE87CE28 0x0D9969E4 b1207
@@ -3754,6 +3882,7 @@ namespace MAP
 	NATIVE_DECL void _SHOW_ACTIVE_POINTS_OF_INTEREST() { invoke<Void>(0x3FBB838AEA30C1D8); } // 0x3FBB838AEA30C1D8 b1207
 	NATIVE_DECL Any _0xF47A1EB2A538A3A3() { return invoke<Any>(0xF47A1EB2A538A3A3); } // 0xF47A1EB2A538A3A3 b1207
 	NATIVE_DECL BOOL _FIND_CLOSEST_GPS_POSITION(float x, float y, float z, Vector3* outPosition) { return invoke<BOOL>(0x3FDA2B79AEEE351C, x, y, z, outPosition); } // 0x3FDA2B79AEEE351C b1207
+	NATIVE_DECL BOOL _FIND_CLOSEST_GPS_POSITION(Vector3 vec, Vector3* outPosition) { return invoke<BOOL>(0x3FDA2B79AEEE351C, vec.x, vec.y, vec.z, outPosition); } // 0x3FDA2B79AEEE351C b1207
 	// If Minimap / Radar should be displayed.
 	NATIVE_DECL void DISPLAY_RADAR(BOOL toggle) { invoke<Void>(0x1B3DA717B9AFF828, toggle); } // 0x1B3DA717B9AFF828 0x52816BD4 b1207
 	// https://github.com/femga/rdr3_discoveries/blob/master/graphics/minimap/radar/radar_configs.lua
@@ -3773,6 +3902,7 @@ namespace MAP
 	NATIVE_DECL void _SET_MINIMAP_FOW_SHOULD_UPDATE(BOOL toggle, Hash p1) { invoke<Void>(0x632AA10BF7EA53D3, toggle, p1); } // 0x632AA10BF7EA53D3 b1207
 	// Up to eight coordinates may be revealed per frame
 	NATIVE_DECL void SET_MINIMAP_FOW_REVEAL_COORDINATE(float x, float y, float z, Hash p3) { invoke<Void>(0x73348402566ECB6E, x, y, z, p3); } // 0x73348402566ECB6E 0xE010F081 b1207
+	NATIVE_DECL void SET_MINIMAP_FOW_REVEAL_COORDINATE(Vector3 vec, Hash p3) { invoke<Void>(0x73348402566ECB6E, vec.x, vec.y, vec.z, p3); } // 0x73348402566ECB6E 0xE010F081 b1207
 	NATIVE_DECL void SET_MINIMAP_FOW_REVEAL_VOLUME(Volume volume, Hash p1) { invoke<Void>(0x63CBBD6CA6F321F9, volume, p1); } // 0x63CBBD6CA6F321F9 b1207
 	NATIVE_DECL void RESET_MINIMAP_FOW(Hash hash) { invoke<Void>(0xEB3CB3386C775D72, hash); } // 0xEB3CB3386C775D72 b1207
 	NATIVE_DECL void _REVEAL_MINIMAP_FOW(Hash hash) { invoke<Void>(0xF8096DF9B87246E3, hash); } // 0xF8096DF9B87246E3 b1207
@@ -3791,6 +3921,7 @@ namespace MAP
 	NATIVE_DECL void _MAP_DISCOVERY_SET_ENABLED(Hash discoveryHash) { invoke<Void>(0xDA98246C7A3C2189, discoveryHash); } // 0xDA98246C7A3C2189 b1207
 	NATIVE_DECL BOOL _MAP_IS_DISCOVERY_ACTIVE(Hash discoveryHash) { return invoke<BOOL>(0x3F81EA4275D39D6F, discoveryHash); } // 0x3F81EA4275D39D6F b1207
 	NATIVE_DECL void _SET_PAUSEMAP_COORDS_WITH_RADIUS(float x, float y, float z, float radius) { invoke<Void>(0xE0884C184728C75B, x, y, z, radius); } // 0xE0884C184728C75B b1207
+	NATIVE_DECL void _SET_PAUSEMAP_COORDS_WITH_RADIUS(Vector3 vec, float radius) { invoke<Void>(0xE0884C184728C75B, vec.x, vec.y, vec.z, radius); } // 0xE0884C184728C75B b1207
 	NATIVE_DECL void _0x7C9F4CDF402CA82A() { invoke<Void>(0x7C9F4CDF402CA82A); } // 0x7C9F4CDF402CA82A b1311
 	// _CLEAR*
 	NATIVE_DECL void _0x44813684F72B563C(Entity entity, Any p1) { invoke<Void>(0x44813684F72B563C, entity, p1); } // 0x44813684F72B563C b1207
@@ -3934,6 +4065,7 @@ namespace MISC
 	// Only used in smuggler2 script
 	NATIVE_DECL void WATER_OVERRIDE_SET_OCEANWAVEMAXAMPLITUDE(float maxAmplitude) { invoke<Void>(0xF06C5B66DE20B2B8, maxAmplitude); } // 0xF06C5B66DE20B2B8 0x0DE40C28 b1207
 	NATIVE_DECL float _GET_TEMPERATURE_AT_COORDS(float x, float y, float z) { return invoke<float>(0xB98B78C3768AF6E0, x, y, z); } // 0xB98B78C3768AF6E0 b1207
+	NATIVE_DECL float _GET_TEMPERATURE_AT_COORDS(Vector3 vec) { return invoke<float>(0xB98B78C3768AF6E0, vec.x, vec.y, vec.z); } // 0xB98B78C3768AF6E0 b1207
 	NATIVE_DECL void SET_WIND_SPEED(float speed) { invoke<Void>(0xD00C2D82DC04A99F, speed); } // 0xD00C2D82DC04A99F 0x45705F94 b1207
 	NATIVE_DECL float GET_WIND_SPEED() { return invoke<float>(0xFFB7E74E041150A4); } // 0xFFB7E74E041150A4 0x098F0F3C b1207
 	NATIVE_DECL void SET_WIND_DIRECTION(float direction) { invoke<Void>(0xB56C4F5F57A45600, direction); } // 0xB56C4F5F57A45600 0x381AEEE9 b1207
@@ -3948,6 +4080,7 @@ namespace MISC
 	NATIVE_DECL void FORCE_LIGHTNING_FLASH() { invoke<Void>(0x369DB5B2510FA080); } // 0x369DB5B2510FA080 0xDF38165E b1207
 	// p3 is always -1.0f in the scripts
 	NATIVE_DECL void _FORCE_LIGHTNING_FLASH_AT_COORDS(float x, float y, float z, float p3) { invoke<Void>(0x67943537D179597C, x, y, z, p3); } // 0x67943537D179597C b1207
+	NATIVE_DECL void _FORCE_LIGHTNING_FLASH_AT_COORDS(Vector3 vec, float p3) { invoke<Void>(0x67943537D179597C, vec.x, vec.y, vec.z, p3); } // 0x67943537D179597C b1207
 	// nullsub, doesn't do anything
 	NATIVE_DECL void _0xA9342743B634A462(Any p0) { invoke<Void>(0xA9342743B634A462, p0); } // 0xA9342743B634A462 b1207
 	NATIVE_DECL int GET_GAME_TIMER() { return invoke<int>(0x4F67E8ECA7D3F667); } // 0x4F67E8ECA7D3F667 0xA4EA0691 b1207
@@ -3968,7 +4101,9 @@ namespace MISC
 	NATIVE_DECL float GET_RANDOM_FLOAT_IN_RANGE(float startRange, float endRange) { return invoke<float>(0xE29F927A961F8AAA, startRange, endRange); } // 0xE29F927A961F8AAA 0x0562C4D0 b1207
 	NATIVE_DECL int GET_RANDOM_INT_IN_RANGE(int startRange, int endRange) { return invoke<int>(0xD53343AA4FB7DD28, startRange, endRange); } // 0xD53343AA4FB7DD28 0x4051115B b1207
 	NATIVE_DECL BOOL GET_GROUND_Z_FOR_3D_COORD(float x, float y, float z, float* groundZ, BOOL p4) { return invoke<BOOL>(0x24FA4267BB8D2431, x, y, z, groundZ, p4); } // 0x24FA4267BB8D2431 0xA1BFD5E0 b1207
+	NATIVE_DECL BOOL GET_GROUND_Z_FOR_3D_COORD(Vector3 vec, float* groundZ, BOOL p4) { return invoke<BOOL>(0x24FA4267BB8D2431, vec.x, vec.y, vec.z, groundZ, p4); } // 0x24FA4267BB8D2431 0xA1BFD5E0 b1207
 	NATIVE_DECL BOOL GET_GROUND_Z_AND_NORMAL_FOR_3D_COORD(float x, float y, float z, float* groundZ, Vector3* normal) { return invoke<BOOL>(0x2A29CA9A6319E6AB, x, y, z, groundZ, normal); } // 0x2A29CA9A6319E6AB 0x64D91CED b1207
+	NATIVE_DECL BOOL GET_GROUND_Z_AND_NORMAL_FOR_3D_COORD(Vector3 vec, float* groundZ, Vector3* normal) { return invoke<BOOL>(0x2A29CA9A6319E6AB, vec.x, vec.y, vec.z, groundZ, normal); } // 0x2A29CA9A6319E6AB 0x64D91CED b1207
 	NATIVE_DECL Any _0xBBE5B63EFFB08E68(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { return invoke<Any>(0xBBE5B63EFFB08E68, p0, p1, p2, p3, p4, p5, p6); } // 0xBBE5B63EFFB08E68 b1207
 	NATIVE_DECL float ASIN(float p0) { return invoke<float>(0x6E3C15D296C15583, p0); } // 0x6E3C15D296C15583 0x998E5CAD b1207
 	NATIVE_DECL float ACOS(float p0) { return invoke<float>(0x586690F0176DC575, p0); } // 0x586690F0176DC575 0xF4038776 b1207
@@ -3979,6 +4114,7 @@ namespace MISC
 	// 
 	// Consider using this faster native instead: BUILTIN::VDIST - DVIST always takes in consideration the 3D coordinates.
 	NATIVE_DECL float GET_DISTANCE_BETWEEN_COORDS(float x1, float y1, float z1, float x2, float y2, float z2, BOOL useZ) { return invoke<float>(0x0BE7F4E3CDBAFB28, x1, y1, z1, x2, y2, z2, useZ); } // 0x0BE7F4E3CDBAFB28 0xF698765E b1207
+	NATIVE_DECL float GET_DISTANCE_BETWEEN_COORDS(Vector3 vec1, Vector3 vec2, BOOL useZ) { return invoke<float>(0x0BE7F4E3CDBAFB28, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, useZ); } // 0x0BE7F4E3CDBAFB28 0xF698765E b1207
 	NATIVE_DECL float GET_ANGLE_BETWEEN_2D_VECTORS(float x1, float y1, float x2, float y2) { return invoke<float>(0xD0DFE1C486097BBB, x1, y1, x2, y2); } // 0xD0DFE1C486097BBB 0xDBF75E58 b1207
 	// dx = x1 - x2
 	// dy = y1 - y2
@@ -4032,9 +4168,11 @@ namespace MISC
 	// };
 	NATIVE_DECL float _GET_EASING_CURVE_VALUE(float t, float b, float d, int easingCurveType) { return invoke<float>(0xEF50E344A8F93784, t, b, d, easingCurveType); } // 0xEF50E344A8F93784 b1207
 	NATIVE_DECL BOOL IS_POSITION_OCCUPIED(float x, float y, float z, float range, BOOL p4, BOOL p5, BOOL p6, BOOL p7, BOOL p8, Any p9, BOOL p10) { return invoke<BOOL>(0x825CA3ED43831015, x, y, z, range, p4, p5, p6, p7, p8, p9, p10); } // 0x825CA3ED43831015 0x452E8D9E b1207
+	NATIVE_DECL BOOL IS_POSITION_OCCUPIED(Vector3 vec, float range, BOOL p4, BOOL p5, BOOL p6, BOOL p7, BOOL p8, Any p9, BOOL p10) { return invoke<BOOL>(0x825CA3ED43831015, vec.x, vec.y, vec.z, range, p4, p5, p6, p7, p8, p9, p10); } // 0x825CA3ED43831015 0x452E8D9E b1207
 	// flag |= 1 | 1048576 | 524288
 	// ALL_BASE, PROJECTILES, AMBIENT_POPULATION, BROADCAST
 	NATIVE_DECL void CLEAR_AREA(float x, float y, float z, float radius, int flag) { invoke<Void>(0x3B882A96EA77D5B1, x, y, z, radius, flag); } // 0x3B882A96EA77D5B1 0x854E9AB8 b1207
+	NATIVE_DECL void CLEAR_AREA(Vector3 vec, float radius, int flag) { invoke<Void>(0x3B882A96EA77D5B1, vec.x, vec.y, vec.z, radius, flag); } // 0x3B882A96EA77D5B1 0x854E9AB8 b1207
 	NATIVE_DECL void _CLEAR_VOLUME_AREA(Volume volume, int flag) { invoke<Void>(0x2FCD528A397E5C88, volume, flag); } // 0x2FCD528A397E5C88 b1207
 	NATIVE_DECL void CLEAR_ANGLED_AREA_OF_VEHICLES(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0xA4D83115C1E02F8A, p0, p1, p2, p3, p4, p5, p6, p7); } // 0xA4D83115C1E02F8A 0xF11A3018 b1207
 	NATIVE_DECL void SET_CREDITS_ACTIVE(BOOL toggle) { invoke<Void>(0xD37BECF862DA726F, toggle); } // 0xD37BECF862DA726F 0xEC2A0ECF b1207
@@ -4046,6 +4184,7 @@ namespace MISC
 	NATIVE_DECL void SET_FADE_IN_AFTER_LOAD(BOOL toggle) { invoke<Void>(0xAC806C4CAB973517, toggle); } // 0xAC806C4CAB973517 0x6E00EB0B b1207
 	NATIVE_DECL BOOL OVERRIDE_SAVE_HOUSE(BOOL p0, float p1, float p2, float p3, float p4, BOOL p5, float p6, float p7) { return invoke<BOOL>(0xB2C69E11A37B5AF0, p0, p1, p2, p3, p4, p5, p6, p7); } // 0xB2C69E11A37B5AF0 0x47436C12 b1207
 	NATIVE_DECL void SHOOT_SINGLE_BULLET_BETWEEN_COORDS(float x1, float y1, float z1, float x2, float y2, float z2, int damage, BOOL p7, Hash weaponHash, Ped ownerPed, BOOL isAudible, BOOL isInvisible, float speed, BOOL p13) { invoke<Void>(0x867654CBC7606F2C, x1, y1, z1, x2, y2, z2, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed, p13); } // 0x867654CBC7606F2C 0xCB7415AC b1207
+	NATIVE_DECL void SHOOT_SINGLE_BULLET_BETWEEN_COORDS(Vector3 vec1, Vector3 vec2, int damage, BOOL p7, Hash weaponHash, Ped ownerPed, BOOL isAudible, BOOL isInvisible, float speed, BOOL p13) { invoke<Void>(0x867654CBC7606F2C, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed, p13); } // 0x867654CBC7606F2C 0xCB7415AC b1207
 	NATIVE_DECL void FIRE_SINGLE_BULLET(Any* args) { invoke<Void>(0xCBC9A21F6A2A679C, args); } // 0xCBC9A21F6A2A679C b1207
 	NATIVE_DECL void GET_MODEL_DIMENSIONS(Hash modelHash, Vector3* minimum, Vector3* maximum) { invoke<Void>(0xDCB8DDD5D054A7E7, modelHash, minimum, maximum); } // 0xDCB8DDD5D054A7E7 0x91ABB8E0 b1207
 	NATIVE_DECL BOOL IS_BIT_SET(int address, int offset) { return invoke<BOOL>(0x4ED6CFDFE8D4131A, address, offset); } // 0x4ED6CFDFE8D4131A 0x902E26AC b1207
@@ -4065,8 +4204,10 @@ namespace MISC
 	// 
 	// ownedByPlayer = only projectiles fired by the player will be detected.
 	NATIVE_DECL BOOL IS_PROJECTILE_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL ownedByPlayer) { return invoke<BOOL>(0x05B0061EFDFC8941, x1, y1, z1, x2, y2, z2, ownedByPlayer); } // 0x05B0061EFDFC8941 0x78E1A557 b1207
+	NATIVE_DECL BOOL IS_PROJECTILE_IN_AREA(Vector3 vec1, Vector3 vec2, BOOL ownedByPlayer) { return invoke<BOOL>(0x05B0061EFDFC8941, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, ownedByPlayer); } // 0x05B0061EFDFC8941 0x78E1A557 b1207
 	// Determines whether there is a projectile of a specific type within the specified coordinates. The coordinates form a rectangle.
 	NATIVE_DECL BOOL IS_PROJECTILE_TYPE_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, int type, BOOL p7) { return invoke<BOOL>(0x04965FB9E14235C7, x1, y1, z1, x2, y2, z2, type, p7); } // 0x04965FB9E14235C7 0x2B73BCF6 b1207
+	NATIVE_DECL BOOL IS_PROJECTILE_TYPE_IN_AREA(Vector3 vec1, Vector3 vec2, int type, BOOL p7) { return invoke<BOOL>(0x04965FB9E14235C7, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, type, p7); } // 0x04965FB9E14235C7 0x2B73BCF6 b1207
 	NATIVE_DECL BOOL IS_PROJECTILE_TYPE_IN_ANGLED_AREA(float p0, float p1, float p2, float p3, float p4, float p5, float p6, Any p7, BOOL p8) { return invoke<BOOL>(0x928431F4133CD3D4, p0, p1, p2, p3, p4, p5, p6, p7, p8); } // 0x928431F4133CD3D4 0xD1AE2681 b1207
 	NATIVE_DECL BOOL IS_PROJECTILE_TYPE_WITHIN_DISTANCE(float p0, float p1, float p2, Any p3, float p4, BOOL p5) { return invoke<BOOL>(0xF51C9BAAD9ED64C4, p0, p1, p2, p3, p4, p5); } // 0xF51C9BAAD9ED64C4 0xBE81F1E2 b1207
 	NATIVE_DECL BOOL GET_COORDS_OF_PROJECTILE_TYPE_WITHIN_DISTANCE(Ped ped, Hash weaponHash, float distance, Vector3* outCoords, BOOL p4, BOOL mustBeOwnedByThisPed) { return invoke<BOOL>(0xD73C960A681052DF, ped, weaponHash, distance, outCoords, p4, mustBeOwnedByThisPed); } // 0xD73C960A681052DF 0x6BDE5CE4 b1207
@@ -4076,6 +4217,7 @@ namespace MISC
 	NATIVE_DECL BOOL IS_BULLET_IN_BOX(float p0, float p1, float p2, float p3, float p4, float p5, BOOL p6) { return invoke<BOOL>(0xC128137C52152741, p0, p1, p2, p3, p4, p5, p6); } // 0xC128137C52152741 0xAB73ED26 b1207
 	// p3 - possibly radius?
 	NATIVE_DECL BOOL HAS_BULLET_IMPACTED_IN_AREA(float x, float y, float z, float p3, BOOL p4, BOOL p5) { return invoke<BOOL>(0xC153E5BCCF411814, x, y, z, p3, p4, p5); } // 0xC153E5BCCF411814 0x902BC7D9 b1207
+	NATIVE_DECL BOOL HAS_BULLET_IMPACTED_IN_AREA(Vector3 vec, float p3, BOOL p4, BOOL p5) { return invoke<BOOL>(0xC153E5BCCF411814, vec.x, vec.y, vec.z, p3, p4, p5); } // 0xC153E5BCCF411814 0x902BC7D9 b1207
 	NATIVE_DECL BOOL HAS_BULLET_IMPACTED_IN_BOX(float p0, float p1, float p2, float p3, float p4, float p5, BOOL p6, BOOL p7) { return invoke<BOOL>(0x3B6A4C05FB2B33AC, p0, p1, p2, p3, p4, p5, p6, p7); } // 0x3B6A4C05FB2B33AC 0x2C2618CC b1207
 	NATIVE_DECL Any _0x7A76104CC2CC69E8(Entity entity, int p1, int p2) { return invoke<Any>(0x7A76104CC2CC69E8, entity, p1, p2); } // 0x7A76104CC2CC69E8 b1207
 	NATIVE_DECL Any _0xDC416CA762BC4F43(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0xDC416CA762BC4F43, p0, p1, p2, p3, p4, p5); } // 0xDC416CA762BC4F43 b1207
@@ -4108,6 +4250,7 @@ namespace MISC
 	NATIVE_DECL void _0xF650DCF5D6F312C1(Any p0) { invoke<Void>(0xF650DCF5D6F312C1, p0); } // 0xF650DCF5D6F312C1 b1232
 	NATIVE_DECL const char* _GET_STRING_FROM_FLOAT(float value, int digits) { return invoke<const char*>(0x2B6846401D68E563, value, digits); } // 0x2B6846401D68E563 b1207
 	NATIVE_DECL const char* _GET_STRING_FROM_VECTOR(float x, float y, float z) { return invoke<const char*>(0x6C4DBF553885F9EB, x, y, z); } // 0x6C4DBF553885F9EB b1207
+	NATIVE_DECL const char* _GET_STRING_FROM_VECTOR(Vector3 vec) { return invoke<const char*>(0x6C4DBF553885F9EB, vec.x, vec.y, vec.z); } // 0x6C4DBF553885F9EB b1207
 	NATIVE_DECL const char* _GET_STRING_FROM_BOOL(BOOL value) { return invoke<const char*>(0xF216F74101968DB0, value); } // 0xF216F74101968DB0 b1207
 	// Note: The first bit in 'flags' must not be set.
 	// It is also required to pass at least one extra argument (this must be a text label string or hash).
@@ -4181,15 +4324,18 @@ namespace MISC
 	NATIVE_DECL void BLOCK_DISPATCH_SERVICE_RESOURCE_CREATION(int dispatchService, BOOL toggle) { invoke<Void>(0x66947E61A44DE2C6, dispatchService, toggle); } // 0x66947E61A44DE2C6 0xE0F0684F b1207
 	// dispatchService: see ENABLE_DISPATCH_SERVICE
 	NATIVE_DECL BOOL CREATE_INCIDENT(int dispatchService, float x, float y, float z, int numUnits, float radius, int* outIncidentID, Any p7, Any p8) { return invoke<BOOL>(0x3F892CAF67444AE7, dispatchService, x, y, z, numUnits, radius, outIncidentID, p7, p8); } // 0x3F892CAF67444AE7 0xFC5FF7B3 b1207
+	NATIVE_DECL BOOL CREATE_INCIDENT(int dispatchService, Vector3 vec, int numUnits, float radius, int* outIncidentID, Any p7, Any p8) { return invoke<BOOL>(0x3F892CAF67444AE7, dispatchService, vec.x, vec.y, vec.z, numUnits, radius, outIncidentID, p7, p8); } // 0x3F892CAF67444AE7 0xFC5FF7B3 b1207
 	// dispatchService: see ENABLE_DISPATCH_SERVICE
 	// 
 	// The entities must be added to itemSet.
 	NATIVE_DECL BOOL _CREATE_INCIDENT_WITH_ENTITIES(int dispatchService, float x, float y, float z, ItemSet itemSet, float radius, int* outIncidentID) { return invoke<BOOL>(0xAB3D3F45436DB1D8, dispatchService, x, y, z, itemSet, radius, outIncidentID); } // 0xAB3D3F45436DB1D8 b1207
+	NATIVE_DECL BOOL _CREATE_INCIDENT_WITH_ENTITIES(int dispatchService, Vector3 vec, ItemSet itemSet, float radius, int* outIncidentID) { return invoke<BOOL>(0xAB3D3F45436DB1D8, dispatchService, vec.x, vec.y, vec.z, itemSet, radius, outIncidentID); } // 0xAB3D3F45436DB1D8 b1207
 	// Delete an incident with a given id.
 	NATIVE_DECL void DELETE_INCIDENT(int incidentId) { invoke<Void>(0x5CFD0F0D6AAE0AEE, incidentId); } // 0x5CFD0F0D6AAE0AEE 0x212BD0DC b1207
 	NATIVE_DECL BOOL IS_INCIDENT_VALID(int incidentId) { return invoke<BOOL>(0x39F2B1BAD412246A, incidentId); } // 0x39F2B1BAD412246A 0x31FD0BA4 b1207
 	NATIVE_DECL void _SET_INCIDENT_UNK(int incidentId) { invoke<Void>(0x9617B6E5F6537B63, incidentId); } // 0x9617B6E5F6537B63 b1207
 	NATIVE_DECL int ADD_POP_MULTIPLIER_AREA(float x1, float y1, float z1, float x2, float y2, float z2, float pedDensity, float trafficDensity, BOOL p8, BOOL p9) { return invoke<int>(0x5EBDA1A3B8CB5EF7, x1, y1, z1, x2, y2, z2, pedDensity, trafficDensity, p8, p9); } // 0x5EBDA1A3B8CB5EF7 0x42BF09B3 b1207
+	NATIVE_DECL int ADD_POP_MULTIPLIER_AREA(Vector3 vec1, Vector3 vec2, float pedDensity, float trafficDensity, BOOL p8, BOOL p9) { return invoke<int>(0x5EBDA1A3B8CB5EF7, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, pedDensity, trafficDensity, p8, p9); } // 0x5EBDA1A3B8CB5EF7 0x42BF09B3 b1207
 	NATIVE_DECL BOOL DOES_POP_MULTIPLIER_AREA_EXIST(int id) { return invoke<BOOL>(0x03BA619C81A646B3, id); } // 0x03BA619C81A646B3 0xE933B34A b1207
 	NATIVE_DECL void REMOVE_POP_MULTIPLIER_AREA(int id, BOOL p1) { invoke<Void>(0x88CB484364EFB37A, id, p1); } // 0x88CB484364EFB37A 0xFBDBE374 b1207
 	// Only used in script function PROCESS_ZONE_CREATION
@@ -4212,6 +4358,7 @@ namespace MISC
 	NATIVE_DECL void RESET_WANTED_RESPONSE_NUM_PEDS_TO_SPAWN() { invoke<Void>(0xEF42F56F69877125); } // 0xEF42F56F69877125 0xE0C9307E b1207
 	// Params: p3 is 0 in R* Script utopia2
 	NATIVE_DECL void ADD_TACTICAL_NAV_MESH_POINT(float x, float y, float z, int p3) { invoke<Void>(0xE4EE55E63FA9AF45, x, y, z, p3); } // 0xE4EE55E63FA9AF45 0x24A4E0B2 b1207
+	NATIVE_DECL void ADD_TACTICAL_NAV_MESH_POINT(Vector3 vec, int p3) { invoke<Void>(0xE4EE55E63FA9AF45, vec.x, vec.y, vec.z, p3); } // 0xE4EE55E63FA9AF45 0x24A4E0B2 b1207
 	NATIVE_DECL void CLEAR_TACTICAL_NAV_MESH_POINTS() { invoke<Void>(0xD93B6516C6878267); } // 0xD93B6516C6878267 0x66C3C59C b1207
 	// enum eOnscreenKeyboardTextType
 	// {
@@ -4738,6 +4885,7 @@ namespace NETWORK
 	NATIVE_DECL BOOL NETWORK_GET_ASSISTED_DAMAGE_OF_ENTITY(Player player, Entity entity, int* p2) { return invoke<BOOL>(0x4CACA84440FA26F6, player, entity, p2); } // 0x4CACA84440FA26F6 0x28A45454 b1207
 	NATIVE_DECL Entity NETWORK_GET_ENTITY_KILLER_OF_PLAYER(Player player, Hash* weaponHash) { return invoke<Entity>(0x42B2DAA6B596F5F8, player, weaponHash); } // 0x42B2DAA6B596F5F8 0xA7E7E04F b1207
 	NATIVE_DECL void NETWORK_RESURRECT_LOCAL_PLAYER(float x, float y, float z, float heading, int p4, BOOL p5, Any p6, BOOL p7) { invoke<Void>(0xEA23C49EAA83ACFB, x, y, z, heading, p4, p5, p6, p7); } // 0xEA23C49EAA83ACFB 0xF1F9D4B4 b1207
+	NATIVE_DECL void NETWORK_RESURRECT_LOCAL_PLAYER(Vector3 vec, float heading, int p4, BOOL p5, Any p6, BOOL p7) { invoke<Void>(0xEA23C49EAA83ACFB, vec.x, vec.y, vec.z, heading, p4, p5, p6, p7); } // 0xEA23C49EAA83ACFB 0xF1F9D4B4 b1207
 	NATIVE_DECL void _NETWORK_RESURRECT_LOCAL_PLAYER_2(Any* args) { invoke<Void>(0x4154B7D8C75E5DCF, args); } // 0x4154B7D8C75E5DCF b1207
 	NATIVE_DECL void NETWORK_SET_LOCAL_PLAYER_INVINCIBLE_TIME(int time) { invoke<Void>(0x2D95C7E2D7E07307, time); } // 0x2D95C7E2D7E07307 0xFEA9B85C b1207
 	NATIVE_DECL void NETWORK_SET_LOCAL_PLAYER_SYNC_LOOK_AT(BOOL toggle) { invoke<Void>(0x524FF0AEFF9C3973, toggle); } // 0x524FF0AEFF9C3973 0xB72F086D b1207
@@ -4838,6 +4986,7 @@ namespace NETWORK
 	NATIVE_DECL void _0xBC7D36946D19E60E(BOOL p0) { invoke<Void>(0xBC7D36946D19E60E, p0); } // 0xBC7D36946D19E60E b1207
 	// Params: p5 = 50.f, p6 = 0 in R* Script net_fetch (NET_FETCH_CLIENT_UPDATE_PED_ROLE_CLUE_IDLE)
 	NATIVE_DECL BOOL _0x880A7202301E282B(Any* p0, Any* p1, float x, float y, float z, float p5, Any p6) { return invoke<BOOL>(0x880A7202301E282B, p0, p1, x, y, z, p5, p6); } // 0x880A7202301E282B b1311
+	NATIVE_DECL BOOL _0x880A7202301E282B(Any* p0, Any* p1, Vector3 vec, float p5, Any p6) { return invoke<BOOL>(0x880A7202301E282B, p0, p1, vec.x, vec.y, vec.z, p5, p6); } // 0x880A7202301E282B b1311
 	// nullsub, doesn't do anything
 	NATIVE_DECL Any _0xC964FCD3D1720697() { return invoke<Any>(0xC964FCD3D1720697); } // 0xC964FCD3D1720697 b1207
 	// nullsub, doesn't do anything
@@ -4908,6 +5057,7 @@ namespace NETWORK
 	// 
 	// Old name: _GET_RESERVATIONS_FOR_SLOT_WORLD_POSITION
 	NATIVE_DECL void GET_RESERVED_MISSION_ENTITIES_IN_AREA(float x, float y, float z, BOOL p3, int* peds, int* vehicles, int* objects, int* pickups) { invoke<Void>(0x5E71E72A94985214, x, y, z, p3, peds, vehicles, objects, pickups); } // 0x5E71E72A94985214 b1207
+	NATIVE_DECL void GET_RESERVED_MISSION_ENTITIES_IN_AREA(Vector3 vec, BOOL p3, int* peds, int* vehicles, int* objects, int* pickups) { invoke<Void>(0x5E71E72A94985214, vec.x, vec.y, vec.z, p3, peds, vehicles, objects, pickups); } // 0x5E71E72A94985214 b1207
 	// Note: this native was added in build 1311.23
 	NATIVE_DECL BOOL _0x5F328FC909F0E0FF(int p0, int p1, int p2, int p3) { return invoke<BOOL>(0x5F328FC909F0E0FF, p0, p1, p2, p3); } // 0x5F328FC909F0E0FF b1311
 	// Always returns 60
@@ -4973,6 +5123,7 @@ namespace NETWORK
 	NATIVE_DECL void CONVERT_POSIX_TIME(int posixTime, Any* timeStructure) { invoke<Void>(0xAC97AF97FA68E5D5, posixTime, timeStructure); } // 0xAC97AF97FA68E5D5 0xBB7CCE49 b1207
 	NATIVE_DECL void NETWORK_SET_IN_SPECTATOR_MODE(BOOL toggle, Ped playerPed) { invoke<Void>(0x423DE3854BB50894, toggle, playerPed); } // 0x423DE3854BB50894 0x5C4C8458 b1207
 	NATIVE_DECL void _NETWORK_SET_IN_STATIC_SPECTATOR_MODE(BOOL toggle, float x, float y, float z) { invoke<Void>(0xFBF1ECFB39A77B5F, toggle, x, y, z); } // 0xFBF1ECFB39A77B5F b1207
+	NATIVE_DECL void _NETWORK_SET_IN_STATIC_SPECTATOR_MODE(BOOL toggle, Vector3 vec) { invoke<Void>(0xFBF1ECFB39A77B5F, toggle, vec.x, vec.y, vec.z); } // 0xFBF1ECFB39A77B5F b1207
 	NATIVE_DECL BOOL NETWORK_IS_IN_SPECTATOR_MODE() { return invoke<BOOL>(0x048746E388762E11); } // 0x048746E388762E11 0x3EAD9DB8 b1207
 	NATIVE_DECL BOOL _NETWORK_IS_PLAYER_IN_SPECTATOR_MODE(Player player) { return invoke<BOOL>(0x5B709519997ECF0F, player); } // 0x5B709519997ECF0F b1207
 	NATIVE_DECL void NETWORK_SET_IN_MP_CUTSCENE(BOOL p0, BOOL p1, int p2, BOOL p3) { invoke<Void>(0x9CA5DE655269FEC4, p0, p1, p2, p3); } // 0x9CA5DE655269FEC4 0x8434CB43 b1207
@@ -5007,6 +5158,7 @@ namespace NETWORK
 	NATIVE_DECL int NETWORK_GET_NETWORK_ID_FROM_ROPE_ID(int ropeId) { return invoke<int>(0x42871327315EDAE8, ropeId); } // 0x42871327315EDAE8 b1207
 	NATIVE_DECL int NETWORK_GET_ROPE_ID_FROM_NETWORK_ID(int netId) { return invoke<int>(0xEB1A4DD8352EC828, netId); } // 0xEB1A4DD8352EC828 b1207
 	NATIVE_DECL void _NETWORK_SPAWN_CONFIG_ADD_SPAWN_POINT(float x, float y, float z, float heading) { invoke<Void>(0xFD1AC0B3858F224C, x, y, z, heading); } // 0xFD1AC0B3858F224C b1207
+	NATIVE_DECL void _NETWORK_SPAWN_CONFIG_ADD_SPAWN_POINT(Vector3 vec, float heading) { invoke<Void>(0xFD1AC0B3858F224C, vec.x, vec.y, vec.z, heading); } // 0xFD1AC0B3858F224C b1207
 	NATIVE_DECL void _0xA63E4F050F20021F() { invoke<Void>(0xA63E4F050F20021F); } // 0xA63E4F050F20021F b1207
 	NATIVE_DECL void _NETWORK_SPAWN_CONFIG_ADD_EXCLUSION_VOLUME(Volume volume) { invoke<Void>(0xEEB7818B1D307212, volume); } // 0xEEB7818B1D307212 b1207
 	NATIVE_DECL void _NETWORK_SPAWN_CONFIG_REMOVE_EXCLUSION_VOLUME(Volume volume) { invoke<Void>(0xA35E7BF20FA269E0, volume); } // 0xA35E7BF20FA269E0 b1207
@@ -5028,6 +5180,7 @@ namespace NETWORK
 	NATIVE_DECL void NETWORK_SPAWN_CONFIG_SET_TUNING_FLOAT(Hash p0, float p1) { invoke<Void>(0x0608326F7B98C08D, p0, p1); } // 0x0608326F7B98C08D b1207
 	NATIVE_DECL void _0x5D3C528B7A7DF836(Hash p0) { invoke<Void>(0x5D3C528B7A7DF836, p0); } // 0x5D3C528B7A7DF836 b1207
 	NATIVE_DECL void _0x2686BD9566B65EDA(float x, float y, float z) { invoke<Void>(0x2686BD9566B65EDA, x, y, z); } // 0x2686BD9566B65EDA b1207
+	NATIVE_DECL void _0x2686BD9566B65EDA(Vector3 vec) { invoke<Void>(0x2686BD9566B65EDA, vec.x, vec.y, vec.z); } // 0x2686BD9566B65EDA b1207
 	NATIVE_DECL void _0xBB1EC8C2EEF33BAA(Entity entity) { invoke<Void>(0xBB1EC8C2EEF33BAA, entity); } // 0xBB1EC8C2EEF33BAA b1207
 	NATIVE_DECL BOOL _0x67CCDF74C4DF7169() { return invoke<BOOL>(0x67CCDF74C4DF7169); } // 0x67CCDF74C4DF7169 b1207
 	NATIVE_DECL void _0xC8B6D18E22484643() { invoke<Void>(0xC8B6D18E22484643); } // 0xC8B6D18E22484643 b1207
@@ -5283,11 +5436,14 @@ namespace NETWORK
 namespace OBJECT
 {
 	NATIVE_DECL Object CREATE_OBJECT(Hash modelHash, float x, float y, float z, BOOL isNetwork, BOOL bScriptHostObj, BOOL dynamic, BOOL p7, BOOL p8) { return invoke<Object>(0x509D5878EB39E842, modelHash, x, y, z, isNetwork, bScriptHostObj, dynamic, p7, p8); } // 0x509D5878EB39E842 0x2F7AA05C b1207
+	NATIVE_DECL Object CREATE_OBJECT(Hash modelHash, Vector3 vec, BOOL isNetwork, BOOL bScriptHostObj, BOOL dynamic, BOOL p7, BOOL p8) { return invoke<Object>(0x509D5878EB39E842, modelHash, vec.x, vec.y, vec.z, isNetwork, bScriptHostObj, dynamic, p7, p8); } // 0x509D5878EB39E842 0x2F7AA05C b1207
 	NATIVE_DECL Object CREATE_OBJECT_NO_OFFSET(Hash modelHash, float x, float y, float z, BOOL isNetwork, BOOL bScriptHostObj, BOOL dynamic, BOOL p7) { return invoke<Object>(0x9A294B2138ABB884, modelHash, x, y, z, isNetwork, bScriptHostObj, dynamic, p7); } // 0x9A294B2138ABB884 0x58040420 b1207
+	NATIVE_DECL Object CREATE_OBJECT_NO_OFFSET(Hash modelHash, Vector3 vec, BOOL isNetwork, BOOL bScriptHostObj, BOOL dynamic, BOOL p7) { return invoke<Object>(0x9A294B2138ABB884, modelHash, vec.x, vec.y, vec.z, isNetwork, bScriptHostObj, dynamic, p7); } // 0x9A294B2138ABB884 0x58040420 b1207
 	// Deletes the specified object, then sets the handle pointed to by the pointer to NULL.
 	NATIVE_DECL void DELETE_OBJECT(Object* object) { invoke<Void>(0x931914268722C263, object); } // 0x931914268722C263 0xD6EF9DA7 b1207
 	NATIVE_DECL BOOL PLACE_OBJECT_ON_GROUND_PROPERLY(Object object, BOOL p1) { return invoke<BOOL>(0x58A850EAEE20FAA3, object, p1); } // 0x58A850EAEE20FAA3 0x8F95A20B b1207
 	NATIVE_DECL BOOL SLIDE_OBJECT(Object object, float toX, float toY, float toZ, float speedX, float speedY, float speedZ, BOOL collision) { return invoke<BOOL>(0x2FDFF4107B8C1147, object, toX, toY, toZ, speedX, speedY, speedZ, collision); } // 0x2FDFF4107B8C1147 0x63BFA7A0 b1207
+	NATIVE_DECL BOOL SLIDE_OBJECT(Object object, Vector3 to, Vector3 speed, BOOL collision) { return invoke<BOOL>(0x2FDFF4107B8C1147, object, to.x, to.y, to.z, speed.x, speed.y, speed.z, collision); } // 0x2FDFF4107B8C1147 0x63BFA7A0 b1207
 	NATIVE_DECL void SET_OBJECT_TARGETTABLE(Object object, BOOL targettable) { invoke<Void>(0x8A7391690F5AFD81, object, targettable); } // 0x8A7391690F5AFD81 0x3F88CD86 b1207
 	NATIVE_DECL void _SET_OBJECT_TARGETTABLE_2(Object object, BOOL targettable) { invoke<Void>(0x581EDBE56E8D62C9, object, targettable); } // 0x581EDBE56E8D62C9 b1207
 	// When p1 and p2 are true you can focus on the object (similar to when you focus a ped)
@@ -5297,10 +5453,12 @@ namespace OBJECT
 	NATIVE_DECL void _0x46CBCF0E98A4E156(Any p0, Any p1) { invoke<Void>(0x46CBCF0E98A4E156, p0, p1); } // 0x46CBCF0E98A4E156 b1207
 	// isMission - if true doesn't return mission objects
 	NATIVE_DECL Object GET_CLOSEST_OBJECT_OF_TYPE(float x, float y, float z, float radius, Hash modelHash, BOOL isMission, BOOL p6, BOOL p7) { return invoke<Object>(0xE143FA2249364369, x, y, z, radius, modelHash, isMission, p6, p7); } // 0xE143FA2249364369 0x45619B33 b1207
+	NATIVE_DECL Object GET_CLOSEST_OBJECT_OF_TYPE(Vector3 vec, float radius, Hash modelHash, BOOL isMission, BOOL p6, BOOL p7) { return invoke<Object>(0xE143FA2249364369, vec.x, vec.y, vec.z, radius, modelHash, isMission, p6, p7); } // 0xE143FA2249364369 0x45619B33 b1207
 	NATIVE_DECL BOOL HAS_OBJECT_BEEN_BROKEN(Any p0) { return invoke<BOOL>(0x8ABFB70C49CC43E2, p0); } // 0x8ABFB70C49CC43E2 0xFE21F891 b1207
 	NATIVE_DECL BOOL HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_BROKEN(float p0, float p1, float p2, float p3, Hash modelHash, Any p5) { return invoke<BOOL>(0x761B0E69AC4D007E, p0, p1, p2, p3, modelHash, p5); } // 0x761B0E69AC4D007E 0x6FC0353D b1207
 	// Old name: _GET_OBJECT_OFFSET_FROM_COORDS
 	NATIVE_DECL Vector3 GET_OFFSET_FROM_COORD_AND_HEADING_IN_WORLD_COORDS(float xPos, float yPos, float zPos, float heading, float xOffset, float yOffset, float zOffset) { return invoke<Vector3>(0x163E252DE035A133, xPos, yPos, zPos, heading, xOffset, yOffset, zOffset); } // 0x163E252DE035A133 0x87A42A12 b1207
+	NATIVE_DECL Vector3 GET_OFFSET_FROM_COORD_AND_HEADING_IN_WORLD_COORDS(Vector3 pos, float heading, Vector3 offset) { return invoke<Vector3>(0x163E252DE035A133, pos.x, pos.y, pos.z, heading, offset.x, offset.y, offset.z); } // 0x163E252DE035A133 0x87A42A12 b1207
 	// Registers a door, hashes: https://github.com/femga/rdr3_discoveries/tree/master/doorHashes
 	NATIVE_DECL void _ADD_DOOR_TO_SYSTEM_NEW(Hash doorHash, BOOL p1, BOOL p2, BOOL p3, int threadId, int p5, BOOL p6) { invoke<Void>(0xD99229FE93B46286, doorHash, p1, p2, p3, threadId, p5, p6); } // 0xD99229FE93B46286 b1207
 	NATIVE_DECL BOOL _IS_DOOR_REGISTERED_WITH_NETWORK(Hash doorHash) { return invoke<BOOL>(0xB5DED7B65C604FDF, doorHash); } // 0xB5DED7B65C604FDF b1207
@@ -5350,6 +5508,7 @@ namespace OBJECT
 	NATIVE_DECL Any _0xEBA314768FB35D58(Any p0) { return invoke<Any>(0xEBA314768FB35D58, p0); } // 0xEBA314768FB35D58 b1207
 	NATIVE_DECL void _0x5230BF34EB0EC645(Any p0) { invoke<Void>(0x5230BF34EB0EC645, p0); } // 0x5230BF34EB0EC645 b1207
 	NATIVE_DECL BOOL DOES_OBJECT_OF_TYPE_EXIST_AT_COORDS(float x, float y, float z, float radius, Hash hash, BOOL p5) { return invoke<BOOL>(0xBFA48E2FF417213F, x, y, z, radius, hash, p5); } // 0xBFA48E2FF417213F 0x23FF2BA4 b1207
+	NATIVE_DECL BOOL DOES_OBJECT_OF_TYPE_EXIST_AT_COORDS(Vector3 vec, float radius, Hash hash, BOOL p5) { return invoke<BOOL>(0xBFA48E2FF417213F, vec.x, vec.y, vec.z, radius, hash, p5); } // 0xBFA48E2FF417213F 0x23FF2BA4 b1207
 	NATIVE_DECL BOOL IS_POINT_IN_ANGLED_AREA(float p0, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float p9, BOOL p10, BOOL p11) { return invoke<BOOL>(0x2A70BAE8883E4C81, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11); } // 0x2A70BAE8883E4C81 0x73BCFFDC b1207
 	NATIVE_DECL void SET_OBJECT_ALLOW_LOW_LOD_BUOYANCY(Object object, BOOL toggle) { invoke<Void>(0x4D89D607CB3DD1D2, object, toggle); } // 0x4D89D607CB3DD1D2 0x19B17769 b1207
 	// Adjust the physics parameters of a prop, or otherwise known as "object". This is useful for simulated gravity.
@@ -5387,6 +5546,7 @@ namespace OBJECT
 	NATIVE_DECL void _0x7FCD49388BC9B775(Any p0, Any p1) { invoke<Void>(0x7FCD49388BC9B775, p0, p1); } // 0x7FCD49388BC9B775 b1207
 	NATIVE_DECL Any _0xFA99E8E575F2FEF8(Any p0) { return invoke<Any>(0xFA99E8E575F2FEF8, p0); } // 0xFA99E8E575F2FEF8 b1436
 	NATIVE_DECL Object GET_RAYFIRE_MAP_OBJECT(float x, float y, float z, float radius, const char* name) { return invoke<Object>(0xB48FCED898292E52, x, y, z, radius, name); } // 0xB48FCED898292E52 0xA286DE96 b1207
+	NATIVE_DECL Object GET_RAYFIRE_MAP_OBJECT(Vector3 vec, float radius, const char* name) { return invoke<Object>(0xB48FCED898292E52, vec.x, vec.y, vec.z, radius, name); } // 0xB48FCED898292E52 0xA286DE96 b1207
 	NATIVE_DECL void SET_STATE_OF_RAYFIRE_MAP_OBJECT(Object object, int state) { invoke<Void>(0x5C29F698D404C5E1, object, state); } // 0x5C29F698D404C5E1 0x21F51560 b1207
 	NATIVE_DECL int GET_STATE_OF_RAYFIRE_MAP_OBJECT(Object object) { return invoke<int>(0x899BA936634A322E, object); } // 0x899BA936634A322E 0xF1B8817A b1207
 	NATIVE_DECL BOOL DOES_RAYFIRE_MAP_OBJECT_EXIST(Object object) { return invoke<BOOL>(0x52AF537A0C5B8AAD, object); } // 0x52AF537A0C5B8AAD 0xE08C834D b1207
@@ -5394,11 +5554,15 @@ namespace OBJECT
 	// https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/Placement%20Flags
 	// https://github.com/femga/rdr3_discoveries/blob/master/objects/pickup_list.lua
 	NATIVE_DECL Pickup CREATE_PICKUP(Hash pickupHash, float x, float y, float z, int flags, int p5, BOOL p6, Hash modelHash, int p8, float p9, Any p10) { return invoke<Pickup>(0xFBA08C503DD5FA58, pickupHash, x, y, z, flags, p5, p6, modelHash, p8, p9, p10); } // 0xFBA08C503DD5FA58 0x5E14DF68 b1207
+	NATIVE_DECL Pickup CREATE_PICKUP(Hash pickupHash, Vector3 vec, int flags, int p5, BOOL p6, Hash modelHash, int p8, float p9, Any p10) { return invoke<Pickup>(0xFBA08C503DD5FA58, pickupHash, vec.x, vec.y, vec.z, flags, p5, p6, modelHash, p8, p9, p10); } // 0xFBA08C503DD5FA58 0x5E14DF68 b1207
 	// flags: see CREATE_PICKUP
 	NATIVE_DECL Pickup CREATE_PICKUP_ROTATE(Hash pickupHash, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, int flags, int p8, int p9, BOOL p10, Hash modelHash, int p12, float p13, Any p14) { return invoke<Pickup>(0x891804727E0A98B7, pickupHash, posX, posY, posZ, rotX, rotY, rotZ, flags, p8, p9, p10, modelHash, p12, p13, p14); } // 0x891804727E0A98B7 0xF015BFE2 b1207
+	NATIVE_DECL Pickup CREATE_PICKUP_ROTATE(Hash pickupHash, Vector3 pos, Vector3 rot, int flags, int p8, int p9, BOOL p10, Hash modelHash, int p12, float p13, Any p14) { return invoke<Pickup>(0x891804727E0A98B7, pickupHash, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, flags, p8, p9, p10, modelHash, p12, p13, p14); } // 0x891804727E0A98B7 0xF015BFE2 b1207
 	// flags: see CREATE_PICKUP
 	NATIVE_DECL Object CREATE_AMBIENT_PICKUP(Hash pickupHash, float x, float y, float z, int flags, int value, Hash modelHash, BOOL p7, BOOL p8, int p9, float p10) { return invoke<Object>(0x673966A0C0FD7171, pickupHash, x, y, z, flags, value, modelHash, p7, p8, p9, p10); } // 0x673966A0C0FD7171 0x17B99CE7 b1207
+	NATIVE_DECL Object CREATE_AMBIENT_PICKUP(Hash pickupHash, Vector3 vec, int flags, int value, Hash modelHash, BOOL p7, BOOL p8, int p9, float p10) { return invoke<Object>(0x673966A0C0FD7171, pickupHash, vec.x, vec.y, vec.z, flags, value, modelHash, p7, p8, p9, p10); } // 0x673966A0C0FD7171 0x17B99CE7 b1207
 	NATIVE_DECL Object CREATE_PORTABLE_PICKUP(Hash pickupHash, float x, float y, float z, BOOL placeOnGround, Hash modelHash) { return invoke<Object>(0x2EAF1FDB2FB55698, pickupHash, x, y, z, placeOnGround, modelHash); } // 0x2EAF1FDB2FB55698 0x8C886BE5 b1207
+	NATIVE_DECL Object CREATE_PORTABLE_PICKUP(Hash pickupHash, Vector3 vec, BOOL placeOnGround, Hash modelHash) { return invoke<Object>(0x2EAF1FDB2FB55698, pickupHash, vec.x, vec.y, vec.z, placeOnGround, modelHash); } // 0x2EAF1FDB2FB55698 0x8C886BE5 b1207
 	NATIVE_DECL void ATTACH_PORTABLE_PICKUP_TO_PED(Object pickupObject, Ped ped) { invoke<Void>(0x8DC39368BDD57755, pickupObject, ped); } // 0x8DC39368BDD57755 0x184F6AB3 b1207
 	NATIVE_DECL void DETACH_PORTABLE_PICKUP_FROM_PED(Object pickupObject) { invoke<Void>(0xCF463D1E9A0AECB1, pickupObject); } // 0xCF463D1E9A0AECB1 0x1D094562 b1207
 	NATIVE_DECL void _HIDE_PICKUP_OBJECT(Object pickupObject, BOOL toggle) { invoke<Void>(0x2777150CC7D9365E, pickupObject, toggle); } // 0x2777150CC7D9365E b1207
@@ -5417,6 +5581,7 @@ namespace OBJECT
 	NATIVE_DECL BOOL IS_OBJECT_A_PORTABLE_PICKUP(Object object) { return invoke<BOOL>(0x0378C08504160D0D, object); } // 0x0378C08504160D0D 0x0F0E94FF b1207
 	NATIVE_DECL BOOL _IS_PICKUP_TYPE_VALID(Hash pickupHash) { return invoke<BOOL>(0x007BD043587F7C82, pickupHash); } // 0x007BD043587F7C82 b1207
 	NATIVE_DECL BOOL DOES_PICKUP_OF_TYPE_EXIST_IN_AREA(Hash pickupHash, float x, float y, float z, float radius) { return invoke<BOOL>(0xF9C36251F6E48E33, pickupHash, x, y, z, radius); } // 0xF9C36251F6E48E33 0xF139681B b1207
+	NATIVE_DECL BOOL DOES_PICKUP_OF_TYPE_EXIST_IN_AREA(Hash pickupHash, Vector3 vec, float radius) { return invoke<BOOL>(0xF9C36251F6E48E33, pickupHash, vec.x, vec.y, vec.z, radius); } // 0xF9C36251F6E48E33 0xF139681B b1207
 	NATIVE_DECL void SET_PICKUP_REGENERATION_TIME(Pickup pickup, int duration) { invoke<Void>(0x78015C9B4B3ECC9D, pickup, duration); } // 0x78015C9B4B3ECC9D 0xAB11267D b1207
 	NATIVE_DECL void FORCE_PICKUP_REGENERATE(Any p0) { invoke<Void>(0x758A5C1B3B1E1990, p0); } // 0x758A5C1B3B1E1990 b1207
 	// Params: p2 controls whether to make pickups usable/collectable or not in networked games
@@ -5462,6 +5627,7 @@ namespace OBJECT
 	// Old name: _GET_PICKUP_HASH
 	NATIVE_DECL Hash CONVERT_OLD_PICKUP_TYPE_TO_NEW(Hash pickupHash) { return invoke<Hash>(0x5EAAD83F8CFB4575, pickupHash); } // 0x5EAAD83F8CFB4575 0x6AE36192 b1207
 	NATIVE_DECL void SET_FORCE_OBJECT_THIS_FRAME(float x, float y, float z, float p3) { invoke<Void>(0xF538081986E49E9D, x, y, z, p3); } // 0xF538081986E49E9D 0x3DA41C1A b1207
+	NATIVE_DECL void SET_FORCE_OBJECT_THIS_FRAME(Vector3 vec, float p3) { invoke<Void>(0xF538081986E49E9D, vec.x, vec.y, vec.z, p3); } // 0xF538081986E49E9D 0x3DA41C1A b1207
 	NATIVE_DECL Any _0xD91E55B6C005EB09(Any p0, Any p1) { return invoke<Any>(0xD91E55B6C005EB09, p0, p1); } // 0xD91E55B6C005EB09 b1207
 	// Old name: _MARK_OBJECT_FOR_DELETION
 	NATIVE_DECL void ONLY_CLEAN_UP_OBJECT_WHEN_OUT_OF_RANGE(Object object) { invoke<Void>(0xADBE4809F19F927A, object); } // 0xADBE4809F19F927A 0x2048A7DD b1207
@@ -5571,33 +5737,47 @@ namespace PATHFIND
 	NATIVE_DECL void _0x6C3F12ECEB6D2E2A(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x6C3F12ECEB6D2E2A, p0, p1, p2, p3, p4, p5, p6, p7); } // 0x6C3F12ECEB6D2E2A b1207
 	NATIVE_DECL void _0x5A4E1A41E3A02AD0(Any p0, Any p1, Any p2) { invoke<Void>(0x5A4E1A41E3A02AD0, p0, p1, p2); } // 0x5A4E1A41E3A02AD0 b1207
 	NATIVE_DECL BOOL GET_CLOSEST_VEHICLE_NODE(float x, float y, float z, Vector3* outPosition, int nodeType, float p5, float p6) { return invoke<BOOL>(0x240A18690AE96513, x, y, z, outPosition, nodeType, p5, p6); } // 0x240A18690AE96513 0x6F5F1E6C b1207
+	NATIVE_DECL BOOL GET_CLOSEST_VEHICLE_NODE(Vector3 vec, Vector3* outPosition, int nodeType, float p5, float p6) { return invoke<BOOL>(0x240A18690AE96513, vec.x, vec.y, vec.z, outPosition, nodeType, p5, p6); } // 0x240A18690AE96513 0x6F5F1E6C b1207
 	NATIVE_DECL Any _0xCA27A86CAA4E98ED(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { return invoke<Any>(0xCA27A86CAA4E98ED, p0, p1, p2, p3, p4, p5, p6); } // 0xCA27A86CAA4E98ED b1207
 	NATIVE_DECL BOOL GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(float x, float y, float z, Vector3* outPosition, float* outHeading, int nodeType, float p6, int p7) { return invoke<BOOL>(0x23CFFD4CCB243354, x, y, z, outPosition, outHeading, nodeType, p6, p7); } // 0x23CFFD4CCB243354 0x8BD5759B b1207
+	NATIVE_DECL BOOL GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(Vector3 vec, Vector3* outPosition, float* outHeading, int nodeType, float p6, int p7) { return invoke<BOOL>(0x23CFFD4CCB243354, vec.x, vec.y, vec.z, outPosition, outHeading, nodeType, p6, p7); } // 0x23CFFD4CCB243354 0x8BD5759B b1207
 	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE(float x, float y, float z, int nthClosest, Vector3* outPosition, int unknown1, float unknown2, Any unknown3) { return invoke<BOOL>(0x5A6D8DF6FBC5D0C4, x, y, z, nthClosest, outPosition, unknown1, unknown2, unknown3); } // 0x5A6D8DF6FBC5D0C4 0xF125BFCC b1207
+	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE(Vector3 vec, int nthClosest, Vector3* outPosition, int unknown1, float unknown2, Any unknown3) { return invoke<BOOL>(0x5A6D8DF6FBC5D0C4, vec.x, vec.y, vec.z, nthClosest, outPosition, unknown1, unknown2, unknown3); } // 0x5A6D8DF6FBC5D0C4 0xF125BFCC b1207
 	NATIVE_DECL int GET_NTH_CLOSEST_VEHICLE_NODE_ID(float x, float y, float z, int nth, int nodetype, float p5, float p6) { return invoke<int>(0x116443008E5CEFC3, x, y, z, nth, nodetype, p5, p6); } // 0x116443008E5CEFC3 0x3F358BEA b1207
+	NATIVE_DECL int GET_NTH_CLOSEST_VEHICLE_NODE_ID(Vector3 vec, int nth, int nodetype, float p5, float p6) { return invoke<int>(0x116443008E5CEFC3, vec.x, vec.y, vec.z, nth, nodetype, p5, p6); } // 0x116443008E5CEFC3 0x3F358BEA b1207
 	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE_WITH_HEADING(float x, float y, float z, int nthClosest, Vector3* outPosition, float* heading, Any* unknown1, int unknown2, float unknown3, float unknown4) { return invoke<BOOL>(0x591B40D4390DB54A, x, y, z, nthClosest, outPosition, heading, unknown1, unknown2, unknown3, unknown4); } // 0x591B40D4390DB54A 0x7349C856 b1207
+	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE_WITH_HEADING(Vector3 vec, int nthClosest, Vector3* outPosition, float* heading, Any* unknown1, int unknown2, float unknown3, float unknown4) { return invoke<BOOL>(0x591B40D4390DB54A, vec.x, vec.y, vec.z, nthClosest, outPosition, heading, unknown1, unknown2, unknown3, unknown4); } // 0x591B40D4390DB54A 0x7349C856 b1207
 	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE_ID_WITH_HEADING(float x, float y, float z, int nthClosest, Vector3* outPosition, float outHeading, Any p6, float p7, float p8) { return invoke<BOOL>(0x4114EAA8A7F7766D, x, y, z, nthClosest, outPosition, outHeading, p6, p7, p8); } // 0x4114EAA8A7F7766D 0xC1AEB88D b1207
+	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE_ID_WITH_HEADING(Vector3 vec, int nthClosest, Vector3* outPosition, float outHeading, Any p6, float p7, float p8) { return invoke<BOOL>(0x4114EAA8A7F7766D, vec.x, vec.y, vec.z, nthClosest, outPosition, outHeading, p6, p7, p8); } // 0x4114EAA8A7F7766D 0xC1AEB88D b1207
 	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE_FAVOUR_DIRECTION(float x, float y, float z, float desiredX, float desiredY, float desiredZ, int nthClosest, Vector3* outPosition, float* outHeading, int nodetype, Any p10, Any p11) { return invoke<BOOL>(0x2FAC235A6062F14A, x, y, z, desiredX, desiredY, desiredZ, nthClosest, outPosition, outHeading, nodetype, p10, p11); } // 0x2FAC235A6062F14A 0x928A4DEC b1207
+	NATIVE_DECL BOOL GET_NTH_CLOSEST_VEHICLE_NODE_FAVOUR_DIRECTION(Vector3 vec, Vector3 desired, int nthClosest, Vector3* outPosition, float* outHeading, int nodetype, Any p10, Any p11) { return invoke<BOOL>(0x2FAC235A6062F14A, vec.x, vec.y, vec.z, desired.x, desired.y, desired.z, nthClosest, outPosition, outHeading, nodetype, p10, p11); } // 0x2FAC235A6062F14A 0x928A4DEC b1207
 	// Returns true if the id is non zero.
 	NATIVE_DECL BOOL IS_VEHICLE_NODE_ID_VALID(int vehicleNodeId) { return invoke<BOOL>(0x5829A02AF4F0B3CB, vehicleNodeId); } // 0x5829A02AF4F0B3CB 0x57DFB1EF b1207
 	NATIVE_DECL void GET_VEHICLE_NODE_POSITION(int nodeId, Vector3* outPosition) { invoke<Void>(0x8E8D72FF24DEE1FB, nodeId, outPosition); } // 0x8E8D72FF24DEE1FB 0xE38E252D b1207
 	NATIVE_DECL BOOL GET_VEHICLE_NODE_IS_SWITCHED_OFF(int nodeID) { return invoke<BOOL>(0x28533DBDDF7C2C97, nodeID); } // 0x28533DBDDF7C2C97 0x56737A3C b1207
 	NATIVE_DECL Any GET_CLOSEST_ROAD(float x, float y, float z, float p3, int p4, Vector3* p5, Vector3* p6, Any* p7, Any* p8, float* p9, BOOL p10) { return invoke<Any>(0x132F52BBA570FE92, x, y, z, p3, p4, p5, p6, p7, p8, p9, p10); } // 0x132F52BBA570FE92 0x567B0E11 b1207
+	NATIVE_DECL Any GET_CLOSEST_ROAD(Vector3 vec, float p3, int p4, Vector3* p5, Vector3* p6, Any* p7, Any* p8, float* p9, BOOL p10) { return invoke<Any>(0x132F52BBA570FE92, vec.x, vec.y, vec.z, p3, p4, p5, p6, p7, p8, p9, p10); } // 0x132F52BBA570FE92 0x567B0E11 b1207
 	NATIVE_DECL BOOL ARE_NODES_LOADED_FOR_AREA(float x1, float y1, float x2, float y2) { return invoke<BOOL>(0xF7B79A50B905A30D, x1, y1, x2, y2); } // 0xF7B79A50B905A30D 0x86E80A17 b1207
 	// Old name: REQUEST_PATHS_PREFER_ACCURATE_BOUNDINGSTRUCT
 	NATIVE_DECL BOOL REQUEST_PATH_NODES_IN_AREA_THIS_FRAME(float x1, float y1, float x2, float y2) { return invoke<BOOL>(0x07FB139B592FA687, x1, y1, x2, y2); } // 0x07FB139B592FA687 0x2CDA5012 b1207
 	NATIVE_DECL BOOL GET_RANDOM_VEHICLE_NODE(float x, float y, float z, float radius, BOOL p4, BOOL p5, BOOL p6, Vector3* outPosition, int* nodeId) { return invoke<BOOL>(0x93E0DB8440B73A7D, x, y, z, radius, p4, p5, p6, outPosition, nodeId); } // 0x93E0DB8440B73A7D 0xAD1476EA b1207
+	NATIVE_DECL BOOL GET_RANDOM_VEHICLE_NODE(Vector3 vec, float radius, BOOL p4, BOOL p5, BOOL p6, Vector3* outPosition, int* nodeId) { return invoke<BOOL>(0x93E0DB8440B73A7D, vec.x, vec.y, vec.z, radius, p4, p5, p6, outPosition, nodeId); } // 0x93E0DB8440B73A7D 0xAD1476EA b1207
 	NATIVE_DECL void _GET_SPAWN_DATA_FOR_ROAD_NODE(int nodeId, float x, float y, float z, Vector3* outCoords, float* heading) { invoke<Void>(0xA3791B915B8B84C6, nodeId, x, y, z, outCoords, heading); } // 0xA3791B915B8B84C6 b1207
+	NATIVE_DECL void _GET_SPAWN_DATA_FOR_ROAD_NODE(int nodeId, Vector3 vec, Vector3* outCoords, float* heading) { invoke<Void>(0xA3791B915B8B84C6, nodeId, vec.x, vec.y, vec.z, outCoords, heading); } // 0xA3791B915B8B84C6 b1207
 	// Gets a value indicating whether the specified position is on a road.
 	NATIVE_DECL BOOL IS_POINT_ON_ROAD(float x, float y, float z, Vehicle vehicle) { return invoke<BOOL>(0x125BF4ABFC536B09, x, y, z, vehicle); } // 0x125BF4ABFC536B09 0xCF198055 b1207
+	NATIVE_DECL BOOL IS_POINT_ON_ROAD(Vector3 vec, Vehicle vehicle) { return invoke<BOOL>(0x125BF4ABFC536B09, vec.x, vec.y, vec.z, vehicle); } // 0x125BF4ABFC536B09 0xCF198055 b1207
 	NATIVE_DECL void SET_PED_PATHS_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL unknown, Any p7) { invoke<Void>(0x34F060F4BF92E018, x1, y1, z1, x2, y2, z2, unknown, p7); } // 0x34F060F4BF92E018 0x2148EA84 b1207
+	NATIVE_DECL void SET_PED_PATHS_IN_AREA(Vector3 vec1, Vector3 vec2, BOOL unknown, Any p7) { invoke<Void>(0x34F060F4BF92E018, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, unknown, p7); } // 0x34F060F4BF92E018 0x2148EA84 b1207
 	NATIVE_DECL void _0xE5EF9DE716FF737E(Any p0, Any p1, Any p2) { invoke<Void>(0xE5EF9DE716FF737E, p0, p1, p2); } // 0xE5EF9DE716FF737E b1207
 	NATIVE_DECL BOOL GET_SAFE_COORD_FOR_PED(float x, float y, float z, BOOL onGround, Vector3* outPosition, int flags) { return invoke<BOOL>(0xB61C8E878A4199CA, x, y, z, onGround, outPosition, flags); } // 0xB61C8E878A4199CA 0xB370270A b1207
+	NATIVE_DECL BOOL GET_SAFE_COORD_FOR_PED(Vector3 vec, BOOL onGround, Vector3* outPosition, int flags) { return invoke<BOOL>(0xB61C8E878A4199CA, vec.x, vec.y, vec.z, onGround, outPosition, flags); } // 0xB61C8E878A4199CA 0xB370270A b1207
 	NATIVE_DECL void SET_PED_PATHS_BACK_TO_ORIGINAL(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0xE04B48F2CC926253, p0, p1, p2, p3, p4, p5, p6); } // 0xE04B48F2CC926253 0x3F1ABDA4 b1207
 	NATIVE_DECL void _0xCF213A5FC3ABFC08(Any p0, Any p1, Any p2) { invoke<Void>(0xCF213A5FC3ABFC08, p0, p1, p2); } // 0xCF213A5FC3ABFC08 b1207
 	NATIVE_DECL void ADD_NAVMESH_REQUIRED_REGION(float x, float y, float radius) { invoke<Void>(0x387EAD7EE42F6685, x, y, radius); } // 0x387EAD7EE42F6685 0x12B086EA b1207
 	// Returns whether navmesh for the region is loaded.
 	NATIVE_DECL BOOL IS_NAVMESH_LOADED_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2) { return invoke<BOOL>(0xF813C7E63F9062A5, x1, y1, z1, x2, y2, z2); } // 0xF813C7E63F9062A5 0x4C2BA99E b1207
+	NATIVE_DECL BOOL IS_NAVMESH_LOADED_IN_AREA(Vector3 vec1, Vector3 vec2) { return invoke<BOOL>(0xF813C7E63F9062A5, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z); } // 0xF813C7E63F9062A5 0x4C2BA99E b1207
 	NATIVE_DECL int GET_NUM_NAVMESHES_EXISTING_IN_AREA(float p0, float p1, float p2, float p3, float p4, float p5) { return invoke<int>(0x01708E8DD3FF8C65, p0, p1, p2, p3, p4, p5); } // 0x01708E8DD3FF8C65 0x76AFFBB5 b1207
 	NATIVE_DECL BOOL _NAVMESH_ACTIVATE_SWAP(const char* name) { return invoke<BOOL>(0x7C334FF4D9215912, name); } // 0x7C334FF4D9215912 b1207
 	NATIVE_DECL BOOL _NAVMESH_DEACTIVATE_SWAP(const char* name) { return invoke<BOOL>(0x527B97C203BB8606, name); } // 0x527B97C203BB8606 b1207
@@ -5645,6 +5825,7 @@ namespace PATHFIND
 	NATIVE_DECL void _0x264E9A5CD78C338F(Any p0) { invoke<Void>(0x264E9A5CD78C338F, p0); } // 0x264E9A5CD78C338F b1207
 	NATIVE_DECL void _0x869A7015BD4606E9(Any p0) { invoke<Void>(0x869A7015BD4606E9, p0); } // 0x869A7015BD4606E9 b1207
 	NATIVE_DECL Any _SIMULATED_ROUTE_CREATE(float x1, float y1, float z1, float x2, float y2, float z2, int p6) { return invoke<Any>(0xFD5BB35AAB83FD48, x1, y1, z1, x2, y2, z2, p6); } // 0xFD5BB35AAB83FD48 b1207
+	NATIVE_DECL Any _SIMULATED_ROUTE_CREATE(Vector3 vec1, Vector3 vec2, int p6) { return invoke<Any>(0xFD5BB35AAB83FD48, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, p6); } // 0xFD5BB35AAB83FD48 b1207
 	NATIVE_DECL void _SIMULATED_ROUTE_DELETE(Any p0) { invoke<Void>(0x4907D0E4FB26EE65, p0); } // 0x4907D0E4FB26EE65 b1207
 	NATIVE_DECL BOOL _SIMULATED_ROUTE_EXISTS(Any p0) { return invoke<BOOL>(0x65A8196B8D7F5E0B, p0); } // 0x65A8196B8D7F5E0B b1207
 	NATIVE_DECL BOOL SIMULATED_ROUTE_IS_LOADED(Any p0) { return invoke<BOOL>(0x240915043CB799D7, p0); } // 0x240915043CB799D7 b1207
@@ -5655,6 +5836,7 @@ namespace PATHFIND
 namespace PED
 {
 	NATIVE_DECL Ped CREATE_PED(Hash modelHash, float x, float y, float z, float heading, BOOL isNetwork, BOOL bScriptHostPed, BOOL p7, BOOL p8) { return invoke<Ped>(0xD49F9B0955C367DE, modelHash, x, y, z, heading, isNetwork, bScriptHostPed, p7, p8); } // 0xD49F9B0955C367DE 0x0389EF71 b1207
+	NATIVE_DECL Ped CREATE_PED(Hash modelHash, Vector3 vec, float heading, BOOL isNetwork, BOOL bScriptHostPed, BOOL p7, BOOL p8) { return invoke<Ped>(0xD49F9B0955C367DE, modelHash, vec.x, vec.y, vec.z, heading, isNetwork, bScriptHostPed, p7, p8); } // 0xD49F9B0955C367DE 0x0389EF71 b1207
 	// Deletes the specified ped, then sets the handle pointed to by the pointer to NULL.
 	NATIVE_DECL void DELETE_PED(Ped* ped) { invoke<Void>(0xCC0EF140F99365C5, ped); } // 0xCC0EF140F99365C5 0x13EFB9A0 b1207
 	NATIVE_DECL void _SET_REMOVE_PED_NETWORKED(Ped ped, int p1) { invoke<Void>(0x39A2FC5AF55A52B1, ped, p1); } // 0x39A2FC5AF55A52B1 b1207
@@ -5672,6 +5854,7 @@ namespace PED
 	// Gets a value indicating whether the specified ped is in any vehicle.
 	NATIVE_DECL BOOL IS_PED_IN_ANY_VEHICLE(Ped ped, BOOL atGetIn) { return invoke<BOOL>(0x997ABD671D25CA0B, ped, atGetIn); } // 0x997ABD671D25CA0B 0x3B0171EE b1207
 	NATIVE_DECL void _0x9851DE7AEC10B4E1(float x, float y, float z, float p3, int p4, Any p5) { invoke<Void>(0x9851DE7AEC10B4E1, x, y, z, p3, p4, p5); } // 0x9851DE7AEC10B4E1 b1207
+	NATIVE_DECL void _0x9851DE7AEC10B4E1(Vector3 vec, float p3, int p4, Any p5) { invoke<Void>(0x9851DE7AEC10B4E1, vec.x, vec.y, vec.z, p3, p4, p5); } // 0x9851DE7AEC10B4E1 b1207
 	// Gets a value indicating whether this ped's health is below its injured threshold.
 	// 
 	// The default threshold is 100.
@@ -5739,6 +5922,7 @@ namespace PED
 	NATIVE_DECL BOOL _0xB7DBB2986B87E230(Ped ped, float p1) { return invoke<BOOL>(0xB7DBB2986B87E230, ped, p1); } // 0xB7DBB2986B87E230 b1207
 	NATIVE_DECL BOOL _0xD355E2F1BB41087E(Ped ped, float p1) { return invoke<BOOL>(0xD355E2F1BB41087E, ped, p1); } // 0xD355E2F1BB41087E b1207
 	NATIVE_DECL BOOL IS_ANY_PED_SHOOTING_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL p6, BOOL p7) { return invoke<BOOL>(0xA0D3D71EA1086C55, x1, y1, z1, x2, y2, z2, p6, p7); } // 0xA0D3D71EA1086C55 0x91833867 b1207
+	NATIVE_DECL BOOL IS_ANY_PED_SHOOTING_IN_AREA(Vector3 vec1, Vector3 vec2, BOOL p6, BOOL p7) { return invoke<BOOL>(0xA0D3D71EA1086C55, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, p6, p7); } // 0xA0D3D71EA1086C55 0x91833867 b1207
 	// Returns whether the specified ped is shooting.
 	NATIVE_DECL BOOL IS_PED_SHOOTING(Ped ped) { return invoke<BOOL>(0x34616828CD07F1A1, ped); } // 0x34616828CD07F1A1 0xE7C3405E b1207
 	// Returns time since the specified ped last shot, in seconds. (fPlayerJustShotTime)
@@ -5811,8 +5995,10 @@ namespace PED
 	NATIVE_DECL BOOL IS_INSTANTLY_FILL_PED_POPULATION_FINISHED() { return invoke<BOOL>(0x0EE3F0D7FECCC54F); } // 0x0EE3F0D7FECCC54F b1207
 	// The distance between these points, is the diagonal of a box (remember it's 3D).
 	NATIVE_DECL void SET_PED_NON_CREATION_AREA(float x1, float y1, float z1, float x2, float y2, float z2) { invoke<Void>(0xEE01041D559983EA, x1, y1, z1, x2, y2, z2); } // 0xEE01041D559983EA 0x7A97283F b1207
+	NATIVE_DECL void SET_PED_NON_CREATION_AREA(Vector3 vec1, Vector3 vec2) { invoke<Void>(0xEE01041D559983EA, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z); } // 0xEE01041D559983EA 0x7A97283F b1207
 	NATIVE_DECL void CLEAR_PED_NON_CREATION_AREA() { invoke<Void>(0x2E05208086BA0651); } // 0x2E05208086BA0651 0x6F7043A3 b1207
 	NATIVE_DECL void _ATTACH_VOLUME_TO_ENTITY(Volume volume, Entity entity, float offsetX, float offsetY, float offsetZ, float rotX, float rotY, float rotZ, int p8, BOOL p9) { invoke<Void>(0x7C00CFC48A782DC0, volume, entity, offsetX, offsetY, offsetZ, rotX, rotY, rotZ, p8, p9); } // 0x7C00CFC48A782DC0 b1207
+	NATIVE_DECL void _ATTACH_VOLUME_TO_ENTITY(Volume volume, Entity entity, Vector3 offset, Vector3 rot, int p8, BOOL p9) { invoke<Void>(0x7C00CFC48A782DC0, volume, entity, offset.x, offset.y, offset.z, rot.x, rot.y, rot.z, p8, p9); } // 0x7C00CFC48A782DC0 b1207
 	NATIVE_DECL void _DETACH_VOLUME_FROM_ENTITY(Volume volume, Entity entity) { invoke<Void>(0x19C975B81BE53C28, volume, entity); } // 0x19C975B81BE53C28 b1207
 	NATIVE_DECL void SET_PED_ONTO_MOUNT(Ped ped, Ped mount, int seatIndex, BOOL p3) { invoke<Void>(0x028F76B6E78246EB, ped, mount, seatIndex, p3); } // 0x028F76B6E78246EB b1207
 	NATIVE_DECL void _REMOVE_PED_FROM_MOUNT(Ped ped, BOOL p1, BOOL p2) { invoke<Void>(0x5337B721C51883A9, ped, p1, p2); } // 0x5337B721C51883A9 b1207
@@ -6077,6 +6263,7 @@ namespace PED
 	NATIVE_DECL int COUNT_PEDS_IN_COMBAT_WITH_TARGET(Ped ped, int flag) { return invoke<int>(0x5407B7288D0478B7, ped, flag); } // 0x5407B7288D0478B7 0xEF0B78E6 b1207
 	NATIVE_DECL int _GET_PEDS_IN_COMBAT_WITH_TARGET(Ped ped, ItemSet itemset, int flag) { return invoke<int>(0x7BE607DAFF382FD2, ped, itemset, flag); } // 0x7BE607DAFF382FD2 b1207
 	NATIVE_DECL int COUNT_PEDS_IN_COMBAT_WITH_TARGET_WITHIN_RADIUS(Ped ped, float x, float y, float z, float radius, int flag) { return invoke<int>(0x336B3D200AB007CB, ped, x, y, z, radius, flag); } // 0x336B3D200AB007CB 0xFB18CB19 b1207
+	NATIVE_DECL int COUNT_PEDS_IN_COMBAT_WITH_TARGET_WITHIN_RADIUS(Ped ped, Vector3 vec, float radius, int flag) { return invoke<int>(0x336B3D200AB007CB, ped, vec.x, vec.y, vec.z, radius, flag); } // 0x336B3D200AB007CB 0xFB18CB19 b1207
 	NATIVE_DECL Entity GET_CURRENT_TARGET_FOR_PED(Ped ped) { return invoke<Entity>(0xCD66FEA29400A0B5, ped); } // 0xCD66FEA29400A0B5 b1207
 	NATIVE_DECL void SET_PED_RELATIONSHIP_GROUP_DEFAULT_HASH(Ped ped, Hash hash) { invoke<Void>(0xADB3F206518799E8, ped, hash); } // 0xADB3F206518799E8 0x423B7BA2 b1207
 	NATIVE_DECL Hash _GET_DEFAULT_RELATIONSHIP_GROUP_HASH(Hash modelHash) { return invoke<Hash>(0x3CC4A718C258BDD0, modelHash); } // 0x3CC4A718C258BDD0 b1207
@@ -6095,11 +6282,13 @@ namespace PED
 	NATIVE_DECL void _0xDC91F22F09BC6C2F(Hash group, BOOL p1) { invoke<Void>(0xDC91F22F09BC6C2F, group, p1); } // 0xDC91F22F09BC6C2F b1207
 	NATIVE_DECL void _0x9629FAF6460D35CB(Hash group, BOOL p1) { invoke<Void>(0x9629FAF6460D35CB, group, p1); } // 0x9629FAF6460D35CB b1207
 	NATIVE_DECL void _0x4E68C7EF706DF35D(Ped ped, float x, float y, float z, float p4, Hash relationshipGroup) { invoke<Void>(0x4E68C7EF706DF35D, ped, x, y, z, p4, relationshipGroup); } // 0x4E68C7EF706DF35D b1207
+	NATIVE_DECL void _0x4E68C7EF706DF35D(Ped ped, Vector3 vec, float p4, Hash relationshipGroup) { invoke<Void>(0x4E68C7EF706DF35D, ped, vec.x, vec.y, vec.z, p4, relationshipGroup); } // 0x4E68C7EF706DF35D b1207
 	// Used in R* Script net_fetch (NET_FETCH_UPDATE_RECIPIENT_PROP_ILO_IN_COMBAT) and various SP Scripts
 	// Params: p1 = 4/5/6, p5 = 40.f/100.f, coords = Player ped
 	// Perhaps returns some distance (Clearing that the local player is able to use ILO while in combat because they are near the recipient but also near hated peds)
 	// _GET_NUM_M* - _GET_PEDS_J*
 	NATIVE_DECL int _0x3ACCE14DFA6BA8C2(Ped ped, int p1, float x, float y, float z, float p5, ItemSet itemset) { return invoke<int>(0x3ACCE14DFA6BA8C2, ped, p1, x, y, z, p5, itemset); } // 0x3ACCE14DFA6BA8C2 b1207
+	NATIVE_DECL int _0x3ACCE14DFA6BA8C2(Ped ped, int p1, Vector3 vec, float p5, ItemSet itemset) { return invoke<int>(0x3ACCE14DFA6BA8C2, ped, p1, vec.x, vec.y, vec.z, p5, itemset); } // 0x3ACCE14DFA6BA8C2 b1207
 	NATIVE_DECL void SET_PED_TO_INFORM_RESPECTED_FRIENDS(Ped ped, float radius, int maxFriends) { invoke<Void>(0x112942C6E708F70B, ped, radius, maxFriends); } // 0x112942C6E708F70B 0xD78AC46C b1207
 	// _IS_PED_RE*
 	NATIVE_DECL BOOL _0x40C9155AF8BC13F3(Ped ped) { return invoke<BOOL>(0x40C9155AF8BC13F3, ped); } // 0x40C9155AF8BC13F3 b1207
@@ -6107,6 +6296,7 @@ namespace PED
 	// Returns count / index
 	// _C*
 	NATIVE_DECL int _0xF4860514AD354226(ScrHandle shockingEvent, float x, float y, float z, float p4, int* p5) { return invoke<int>(0xF4860514AD354226, shockingEvent, x, y, z, p4, p5); } // 0xF4860514AD354226 b1207
+	NATIVE_DECL int _0xF4860514AD354226(ScrHandle shockingEvent, Vector3 vec, float p4, int* p5) { return invoke<int>(0xF4860514AD354226, shockingEvent, vec.x, vec.y, vec.z, p4, p5); } // 0xF4860514AD354226 b1207
 	// eventType: https://alloc8or.re/rdr3/doc/enums/eEventType.txt
 	NATIVE_DECL BOOL IS_PED_RESPONDING_TO_EVENT(Ped ped, Hash eventType) { return invoke<BOOL>(0x625B774D75C87068, ped, eventType); } // 0x625B774D75C87068 0x7A877554 b1207
 	// Only used in R* SP Scripts
@@ -6165,6 +6355,7 @@ namespace PED
 	// _SET_FORMATION_*
 	NATIVE_DECL BOOL _0xB05CC690CDE8A4A9(int groupId, float p1) { return invoke<BOOL>(0xB05CC690CDE8A4A9, groupId, p1); } // 0xB05CC690CDE8A4A9 b1207
 	NATIVE_DECL void ADD_CUSTOM_FORMATION_LOCATION(int groupId, float x, float y, float z, int position) { invoke<Void>(0x4E23CD07BD161E06, groupId, x, y, z, position); } // 0x4E23CD07BD161E06 b1207
+	NATIVE_DECL void ADD_CUSTOM_FORMATION_LOCATION(int groupId, Vector3 vec, int position) { invoke<Void>(0x4E23CD07BD161E06, groupId, vec.x, vec.y, vec.z, position); } // 0x4E23CD07BD161E06 b1207
 	NATIVE_DECL BOOL ADD_FORMATION_LOCATION(int groupId, float p1, float p2, float p3) { return invoke<BOOL>(0xB05945C1E9E60D91, groupId, p1, p2, p3); } // 0xB05945C1E9E60D91 b1207
 	NATIVE_DECL BOOL SET_FORMATION_POSITIONS_TARGET_RADIUS(int groupId, float radius) { return invoke<BOOL>(0x7CC7D3B7AF7FB71F, groupId, radius); } // 0x7CC7D3B7AF7FB71F b1207
 	NATIVE_DECL void _SET_FORMATION_AUTO_ASSIGN_POSITION(int groupId, BOOL toggle) { invoke<Void>(0x478F6B9920446CE2, groupId, toggle); } // 0x478F6B9920446CE2 b1207
@@ -6388,7 +6579,9 @@ namespace PED
 	// _H* or _I*
 	NATIVE_DECL float _GET_PED_DRUNKNESS(Ped ped) { return invoke<float>(0x6FB76442469ABD68, ped); } // 0x6FB76442469ABD68 b1207
 	NATIVE_DECL Vector3 GET_ANIM_INITIAL_OFFSET_POSITION(const char* animDict, const char* animName, float x, float y, float z, float xRot, float yRot, float zRot, float p8, int p9) { return invoke<Vector3>(0xBE22B26DD764C040, animDict, animName, x, y, z, xRot, yRot, zRot, p8, p9); } // 0xBE22B26DD764C040 0xC59D4268 b1207
+	NATIVE_DECL Vector3 GET_ANIM_INITIAL_OFFSET_POSITION(const char* animDict, const char* animName, Vector3 vec, Vector3 rot, float p8, int p9) { return invoke<Vector3>(0xBE22B26DD764C040, animDict, animName, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, p8, p9); } // 0xBE22B26DD764C040 0xC59D4268 b1207
 	NATIVE_DECL Vector3 GET_ANIM_INITIAL_OFFSET_ROTATION(const char* animDict, const char* animName, float x, float y, float z, float xRot, float yRot, float zRot, float p8, int p9) { return invoke<Vector3>(0x4B805E6046EE9E47, animDict, animName, x, y, z, xRot, yRot, zRot, p8, p9); } // 0x4B805E6046EE9E47 0x5F7789E6 b1207
+	NATIVE_DECL Vector3 GET_ANIM_INITIAL_OFFSET_ROTATION(const char* animDict, const char* animName, Vector3 vec, Vector3 rot, float p8, int p9) { return invoke<Vector3>(0x4B805E6046EE9E47, animDict, animName, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, p8, p9); } // 0x4B805E6046EE9E47 0x5F7789E6 b1207
 	NATIVE_DECL void SET_PED_RANDOM_COMPONENT_VARIATION(Ped ped, int p1) { invoke<Void>(0xC8A9481A01E63C28, ped, p1); } // 0xC8A9481A01E63C28 0x4111BA46 b1207
 	NATIVE_DECL void KNOCK_OFF_PED_PROP(Ped ped, BOOL p1, BOOL p2, BOOL p3, BOOL p4) { invoke<Void>(0x6FD7816A36615F48, ped, p1, p2, p3, p4); } // 0x6FD7816A36615F48 0x08D8B180 b1207
 	NATIVE_DECL void SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(Ped ped, BOOL toggle) { invoke<Void>(0x9F8AA94D6D97DBF4, ped, toggle); } // 0x9F8AA94D6D97DBF4 0xDFE34E4A b1207
@@ -6407,16 +6600,19 @@ namespace PED
 	NATIVE_DECL int _GET_PED_MODEL_SIZE_FROM_HASH(Hash modelHash) { return invoke<int>(0xA65AA1ACE81E5A77, modelHash); } // 0xA65AA1ACE81E5A77 b1311
 	NATIVE_DECL void REGISTER_TARGET(Ped ped, Ped targetPed, BOOL p2) { invoke<Void>(0x2F25D9AEFA34FBA2, ped, targetPed, p2); } // 0x2F25D9AEFA34FBA2 0x50A95442 b1207
 	NATIVE_DECL void _REGISTER_HATED_TARGETS_IN_AREA(Ped ped, float x, float y, float z, float radius) { invoke<Void>(0xD8736EFDA38EDC5C, ped, x, y, z, radius); } // 0xD8736EFDA38EDC5C b1207
+	NATIVE_DECL void _REGISTER_HATED_TARGETS_IN_AREA(Ped ped, Vector3 vec, float radius) { invoke<Void>(0xD8736EFDA38EDC5C, ped, vec.x, vec.y, vec.z, radius); } // 0xD8736EFDA38EDC5C b1207
 	// Based on TASK_COMBAT_HATED_TARGETS_AROUND_PED, the parameters are likely similar (PedHandle, and area to attack in).
 	NATIVE_DECL void REGISTER_HATED_TARGETS_AROUND_PED(Ped ped, float radius) { invoke<Void>(0x9222F300BF8354FE, ped, radius); } // 0x9222F300BF8354FE 0x7F87559E b1207
 	NATIVE_DECL BOOL _IS_TARGET(Ped ped, Ped targetPed) { return invoke<BOOL>(0x6E5CBCB3941D7D08, ped, targetPed); } // 0x6E5CBCB3941D7D08 b1207
 	NATIVE_DECL void _REMOVE_TARGET(Ped ped, Ped targetPed) { invoke<Void>(0x4707E9C23D8CA3FE, ped, targetPed); } // 0x4707E9C23D8CA3FE b1207
 	// Gets the closest ped in a radius.
 	NATIVE_DECL BOOL GET_CLOSEST_PED(float x, float y, float z, float radius, BOOL p4, BOOL p5, Ped* outPed, BOOL p7, BOOL p8, BOOL p9, int pedType) { return invoke<BOOL>(0xC33AB876A77F8164, x, y, z, radius, p4, p5, outPed, p7, p8, p9, pedType); } // 0xC33AB876A77F8164 0x8F6C1F55 b1207
+	NATIVE_DECL BOOL GET_CLOSEST_PED(Vector3 vec, float radius, BOOL p4, BOOL p5, Ped* outPed, BOOL p7, BOOL p8, BOOL p9, int pedType) { return invoke<BOOL>(0xC33AB876A77F8164, vec.x, vec.y, vec.z, radius, p4, p5, outPed, p7, p8, p9, pedType); } // 0xC33AB876A77F8164 0x8F6C1F55 b1207
 	NATIVE_DECL BOOL CAN_PED_RAGDOLL(Ped ped) { return invoke<BOOL>(0x128F79EDCECE4FD5, ped); } // 0x128F79EDCECE4FD5 0xC0EFB7A3 b1207
 	// Params: p6 = DraggedByCart in R* SP Script marston8
 	NATIVE_DECL BOOL SET_PED_TO_RAGDOLL(Ped ped, int timeMin, int timeMax, int ragdollType, BOOL p4, BOOL p5, const char* p6) { return invoke<BOOL>(0xAE99FB955581844A, ped, timeMin, timeMax, ragdollType, p4, p5, p6); } // 0xAE99FB955581844A 0x83CB5052 b1207
 	NATIVE_DECL BOOL SET_PED_TO_RAGDOLL_WITH_FALL(Ped ped, int timeMin, int timeMax, int ragdollType, float falldirX, float falldirY, float falldirZ, float p7, float p8, float p9, float p10, float p11, float p12, float p13) { return invoke<BOOL>(0xD76632D99E4966C8, ped, timeMin, timeMax, ragdollType, falldirX, falldirY, falldirZ, p7, p8, p9, p10, p11, p12, p13); } // 0xD76632D99E4966C8 0xFA12E286 b1207
+	NATIVE_DECL BOOL SET_PED_TO_RAGDOLL_WITH_FALL(Ped ped, int timeMin, int timeMax, int ragdollType, Vector3 falldir, float p7, float p8, float p9, float p10, float p11, float p12, float p13) { return invoke<BOOL>(0xD76632D99E4966C8, ped, timeMin, timeMax, ragdollType, falldir.x, falldir.y, falldir.z, p7, p8, p9, p10, p11, p12, p13); } // 0xD76632D99E4966C8 0xFA12E286 b1207
 	// Causes Ped to ragdoll on collision with any object (e.g Running into trashcan). If applied to player you will sometimes trip on the sidewalk.
 	NATIVE_DECL void SET_PED_RAGDOLL_ON_COLLISION(Ped ped, BOOL toggle, BOOL p2) { invoke<Void>(0xF0A4F1BBF4FA7497, ped, toggle, p2); } // 0xF0A4F1BBF4FA7497 0x2654A0F4 b1207
 	NATIVE_DECL void _SET_PED_TO_DISABLE_RAGDOLL(Ped ped, BOOL toggle) { invoke<Void>(0x221F4D9912B7FE86, ped, toggle); } // 0x221F4D9912B7FE86 b1207
@@ -6466,9 +6662,12 @@ namespace PED
 	NATIVE_DECL void _0x88B2026A3B0BE33D(Ped ped, float p1) { invoke<Void>(0x88B2026A3B0BE33D, ped, p1); } // 0x88B2026A3B0BE33D b1207
 	NATIVE_DECL void SET_PED_DEFENSIVE_AREA_VOLUME(Ped ped, Volume volume, BOOL p2, BOOL p3, BOOL p4) { invoke<Void>(0xFC3DB99C8144CD81, ped, volume, p2, p3, p4); } // 0xFC3DB99C8144CD81 b1207
 	NATIVE_DECL void SET_PED_SPHERE_DEFENSIVE_AREA(Ped ped, float x, float y, float z, float radius, BOOL p5, BOOL p6, BOOL p7) { invoke<Void>(0x9D3151A373974804, ped, x, y, z, radius, p5, p6, p7); } // 0x9D3151A373974804 0xBD96D8E8 b1207
+	NATIVE_DECL void SET_PED_SPHERE_DEFENSIVE_AREA(Ped ped, Vector3 vec, float radius, BOOL p5, BOOL p6, BOOL p7) { invoke<Void>(0x9D3151A373974804, ped, vec.x, vec.y, vec.z, radius, p5, p6, p7); } // 0x9D3151A373974804 0xBD96D8E8 b1207
 	NATIVE_DECL void _SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_ENTITY(Ped ped, Entity entity, float x, float y, float z, float radius, int p6, BOOL p7) { invoke<Void>(0x1854217C640B39EC, ped, entity, x, y, z, radius, p6, p7); } // 0x1854217C640B39EC b1207
+	NATIVE_DECL void _SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_ENTITY(Ped ped, Entity entity, Vector3 vec, float radius, int p6, BOOL p7) { invoke<Void>(0x1854217C640B39EC, ped, entity, vec.x, vec.y, vec.z, radius, p6, p7); } // 0x1854217C640B39EC b1207
 	// _SET_PED_(A?)*
 	NATIVE_DECL void _SET_PED_DEFENSIVE_AREA_TO_ANGLED_AREA(Ped ped, float x1, float y1, float z1, float x2, float y2, float z2, Any p7, BOOL p8, BOOL p9, Entity entity, BOOL p11) { invoke<Void>(0xEB2BFE5D009F0331, ped, x1, y1, z1, x2, y2, z2, p7, p8, p9, entity, p11); } // 0xEB2BFE5D009F0331 b1232
+	NATIVE_DECL void _SET_PED_DEFENSIVE_AREA_TO_ANGLED_AREA(Ped ped, Vector3 vec1, Vector3 vec2, Any p7, BOOL p8, BOOL p9, Entity entity, BOOL p11) { invoke<Void>(0xEB2BFE5D009F0331, ped, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, p7, p8, p9, entity, p11); } // 0xEB2BFE5D009F0331 b1232
 	NATIVE_DECL void SET_PED_DEFENSIVE_AREA_DIRECTION(Ped ped, float p1, float p2, float p3, BOOL p4) { invoke<Void>(0x413C6C763A4AFFAD, ped, p1, p2, p3, p4); } // 0x413C6C763A4AFFAD 0xB66B0C9A b1207
 	// Ped will no longer get angry when you stay near him.
 	NATIVE_DECL void REMOVE_PED_DEFENSIVE_AREA(Ped ped, BOOL toggle) { invoke<Void>(0x74D4E028107450A9, ped, toggle); } // 0x74D4E028107450A9 0x34AAAFA5 b1207
@@ -6479,6 +6678,7 @@ namespace PED
 	NATIVE_DECL void _0x4EC4EA2F72B36358(Ped ped, BOOL p1) { invoke<Void>(0x4EC4EA2F72B36358, ped, p1); } // 0x4EC4EA2F72B36358 b1207
 	// _SET_PED_COMBAT_*
 	NATIVE_DECL void _0xCF0B19806473D324(Ped ped, float x, float y, float z) { invoke<Void>(0xCF0B19806473D324, ped, x, y, z); } // 0xCF0B19806473D324 b1207
+	NATIVE_DECL void _0xCF0B19806473D324(Ped ped, Vector3 vec) { invoke<Void>(0xCF0B19806473D324, ped, vec.x, vec.y, vec.z); } // 0xCF0B19806473D324 b1207
 	// _RESET_PED_C*
 	NATIVE_DECL void _0xB4B7C92FCE7347B7(Ped ped) { invoke<Void>(0xB4B7C92FCE7347B7, ped); } // 0xB4B7C92FCE7347B7 b1207
 	NATIVE_DECL void REVIVE_INJURED_PED(Ped ped) { invoke<Void>(0x8D8ACD8388CD99CE, ped); } // 0x8D8ACD8388CD99CE 0x14D3E6E3 b1207
@@ -6495,6 +6695,7 @@ namespace PED
 	NATIVE_DECL BOOL _0x7020839C7302D8AC(Ped ped) { return invoke<BOOL>(0x7020839C7302D8AC, ped); } // 0x7020839C7302D8AC b1207
 	// _C*
 	NATIVE_DECL void _0xE1AADD0055D76603(Ped ped, Entity entity, int boneIndex1, int boneIndex2, float x, float y, float z, float p7, BOOL p8, BOOL p9, int p10) { invoke<Void>(0xE1AADD0055D76603, ped, entity, boneIndex1, boneIndex2, x, y, z, p7, p8, p9, p10); } // 0xE1AADD0055D76603 b1207
+	NATIVE_DECL void _0xE1AADD0055D76603(Ped ped, Entity entity, int boneIndex1, int boneIndex2, Vector3 vec, float p7, BOOL p8, BOOL p9, int p10) { invoke<Void>(0xE1AADD0055D76603, ped, entity, boneIndex1, boneIndex2, vec.x, vec.y, vec.z, p7, p8, p9, p10); } // 0xE1AADD0055D76603 b1207
 	// _C*
 	NATIVE_DECL void _0x5A1A929C8B729B4A(Ped ped) { invoke<Void>(0x5A1A929C8B729B4A, ped); } // 0x5A1A929C8B729B4A b1207
 	// _SET_PED_D*
@@ -6563,8 +6764,10 @@ namespace PED
 	// offsetY: The Y-component of the offset to add to the position relative to the bone's rotation.
 	// offsetZ: The Z-component of the offset to add to the position relative to the bone's rotation.
 	NATIVE_DECL Vector3 GET_PED_BONE_COORDS(Ped ped, int boneId, float offsetX, float offsetY, float offsetZ) { return invoke<Vector3>(0x17C07FC640E86B4E, ped, boneId, offsetX, offsetY, offsetZ); } // 0x17C07FC640E86B4E 0x4579CAB1 b1207
+	NATIVE_DECL Vector3 GET_PED_BONE_COORDS(Ped ped, int boneId, Vector3 offset) { return invoke<Vector3>(0x17C07FC640E86B4E, ped, boneId, offset.x, offset.y, offset.z); } // 0x17C07FC640E86B4E 0x4579CAB1 b1207
 	// blockingFlags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eScenarioBlockingFlags
 	NATIVE_DECL int ADD_SCENARIO_BLOCKING_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL p6, int blockingFlags) { return invoke<int>(0x1B5C85C612E5256E, x1, y1, z1, x2, y2, z2, p6, blockingFlags); } // 0x1B5C85C612E5256E 0xA38C0234 b1207
+	NATIVE_DECL int ADD_SCENARIO_BLOCKING_AREA(Vector3 vec1, Vector3 vec2, BOOL p6, int blockingFlags) { return invoke<int>(0x1B5C85C612E5256E, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, p6, blockingFlags); } // 0x1B5C85C612E5256E 0xA38C0234 b1207
 	NATIVE_DECL void REMOVE_SCENARIO_BLOCKING_AREAS() { invoke<Void>(0xD37401D78A929A49); } // 0xD37401D78A929A49 0x4DDF845F b1207
 	NATIVE_DECL void REMOVE_SCENARIO_BLOCKING_AREA(Any p0, BOOL p1) { invoke<Void>(0x31D16B74C6E29D66, p0, p1); } // 0x31D16B74C6E29D66 0x4483EF06 b1207
 	// flag: see ADD_SCENARIO_BLOCKING_AREA
@@ -6580,6 +6783,7 @@ namespace PED
 	// _CAN_PED_SEE* - _CAN_PED_USE_(SCENARIO_HASH?)*
 	NATIVE_DECL BOOL _0x1148F706CF4EBDDA(Ped ped, Hash p1, int p2) { return invoke<BOOL>(0x1148F706CF4EBDDA, ped, p1, p2); } // 0x1148F706CF4EBDDA b1207
 	NATIVE_DECL BOOL SET_PED_PANIC_EXIT_SCENARIO(Ped ped, float x, float y, float z) { return invoke<BOOL>(0xFE07FF6495D52E2A, ped, x, y, z); } // 0xFE07FF6495D52E2A 0x59DE73AC b1207
+	NATIVE_DECL BOOL SET_PED_PANIC_EXIT_SCENARIO(Ped ped, Vector3 vec) { return invoke<BOOL>(0xFE07FF6495D52E2A, ped, vec.x, vec.y, vec.z); } // 0xFE07FF6495D52E2A 0x59DE73AC b1207
 	// If toggle is true, when the ped is using a scenario he will stop it and become scared
 	// If toggle is false, the ped will not be scared anymore and continue his scenario
 	// 
@@ -6588,6 +6792,7 @@ namespace PED
 	NATIVE_DECL void _0xD8CEEED54C672B5D(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0xD8CEEED54C672B5D, p0, p1, p2, p3, p4, p5, p6); } // 0xD8CEEED54C672B5D b1207
 	// Old name: _SET_PED_SHOULD_PLAY_DIRECTED_SCENARIO_EXIT
 	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_DIRECTED_NORMAL_SCENARIO_EXIT(Ped ped, float x, float y, float z) { return invoke<BOOL>(0xEC6935EBE0847B90, ped, x, y, z); } // 0xEC6935EBE0847B90 b1207
+	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_DIRECTED_NORMAL_SCENARIO_EXIT(Ped ped, Vector3 vec) { return invoke<BOOL>(0xEC6935EBE0847B90, ped, vec.x, vec.y, vec.z); } // 0xEC6935EBE0847B90 b1207
 	NATIVE_DECL void SET_PED_SHOULD_PLAY_NORMAL_SCENARIO_EXIT(Ped ped) { invoke<Void>(0xA3A9299C4F2ADB98, ped); } // 0xA3A9299C4F2ADB98 0x033F43FA b1207
 	NATIVE_DECL void SET_PED_SHOULD_PLAY_IMMEDIATE_SCENARIO_EXIT(Ped ped) { invoke<Void>(0xF1C03A5352243A30, ped); } // 0xF1C03A5352243A30 0x4C684C81 b1207
 	// lookIntensity:
@@ -6596,12 +6801,16 @@ namespace PED
 	// 2 - REACT_LOOK_MEDIUM
 	// 3 - REACT_LOOK_HIGH
 	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT(Ped ped, float x, float y, float z, int lookIntensity) { return invoke<BOOL>(0xEEED8FAFEC331A70, ped, x, y, z, lookIntensity); } // 0xEEED8FAFEC331A70 0x7B4C3E6F b1207
+	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT(Ped ped, Vector3 vec, int lookIntensity) { return invoke<BOOL>(0xEEED8FAFEC331A70, ped, vec.x, vec.y, vec.z, lookIntensity); } // 0xEEED8FAFEC331A70 0x7B4C3E6F b1207
 	// lookIntensity: see SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT
 	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_COMBAT_SCENARIO_EXIT(Ped ped, float x, float y, float z, int lookIntensity) { return invoke<BOOL>(0x802092B07E3B1EEA, ped, x, y, z, lookIntensity); } // 0x802092B07E3B1EEA b1207
+	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_COMBAT_SCENARIO_EXIT(Ped ped, Vector3 vec, int lookIntensity) { return invoke<BOOL>(0x802092B07E3B1EEA, ped, vec.x, vec.y, vec.z, lookIntensity); } // 0x802092B07E3B1EEA b1207
 	// lookIntensity: see SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT
 	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_EMOTIONAL_SCENARIO_EXIT(Ped ped, float x, float y, float z, int lookIntensity, BOOL p5) { return invoke<BOOL>(0x62FDAD5E01D2DD47, ped, x, y, z, lookIntensity, p5); } // 0x62FDAD5E01D2DD47 b1207
+	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_EMOTIONAL_SCENARIO_EXIT(Ped ped, Vector3 vec, int lookIntensity, BOOL p5) { return invoke<BOOL>(0x62FDAD5E01D2DD47, ped, vec.x, vec.y, vec.z, lookIntensity, p5); } // 0x62FDAD5E01D2DD47 b1207
 	// lookIntensity: see SET_PED_SHOULD_PLAY_FLEE_SCENARIO_EXIT
 	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_QUICK_SCENARIO_EXIT(Ped ped, float x, float y, float z, int lookIntensity, BOOL p5) { return invoke<BOOL>(0x463803429297117C, ped, x, y, z, lookIntensity, p5); } // 0x463803429297117C b1207
+	NATIVE_DECL BOOL SET_PED_SHOULD_PLAY_QUICK_SCENARIO_EXIT(Ped ped, Vector3 vec, int lookIntensity, BOOL p5) { return invoke<BOOL>(0x463803429297117C, ped, vec.x, vec.y, vec.z, lookIntensity, p5); } // 0x463803429297117C b1207
 	NATIVE_DECL BOOL _0xF9331B3A314EB49D(Ped ped) { return invoke<BOOL>(0xF9331B3A314EB49D, ped); } // 0xF9331B3A314EB49D b1207
 	NATIVE_DECL void _0xE735A7DA22E88359(Any p0) { invoke<Void>(0xE735A7DA22E88359, p0); } // 0xE735A7DA22E88359 b1207
 	NATIVE_DECL Any _0x82CB0F3F0C7785E5(Any p0) { return invoke<Any>(0x82CB0F3F0C7785E5, p0); } // 0x82CB0F3F0C7785E5 b1207
@@ -6663,6 +6872,7 @@ namespace PED
 	// Triggers a gunshot
 	// Params: p5 = -1 in R* Scripts
 	NATIVE_DECL Any _SHOOT_TRIGGER_AT_COORDS(Ped ped, float x, float y, float z, int p4, float p5, int p6, float p7) { return invoke<Any>(0x4C57F27D1554E6B0, ped, x, y, z, p4, p5, p6, p7); } // 0x4C57F27D1554E6B0 b1207
+	NATIVE_DECL Any _SHOOT_TRIGGER_AT_COORDS(Ped ped, Vector3 vec, int p4, float p5, int p6, float p7) { return invoke<Any>(0x4C57F27D1554E6B0, ped, vec.x, vec.y, vec.z, p4, p5, p6, p7); } // 0x4C57F27D1554E6B0 b1207
 	NATIVE_DECL BOOL _IS_THIS_MODEL_A_HORSE(Hash model) { return invoke<BOOL>(0x772A1969F649E902, model); } // 0x772A1969F649E902 b1207
 	NATIVE_DECL void SET_PED_MODEL_IS_SUPPRESSED(Ped ped, BOOL toggle) { invoke<Void>(0xE163A4BCE4DE6F11, ped, toggle); } // 0xE163A4BCE4DE6F11 0x7820CA43 b1207
 	NATIVE_DECL BOOL _IS_PED_MODEL_SUPPRESSED(Hash model) { return invoke<BOOL>(0xAA9F048DCF69B6DC, model); } // 0xAA9F048DCF69B6DC b1207
@@ -6676,6 +6886,7 @@ namespace PED
 	// If returned false: Moving back to idle as there aren't any remaining enemy peds near ped
 	// _IS_PED_IN_*
 	NATIVE_DECL BOOL _0x078076AB50FB117F(Ped ped, float x, float y, float z, float p4, BOOL p5) { return invoke<BOOL>(0x078076AB50FB117F, ped, x, y, z, p4, p5); } // 0x078076AB50FB117F b1207
+	NATIVE_DECL BOOL _0x078076AB50FB117F(Ped ped, Vector3 vec, float p4, BOOL p5) { return invoke<BOOL>(0x078076AB50FB117F, ped, vec.x, vec.y, vec.z, p4, p5); } // 0x078076AB50FB117F b1207
 	// SET_PED_CAN_*
 	NATIVE_DECL void _SET_PED_CAN_BE_LASSOED(Ped ped, BOOL toggle) { invoke<Void>(0xFD6943B6DF77E449, ped, toggle); } // 0xFD6943B6DF77E449 b1207
 	// 0 - Stationary (Will just stand in place)
@@ -6852,6 +7063,7 @@ namespace PED
 	NATIVE_DECL void SET_PED_FLEE_ATTRIBUTES(Ped ped, int attributeFlags, BOOL enable) { invoke<Void>(0x70A2D1137C8ED7C9, ped, attributeFlags, enable); } // 0x70A2D1137C8ED7C9 0xA717A875 b1207
 	NATIVE_DECL BOOL _IS_PED_COWERING(Ped ped) { return invoke<BOOL>(0xB086C8C0F5701D14, ped); } // 0xB086C8C0F5701D14 b1207
 	NATIVE_DECL BOOL IS_ANY_PED_NEAR_POINT(float x, float y, float z, float radius) { return invoke<BOOL>(0x083961498679DC9F, x, y, z, radius); } // 0x083961498679DC9F 0xFBD9B050 b1207
+	NATIVE_DECL BOOL IS_ANY_PED_NEAR_POINT(Vector3 vec, float radius) { return invoke<BOOL>(0x083961498679DC9F, vec.x, vec.y, vec.z, radius); } // 0x083961498679DC9F 0xFBD9B050 b1207
 	NATIVE_DECL void FORCE_PED_AI_AND_ANIMATION_UPDATE(Ped ped, BOOL p1, BOOL p2) { invoke<Void>(0x2208438012482A1A, ped, p1, p2); } // 0x2208438012482A1A 0x187B9070 b1207
 	// _FORCE_PED_*
 	NATIVE_DECL void _0xC2722B252C79E641(Ped ped, Any p1, Any p2, BOOL p3) { invoke<Void>(0xC2722B252C79E641, ped, p1, p2, p3); } // 0xC2722B252C79E641 b1232
@@ -6865,6 +7077,7 @@ namespace PED
 	NATIVE_DECL void _GIVE_PED_HASH_COMMAND(Ped ped, Hash commandHash, float activationDuration) { invoke<Void>(0xD65FDC686A031C83, ped, commandHash, activationDuration); } // 0xD65FDC686A031C83 b1207
 	NATIVE_DECL BOOL _GET_IS_PED_COMMAND_HASH_PRESENT(Ped ped, Hash commandHash) { return invoke<BOOL>(0x68821369A2CEADD5, ped, commandHash); } // 0x68821369A2CEADD5 b1207
 	NATIVE_DECL BOOL IS_PED_HEADING_TOWARDS_POSITION(Ped ped, float x, float y, float z, float p4) { return invoke<BOOL>(0xFCF37A457CB96DC0, ped, x, y, z, p4); } // 0xFCF37A457CB96DC0 0x45037B9B b1207
+	NATIVE_DECL BOOL IS_PED_HEADING_TOWARDS_POSITION(Ped ped, Vector3 vec, float p4) { return invoke<BOOL>(0xFCF37A457CB96DC0, ped, vec.x, vec.y, vec.z, p4); } // 0xFCF37A457CB96DC0 0x45037B9B b1207
 	// Not implemented.
 	NATIVE_DECL void _0x600BBDD29820370C(Ped ped) { invoke<Void>(0x600BBDD29820370C, ped); } // 0x600BBDD29820370C b1207
 	NATIVE_DECL void REQUEST_PED_VISIBILITY_TRACKING(Ped ped) { invoke<Void>(0x7D7A2E43E74E2EB8, ped); } // 0x7D7A2E43E74E2EB8 0x840D24D3 b1207
@@ -6955,8 +7168,10 @@ namespace PED
 	NATIVE_DECL Ped _GET_RIDER_OF_MOUNT(Ped mount, BOOL p1) { return invoke<Ped>(0xB676EFDA03DADA52, mount, p1); } // 0xB676EFDA03DADA52 b1207
 	// Params: p4 = 35.f, duration = 5000 in R* Scripts
 	NATIVE_DECL void SPAWNPOINTS_START_SEARCH(float x, float y, float z, float width, float p4, int spawnpointsFlag, float p6, int duration, float p8) { invoke<Void>(0x2DF9038C90AD5264, x, y, z, width, p4, spawnpointsFlag, p6, duration, p8); } // 0x2DF9038C90AD5264 0x909A1D76 b1207
+	NATIVE_DECL void SPAWNPOINTS_START_SEARCH(Vector3 vec, float width, float p4, int spawnpointsFlag, float p6, int duration, float p8) { invoke<Void>(0x2DF9038C90AD5264, vec.x, vec.y, vec.z, width, p4, spawnpointsFlag, p6, duration, p8); } // 0x2DF9038C90AD5264 0x909A1D76 b1207
 	// Searching area between coords 1 and 2
 	NATIVE_DECL void SPAWNPOINTS_START_SEARCH_IN_ANGLED_AREA(float x1, float y1, float z1, float x2, float y2, float z2, float width, int spawnpointsFlag, float p8, int duration, float p10) { invoke<Void>(0xB2AFF10216DEFA2F, x1, y1, z1, x2, y2, z2, width, spawnpointsFlag, p8, duration, p10); } // 0xB2AFF10216DEFA2F 0x4AAD0ECB b1207
+	NATIVE_DECL void SPAWNPOINTS_START_SEARCH_IN_ANGLED_AREA(Vector3 vec1, Vector3 vec2, float width, int spawnpointsFlag, float p8, int duration, float p10) { invoke<Void>(0xB2AFF10216DEFA2F, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, width, spawnpointsFlag, p8, duration, p10); } // 0xB2AFF10216DEFA2F 0x4AAD0ECB b1207
 	NATIVE_DECL void _SPAWNPOINTS_START_SEARCH_WITH_VOLUME(Volume volume, int spawnpointsFlag, float p2, int duration, float p4) { invoke<Void>(0x83ED1FC9DF3411F5, volume, spawnpointsFlag, p2, duration, p4); } // 0x83ED1FC9DF3411F5 b1311
 	NATIVE_DECL void SPAWNPOINTS_CANCEL_SEARCH() { invoke<Void>(0xFEE4A5459472A9F8); } // 0xFEE4A5459472A9F8 0x492C9E46 b1207
 	NATIVE_DECL BOOL SPAWNPOINTS_IS_SEARCH_ACTIVE() { return invoke<BOOL>(0x3C67506996001F5E); } // 0x3C67506996001F5E 0x814A28F4 b1207
@@ -6966,6 +7181,7 @@ namespace PED
 	NATIVE_DECL void SPAWNPOINTS_GET_SEARCH_RESULT(int randomInt, float* x, Any* y, float* z) { invoke<Void>(0x280C7E3AC7F56E90, randomInt, x, y, z); } // 0x280C7E3AC7F56E90 0x36A4AC65 b1207
 	NATIVE_DECL void SPAWNPOINTS_GET_SEARCH_RESULT_FLAGS(Any p0, Any* p1) { invoke<Void>(0xB782F8238512BAD5, p0, p1); } // 0xB782F8238512BAD5 0xBA699DDF b1207
 	NATIVE_DECL void SET_IK_TARGET(Ped ped, int ikIndex, Entity entityLookAt, int boneLookAt, float offsetX, float offsetY, float offsetZ, Any p7, int blendInDuration, int blendOutDuration) { invoke<Void>(0xC32779C16FCEECD9, ped, ikIndex, entityLookAt, boneLookAt, offsetX, offsetY, offsetZ, p7, blendInDuration, blendOutDuration); } // 0xC32779C16FCEECD9 0x6FE5218C b1207
+	NATIVE_DECL void SET_IK_TARGET(Ped ped, int ikIndex, Entity entityLookAt, int boneLookAt, Vector3 offset, Any p7, int blendInDuration, int blendOutDuration) { invoke<Void>(0xC32779C16FCEECD9, ped, ikIndex, entityLookAt, boneLookAt, offset.x, offset.y, offset.z, p7, blendInDuration, blendOutDuration); } // 0xC32779C16FCEECD9 0x6FE5218C b1207
 	// For more information, see common:/data/emotional_presets.meta
 	NATIVE_DECL void _REQUEST_PED_EMOTIONAL_PRESET(Ped ped, const char* name) { invoke<Void>(0x5C3C55EAAD19915F, ped, name); } // 0x5C3C55EAAD19915F b1207
 	// See _REQUEST_PED_EMOTIONAL_PRESET
@@ -6983,6 +7199,7 @@ namespace PED
 	NATIVE_DECL float _GET_PED_LOD_MULTIPLIER(Ped ped) { return invoke<float>(0x1B710E6F4AB69341, ped); } // 0x1B710E6F4AB69341 b1355
 	NATIVE_DECL Any _0xA218D2BBCAA7388C(Any p0, Any p1) { return invoke<Any>(0xA218D2BBCAA7388C, p0, p1); } // 0xA218D2BBCAA7388C b1207
 	NATIVE_DECL BOOL IS_ANY_HOSTILE_PED_NEAR_POINT(Ped ped, float x, float y, float z, float radius) { return invoke<BOOL>(0x68772DB2B2526F9F, ped, x, y, z, radius); } // 0x68772DB2B2526F9F 0x1A464167 b1311
+	NATIVE_DECL BOOL IS_ANY_HOSTILE_PED_NEAR_POINT(Ped ped, Vector3 vec, float radius) { return invoke<BOOL>(0x68772DB2B2526F9F, ped, vec.x, vec.y, vec.z, radius); } // 0x68772DB2B2526F9F 0x1A464167 b1311
 	NATIVE_DECL void _0xCBDE59C48F2B06F5(Any p0, Any p1, Any p2) { invoke<Void>(0xCBDE59C48F2B06F5, p0, p1, p2); } // 0xCBDE59C48F2B06F5 b1207
 	NATIVE_DECL void _0x6A190B94C2541A99(Any p0) { invoke<Void>(0x6A190B94C2541A99, p0); } // 0x6A190B94C2541A99 b1207
 	// Returns true if ped is in perception (focused and looking at target ped)
@@ -7282,6 +7499,7 @@ namespace PED
 	NATIVE_DECL BOOL _IS_METAPED_PED_REQUEST_VALID(int requestId) { return invoke<BOOL>(0x43E4DA469541A9C9, requestId); } // 0x43E4DA469541A9C9 b1207
 	// Only used in SP scripts, for example odriscolls1: BOOLS: true, true, true, false, false
 	NATIVE_DECL Ped _CREATE_METAPED_PED(int requestId, float x, float y, float z, float heading, BOOL p5, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { return invoke<Ped>(0x0BCD4091C8EABA42, requestId, x, y, z, heading, p5, p6, p7, p8, p9); } // 0x0BCD4091C8EABA42 b1207
+	NATIVE_DECL Ped _CREATE_METAPED_PED(int requestId, Vector3 vec, float heading, BOOL p5, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { return invoke<Ped>(0x0BCD4091C8EABA42, requestId, vec.x, vec.y, vec.z, heading, p5, p6, p7, p8, p9); } // 0x0BCD4091C8EABA42 b1207
 	NATIVE_DECL void _RELEASE_METAPED_PED_REQUEST(int requestId) { invoke<Void>(0x3972F78A78B5D9DF, requestId); } // 0x3972F78A78B5D9DF b1207
 	// https://github.com/femga/rdr3_discoveries/blob/master/clothes/metaped_outfits.lua
 	// Returns requestId, to be used with 0x74F512E29CB717E2
@@ -7303,10 +7521,12 @@ namespace PED
 	// https://github.com/femga/rdr3_discoveries/blob/master/objects/metaped_asset_bundles_list.lua
 	// Creates a pickup-able metaped component. asset doesn't seems to be related to component hashes. Hash example : 0xD20354AB (https ://i.imgur.com/dzHkcDb.png)
 	NATIVE_DECL Entity _CREATE_METAPED_ASSET(Hash asset, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, BOOL p7, BOOL p8, BOOL p9) { return invoke<Entity>(0x9641A9A20310F6B8, asset, posX, posY, posZ, rotX, rotY, rotZ, p7, p8, p9); } // 0x9641A9A20310F6B8 b1207
+	NATIVE_DECL Entity _CREATE_METAPED_ASSET(Hash asset, Vector3 pos, Vector3 rot, BOOL p7, BOOL p8, BOOL p9) { return invoke<Entity>(0x9641A9A20310F6B8, asset, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, p7, p8, p9); } // 0x9641A9A20310F6B8 b1207
 	NATIVE_DECL BOOL _HAS_METAPED_OUTFIT_LOADED(int requestId) { return invoke<BOOL>(0x610438375E5D1801, requestId); } // 0x610438375E5D1801 b1207
 	NATIVE_DECL BOOL _IS_METAPED_OUTFIT_REQUEST_VALID(int requestId) { return invoke<BOOL>(0xB25E57FC8E37114D, requestId); } // 0xB25E57FC8E37114D b1207
 	// Creates metaped from ped outfit requestId. See _REQUEST_METAPED_OUTFIT
 	NATIVE_DECL Ped _CREATE_METAPED_OUTFIT_PED(int requestId, float x, float y, float z, float heading, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { return invoke<Ped>(0xEAF682A14F8E5F53, requestId, x, y, z, heading, p5, p6, p7, p8); } // 0xEAF682A14F8E5F53 b1207
+	NATIVE_DECL Ped _CREATE_METAPED_OUTFIT_PED(int requestId, Vector3 vec, float heading, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { return invoke<Ped>(0xEAF682A14F8E5F53, requestId, vec.x, vec.y, vec.z, heading, p5, p6, p7, p8); } // 0xEAF682A14F8E5F53 b1207
 	// https://github.com/femga/rdr3_discoveries/blob/master/clothes/metaped_outfits.lua
 	NATIVE_DECL BOOL _APPLY_PED_METAPED_OUTFIT(int requestId, Ped ped, BOOL p2, BOOL p3) { return invoke<BOOL>(0x74F512E29CB717E2, requestId, ped, p2, p3); } // 0x74F512E29CB717E2 b1207
 	// Sets ped eye redness, weariness: 0.f to 1.f
@@ -7362,6 +7582,7 @@ namespace PED
 	// 
 	// _CREATE_[P-Z]
 	NATIVE_DECL int _CREATE_GRAVITY_WELL(float xPos, float yPos, float zPos, float heading, float radius, float p5, float p6, float p7, BOOL stopAtDestination) { return invoke<int>(0x4F5EBE70081E5A20, xPos, yPos, zPos, heading, radius, p5, p6, p7, stopAtDestination); } // 0x4F5EBE70081E5A20 b1207
+	NATIVE_DECL int _CREATE_GRAVITY_WELL(Vector3 pos, float heading, float radius, float p5, float p6, float p7, BOOL stopAtDestination) { return invoke<int>(0x4F5EBE70081E5A20, pos.x, pos.y, pos.z, heading, radius, p5, p6, p7, stopAtDestination); } // 0x4F5EBE70081E5A20 b1207
 	// Removes gravity well by handle returned from 0x4F5EBE70081E5A20
 	NATIVE_DECL void _REMOVE_GRAVITY_WELL(int handle) { invoke<Void>(0x87247BC60B60BED8, handle); } // 0x87247BC60B60BED8 b1207
 	NATIVE_DECL BOOL _IS_PED_INTIMIDATED(Ped ped) { return invoke<BOOL>(0x57779B55B83E2BEA, ped); } // 0x57779B55B83E2BEA b1207
@@ -7528,6 +7749,7 @@ namespace PED
 	NATIVE_DECL void _0x09E378C52B1433B5(Any p0, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0x09E378C52B1433B5, p0, p1, p2, p3, p4); } // 0x09E378C52B1433B5 b1207
 	// _IS_N* - _IS_P*
 	NATIVE_DECL BOOL _0x6507AC3BD7C99009(float x, float y, float z, float p3) { return invoke<BOOL>(0x6507AC3BD7C99009, x, y, z, p3); } // 0x6507AC3BD7C99009 b1207
+	NATIVE_DECL BOOL _0x6507AC3BD7C99009(Vector3 vec, float p3) { return invoke<BOOL>(0x6507AC3BD7C99009, vec.x, vec.y, vec.z, p3); } // 0x6507AC3BD7C99009 b1207
 	// Returns how deep the water is below the ped (if in water)
 	// -1.0f = Not in water
 	// 10.0f = Max water depth
@@ -7601,8 +7823,10 @@ namespace PERSISTENCE
 {
 	NATIVE_DECL void _0x7A1BD123E5CDB6E5() { invoke<Void>(0x7A1BD123E5CDB6E5); } // 0x7A1BD123E5CDB6E5 b1207
 	NATIVE_DECL void PERSISTENCE_REMOVE_ALL_ENTITIES_IN_AREA(float x, float y, float z, float radius) { invoke<Void>(0x9D16896F0DBE78A2, x, y, z, radius); } // 0x9D16896F0DBE78A2 b1207
+	NATIVE_DECL void PERSISTENCE_REMOVE_ALL_ENTITIES_IN_AREA(Vector3 vec, float radius) { invoke<Void>(0x9D16896F0DBE78A2, vec.x, vec.y, vec.z, radius); } // 0x9D16896F0DBE78A2 b1207
 	NATIVE_DECL void _0x065887B694359799(Any p0) { invoke<Void>(0x065887B694359799, p0); } // 0x065887B694359799 b1207
 	NATIVE_DECL void _0xFC9806DA9A460093(float x1, float y1, float z1, float x2, float y2, float z2) { invoke<Void>(0xFC9806DA9A460093, x1, y1, z1, x2, y2, z2); } // 0xFC9806DA9A460093 b1207
+	NATIVE_DECL void _0xFC9806DA9A460093(Vector3 vec1, Vector3 vec2) { invoke<Void>(0xFC9806DA9A460093, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z); } // 0xFC9806DA9A460093 b1207
 	// nullsub, doesn't do anything
 	NATIVE_DECL void _0xB03140014ACA6C40(Any p0, Any p1) { invoke<Void>(0xB03140014ACA6C40, p0, p1); } // 0xB03140014ACA6C40 b1207
 	NATIVE_DECL void _0xE225CEF1901F6108(Any p0, Any p1) { invoke<Void>(0xE225CEF1901F6108, p0, p1); } // 0xE225CEF1901F6108 b1207
@@ -7621,7 +7845,9 @@ namespace PERSISTENCE
 	NATIVE_DECL void PERSISTENCE_ADD_SCENARIO_LOOTED(int scenario) { invoke<Void>(0x8245C1F3262F4AC2, scenario); } // 0x8245C1F3262F4AC2 b1207
 	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED(int scenario) { return invoke<BOOL>(0xFB7CF1DE938A3E22, scenario); } // 0xFB7CF1DE938A3E22 b1207
 	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED_AT_COORDS(float x, float y, float z) { return invoke<BOOL>(0xB6E1A185C2B9319A, x, y, z); } // 0xB6E1A185C2B9319A b1207
+	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED_AT_COORDS(Vector3 vec) { return invoke<BOOL>(0xB6E1A185C2B9319A, vec.x, vec.y, vec.z); } // 0xB6E1A185C2B9319A b1207
 	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED_AT_COORDS_WITH_MODEL(float x, float y, float z, Hash model) { return invoke<BOOL>(0x188313616D184213, x, y, z, model); } // 0x188313616D184213 b1207
+	NATIVE_DECL BOOL _PERSISTENCE_IS_SCENARIO_MARKED_AS_LOOTED_AT_COORDS_WITH_MODEL(Vector3 vec, Hash model) { return invoke<BOOL>(0x188313616D184213, vec.x, vec.y, vec.z, model); } // 0x188313616D184213 b1207
 	// _PERSISTENCE_*
 	NATIVE_DECL void _0x66DAA3A9274E8E82() { invoke<Void>(0x66DAA3A9274E8E82); } // 0x66DAA3A9274E8E82 b1232
 }
@@ -7632,12 +7858,15 @@ namespace PHYSICS
 	// Rope definitions are stored in ropedata.xml
 	// Rope types 0, 15 and 18 have proper physics for hanging objects (taut, do not sag, small to medium diameter, good aspect for a rope)
 	NATIVE_DECL int ADD_ROPE(float x, float y, float z, float rotX, float rotY, float rotZ, float length, int ropeType, float maxLength, float minLength, float p10, BOOL p11, BOOL p12, BOOL rigid, float p14, BOOL breakWhenShot, Any* unkPtr, BOOL p17) { return invoke<int>(0xE832D760399EB220, x, y, z, rotX, rotY, rotZ, length, ropeType, maxLength, minLength, p10, p11, p12, rigid, p14, breakWhenShot, unkPtr, p17); } // 0xE832D760399EB220 0xA592EC74 b1207
+	NATIVE_DECL int ADD_ROPE(Vector3 vec, Vector3 rot, float length, int ropeType, float maxLength, float minLength, float p10, BOOL p11, BOOL p12, BOOL rigid, float p14, BOOL breakWhenShot, Any* unkPtr, BOOL p17) { return invoke<int>(0xE832D760399EB220, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, length, ropeType, maxLength, minLength, p10, p11, p12, rigid, p14, breakWhenShot, unkPtr, p17); } // 0xE832D760399EB220 0xA592EC74 b1207
 	NATIVE_DECL int _ADD_ROPE_2(float x, float y, float z, float rotX, float rotY, float rotZ, float length, int ropeType, BOOL isNetworked, int p9, float p10) { return invoke<int>(0xE9C59F6809373A99, x, y, z, rotX, rotY, rotZ, length, ropeType, isNetworked, p9, p10); } // 0xE9C59F6809373A99 b1207
+	NATIVE_DECL int _ADD_ROPE_2(Vector3 vec, Vector3 rot, float length, int ropeType, BOOL isNetworked, int p9, float p10) { return invoke<int>(0xE9C59F6809373A99, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, length, ropeType, isNetworked, p9, p10); } // 0xE9C59F6809373A99 b1207
 	NATIVE_DECL void DELETE_ROPE(int* ropeId) { invoke<Void>(0x52B4829281364649, ropeId); } // 0x52B4829281364649 0x748D72AF b1207
 	NATIVE_DECL void _RELEASE_ROPE(int ropeId) { invoke<Void>(0x6076213101A47B3B, ropeId); } // 0x6076213101A47B3B b1207
 	NATIVE_DECL void DELETE_CHILD_ROPE(int ropeId) { invoke<Void>(0xAA5D6B1888E4DB20, ropeId); } // 0xAA5D6B1888E4DB20 0xB19B4706 b1207
 	// ropeTop returns top half of rope, ropeBottom returns bottom half of rope
 	NATIVE_DECL void _BREAK_ROPE(int* ropeId, int* ropeTop, int* ropeBottom, float offsetX, float offsetY, float offsetZ, int p6) { invoke<Void>(0x4CFA2B7FAE115ECB, ropeId, ropeTop, ropeBottom, offsetX, offsetY, offsetZ, p6); } // 0x4CFA2B7FAE115ECB b1207
+	NATIVE_DECL void _BREAK_ROPE(int* ropeId, int* ropeTop, int* ropeBottom, Vector3 offset, int p6) { invoke<Void>(0x4CFA2B7FAE115ECB, ropeId, ropeTop, ropeBottom, offset.x, offset.y, offset.z, p6); } // 0x4CFA2B7FAE115ECB b1207
 	NATIVE_DECL BOOL DOES_ROPE_EXIST(int ropeId) { return invoke<BOOL>(0xFD5448BE3111ED96, ropeId); } // 0xFD5448BE3111ED96 0x66E4A3AC b1207
 	NATIVE_DECL BOOL _IS_ROPE_BROKEN(int ropeId) { return invoke<BOOL>(0x79C2BEC82CFD7F7F, ropeId); } // 0x79C2BEC82CFD7F7F b1207
 	NATIVE_DECL void _0x7A54D82227A139DB(int* ropeId, Any p1) { invoke<Void>(0x7A54D82227A139DB, ropeId, p1); } // 0x7A54D82227A139DB b1207
@@ -7651,8 +7880,10 @@ namespace PHYSICS
 	// Attaches entity 1 to entity 2.
 	// If you use a boneName (p12/p13) make sure boneId (p15/p16) is set to -1.
 	NATIVE_DECL void ATTACH_ENTITIES_TO_ROPE(int ropeId, Entity entity1, Entity entity2, float ent1X, float ent1Y, float ent1Z, float ent2X, float ent2Y, float ent2Z, float length, int alwaysZero1, int alwaysZero2, const char* boneName1, const char* boneName2, BOOL p14, int boneId1, int boneId2, int alwaysZero3, int alwaysZero4, BOOL p19, BOOL p20) { invoke<Void>(0x3D95EC8B6D940AC3, ropeId, entity1, entity2, ent1X, ent1Y, ent1Z, ent2X, ent2Y, ent2Z, length, alwaysZero1, alwaysZero2, boneName1, boneName2, p14, boneId1, boneId2, alwaysZero3, alwaysZero4, p19, p20); } // 0x3D95EC8B6D940AC3 0x7508668F b1207
+	NATIVE_DECL void ATTACH_ENTITIES_TO_ROPE(int ropeId, Entity entity1, Entity entity2, Vector3 ent1, Vector3 ent2, float length, int alwaysZero1, int alwaysZero2, const char* boneName1, const char* boneName2, BOOL p14, int boneId1, int boneId2, int alwaysZero3, int alwaysZero4, BOOL p19, BOOL p20) { invoke<Void>(0x3D95EC8B6D940AC3, ropeId, entity1, entity2, ent1.x, ent1.y, ent1.z, ent2.x, ent2.y, ent2.z, length, alwaysZero1, alwaysZero2, boneName1, boneName2, p14, boneId1, boneId2, alwaysZero3, alwaysZero4, p19, p20); } // 0x3D95EC8B6D940AC3 0x7508668F b1207
 	// Attaches a rope to two entities: binds two bones from two entities; one entity can be an object, i.e. a suspension point, the other an NPC bone
 	NATIVE_DECL void _ATTACH_ENTITIES_TO_ROPE_2(int ropeId, Entity entity1, Entity entity2, float ent1X, float ent1Y, float ent1Z, float ent2X, float ent2Y, float ent2Z, const char* boneName1, const char* boneName2) { invoke<Void>(0x462FF2A432733A44, ropeId, entity1, entity2, ent1X, ent1Y, ent1Z, ent2X, ent2Y, ent2Z, boneName1, boneName2); } // 0x462FF2A432733A44 b1207
+	NATIVE_DECL void _ATTACH_ENTITIES_TO_ROPE_2(int ropeId, Entity entity1, Entity entity2, Vector3 ent1, Vector3 ent2, const char* boneName1, const char* boneName2) { invoke<Void>(0x462FF2A432733A44, ropeId, entity1, entity2, ent1.x, ent1.y, ent1.z, ent2.x, ent2.y, ent2.z, boneName1, boneName2); } // 0x462FF2A432733A44 b1207
 	NATIVE_DECL void _ATTACH_ENTITES_TO_ROPE_3(int ropeId, Entity entity1, Entity entity2, float p3, float p4, float p5, float p6, float p7, float p8, Any p9, Any p10) { invoke<Void>(0xE9CD9A67834985A7, ropeId, entity1, entity2, p3, p4, p5, p6, p7, p8, p9, p10); } // 0xE9CD9A67834985A7 b1207
 	NATIVE_DECL void _0x69C810B72291D831(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0x69C810B72291D831, p0, p1, p2, p3, p4, p5, p6); } // 0x69C810B72291D831 b1207
 	NATIVE_DECL void _0xB7469CB9AC3C0FD4(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0xB7469CB9AC3C0FD4, p0, p1, p2, p3, p4, p5, p6, p7); } // 0xB7469CB9AC3C0FD4 b1207
@@ -7660,6 +7891,7 @@ namespace PHYSICS
 	NATIVE_DECL BOOL _IS_ROPE_ATTACHED_TO_ENTITY(int ropeId, Entity entity) { return invoke<BOOL>(0x9B4F7E3E4F9C77B3, ropeId, entity); } // 0x9B4F7E3E4F9C77B3 b1207
 	NATIVE_DECL void DETACH_ROPE_FROM_ENTITY(int ropeId, Entity entity) { invoke<Void>(0xBCF3026912A8647D, ropeId, entity); } // 0xBCF3026912A8647D 0x3E720BEE b1207
 	NATIVE_DECL void _HITCH_HORSE(Ped horse, float x, float y, float z) { invoke<Void>(0x06AADE17334F7A40, horse, x, y, z); } // 0x06AADE17334F7A40 b1207
+	NATIVE_DECL void _HITCH_HORSE(Ped horse, Vector3 vec) { invoke<Void>(0x06AADE17334F7A40, horse, vec.x, vec.y, vec.z); } // 0x06AADE17334F7A40 b1207
 	NATIVE_DECL void _UNHITCH_HORSE(Ped horse) { invoke<Void>(0x0348469DAA17576C, horse); } // 0x0348469DAA17576C b1207
 	NATIVE_DECL void _0x6EA0E93CFFA472CC(Any p0) { invoke<Void>(0x6EA0E93CFFA472CC, p0); } // 0x6EA0E93CFFA472CC b1207
 	NATIVE_DECL void _0xBDDA142759307528(Any p0) { invoke<Void>(0xBDDA142759307528, p0); } // 0xBDDA142759307528 b1207
@@ -7905,6 +8137,7 @@ namespace PLAYER
 	NATIVE_DECL BOOL IS_SYSTEM_UI_BEING_DISPLAYED() { return invoke<BOOL>(0x908258B6209E71F7); } // 0x908258B6209E71F7 0xE495B6DA b1207
 	NATIVE_DECL void _0xD48227263E3D06AE(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9) { invoke<Void>(0xD48227263E3D06AE, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9); } // 0xD48227263E3D06AE b1232
 	NATIVE_DECL void _0x3946FC742AC305CD(Player player, Ped ped, const char* p2, float x, float y, float z, Entity targetEntity, const char* p7) { invoke<Void>(0x3946FC742AC305CD, player, ped, p2, x, y, z, targetEntity, p7); } // 0x3946FC742AC305CD b1207
+	NATIVE_DECL void _0x3946FC742AC305CD(Player player, Ped ped, const char* p2, Vector3 vec, Entity targetEntity, const char* p7) { invoke<Void>(0x3946FC742AC305CD, player, ped, p2, vec.x, vec.y, vec.z, targetEntity, p7); } // 0x3946FC742AC305CD b1207
 	NATIVE_DECL void _0xA28056CD1B04B250(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10) { invoke<Void>(0xA28056CD1B04B250, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10); } // 0xA28056CD1B04B250 b1232
 	// _DISABLE_*(PLAYER_FORCED_INTERACTION_LOCKON?)
 	NATIVE_DECL void _0xC67A4910425F11F1(Player player, const char* name) { invoke<Void>(0xC67A4910425F11F1, player, name); } // 0xC67A4910425F11F1 b1207
@@ -8018,6 +8251,7 @@ namespace PLAYER
 	NATIVE_DECL BOOL _IS_SECONDARY_SPECIAL_ABILITY_ACTIVE(Player player) { return invoke<BOOL>(0x45AB66D02B601FA7, player); } // 0x45AB66D02B601FA7 b1207
 	NATIVE_DECL void _0x107F2A66E1C4C83A(Any p0) { invoke<Void>(0x107F2A66E1C4C83A, p0); } // 0x107F2A66E1C4C83A b1207
 	NATIVE_DECL void START_PLAYER_TELEPORT(Player player, float x, float y, float z, float heading, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { invoke<Void>(0xDF8822C55EDDA65B, player, x, y, z, heading, p5, p6, p7, p8); } // 0xDF8822C55EDDA65B 0xC552E06C b1207
+	NATIVE_DECL void START_PLAYER_TELEPORT(Player player, Vector3 vec, float heading, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { invoke<Void>(0xDF8822C55EDDA65B, player, vec.x, vec.y, vec.z, heading, p5, p6, p7, p8); } // 0xDF8822C55EDDA65B 0xC552E06C b1207
 	NATIVE_DECL void _0x2C2D287748E8E9B7(BOOL p0) { invoke<Void>(0x2C2D287748E8E9B7, p0); } // 0x2C2D287748E8E9B7 b1207
 	NATIVE_DECL BOOL UPDATE_PLAYER_TELEPORT(Player player) { return invoke<BOOL>(0xC39DCE4672CBFBC1, player); } // 0xC39DCE4672CBFBC1 b1207
 	// Disables the player's teleportation
@@ -8302,6 +8536,7 @@ namespace POPULATION
 	NATIVE_DECL int GET_NUM_MODELS_IN_POPULATION_SET(Hash popSetHash) { return invoke<int>(0xA1E3171ED0E47564, popSetHash); } // 0xA1E3171ED0E47564 b1207
 	NATIVE_DECL Hash GET_PED_MODEL_NAME_IN_POPULATION_SET(Hash popSetHash, int index) { return invoke<Hash>(0x3EAFA1C533B7139E, popSetHash, index); } // 0x3EAFA1C533B7139E b1207
 	NATIVE_DECL Hash GET_RANDOM_MODEL_FROM_POPULATION_SET(Hash popSetHash, int flags, Hash p2, BOOL p3, BOOL p4, float x, float y, float z) { return invoke<Hash>(0x6B12ED8C77E8567B, popSetHash, flags, p2, p3, p4, x, y, z); } // 0x6B12ED8C77E8567B b1207
+	NATIVE_DECL Hash GET_RANDOM_MODEL_FROM_POPULATION_SET(Hash popSetHash, int flags, Hash p2, BOOL p3, BOOL p4, Vector3 vec) { return invoke<Hash>(0x6B12ED8C77E8567B, popSetHash, flags, p2, p3, p4, vec.x, vec.y, vec.z); } // 0x6B12ED8C77E8567B b1207
 	NATIVE_DECL PopZone _CREATE_POPZONE_FROM_VOLUME(Volume volume) { return invoke<PopZone>(0x9AC1C64FE46B6D09, volume); } // 0x9AC1C64FE46B6D09 b1207
 	NATIVE_DECL void _DELETE_SCRIPT_POPZONE(PopZone popZone) { invoke<Void>(0xA6E6A66FC4CA4224, popZone); } // 0xA6E6A66FC4CA4224 b1207
 	NATIVE_DECL BOOL _IS_POPZONE_VALID(PopZone popZone) { return invoke<BOOL>(0xA5BD585005EFCAD4, popZone); } // 0xA5BD585005EFCAD4 b1207
@@ -8386,14 +8621,19 @@ namespace PROPSET
 	NATIVE_DECL void _DELETE_PROP_SET(PropSet propSet, BOOL p1, BOOL p2) { invoke<Void>(0x58AC173A55D9D7B4, propSet, p1, p2); } // 0x58AC173A55D9D7B4 b1207
 	NATIVE_DECL BOOL _RELEASE_PROP_SET(Hash hash) { return invoke<BOOL>(0xB1964A83B345B4AB, hash); } // 0xB1964A83B345B4AB b1207
 	NATIVE_DECL PropSet _CREATE_PROP_SET(Hash hash, float x, float y, float z, int p4, float heading, float p6, BOOL p7, BOOL p8) { return invoke<PropSet>(0xE65C5CBA95F0E510, hash, x, y, z, p4, heading, p6, p7, p8); } // 0xE65C5CBA95F0E510 b1207
+	NATIVE_DECL PropSet _CREATE_PROP_SET(Hash hash, Vector3 vec, int p4, float heading, float p6, BOOL p7, BOOL p8) { return invoke<PropSet>(0xE65C5CBA95F0E510, hash, vec.x, vec.y, vec.z, p4, heading, p6, p7, p8); } // 0xE65C5CBA95F0E510 b1207
 	// Same as _CREATE_PROP_SET
 	// https://github.com/femga/rdr3_discoveries/blob/master/objects/propsets_list.lua
 	NATIVE_DECL PropSet _CREATE_PROP_SET_2(Hash hash, float x, float y, float z, int p4, float p5, float p6, BOOL p7, BOOL p8) { return invoke<PropSet>(0x899C97A1CCE7D483, hash, x, y, z, p4, p5, p6, p7, p8); } // 0x899C97A1CCE7D483 b1207
+	NATIVE_DECL PropSet _CREATE_PROP_SET_2(Hash hash, Vector3 vec, int p4, float p5, float p6, BOOL p7, BOOL p8) { return invoke<PropSet>(0x899C97A1CCE7D483, hash, vec.x, vec.y, vec.z, p4, p5, p6, p7, p8); } // 0x899C97A1CCE7D483 b1207
 	NATIVE_DECL PropSet CREATE_PROP_SET_INSTANCE_ATTACHED_TO_ENTITY(Hash hash, float x, float y, float z, Entity entity, float p5, BOOL p6, int p7, BOOL p8) { return invoke<PropSet>(0x9609DBDDE18FAD8C, hash, x, y, z, entity, p5, p6, p7, p8); } // 0x9609DBDDE18FAD8C b1207
+	NATIVE_DECL PropSet CREATE_PROP_SET_INSTANCE_ATTACHED_TO_ENTITY(Hash hash, Vector3 vec, Entity entity, float p5, BOOL p6, int p7, BOOL p8) { return invoke<PropSet>(0x9609DBDDE18FAD8C, hash, vec.x, vec.y, vec.z, entity, p5, p6, p7, p8); } // 0x9609DBDDE18FAD8C b1207
 	// Same as CREATE_PROP_SET_INSTANCE_ATTACHED_TO_ENTITY
 	NATIVE_DECL PropSet _CREATE_PROP_SET_4(Hash hash, float x, float y, float z, Entity entity, float p5, BOOL p6, int p7, BOOL p8) { return invoke<PropSet>(0xACA7FB30269096D4, hash, x, y, z, entity, p5, p6, p7, p8); } // 0xACA7FB30269096D4 b1207
+	NATIVE_DECL PropSet _CREATE_PROP_SET_4(Hash hash, Vector3 vec, Entity entity, float p5, BOOL p6, int p7, BOOL p8) { return invoke<PropSet>(0xACA7FB30269096D4, hash, vec.x, vec.y, vec.z, entity, p5, p6, p7, p8); } // 0xACA7FB30269096D4 b1207
 	NATIVE_DECL BOOL DOES_PROP_SET_EXIST(PropSet propSet) { return invoke<BOOL>(0x7DDDCF815E650FF5, propSet); } // 0x7DDDCF815E650FF5 b1207
 	NATIVE_DECL BOOL _DOES_PROP_SET_OF_TYPE_EXIST_NEAR_COORDS(Hash propsetHash, float x, float y, float z) { return invoke<BOOL>(0x72068021F498E6E3, propsetHash, x, y, z); } // 0x72068021F498E6E3 b1207
+	NATIVE_DECL BOOL _DOES_PROP_SET_OF_TYPE_EXIST_NEAR_COORDS(Hash propsetHash, Vector3 vec) { return invoke<BOOL>(0x72068021F498E6E3, propsetHash, vec.x, vec.y, vec.z); } // 0x72068021F498E6E3 b1207
 	NATIVE_DECL BOOL IS_PROP_SET_FULLY_LOADED(PropSet propSet) { return invoke<BOOL>(0xF42DB680A8B2A4D9, propSet); } // 0xF42DB680A8B2A4D9 b1207
 	NATIVE_DECL void _SET_PROP_SET_VISIBLE(PropSet propSet, BOOL toggle) { invoke<Void>(0x9D096A5BD02F953E, propSet, toggle); } // 0x9D096A5BD02F953E b1207
 	NATIVE_DECL BOOL _IS_PROP_SET_VISIBLE(PropSet propSet) { return invoke<BOOL>(0x0CE8AAFE9E433A23, propSet); } // 0x0CE8AAFE9E433A23 b1207
@@ -8425,6 +8665,7 @@ namespace PROPSET
 	NATIVE_DECL PropSet _GET_TRAIN_CARRIAGE_PROP_SET(Entity trainCarriage) { return invoke<PropSet>(0xCFC0BD09BB1B73FF, trainCarriage); } // 0xCFC0BD09BB1B73FF b1207
 	NATIVE_DECL BOOL _HAS_VEHICLE_TRAILER_PROP_SET_LOADED(Vehicle vehicle, int wagonIndex) { return invoke<BOOL>(0x8F3333F0A6900B3C, vehicle, wagonIndex); } // 0x8F3333F0A6900B3C b1207
 	NATIVE_DECL PropSet _GET_PROP_SET_AT_COORDS(Hash propsetHash, float x, float y, float z) { return invoke<PropSet>(0xC061E50F8D299F95, propsetHash, x, y, z); } // 0xC061E50F8D299F95 b1207
+	NATIVE_DECL PropSet _GET_PROP_SET_AT_COORDS(Hash propsetHash, Vector3 vec) { return invoke<PropSet>(0xC061E50F8D299F95, propsetHash, vec.x, vec.y, vec.z); } // 0xC061E50F8D299F95 b1207
 }
 
 namespace QUEUE
@@ -8665,12 +8906,17 @@ namespace SHAPETEST
 	// 
 	// p8 is a bit mask with bits 1, 2 and/or 4, relating to collider types; 4 should usually be used.
 	NATIVE_DECL ScrHandle START_SHAPE_TEST_LOS_PROBE(float x1, float y1, float z1, float x2, float y2, float z2, int flags, Entity entity, int p8) { return invoke<ScrHandle>(0x7EE9F5D83DD4F90E, x1, y1, z1, x2, y2, z2, flags, entity, p8); } // 0x7EE9F5D83DD4F90E 0xEFAF4BA6 b1207
+	NATIVE_DECL ScrHandle START_SHAPE_TEST_LOS_PROBE(Vector3 vec1, Vector3 vec2, int flags, Entity entity, int p8) { return invoke<ScrHandle>(0x7EE9F5D83DD4F90E, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, flags, entity, p8); } // 0x7EE9F5D83DD4F90E 0xEFAF4BA6 b1207
 	NATIVE_DECL Any _0x04AA59CA40571C2E(Any p0, Any p1) { return invoke<Any>(0x04AA59CA40571C2E, p0, p1); } // 0x04AA59CA40571C2E b1207
 	// Does the same as 0x7EE9F5D83DD4F90E, except blocking until the shape test completes.
 	NATIVE_DECL ScrHandle START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(float x1, float y1, float z1, float x2, float y2, float z2, int flags, Entity entityToIgnore, int p8) { return invoke<ScrHandle>(0x377906D8A31E5586, x1, y1, z1, x2, y2, z2, flags, entityToIgnore, p8); } // 0x377906D8A31E5586 0x8251485D b1207
+	NATIVE_DECL ScrHandle START_EXPENSIVE_SYNCHRONOUS_SHAPE_TEST_LOS_PROBE(Vector3 vec1, Vector3 vec2, int flags, Entity entityToIgnore, int p8) { return invoke<ScrHandle>(0x377906D8A31E5586, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, flags, entityToIgnore, p8); } // 0x377906D8A31E5586 0x8251485D b1207
 	NATIVE_DECL ScrHandle START_SHAPE_TEST_BOX(float x, float y, float z, float x1, float y2, float z2, float rotX, float rotY, float rotZ, Any p9, Any p10, Any entity, Any p12) { return invoke<ScrHandle>(0xFE466162C4401D18, x, y, z, x1, y2, z2, rotX, rotY, rotZ, p9, p10, entity, p12); } // 0xFE466162C4401D18 0x249BC876 b1207
+	NATIVE_DECL ScrHandle START_SHAPE_TEST_BOX(Vector3 vec, float x1, float y2, float z2, Vector3 rot, Any p9, Any p10, Any entity, Any p12) { return invoke<ScrHandle>(0xFE466162C4401D18, vec.x, vec.y, vec.z, x1, y2, z2, rot.x, rot.y, rot.z, p9, p10, entity, p12); } // 0xFE466162C4401D18 0x249BC876 b1207
 	NATIVE_DECL ScrHandle START_SHAPE_TEST_CAPSULE(float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, Entity entityToIgnore, int p9) { return invoke<ScrHandle>(0x28579D1B8F8AAC80, x1, y1, z1, x2, y2, z2, radius, flags, entityToIgnore, p9); } // 0x28579D1B8F8AAC80 0x591EA833 b1207
+	NATIVE_DECL ScrHandle START_SHAPE_TEST_CAPSULE(Vector3 vec1, Vector3 vec2, float radius, int flags, Entity entityToIgnore, int p9) { return invoke<ScrHandle>(0x28579D1B8F8AAC80, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, radius, flags, entityToIgnore, p9); } // 0x28579D1B8F8AAC80 0x591EA833 b1207
 	NATIVE_DECL ScrHandle START_SHAPE_TEST_SWEPT_SPHERE(float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, Entity entity, Any p9) { return invoke<ScrHandle>(0xAA5B7C8309F73230, x1, y1, z1, x2, y2, z2, radius, flags, entity, p9); } // 0xAA5B7C8309F73230 0x4559460A b1207
+	NATIVE_DECL ScrHandle START_SHAPE_TEST_SWEPT_SPHERE(Vector3 vec1, Vector3 vec2, float radius, int flags, Entity entity, Any p9) { return invoke<ScrHandle>(0xAA5B7C8309F73230, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, radius, flags, entity, p9); } // 0xAA5B7C8309F73230 0x4559460A b1207
 	// Old name: _START_SHAPE_TEST_SURROUNDING_COORDS
 	NATIVE_DECL ScrHandle START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE(Vector3* pVec1, Vector3* pVec2, int flag, Entity entity, int flag2) { return invoke<ScrHandle>(0x9839013D8B6014F1, pVec1, pVec2, flag, entity, flag2); } // 0x9839013D8B6014F1 b1207
 	// Returns the result of a shape test: 0 if the handle is invalid, 1 if the shape test is still pending, or 2 if the shape test has completed, and the handle should be invalidated.
@@ -8818,6 +9064,7 @@ namespace STATS
 	NATIVE_DECL void STATSTRACKER_DEED_STARTED(Hash p0, Any p1) { invoke<Void>(0xB2A38826E5886E83, p0, p1); } // 0xB2A38826E5886E83 b1207
 	NATIVE_DECL void _0xD5910ECF81A2278C(int deedType, Hash deedHash, int missionStatus, Any* p3) { invoke<Void>(0xD5910ECF81A2278C, deedType, deedHash, missionStatus, p3); } // 0xD5910ECF81A2278C b1207
 	NATIVE_DECL void _0x99230691875FC218(Any p0, Hash p1, float x, float y, float z) { invoke<Void>(0x99230691875FC218, p0, p1, x, y, z); } // 0x99230691875FC218 b1207
+	NATIVE_DECL void _0x99230691875FC218(Any p0, Hash p1, Vector3 vec) { invoke<Void>(0x99230691875FC218, p0, p1, vec.x, vec.y, vec.z); } // 0x99230691875FC218 b1207
 	NATIVE_DECL void _0x025E98E317652CDD(int p0) { invoke<Void>(0x025E98E317652CDD, p0); } // 0x025E98E317652CDD b1207
 	NATIVE_DECL void _0xE5A680A5D8B1F687(int p0) { invoke<Void>(0xE5A680A5D8B1F687, p0); } // 0xE5A680A5D8B1F687 b1207
 	// Only used in R* SP Scripts
@@ -8881,12 +9128,16 @@ namespace STREAMING
 	NATIVE_DECL BOOL IS_MODEL_A_VEHICLE(Hash model) { return invoke<BOOL>(0x354F62672DE7DB0A, model); } // 0x354F62672DE7DB0A 0xFFFC85D4 b1207
 	NATIVE_DECL BOOL _IS_MODEL_AN_OBJECT(Hash model) { return invoke<BOOL>(0x274EE1B90CFA669E, model); } // 0x274EE1B90CFA669E b1207
 	NATIVE_DECL BOOL _HAS_COLLISION_LOADED_AT_COORD(float x, float y, float z) { return invoke<BOOL>(0xDA8B2EAF29E872E2, x, y, z); } // 0xDA8B2EAF29E872E2 b1207
+	NATIVE_DECL BOOL _HAS_COLLISION_LOADED_AT_COORD(Vector3 vec) { return invoke<BOOL>(0xDA8B2EAF29E872E2, vec.x, vec.y, vec.z); } // 0xDA8B2EAF29E872E2 b1207
 	NATIVE_DECL void _0x80B3E0597366ADF1() { invoke<Void>(0x80B3E0597366ADF1); } // 0x80B3E0597366ADF1 b1207
 	NATIVE_DECL void REQUEST_COLLISION_AT_COORD(float x, float y, float z) { invoke<Void>(0x0A3720F162A033C9, x, y, z); } // 0x0A3720F162A033C9 0xCD9805E7 b1207
+	NATIVE_DECL void REQUEST_COLLISION_AT_COORD(Vector3 vec) { invoke<Void>(0x0A3720F162A033C9, vec.x, vec.y, vec.z); } // 0x0A3720F162A033C9 0xCD9805E7 b1207
 	NATIVE_DECL void _REQUEST_METADATA_AT_COORD(float x, float y, float z) { invoke<Void>(0xA8432A14D4DC2101, x, y, z); } // 0xA8432A14D4DC2101 b1207
+	NATIVE_DECL void _REQUEST_METADATA_AT_COORD(Vector3 vec) { invoke<Void>(0xA8432A14D4DC2101, vec.x, vec.y, vec.z); } // 0xA8432A14D4DC2101 b1207
 	NATIVE_DECL void REQUEST_COLLISION_FOR_MODEL(Hash model) { invoke<Void>(0xF1767BE37F661551, model); } // 0xF1767BE37F661551 0x3930C042 b1207
 	NATIVE_DECL BOOL HAS_COLLISION_FOR_MODEL_LOADED(Hash model) { return invoke<BOOL>(0x210A79C9EC89778F, model); } // 0x210A79C9EC89778F 0x41A094F8 b1207
 	NATIVE_DECL void REQUEST_ADDITIONAL_COLLISION_AT_COORD(float x, float y, float z) { invoke<Void>(0x83A8D71650D1894F, x, y, z); } // 0x83A8D71650D1894F 0xC2CC1DF2 b1311
+	NATIVE_DECL void REQUEST_ADDITIONAL_COLLISION_AT_COORD(Vector3 vec) { invoke<Void>(0x83A8D71650D1894F, vec.x, vec.y, vec.z); } // 0x83A8D71650D1894F 0xC2CC1DF2 b1311
 	NATIVE_DECL BOOL DOES_ANIM_DICT_EXIST(const char* animDict) { return invoke<BOOL>(0x537F44CB0D7F150D, animDict); } // 0x537F44CB0D7F150D 0xCD31C872 b1207
 	NATIVE_DECL void REQUEST_ANIM_DICT(const char* animDict) { invoke<Void>(0xA862A2AD321F94B4, animDict); } // 0xA862A2AD321F94B4 0xDCA96950 b1207
 	NATIVE_DECL BOOL HAS_ANIM_DICT_LOADED(const char* animDict) { return invoke<BOOL>(0x27FF6FE8009B40CA, animDict); } // 0x27FF6FE8009B40CA 0x05E6763C b1207
@@ -8927,6 +9178,7 @@ namespace STREAMING
 	NATIVE_DECL BOOL IS_IPL_ACTIVE_BY_HASH(Hash iplHash) { return invoke<BOOL>(0x93AC1B91CB6D9913, iplHash); } // 0x93AC1B91CB6D9913 b1207
 	// Returns true if IPL is streamed in (?)
 	NATIVE_DECL BOOL _IS_POSITION_INSIDE_IPL_STREAMING_EXTENTS(Hash iplHash, float x, float y, float z) { return invoke<BOOL>(0x73B40D97D7BAAD77, iplHash, x, y, z); } // 0x73B40D97D7BAAD77 b1207
+	NATIVE_DECL BOOL _IS_POSITION_INSIDE_IPL_STREAMING_EXTENTS(Hash iplHash, Vector3 vec) { return invoke<BOOL>(0x73B40D97D7BAAD77, iplHash, vec.x, vec.y, vec.z); } // 0x73B40D97D7BAAD77 b1207
 	NATIVE_DECL void _0xDEEE1F265B7ECEF5() { invoke<Void>(0xDEEE1F265B7ECEF5); } // 0xDEEE1F265B7ECEF5 b1311
 	NATIVE_DECL void SET_GAME_PAUSES_FOR_STREAMING(BOOL toggle) { invoke<Void>(0xB3BC8250F4FE8B63, toggle); } // 0xB3BC8250F4FE8B63 0x9211A28A b1207
 	NATIVE_DECL int GET_NUMBER_OF_STREAMING_REQUESTS() { return invoke<int>(0x30CCCC4D88E654CA); } // 0x30CCCC4D88E654CA 0xC2EE9A02 b1207
@@ -8941,6 +9193,7 @@ namespace STREAMING
 	NATIVE_DECL Any _0x071769BCB24379E5() { return invoke<Any>(0x071769BCB24379E5); } // 0x071769BCB24379E5 b1207
 	NATIVE_DECL void CLEAR_FOCUS() { invoke<Void>(0x86CCAF7CE493EFBE); } // 0x86CCAF7CE493EFBE 0x34D91E7A b1207
 	NATIVE_DECL void SET_FOCUS_POS_AND_VEL(float x, float y, float z, float offsetX, float offsetY, float offsetZ) { invoke<Void>(0x25F6EF88664540E2, x, y, z, offsetX, offsetY, offsetZ); } // 0x25F6EF88664540E2 0x14680A60 b1207
+	NATIVE_DECL void SET_FOCUS_POS_AND_VEL(Vector3 vec, Vector3 offset) { invoke<Void>(0x25F6EF88664540E2, vec.x, vec.y, vec.z, offset.x, offset.y, offset.z); } // 0x25F6EF88664540E2 0x14680A60 b1207
 	// It seems to make the entity's coords mark the point from which LOD-distances are measured. In my testing, setting a vehicle as the focus entity and moving that vehicle more than 300 distance units away from the player will make the level of detail around the player go down drastically (shadows disappear, textures go extremely low res, etc). The player seems to be the default focus entity.
 	NATIVE_DECL void SET_FOCUS_ENTITY(Entity entity) { invoke<Void>(0x955AEDD58F4BD309, entity); } // 0x955AEDD58F4BD309 0x18DB04AC b1207
 	NATIVE_DECL BOOL IS_ENTITY_FOCUS(Entity entity) { return invoke<BOOL>(0xF87DE697E9A06EC6, entity); } // 0xF87DE697E9A06EC6 0xB456D707 b1207
@@ -8949,7 +9202,9 @@ namespace STREAMING
 	NATIVE_DECL void SET_ALL_MAPDATA_CULLED(Any p0) { invoke<Void>(0x19ABCC581D28E6F9, p0); } // 0x19ABCC581D28E6F9 0xA07BAEB9 b1207
 	NATIVE_DECL void _0xF01D21DF39554115(Any p0) { invoke<Void>(0xF01D21DF39554115, p0); } // 0xF01D21DF39554115 b1207
 	NATIVE_DECL BOOL LOAD_SCENE_START(float posX, float posY, float posZ, float offsetX, float offsetY, float offsetZ, float radius, int p7) { return invoke<BOOL>(0x387AD749E3B69B70, posX, posY, posZ, offsetX, offsetY, offsetZ, radius, p7); } // 0x387AD749E3B69B70 b1207
+	NATIVE_DECL BOOL LOAD_SCENE_START(Vector3 pos, Vector3 offset, float radius, int p7) { return invoke<BOOL>(0x387AD749E3B69B70, pos.x, pos.y, pos.z, offset.x, offset.y, offset.z, radius, p7); } // 0x387AD749E3B69B70 b1207
 	NATIVE_DECL BOOL LOAD_SCENE_START_SPHERE(float x, float y, float z, float radius, Any p4) { return invoke<BOOL>(0x513F8AA5BF2F17CF, x, y, z, radius, p4); } // 0x513F8AA5BF2F17CF b1207
+	NATIVE_DECL BOOL LOAD_SCENE_START_SPHERE(Vector3 vec, float radius, Any p4) { return invoke<BOOL>(0x513F8AA5BF2F17CF, vec.x, vec.y, vec.z, radius, p4); } // 0x513F8AA5BF2F17CF b1207
 	NATIVE_DECL void LOAD_SCENE_STOP() { invoke<Void>(0x5A8B01199C3E79C3); } // 0x5A8B01199C3E79C3 b1207
 	NATIVE_DECL BOOL IS_LOAD_SCENE_ACTIVE() { return invoke<BOOL>(0xCF45DF50C7775F2A); } // 0xCF45DF50C7775F2A b1207
 	NATIVE_DECL BOOL IS_LOAD_SCENE_LOADED() { return invoke<BOOL>(0x0909F71B5C070797); } // 0x0909F71B5C070797 b1207
@@ -8972,6 +9227,7 @@ namespace STREAMING
 	NATIVE_DECL void SET_SRL_READAHEAD_TIMES(int p0, int p1, int p2, int p3) { invoke<Void>(0xD346248C1DCE0D76, p0, p1, p2, p3); } // 0xD346248C1DCE0D76 0x62F02485 b1207
 	NATIVE_DECL void SET_SRL_LONG_JUMP_MODE(BOOL p0) { invoke<Void>(0x7C907E8A725E5FD2, p0); } // 0x7C907E8A725E5FD2 0xA6459CAA b1207
 	NATIVE_DECL void SET_HD_AREA(float x, float y, float z, float radius) { invoke<Void>(0xB88B905AFA35CB4D, x, y, z, radius); } // 0xB88B905AFA35CB4D 0x80BAA035 b1207
+	NATIVE_DECL void SET_HD_AREA(Vector3 vec, float radius) { invoke<Void>(0xB88B905AFA35CB4D, vec.x, vec.y, vec.z, radius); } // 0xB88B905AFA35CB4D 0x80BAA035 b1207
 	NATIVE_DECL void CLEAR_HD_AREA() { invoke<Void>(0xD83B22434E52728D); } // 0xD83B22434E52728D 0x7CAC6FA0 b1207
 	NATIVE_DECL void _0x09FBF15D73EFC900() { invoke<Void>(0x09FBF15D73EFC900); } // 0x09FBF15D73EFC900 b1207
 	NATIVE_DECL void _0xF11D7CB962FCD747(Any p0) { invoke<Void>(0xF11D7CB962FCD747, p0); } // 0xF11D7CB962FCD747 b1207
@@ -9015,6 +9271,7 @@ namespace TASK
 	NATIVE_DECL void TASK_STAND_STILL(Ped ped, int time) { invoke<Void>(0x919BE13EED931959, ped, time); } // 0x919BE13EED931959 0x6F80965D b1207
 	NATIVE_DECL void TASK_JUMP(Ped ped, BOOL unused) { invoke<Void>(0x0AE4086104E067B1, ped, unused); } // 0x0AE4086104E067B1 0x0356E3CE b1207
 	NATIVE_DECL void _TASK_JUMP_2(Ped ped, float x, float y, float z, Entity entity) { invoke<Void>(0x91083103137D7254, ped, x, y, z, entity); } // 0x91083103137D7254 b1207
+	NATIVE_DECL void _TASK_JUMP_2(Ped ped, Vector3 vec, Entity entity) { invoke<Void>(0x91083103137D7254, ped, vec.x, vec.y, vec.z, entity); } // 0x91083103137D7254 b1207
 	NATIVE_DECL void TASK_COWER(Ped ped, int duration, Ped pedToCowerFrom, const char* p3) { invoke<Void>(0x3EB1FE9E8E908E15, ped, duration, pedToCowerFrom, p3); } // 0x3EB1FE9E8E908E15 0x9CF1C19B b1207
 	NATIVE_DECL void TASK_HANDS_UP(Ped ped, int duration, Ped facingPed, int p3, BOOL p4) { invoke<Void>(0xF2EAB31979A7F910, ped, duration, facingPed, p3, p4); } // 0xF2EAB31979A7F910 0x8DCC19C5 b1207
 	NATIVE_DECL void TASK_KNOCKED_OUT(Ped ped, float p1, BOOL permanently) { invoke<Void>(0xF90427F00A495A28, ped, p1, permanently); } // 0xF90427F00A495A28 b1207
@@ -9043,12 +9300,15 @@ namespace TASK
 	NATIVE_DECL void TASK_HITCH_ANIMAL(Ped ped, int scenarioPoint, int flag) { invoke<Void>(0x9030AD4B6207BFE8, ped, scenarioPoint, flag); } // 0x9030AD4B6207BFE8 b1207
 	NATIVE_DECL void _0xE05A5D39BE6E93AF(Any p0) { invoke<Void>(0xE05A5D39BE6E93AF, p0); } // 0xE05A5D39BE6E93AF b1207
 	NATIVE_DECL void TASK_VEHICLE_DRIVE_TO_COORD(Ped ped, Vehicle vehicle, float x, float y, float z, float speed, Any p6, Hash vehicleModel, int drivingMode, float stopRange, float p10) { invoke<Void>(0xE2A2AA2F659D77A7, ped, vehicle, x, y, z, speed, p6, vehicleModel, drivingMode, stopRange, p10); } // 0xE2A2AA2F659D77A7 0xE4AC0387 b1207
+	NATIVE_DECL void TASK_VEHICLE_DRIVE_TO_COORD(Ped ped, Vehicle vehicle, Vector3 vec, float speed, Any p6, Hash vehicleModel, int drivingMode, float stopRange, float p10) { invoke<Void>(0xE2A2AA2F659D77A7, ped, vehicle, vec.x, vec.y, vec.z, speed, p6, vehicleModel, drivingMode, stopRange, p10); } // 0xE2A2AA2F659D77A7 0xE4AC0387 b1207
 	NATIVE_DECL void _TASK_VEHICLE_DRIVE_TO_COORD_2(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8) { invoke<Void>(0xF0108F01FB105DA2, ped, p1, p2, p3, p4, p5, p6, p7, p8); } // 0xF0108F01FB105DA2 b1207
 	NATIVE_DECL void TASK_VEHICLE_DRIVE_WANDER(Ped ped, Vehicle vehicle, float speed, int drivingStyle) { invoke<Void>(0x480142959D337D00, ped, vehicle, speed, drivingStyle); } // 0x480142959D337D00 0x36EC0EB0 b1207
 	NATIVE_DECL void TASK_FOLLOW_TO_OFFSET_OF_ENTITY(Ped ped, Entity entity, float offsetX, float offsetY, float offsetZ, float movementSpeed, int timeout, float stoppingRange, BOOL persistFollowing, BOOL p9, BOOL walkOnly, BOOL p11, BOOL p12, BOOL p13) { invoke<Void>(0x304AE42E357B8C7E, ped, entity, offsetX, offsetY, offsetZ, movementSpeed, timeout, stoppingRange, persistFollowing, p9, walkOnly, p11, p12, p13); } // 0x304AE42E357B8C7E 0x2DF5A6AC b1207
+	NATIVE_DECL void TASK_FOLLOW_TO_OFFSET_OF_ENTITY(Ped ped, Entity entity, Vector3 offset, float movementSpeed, int timeout, float stoppingRange, BOOL persistFollowing, BOOL p9, BOOL walkOnly, BOOL p11, BOOL p12, BOOL p13) { invoke<Void>(0x304AE42E357B8C7E, ped, entity, offset.x, offset.y, offset.z, movementSpeed, timeout, stoppingRange, persistFollowing, p9, walkOnly, p11, p12, p13); } // 0x304AE42E357B8C7E 0x2DF5A6AC b1207
 	NATIVE_DECL void TASK_FOLLOW_TO_OFFSET_OF_COORD(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14) { invoke<Void>(0x2E3676282C18A692, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0x2E3676282C18A692 b1207
 	NATIVE_DECL void _0x3FFCD7BBA074CC80(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8) { invoke<Void>(0x3FFCD7BBA074CC80, ped, p1, p2, p3, p4, p5, p6, p7, p8); } // 0x3FFCD7BBA074CC80 b1207
 	NATIVE_DECL void TASK_GO_STRAIGHT_TO_COORD(Ped ped, float x, float y, float z, float moveBlendSpeedY, int p5, float p6, float p7, int p8) { invoke<Void>(0xD76B57B44F1E6F8B, ped, x, y, z, moveBlendSpeedY, p5, p6, p7, p8); } // 0xD76B57B44F1E6F8B 0x80A9E7A7 b1207
+	NATIVE_DECL void TASK_GO_STRAIGHT_TO_COORD(Ped ped, Vector3 vec, float moveBlendSpeedY, int p5, float p6, float p7, int p8) { invoke<Void>(0xD76B57B44F1E6F8B, ped, vec.x, vec.y, vec.z, moveBlendSpeedY, p5, p6, p7, p8); } // 0xD76B57B44F1E6F8B 0x80A9E7A7 b1207
 	NATIVE_DECL void TASK_GO_STRAIGHT_TO_COORD_RELATIVE_TO_ENTITY(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x61E360B7E040D12E, ped, p1, p2, p3, p4, p5, p6, p7); } // 0x61E360B7E040D12E 0xD26CAC68 b1207
 	NATIVE_DECL void TASK_MOVE_IN_TRAFFIC(Ped ped, Any p1, Any p2, Any p3) { invoke<Void>(0x8AA1593AEC087A29, ped, p1, p2, p3); } // 0x8AA1593AEC087A29 b1207
 	NATIVE_DECL void TASK_MOVE_IN_TRAFFIC_TO_DESTINATION(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0xDCA3A13F7A45338B, ped, p1, p2, p3, p4, p5, p6, p7); } // 0xDCA3A13F7A45338B b1207
@@ -9056,6 +9316,7 @@ namespace TASK
 	NATIVE_DECL void _0xBAAB791AA72C2821(Any p0, Any p1) { invoke<Void>(0xBAAB791AA72C2821, p0, p1); } // 0xBAAB791AA72C2821 b1207
 	// Params: moveBlendRatio commonly 1.25f, p5 is always 0 in R* Scripts
 	NATIVE_DECL void TASK_MOVE_FOLLOW_ROAD_USING_NAVMESH(Ped ped, float moveBlendRatio, float x, float y, float z, Any p5) { invoke<Void>(0x79482C12482A860D, ped, moveBlendRatio, x, y, z, p5); } // 0x79482C12482A860D b1207
+	NATIVE_DECL void TASK_MOVE_FOLLOW_ROAD_USING_NAVMESH(Ped ped, float moveBlendRatio, Vector3 vec, Any p5) { invoke<Void>(0x79482C12482A860D, ped, moveBlendRatio, vec.x, vec.y, vec.z, p5); } // 0x79482C12482A860D b1207
 	// Makes the specified ped achieve the specified heading.
 	// 
 	// pedHandle: The handle of the ped to assign the task to.
@@ -9068,6 +9329,7 @@ namespace TASK
 	// 
 	// A maximum of 8 points can be added.
 	NATIVE_DECL void TASK_EXTEND_ROUTE(float x, float y, float z) { invoke<Void>(0x1E7889778264843A, x, y, z); } // 0x1E7889778264843A 0x43271F69 b1207
+	NATIVE_DECL void TASK_EXTEND_ROUTE(Vector3 vec) { invoke<Void>(0x1E7889778264843A, vec.x, vec.y, vec.z); } // 0x1E7889778264843A 0x43271F69 b1207
 	NATIVE_DECL void TASK_FOLLOW_POINT_ROUTE(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5) { invoke<Void>(0x0E14C5550DC3CD1D, ped, p1, p2, p3, p4, p5); } // 0x0E14C5550DC3CD1D b1207
 	// flags:
 	// MOVE_WHILST_WAITING_FOR_PATH = (1 << 0),
@@ -9102,9 +9364,11 @@ namespace TASK
 	NATIVE_DECL void _TASK_FLEE_FROM_COORD(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11) { invoke<Void>(0x6879FF208ED87F2A, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11); } // 0x6879FF208ED87F2A b1207
 	// fleeType: see TASK_FLEE_COORD
 	NATIVE_DECL void _TASK_FLEE_FROM_PED(Ped ped, Ped fleeFromTarget, float x, float y, float z, float distance, int p6, int p7, float p8, Ped targetPed) { invoke<Void>(0x7B74D8EEDE9B5727, ped, fleeFromTarget, x, y, z, distance, p6, p7, p8, targetPed); } // 0x7B74D8EEDE9B5727 b1207
+	NATIVE_DECL void _TASK_FLEE_FROM_PED(Ped ped, Ped fleeFromTarget, Vector3 vec, float distance, int p6, int p7, float p8, Ped targetPed) { invoke<Void>(0x7B74D8EEDE9B5727, ped, fleeFromTarget, vec.x, vec.y, vec.z, distance, p6, p7, p8, targetPed); } // 0x7B74D8EEDE9B5727 b1207
 	// Makes the specified ped flee the specified distance from the specified position.
 	// fleeType: see TASK_FLEE_COORD
 	NATIVE_DECL void TASK_SMART_FLEE_COORD(Ped ped, float x, float y, float z, float distance, int time, int fleeType, float fleeSpeed) { invoke<Void>(0x94587F17E9C365D5, ped, x, y, z, distance, time, fleeType, fleeSpeed); } // 0x94587F17E9C365D5 0xB2E686FC b1207
+	NATIVE_DECL void TASK_SMART_FLEE_COORD(Ped ped, Vector3 vec, float distance, int time, int fleeType, float fleeSpeed) { invoke<Void>(0x94587F17E9C365D5, ped, vec.x, vec.y, vec.z, distance, time, fleeType, fleeSpeed); } // 0x94587F17E9C365D5 0xB2E686FC b1207
 	// Makes a ped run away from another ped (fleeFromTarget)
 	// 
 	// fleeDistance = ped will flee this distance
@@ -9117,24 +9381,29 @@ namespace TASK
 	// Params: p5 = some flag?, p6 = -1.0f, p8 = 0 in R* Scripts
 	// fleeStyle: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eFleeStyle
 	NATIVE_DECL void TASK_FLEE_COORD(Ped ped, float x, float y, float z, int fleeStyle, int p5, float p6, int duration, int p8) { invoke<Void>(0x58428248BF4B64E4, ped, x, y, z, fleeStyle, p5, p6, duration, p8); } // 0x58428248BF4B64E4 b1207
+	NATIVE_DECL void TASK_FLEE_COORD(Ped ped, Vector3 vec, int fleeStyle, int p5, float p6, int duration, int p8) { invoke<Void>(0x58428248BF4B64E4, ped, vec.x, vec.y, vec.z, fleeStyle, p5, p6, duration, p8); } // 0x58428248BF4B64E4 b1207
 	// Params: p4 = -1.0f, p5 = -1, p6 = 0 in R* Scripts
 	// fleeStyle: see TASK_FLEE_COORD
 	NATIVE_DECL void TASK_FLEE_PED(Ped ped, Ped fleeFromTarget, int fleeStyle, int flag, float p4, int p5, int p6) { invoke<Void>(0xFD45175A6DFD7CE9, ped, fleeFromTarget, fleeStyle, flag, p4, p5, p6); } // 0xFD45175A6DFD7CE9 b1207
 	NATIVE_DECL void TASK_FLEE_COORD_VIA(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11) { invoke<Void>(0x390E0B697D25EAF5, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11); } // 0x390E0B697D25EAF5 b1207
 	NATIVE_DECL void TASK_FLEE_PED_VIA(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9) { invoke<Void>(0x5802E0F910E4CF1D, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9); } // 0x5802E0F910E4CF1D b1207
 	NATIVE_DECL void _ADD_FLEE_TARGET_COORDS(Ped ped, float x, float y, float z, float p4) { invoke<Void>(0xE8F1A5B4CED3725A, ped, x, y, z, p4); } // 0xE8F1A5B4CED3725A b1207
+	NATIVE_DECL void _ADD_FLEE_TARGET_COORDS(Ped ped, Vector3 vec, float p4) { invoke<Void>(0xE8F1A5B4CED3725A, ped, vec.x, vec.y, vec.z, p4); } // 0xE8F1A5B4CED3725A b1207
 	// Params: p2 is always -1.f in R* Scripts
 	NATIVE_DECL void ADD_FLEE_TARGET_PED(Ped ped, Ped targetPed, float p2) { invoke<Void>(0x3923EC958249657D, ped, targetPed, p2); } // 0x3923EC958249657D b1207
 	NATIVE_DECL void _0xA42DC7919159CCCF(Any p0) { invoke<Void>(0xA42DC7919159CCCF, p0); } // 0xA42DC7919159CCCF b1207
 	NATIVE_DECL void TASK_FLY_AWAY(Ped ped, Ped fleeFromTarget) { invoke<Void>(0xE86A537B5A3C297C, ped, fleeFromTarget); } // 0xE86A537B5A3C297C b1207
 	NATIVE_DECL void TASK_FLY_TO_COORD(Ped ped, float travelMbr, float x, float y, float z, BOOL p5, BOOL p6) { invoke<Void>(0xD6CFC2D59DA72042, ped, travelMbr, x, y, z, p5, p6); } // 0xD6CFC2D59DA72042 b1207
+	NATIVE_DECL void TASK_FLY_TO_COORD(Ped ped, float travelMbr, Vector3 vec, BOOL p5, BOOL p6) { invoke<Void>(0xD6CFC2D59DA72042, ped, travelMbr, vec.x, vec.y, vec.z, p5, p6); } // 0xD6CFC2D59DA72042 b1207
 	NATIVE_DECL void TASK_FLYING_CIRCLE(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0x72997893BFB8ECCC, ped, p1, p2, p3, p4, p5, p6); } // 0x72997893BFB8ECCC b1207
 	NATIVE_DECL void TASK_WALK_AWAY(Ped ped, Entity entity) { invoke<Void>(0x04ACFAC71E6858F9, ped, entity); } // 0x04ACFAC71E6858F9 b1207
 	NATIVE_DECL void TASK_SHOCKING_EVENT_REACT(Ped ped, Any p1, Any p2) { invoke<Void>(0x452419CBD838065B, ped, p1, p2); } // 0x452419CBD838065B 0x9BD00ACF b1207
 	// Makes a ped react to an entity.
 	// Params: reactingTo Entity can be 0, p8 is always 4
 	NATIVE_DECL void TASK_REACT(Ped ped, Entity reactingTo, float x, float y, float z, const char* reactionName, float p6, float p7, int p8) { invoke<Void>(0xC4C32C31920E1B70, ped, reactingTo, x, y, z, reactionName, p6, p7, p8); } // 0xC4C32C31920E1B70 b1207
+	NATIVE_DECL void TASK_REACT(Ped ped, Entity reactingTo, Vector3 vec, const char* reactionName, float p6, float p7, int p8) { invoke<Void>(0xC4C32C31920E1B70, ped, reactingTo, vec.x, vec.y, vec.z, reactionName, p6, p7, p8); } // 0xC4C32C31920E1B70 b1207
 	NATIVE_DECL void TASK_WANDER_IN_AREA(Ped ped, float x, float y, float z, float radius, float p5, float p6, int p7) { invoke<Void>(0xE054346CA3A0F315, ped, x, y, z, radius, p5, p6, p7); } // 0xE054346CA3A0F315 0xC6981FB9 b1207
+	NATIVE_DECL void TASK_WANDER_IN_AREA(Ped ped, Vector3 vec, float radius, float p5, float p6, int p7) { invoke<Void>(0xE054346CA3A0F315, ped, vec.x, vec.y, vec.z, radius, p5, p6, p7); } // 0xE054346CA3A0F315 0xC6981FB9 b1207
 	NATIVE_DECL void TASK_WANDER_IN_VOLUME(Ped ped, Volume volume, float p2, float p3, int p4) { invoke<Void>(0x9FDA168777B28424, ped, volume, p2, p3, p4); } // 0x9FDA168777B28424 b1207
 	// Makes ped walk around the area.
 	// 
@@ -9142,6 +9411,7 @@ namespace TASK
 	NATIVE_DECL void TASK_WANDER_STANDARD(Ped ped, float p1, int p2) { invoke<Void>(0xBB9CE077274F6A1B, ped, p1, p2); } // 0xBB9CE077274F6A1B 0xAF59151A b1207
 	NATIVE_DECL void TASK_WANDER_SWIM(Ped ped, Any p1) { invoke<Void>(0x527EA3DB8BC7F03B, ped, p1); } // 0x527EA3DB8BC7F03B b1207
 	NATIVE_DECL void TASK_PLANT_BOMB(Ped ped, float x, float y, float z, float heading) { invoke<Void>(0x965FEC691D55E9BF, ped, x, y, z, heading); } // 0x965FEC691D55E9BF 0x33457535 b1207
+	NATIVE_DECL void TASK_PLANT_BOMB(Ped ped, Vector3 vec, float heading) { invoke<Void>(0x965FEC691D55E9BF, ped, vec.x, vec.y, vec.z, heading); } // 0x965FEC691D55E9BF 0x33457535 b1207
 	// https://github.com/femga/rdr3_discoveries/tree/master/tasks/TASK_HORSE_ACTION
 	// Params: p2, p3 are set to 0 in R* Scripts
 	NATIVE_DECL void TASK_HORSE_ACTION(Ped ped, int action, Ped targetPed, Any p3) { invoke<Void>(0xA09CFD29100F06C3, ped, action, targetPed, p3); } // 0xA09CFD29100F06C3 b1207
@@ -9161,7 +9431,9 @@ namespace TASK
 	NATIVE_DECL void TASK_FOLLOW_PAVEMENT_TO_COORD(Ped ped, Any* args) { invoke<Void>(0x1B1475414E70DD8E, ped, args); } // 0x1B1475414E70DD8E b1207
 	// If no timeout, set timeout to -1.
 	NATIVE_DECL void TASK_FOLLOW_NAV_MESH_TO_COORD(Ped ped, float x, float y, float z, float speedMultiplier, int timeout, float stoppingRange, int flags, float heading) { invoke<Void>(0x15D3A79D4E44B913, ped, x, y, z, speedMultiplier, timeout, stoppingRange, flags, heading); } // 0x15D3A79D4E44B913 0xFE4A10D9 b1207
+	NATIVE_DECL void TASK_FOLLOW_NAV_MESH_TO_COORD(Ped ped, Vector3 vec, float speedMultiplier, int timeout, float stoppingRange, int flags, float heading) { invoke<Void>(0x15D3A79D4E44B913, ped, vec.x, vec.y, vec.z, speedMultiplier, timeout, stoppingRange, flags, heading); } // 0x15D3A79D4E44B913 0xFE4A10D9 b1207
 	NATIVE_DECL void TASK_FOLLOW_NAV_MESH_TO_COORD_ADVANCED(Ped ped, float x, float y, float z, float speedMultiplier, int timeout, float stoppingRange, int flags, float p8, float p9, float p10, Entity entity, float unk) { invoke<Void>(0x17F58B88D085DBAC, ped, x, y, z, speedMultiplier, timeout, stoppingRange, flags, p8, p9, p10, entity, unk); } // 0x17F58B88D085DBAC 0x6BF6E296 b1207
+	NATIVE_DECL void TASK_FOLLOW_NAV_MESH_TO_COORD_ADVANCED(Ped ped, Vector3 vec, float speedMultiplier, int timeout, float stoppingRange, int flags, float p8, float p9, float p10, Entity entity, float unk) { invoke<Void>(0x17F58B88D085DBAC, ped, vec.x, vec.y, vec.z, speedMultiplier, timeout, stoppingRange, flags, p8, p9, p10, entity, unk); } // 0x17F58B88D085DBAC 0x6BF6E296 b1207
 	NATIVE_DECL void SET_PED_PATH_CAN_USE_CLIMBOVERS(Ped ped, BOOL toggle) { invoke<Void>(0x8E06A6FE76C9EFF4, ped, toggle); } // 0x8E06A6FE76C9EFF4 0xB7B7D442 b1207
 	NATIVE_DECL void SET_PED_PATH_CAN_USE_LADDERS(Ped ped, BOOL toggle) { invoke<Void>(0x77A5B103C87F476E, ped, toggle); } // 0x77A5B103C87F476E 0x53A879EE b1207
 	NATIVE_DECL void SET_PED_PATH_CAN_DROP_FROM_HEIGHT(Ped ped, BOOL toggle) { invoke<Void>(0xE361C5C71C431A4F, ped, toggle); } // 0xE361C5C71C431A4F 0x394B7AC9 b1207
@@ -9193,7 +9465,9 @@ namespace TASK
 	NATIVE_DECL void _0x06ECF3925BC2ABAE(Any p0, Any p1) { invoke<Void>(0x06ECF3925BC2ABAE, p0, p1); } // 0x06ECF3925BC2ABAE b1311
 	NATIVE_DECL void _0xFA30E2254461ADEB(Any p0, Any p1) { invoke<Void>(0xFA30E2254461ADEB, p0, p1); } // 0xFA30E2254461ADEB b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_ANY_MEANS(Ped ped, float x, float y, float z, float speed, Entity entity, BOOL p6, int walkingStyle, float p8) { invoke<Void>(0x5BC448CB78FA3E88, ped, x, y, z, speed, entity, p6, walkingStyle, p8); } // 0x5BC448CB78FA3E88 0xF91DF93B b1207
+	NATIVE_DECL void TASK_GO_TO_COORD_ANY_MEANS(Ped ped, Vector3 vec, float speed, Entity entity, BOOL p6, int walkingStyle, float p8) { invoke<Void>(0x5BC448CB78FA3E88, ped, vec.x, vec.y, vec.z, speed, entity, p6, walkingStyle, p8); } // 0x5BC448CB78FA3E88 0xF91DF93B b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS(Ped ped, float x, float y, float z, float speed, Any p5, BOOL p6, int walkingStyle, float p8, Any p9, Any p10, Any p11, Any p12) { invoke<Void>(0x1DD45F9ECFDB1BC9, ped, x, y, z, speed, p5, p6, walkingStyle, p8, p9, p10, p11, p12); } // 0x1DD45F9ECFDB1BC9 0x094B75EF b1207
+	NATIVE_DECL void TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS(Ped ped, Vector3 vec, float speed, Any p5, BOOL p6, int walkingStyle, float p8, Any p9, Any p10, Any p11, Any p12) { invoke<Void>(0x1DD45F9ECFDB1BC9, ped, vec.x, vec.y, vec.z, speed, p5, p6, walkingStyle, p8, p9, p10, p11, p12); } // 0x1DD45F9ECFDB1BC9 0x094B75EF b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_ANY_MEANS_EXTRA_PARAMS_WITH_CRUISE_SPEED(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14) { invoke<Void>(0xB8ECD61F531A7B02, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0xB8ECD61F531A7B02 0x86DC03F9 b1207
 	// https://github.com/femga/rdr3_discoveries/tree/master/animations
 	// flags: https://github.com/Halen84/RDR3-Native-Flags-And-Enums/tree/main/eScriptedAnimFlags
@@ -9202,6 +9476,7 @@ namespace TASK
 	// flags: see TASK_PLAY_ANIM
 	// ikFlags: see TASK_PLAY_ANIM
 	NATIVE_DECL void TASK_PLAY_ANIM_ADVANCED(Ped ped, const char* animDict, const char* animName, float posX, float posY, float posZ, float rotX, float rotY, float rotZ, float speed, float speedMultiplier, int duration, int flags, float p13, int p14, int p15, int p16) { invoke<Void>(0x83CDB10EA29B370B, ped, animDict, animName, posX, posY, posZ, rotX, rotY, rotZ, speed, speedMultiplier, duration, flags, p13, p14, p15, p16); } // 0x83CDB10EA29B370B 0x3DDEB0E6 b1207
+	NATIVE_DECL void TASK_PLAY_ANIM_ADVANCED(Ped ped, const char* animDict, const char* animName, Vector3 pos, Vector3 rot, float speed, float speedMultiplier, int duration, int flags, float p13, int p14, int p15, int p16) { invoke<Void>(0x83CDB10EA29B370B, ped, animDict, animName, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, speed, speedMultiplier, duration, flags, p13, p14, p15, p16); } // 0x83CDB10EA29B370B 0x3DDEB0E6 b1207
 	NATIVE_DECL void TASK_PLAY_UPPER_ANIM_FACING_ENTITY(Ped ped, const char* animDict, const char* animName, Entity entity, int p4, float p5, float p6, int p7, float p8, BOOL p9, BOOL p10, float p11, const char* p12, int p13, float p14) { invoke<Void>(0xAD67214236AB1CFE, ped, animDict, animName, entity, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0xAD67214236AB1CFE b1207
 	NATIVE_DECL void STOP_ANIM_TASK(Ped ped, const char* animDictionary, const char* animationName, float p3) { invoke<Void>(0x97FF36A1D40EA00A, ped, animDictionary, animationName, p3); } // 0x97FF36A1D40EA00A 0x2B520A57 b1207
 	NATIVE_DECL void TASK_SCRIPTED_ANIMATION(Ped ped, Any* args) { invoke<Void>(0x126EF75F1E17ABE5, ped, args); } // 0x126EF75F1E17ABE5 0xFC2DCF47 b1207
@@ -9232,6 +9507,7 @@ namespace TASK
 	// Params: p2 is returned by BUILTIN::SHIFT_LEFT
 	NATIVE_DECL void TASK_EVASIVE_ANIM(Ped ped1, Ped ped2, int p2) { invoke<Void>(0x5F22926E1BCE9B08, ped1, ped2, p2); } // 0x5F22926E1BCE9B08 b1207
 	NATIVE_DECL void TASK_LOOK_AT_COORD(Ped ped, float x, float y, float z, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x6FA46612594F7973, ped, x, y, z, p4, p5, p6, p7); } // 0x6FA46612594F7973 0x7B784DD8 b1207
+	NATIVE_DECL void TASK_LOOK_AT_COORD(Ped ped, Vector3 vec, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x6FA46612594F7973, ped, vec.x, vec.y, vec.z, p4, p5, p6, p7); } // 0x6FA46612594F7973 0x7B784DD8 b1207
 	// param3: duration in ms, use -1 to look forever
 	// param4: using 2048 is fine
 	// param5: using 3 is fine
@@ -9240,6 +9516,7 @@ namespace TASK
 	// Only used in R* SP Scripts
 	// Params: p4 = 1.0f - 30.0f
 	NATIVE_DECL BOOL _0x508F5053E3F6F0C4(Ped ped, float x, float y, float z, float p4) { return invoke<BOOL>(0x508F5053E3F6F0C4, ped, x, y, z, p4); } // 0x508F5053E3F6F0C4 b1207
+	NATIVE_DECL BOOL _0x508F5053E3F6F0C4(Ped ped, Vector3 vec, float p4) { return invoke<BOOL>(0x508F5053E3F6F0C4, ped, vec.x, vec.y, vec.z, p4); } // 0x508F5053E3F6F0C4 b1207
 	NATIVE_DECL void _0x23767D80C7EED7C6(Any p0, Any p1) { invoke<Void>(0x23767D80C7EED7C6, p0, p1); } // 0x23767D80C7EED7C6 b1311
 	NATIVE_DECL void OPEN_SEQUENCE_TASK(int* taskSequenceId) { invoke<Void>(0xE8854A4326B9E12B, taskSequenceId); } // 0xE8854A4326B9E12B 0xABA6923E b1207
 	NATIVE_DECL void CLOSE_SEQUENCE_TASK(int taskSequenceId) { invoke<Void>(0x39E72BC99E6360CB, taskSequenceId); } // 0x39E72BC99E6360CB 0x1A7CEBD0 b1207
@@ -9285,9 +9562,11 @@ namespace TASK
 	// duration: the amount of time in milliseconds to do the task. -1 will keep the task going until either another task is applied, or CLEAR_ALL_TASKS() is called with the ped
 	NATIVE_DECL void TASK_TURN_PED_TO_FACE_ENTITY(Ped ped, Entity targetEntity, int duration, float p3, float p4, float p5) { invoke<Void>(0x5AD23D40115353AC, ped, targetEntity, duration, p3, p4, p5); } // 0x5AD23D40115353AC 0x3C37C767 b1207
 	NATIVE_DECL void TASK_AIM_GUN_AT_COORD(Ped ped, float x, float y, float z, int time, BOOL p5, BOOL p6) { invoke<Void>(0x6671F3EEC681BDA1, ped, x, y, z, time, p5, p6); } // 0x6671F3EEC681BDA1 0xFBF44AD3 b1207
+	NATIVE_DECL void TASK_AIM_GUN_AT_COORD(Ped ped, Vector3 vec, int time, BOOL p5, BOOL p6) { invoke<Void>(0x6671F3EEC681BDA1, ped, vec.x, vec.y, vec.z, time, p5, p6); } // 0x6671F3EEC681BDA1 0xFBF44AD3 b1207
 	NATIVE_DECL void TASK_AIM_AT_COORD(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0x4AF1D73861212F52, ped, p1, p2, p3, p4, p5, p6); } // 0x4AF1D73861212F52 b1207
 	NATIVE_DECL void TASK_AIM_AT_ENTITY(Ped ped, Any p1, Any p2, Any p3, Any p4) { invoke<Void>(0xCF7569BD0FB480A0, ped, p1, p2, p3, p4); } // 0xCF7569BD0FB480A0 b1207
 	NATIVE_DECL void TASK_SHOOT_AT_COORD(Ped ped, float x, float y, float z, int duration, Hash firingPattern, Any p6) { invoke<Void>(0x46A6CC01E0826106, ped, x, y, z, duration, firingPattern, p6); } // 0x46A6CC01E0826106 0x601C22E3 b1207
+	NATIVE_DECL void TASK_SHOOT_AT_COORD(Ped ped, Vector3 vec, int duration, Hash firingPattern, Any p6) { invoke<Void>(0x46A6CC01E0826106, ped, vec.x, vec.y, vec.z, duration, firingPattern, p6); } // 0x46A6CC01E0826106 0x601C22E3 b1207
 	// Makes the specified ped shuffle to the next vehicle seat.
 	// The ped MUST be in a vehicle and the vehicle parameter MUST be the ped's current vehicle.
 	NATIVE_DECL void TASK_SHUFFLE_TO_NEXT_VEHICLE_SEAT(Ped ped, Vehicle vehicle) { invoke<Void>(0x7AA80209BDA643EB, ped, vehicle); } // 0x7AA80209BDA643EB 0xBEAF8F67 b1207
@@ -9301,6 +9580,7 @@ namespace TASK
 	NATIVE_DECL void TASK_EVERYONE_LEAVE_VEHICLE_IN_ORDER(Vehicle vehicle, BOOL p1) { invoke<Void>(0x6F1C49F275BD25B3, vehicle, p1); } // 0x6F1C49F275BD25B3 b1207
 	NATIVE_DECL void TASK_INVESTIGATE(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5) { invoke<Void>(0x5C8514540D27FBFB, ped, p1, p2, p3, p4, p5); } // 0x5C8514540D27FBFB b1207
 	NATIVE_DECL void TASK_GOTO_ENTITY_OFFSET(Ped ped, Entity entity, Any p2, float x, float y, float z, int duration) { invoke<Void>(0xE39B4FF4FDEBDE27, ped, entity, p2, x, y, z, duration); } // 0xE39B4FF4FDEBDE27 0x1A17A85E b1207
+	NATIVE_DECL void TASK_GOTO_ENTITY_OFFSET(Ped ped, Entity entity, Any p2, Vector3 vec, int duration) { invoke<Void>(0xE39B4FF4FDEBDE27, ped, entity, p2, vec.x, vec.y, vec.z, duration); } // 0xE39B4FF4FDEBDE27 0x1A17A85E b1207
 	NATIVE_DECL void TASK_GOTO_ENTITY_OFFSET_XY(Ped ped, Entity entity, int duration, float p3, float p4, float p5, float p6, BOOL p7) { invoke<Void>(0x338E7EF52B6095A9, ped, entity, duration, p3, p4, p5, p6, p7); } // 0x338E7EF52B6095A9 0xBC1E3D0A b1207
 	NATIVE_DECL void TASK_GOTO_ENTITY_OFFSET_XYZ(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8) { invoke<Void>(0xFA6DA9D151769392, ped, p1, p2, p3, p4, p5, p6, p7, p8); } // 0xFA6DA9D151769392 b1311
 	NATIVE_DECL void TASK_GOTO_ENTITY_OFFSET_XY_AIMING(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8) { invoke<Void>(0x901BD69984400F62, ped, p1, p2, p3, p4, p5, p6, p7, p8); } // 0x901BD69984400F62 b1207
@@ -9308,6 +9588,7 @@ namespace TASK
 	NATIVE_DECL void TASK_FOLLOW_ENTITY_WHILE_AIMING_AT_ENTITY(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x2D532EAA142CF83F, ped, p1, p2, p3, p4, p5, p6, p7); } // 0x2D532EAA142CF83F b1207
 	// duration in milliseconds
 	NATIVE_DECL void TASK_TURN_PED_TO_FACE_COORD(Ped ped, float x, float y, float z, int duration) { invoke<Void>(0x1DDA930A0AC38571, ped, x, y, z, duration); } // 0x1DDA930A0AC38571 0x30463D73 b1207
+	NATIVE_DECL void TASK_TURN_PED_TO_FACE_COORD(Ped ped, Vector3 vec, int duration) { invoke<Void>(0x1DDA930A0AC38571, ped, vec.x, vec.y, vec.z, duration); } // 0x1DDA930A0AC38571 0x30463D73 b1207
 	// Documentation from GTA V, might be the same in RDR:
 	// 
 	// '1 - brake
@@ -9349,8 +9630,10 @@ namespace TASK
 	// p9 - 8.f
 	// p10 = false
 	NATIVE_DECL void TASK_VEHICLE_DRIVE_TO_DESTINATION(Ped driver, Vehicle vehicle, float x, float y, float z, float speed, int drivingFlags, int p7, float stoppingRange1, float stoppingRange2, BOOL p10) { invoke<Void>(0x7F241A0D14354583, driver, vehicle, x, y, z, speed, drivingFlags, p7, stoppingRange1, stoppingRange2, p10); } // 0x7F241A0D14354583 b1207
+	NATIVE_DECL void TASK_VEHICLE_DRIVE_TO_DESTINATION(Ped driver, Vehicle vehicle, Vector3 vec, float speed, int drivingFlags, int p7, float stoppingRange1, float stoppingRange2, BOOL p10) { invoke<Void>(0x7F241A0D14354583, driver, vehicle, vec.x, vec.y, vec.z, speed, drivingFlags, p7, stoppingRange1, stoppingRange2, p10); } // 0x7F241A0D14354583 b1207
 	// Tasks vehicle towards owner
 	NATIVE_DECL void _TASK_VEHICLE_DRIVE_TO_DESTINATION_2(Vehicle vehicle, float x, float y, float z, float speed, int p5, int p6, float p7, float p8) { invoke<Void>(0x391073B9D3CCE2BA, vehicle, x, y, z, speed, p5, p6, p7, p8); } // 0x391073B9D3CCE2BA b1207
+	NATIVE_DECL void _TASK_VEHICLE_DRIVE_TO_DESTINATION_2(Vehicle vehicle, Vector3 vec, float speed, int p5, int p6, float p7, float p8) { invoke<Void>(0x391073B9D3CCE2BA, vehicle, vec.x, vec.y, vec.z, speed, p5, p6, p7, p8); } // 0x391073B9D3CCE2BA b1207
 	// Vehicle Auto Drive (?)
 	// p1/p2/p3: usually 1f, 1f, 0f or 0f, 0f, 0f
 	// Speed: usually 8f
@@ -9359,18 +9642,24 @@ namespace TASK
 	// Old name: _TASK_VEHICLE_DRIVE_TO_POINT
 	// flag: 524419 and 0 in shop_horse_shop R* Script
 	NATIVE_DECL void TASK_VEHICLE_DRIVE_STRAIGHT_TO_POINT(Ped driver, Vehicle vehicle, float x, float y, float z, float p5, float p6, int flag) { invoke<Void>(0x089FF2FB965F0A29, driver, vehicle, x, y, z, p5, p6, flag); } // 0x089FF2FB965F0A29 b1207
+	NATIVE_DECL void TASK_VEHICLE_DRIVE_STRAIGHT_TO_POINT(Ped driver, Vehicle vehicle, Vector3 vec, float p5, float p6, int flag) { invoke<Void>(0x089FF2FB965F0A29, driver, vehicle, vec.x, vec.y, vec.z, p5, p6, flag); } // 0x089FF2FB965F0A29 b1207
 	// Params: p4 = 3.f or 8.f, p5 = 0.25f, p6 = 0 in R* Scripts
 	NATIVE_DECL void _TASK_VEHICLE_DRIVE_TO_POINT_2(Vehicle vehicle, float x, float y, float z, float p4, float p5, Any p6) { invoke<Void>(0x6524A8981E8BE7C9, vehicle, x, y, z, p4, p5, p6); } // 0x6524A8981E8BE7C9 b1207
+	NATIVE_DECL void _TASK_VEHICLE_DRIVE_TO_POINT_2(Vehicle vehicle, Vector3 vec, float p4, float p5, Any p6) { invoke<Void>(0x6524A8981E8BE7C9, vehicle, vec.x, vec.y, vec.z, p4, p5, p6); } // 0x6524A8981E8BE7C9 b1207
 	NATIVE_DECL void _0x1D125814EBC517EB(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0x1D125814EBC517EB, p0, p1, p2, p3); } // 0x1D125814EBC517EB b1207
 	NATIVE_DECL BOOL _0x583AE9AF9CEE0958(Vehicle vehicle, float x, float y, float z) { return invoke<BOOL>(0x583AE9AF9CEE0958, vehicle, x, y, z); } // 0x583AE9AF9CEE0958 b1207
+	NATIVE_DECL BOOL _0x583AE9AF9CEE0958(Vehicle vehicle, Vector3 vec) { return invoke<BOOL>(0x583AE9AF9CEE0958, vehicle, vec.x, vec.y, vec.z); } // 0x583AE9AF9CEE0958 b1207
 	// See TASK_VEHICLE_MISSION
 	NATIVE_DECL void TASK_VEHICLE_MISSION_PED_TARGET(Ped ped, Vehicle vehicle, Ped pedTarget, int mode, float maxSpeed, int drivingStyle, float minDistance, float p7, BOOL DriveAgainstTraffic) { invoke<Void>(0x9454528DF15D657A, ped, vehicle, pedTarget, mode, maxSpeed, drivingStyle, minDistance, p7, DriveAgainstTraffic); } // 0x9454528DF15D657A 0xC81C4677 b1207
 	NATIVE_DECL void _0xA263ADBBC8056214(Any p0, Any p1) { invoke<Void>(0xA263ADBBC8056214, p0, p1); } // 0xA263ADBBC8056214 b1207
 	NATIVE_DECL void TASK_VEHICLE_ESCORT(Ped ped, Vehicle vehicle, Vehicle targetVehicle, int mode, float speed, int drivingStyle, float minDistance, int p7, float noRoadsDistance) { invoke<Void>(0x0FA6E4B75F302400, ped, vehicle, targetVehicle, mode, speed, drivingStyle, minDistance, p7, noRoadsDistance); } // 0x0FA6E4B75F302400 0x9FDCB250 b1207
 	NATIVE_DECL void TASK_BOAT_MISSION(Ped pedDriver, Vehicle boat, Any p2, Any p3, float x, float y, float z, Any p7, float maxSpeed, int drivingStyle, float p10, Any p11) { invoke<Void>(0x15C86013127CE63F, pedDriver, boat, p2, p3, x, y, z, p7, maxSpeed, drivingStyle, p10, p11); } // 0x15C86013127CE63F 0x5865B031 b1207
+	NATIVE_DECL void TASK_BOAT_MISSION(Ped pedDriver, Vehicle boat, Any p2, Any p3, Vector3 vec, Any p7, float maxSpeed, int drivingStyle, float p10, Any p11) { invoke<Void>(0x15C86013127CE63F, pedDriver, boat, p2, p3, vec.x, vec.y, vec.z, p7, maxSpeed, drivingStyle, p10, p11); } // 0x15C86013127CE63F 0x5865B031 b1207
 	NATIVE_DECL void TASK_WEAPON(Ped ped) { invoke<Void>(0x7157B82D60E4BC46, ped); } // 0x7157B82D60E4BC46 b1207
 	NATIVE_DECL void TASK_DRIVE_BY(Ped driverPed, Ped targetPed, Vehicle targetVehicle, float targetX, float targetY, float targetZ, float distanceToShoot, int pedAccuracy, BOOL p8, Hash firingPattern) { invoke<Void>(0x2F8AF0E82773A171, driverPed, targetPed, targetVehicle, targetX, targetY, targetZ, distanceToShoot, pedAccuracy, p8, firingPattern); } // 0x2F8AF0E82773A171 0x2B84D1C4 b1207
+	NATIVE_DECL void TASK_DRIVE_BY(Ped driverPed, Ped targetPed, Vehicle targetVehicle, Vector3 target, float distanceToShoot, int pedAccuracy, BOOL p8, Hash firingPattern) { invoke<Void>(0x2F8AF0E82773A171, driverPed, targetPed, targetVehicle, target.x, target.y, target.z, distanceToShoot, pedAccuracy, p8, firingPattern); } // 0x2F8AF0E82773A171 0x2B84D1C4 b1207
 	NATIVE_DECL void SET_DRIVEBY_TASK_TARGET(Ped shootingPed, Ped targetPed, Vehicle targetVehicle, float x, float y, float z) { invoke<Void>(0xE5B302114D8162EE, shootingPed, targetPed, targetVehicle, x, y, z); } // 0xE5B302114D8162EE 0xDA6A6FC1 b1207
+	NATIVE_DECL void SET_DRIVEBY_TASK_TARGET(Ped shootingPed, Ped targetPed, Vehicle targetVehicle, Vector3 vec) { invoke<Void>(0xE5B302114D8162EE, shootingPed, targetPed, targetVehicle, vec.x, vec.y, vec.z); } // 0xE5B302114D8162EE 0xDA6A6FC1 b1207
 	NATIVE_DECL void CLEAR_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK(Ped ped) { invoke<Void>(0xC35B5CDB2824CF69, ped); } // 0xC35B5CDB2824CF69 0x9B76F7E6 b1207
 	NATIVE_DECL BOOL IS_DRIVEBY_TASK_UNDERNEATH_DRIVING_TASK(Ped ped) { return invoke<BOOL>(0x8785E6E40C7A8818, ped); } // 0x8785E6E40C7A8818 0xB23F46E6 b1207
 	NATIVE_DECL BOOL GET_IS_PED_AIMING_IN_THE_AIR(Ped ped) { return invoke<BOOL>(0x8785E6E40C7A8819, ped); } // 0x8785E6E40C7A8819 b1207
@@ -9401,6 +9690,7 @@ namespace TASK
 	NATIVE_DECL void TASK_SET_SPHERE_DEFENSIVE_AREA(Ped ped, float p1, float p2, float p3, float p4) { invoke<Void>(0x933C06518B52A9A4, ped, p1, p2, p3, p4); } // 0x933C06518B52A9A4 0x9F3C5D6A b1207
 	NATIVE_DECL void TASK_CLEAR_DEFENSIVE_AREA(Ped ped) { invoke<Void>(0x95A6C46A31D1917D, ped); } // 0x95A6C46A31D1917D 0x7A05BF0D b1207
 	NATIVE_DECL void TASK_PED_SLIDE_TO_COORD(Ped ped, float x, float y, float z, float heading, float p5) { invoke<Void>(0xD04FE6765D990A06, ped, x, y, z, heading, p5); } // 0xD04FE6765D990A06 0x225380EF b1207
+	NATIVE_DECL void TASK_PED_SLIDE_TO_COORD(Ped ped, Vector3 vec, float heading, float p5) { invoke<Void>(0xD04FE6765D990A06, ped, vec.x, vec.y, vec.z, heading, p5); } // 0xD04FE6765D990A06 0x225380EF b1207
 	NATIVE_DECL Any _0x9420FB11B8D77948(Any p0) { return invoke<Any>(0x9420FB11B8D77948, p0); } // 0x9420FB11B8D77948 b1207
 	NATIVE_DECL Any _0x6BA606AB3A83BC4D(Any p0) { return invoke<Any>(0x6BA606AB3A83BC4D, p0); } // 0x6BA606AB3A83BC4D b1207
 	NATIVE_DECL ScrHandle ADD_COVER_POINT(float p0, float p1, float p2, float p3, Any p4, Any p5, Any p6, BOOL p7) { return invoke<ScrHandle>(0xD5C12A75C7B9497F, p0, p1, p2, p3, p4, p5, p6, p7); } // 0xD5C12A75C7B9497F 0xA0AF0B98 b1207
@@ -9416,11 +9706,14 @@ namespace TASK
 	NATIVE_DECL void TASK_COMBAT_PED_TIMED(Ped ped, Ped targetPed, int p2, Any p3) { invoke<Void>(0x944F30DCB7096BDE, ped, targetPed, p2, p3); } // 0x944F30DCB7096BDE 0xF5CA2A45 b1207
 	NATIVE_DECL void _TASK_COMBAT_PED_3(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { invoke<Void>(0xC624414FA748B9BA, p0, p1, p2, p3, p4, p5); } // 0xC624414FA748B9BA b1207
 	NATIVE_DECL void TASK_SEEK_COVER_FROM_POS(Ped ped, float x, float y, float z, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x75AC2B60386D89F2, ped, x, y, z, p4, p5, p6, p7); } // 0x75AC2B60386D89F2 0x83F18EE9 b1207
+	NATIVE_DECL void TASK_SEEK_COVER_FROM_POS(Ped ped, Vector3 vec, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x75AC2B60386D89F2, ped, vec.x, vec.y, vec.z, p4, p5, p6, p7); } // 0x75AC2B60386D89F2 0x83F18EE9 b1207
 	NATIVE_DECL void TASK_SEEK_COVER_FROM_PED(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5) { invoke<Void>(0x84D32B3BEC531324, ped, p1, p2, p3, p4, p5); } // 0x84D32B3BEC531324 0xC1EC907E b1207
 	NATIVE_DECL void TASK_SEEK_COVER_TO_COVER_POINT(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8) { invoke<Void>(0xD43D95C7A869447F, ped, p1, p2, p3, p4, p5, p6, p7, p8); } // 0xD43D95C7A869447F 0x3D026B29 b1207
 	NATIVE_DECL void TASK_SEEK_COVER_TO_COORDS(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10) { invoke<Void>(0x39246A6958EF072C, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10); } // 0x39246A6958EF072C 0xFFFE754E b1207
 	NATIVE_DECL void TASK_PUT_PED_DIRECTLY_INTO_COVER(Ped ped, float x, float y, float z, int timeout, BOOL p5, float p6, Any p7, Any p8, ScrHandle coverpoint, BOOL p10, BOOL p11, Any p12) { invoke<Void>(0x4172393E6BE1FECE, ped, x, y, z, timeout, p5, p6, p7, p8, coverpoint, p10, p11, p12); } // 0x4172393E6BE1FECE 0xC9F00E68 b1207
+	NATIVE_DECL void TASK_PUT_PED_DIRECTLY_INTO_COVER(Ped ped, Vector3 vec, int timeout, BOOL p5, float p6, Any p7, Any p8, ScrHandle coverpoint, BOOL p10, BOOL p11, Any p12) { invoke<Void>(0x4172393E6BE1FECE, ped, vec.x, vec.y, vec.z, timeout, p5, p6, p7, p8, coverpoint, p10, p11, p12); } // 0x4172393E6BE1FECE 0xC9F00E68 b1207
 	NATIVE_DECL void _TASK_PUT_PED_DIRECTLY_INTO_COVER_FROM_COORDS(Ped ped, float x, float y, float z, float fromX, float fromY, float fromZ, int timeout, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14, Any p15, Any p16, Any p17) { invoke<Void>(0xDF8A5855B9F9A97B, ped, x, y, z, fromX, fromY, fromZ, timeout, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17); } // 0xDF8A5855B9F9A97B b1207
+	NATIVE_DECL void _TASK_PUT_PED_DIRECTLY_INTO_COVER_FROM_COORDS(Ped ped, Vector3 vec, Vector3 from, int timeout, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14, Any p15, Any p16, Any p17) { invoke<Void>(0xDF8A5855B9F9A97B, ped, vec.x, vec.y, vec.z, from.x, from.y, from.z, timeout, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17); } // 0xDF8A5855B9F9A97B b1207
 	// meleeStyles: AR_GRAPPLE_BACK_FROM_BACK, AR_GRAPPLE_MOUNT_FACEDOWN_FROM_FRONT, AR_ALLIGATOR_LEAPKILL, AR_ALLIGATOR_WAIST_AUTOKILL_FRONT
 	NATIVE_DECL void TASK_PUT_PED_DIRECTLY_INTO_MELEE(Ped ped, Ped meleeTarget, Hash meleeStyle, float p3, float animBlendRatio, BOOL p5, int p6) { invoke<Void>(0x1C6CD14A876FFE39, ped, meleeTarget, meleeStyle, p3, animBlendRatio, p5, p6); } // 0x1C6CD14A876FFE39 0x79E1D27D b1207
 	// grappleStyle: AR_GRAPPLE_STRUGGLE, AR_ALLIGATOR_LEG_GRAB_CHALLENGE_FAIL, AR_GRAPPLE_BACK_FROM_BACK, AR_GRAPPLE_BACK_DEFEND, AR_GRAPPLE_FRONT_FROM_FRONT
@@ -9434,10 +9727,12 @@ namespace TASK
 	NATIVE_DECL void _TASK_GUARD_ASSIGNED_DEFENSIVE_AREA_2(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x1FC9B33976BACD6C, ped, p1, p2, p3, p4, p5, p6, p7); } // 0x1FC9B33976BACD6C b1207
 	NATIVE_DECL void TASK_GUARD_ASSIGNED_DEFENSIVE_AREA(Ped ped, float p1, float p2, float p3, float p4, float p5, Any p6) { invoke<Void>(0xD2A207EEBDF9889B, ped, p1, p2, p3, p4, p5, p6); } // 0xD2A207EEBDF9889B 0x7AF0133D b1207
 	NATIVE_DECL void TASK_STAND_GUARD(Ped ped, float x, float y, float z, float heading, const char* scenarioName) { invoke<Void>(0xAE032F8BBA959E90, ped, x, y, z, heading, scenarioName); } // 0xAE032F8BBA959E90 0xD130F636 b1207
+	NATIVE_DECL void TASK_STAND_GUARD(Ped ped, Vector3 vec, float heading, const char* scenarioName) { invoke<Void>(0xAE032F8BBA959E90, ped, vec.x, vec.y, vec.z, heading, scenarioName); } // 0xAE032F8BBA959E90 0xD130F636 b1207
 	NATIVE_DECL void SET_DRIVE_TASK_CRUISE_SPEED(Ped driver, float cruiseSpeed) { invoke<Void>(0x5C9B84BD7D31D908, driver, cruiseSpeed); } // 0x5C9B84BD7D31D908 0x3CEC07B1 b1207
 	// Not implemented.
 	NATIVE_DECL void SET_DRIVE_TASK_MAX_CRUISE_SPEED(Ped ped, float maxCruiseSpeed) { invoke<Void>(0x404A5AA9B9F0B746, ped, maxCruiseSpeed); } // 0x404A5AA9B9F0B746 0x7FDF6131 b1207
 	NATIVE_DECL void ADD_COVER_BLOCKING_AREA(float playerX, float playerY, float playerZ, float radiusX, float radiusY, float radiusZ, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { invoke<Void>(0x45C597097DD7CB81, playerX, playerY, playerZ, radiusX, radiusY, radiusZ, p6, p7, p8, p9); } // 0x45C597097DD7CB81 0x3536946F b1207
+	NATIVE_DECL void ADD_COVER_BLOCKING_AREA(Vector3 player, Vector3 radius, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { invoke<Void>(0x45C597097DD7CB81, player.x, player.y, player.z, radius.x, radius.y, radius.z, p6, p7, p8, p9); } // 0x45C597097DD7CB81 0x3536946F b1207
 	NATIVE_DECL void _ADD_COVER_BLOCKING_VOLUME(Volume volume, BOOL p1, BOOL p2, BOOL p3, BOOL p4) { invoke<Void>(0xEB2ED1DC3AEC0654, volume, p1, p2, p3, p4); } // 0xEB2ED1DC3AEC0654 b1207
 	NATIVE_DECL void REMOVE_ALL_COVER_BLOCKING_AREAS() { invoke<Void>(0xDB6708C0B46F56D8); } // 0xDB6708C0B46F56D8 0xCF9221A7 b1207
 	NATIVE_DECL void _0x2A10538D0A005E81(Any p0, Any p1) { invoke<Void>(0x2A10538D0A005E81, p0, p1); } // 0x2A10538D0A005E81 b1207
@@ -9446,8 +9741,10 @@ namespace TASK
 	NATIVE_DECL BOOL _0xBEDBE39B5FD98FD6(Ped ped) { return invoke<BOOL>(0xBEDBE39B5FD98FD6, ped); } // 0xBEDBE39B5FD98FD6 b1207
 	// Returns scenario
 	NATIVE_DECL int CREATE_SCENARIO_POINT_HASH(Hash scenarioHash, float x, float y, float z, float heading, Any p5, Any p6, BOOL p7) { return invoke<int>(0x94B745CE41DB58A1, scenarioHash, x, y, z, heading, p5, p6, p7); } // 0x94B745CE41DB58A1 b1207
+	NATIVE_DECL int CREATE_SCENARIO_POINT_HASH(Hash scenarioHash, Vector3 vec, float heading, Any p5, Any p6, BOOL p7) { return invoke<int>(0x94B745CE41DB58A1, scenarioHash, vec.x, vec.y, vec.z, heading, p5, p6, p7); } // 0x94B745CE41DB58A1 b1207
 	// Returns scenario
 	NATIVE_DECL int CREATE_SCENARIO_POINT_HASH_ATTACHED_TO_ENTITY(Entity entity, Hash scenarioHash, float x, float y, float z, float heading, Any p6, Any p7, BOOL p8) { return invoke<int>(0x794AB1379A74064D, entity, scenarioHash, x, y, z, heading, p6, p7, p8); } // 0x794AB1379A74064D b1207
+	NATIVE_DECL int CREATE_SCENARIO_POINT_HASH_ATTACHED_TO_ENTITY(Entity entity, Hash scenarioHash, Vector3 vec, float heading, Any p6, Any p7, BOOL p8) { return invoke<int>(0x794AB1379A74064D, entity, scenarioHash, vec.x, vec.y, vec.z, heading, p6, p7, p8); } // 0x794AB1379A74064D b1207
 	NATIVE_DECL BOOL _DOES_SCENARIO_POINT_HAVE_PROPS(int scenario) { return invoke<BOOL>(0xEA31F199A73801D3, scenario); } // 0xEA31F199A73801D3 b1207
 	// Old name: _GET_SCENARIO_POINT_ENTITY
 	NATIVE_DECL Entity GET_PROP_FOR_SCENARIO_POINT(int scenarioPoint, const char* name) { return invoke<Entity>(0x295514F198EFD0CA, scenarioPoint, name); } // 0x295514F198EFD0CA b1207
@@ -9473,6 +9770,7 @@ namespace TASK
 	NATIVE_DECL float _GET_SCENARIO_POINT_HEADING(int scenario, BOOL p1) { return invoke<float>(0xB93EA7184BAA85C3, scenario, p1); } // 0xB93EA7184BAA85C3 b1207
 	NATIVE_DECL float _GET_SCENARIO_POINT_RADIUS(int scenario) { return invoke<float>(0x6718F40313A2B5A6, scenario); } // 0x6718F40313A2B5A6 b1207
 	NATIVE_DECL void _SET_SCENARIO_POINT_COORDS(int scenario, float xPos, float yPos, float zPos, BOOL p4) { invoke<Void>(0x2056AB38DF06825C, scenario, xPos, yPos, zPos, p4); } // 0x2056AB38DF06825C b1207
+	NATIVE_DECL void _SET_SCENARIO_POINT_COORDS(int scenario, Vector3 pos, BOOL p4) { invoke<Void>(0x2056AB38DF06825C, scenario, pos.x, pos.y, pos.z, p4); } // 0x2056AB38DF06825C b1207
 	NATIVE_DECL void _SET_SCENARIO_POINT_HEADING(int scenario, float heading, BOOL p2) { invoke<Void>(0xD3A0DA8F91612C6E, scenario, heading, p2); } // 0xD3A0DA8F91612C6E b1207
 	NATIVE_DECL void _SET_SCENARIO_POINT_RADIUS(int scenario, float radius) { invoke<Void>(0xC47D9080A9A8856A, scenario, radius); } // 0xC47D9080A9A8856A b1207
 	// _SET_SCENARIO_*
@@ -9480,6 +9778,7 @@ namespace TASK
 	NATIVE_DECL void _0xE69FDA40AAC3EFC0(Any p0, Any p1) { invoke<Void>(0xE69FDA40AAC3EFC0, p0, p1); } // 0xE69FDA40AAC3EFC0 b1207
 	// Note: scenariosInRadius is an array, and its size and values should be aligned to 8 bytes.
 	NATIVE_DECL int GET_SCENARIO_POINTS_IN_AREA(float posX, float posY, float posZ, float radius, Any* scenariosInRadius, int size) { return invoke<int>(0x345EC3B7EBDE1CB5, posX, posY, posZ, radius, scenariosInRadius, size); } // 0x345EC3B7EBDE1CB5 b1207
+	NATIVE_DECL int GET_SCENARIO_POINTS_IN_AREA(Vector3 pos, float radius, Any* scenariosInRadius, int size) { return invoke<int>(0x345EC3B7EBDE1CB5, pos.x, pos.y, pos.z, radius, scenariosInRadius, size); } // 0x345EC3B7EBDE1CB5 b1207
 	NATIVE_DECL Any _0xEFD875C2791EBEFD(Any p0, Any p1, Any p2, Any p3) { return invoke<Any>(0xEFD875C2791EBEFD, p0, p1, p2, p3); } // 0xEFD875C2791EBEFD b1207
 	NATIVE_DECL Any _0x152664AA3188B193(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0x152664AA3188B193, p0, p1, p2, p3, p4, p5); } // 0x152664AA3188B193 b1207
 	NATIVE_DECL Any _0xE7BBC4E56B989449(Any p0, Any p1, Any p2) { return invoke<Any>(0xE7BBC4E56B989449, p0, p1, p2); } // 0xE7BBC4E56B989449 b1207
@@ -9512,22 +9811,31 @@ namespace TASK
 	// Takes scenario point handle instead of hash
 	NATIVE_DECL void _TASK_START_SCENARIO_IN_PLACE_2(Ped ped, Any p1, const char* p2, int p3, BOOL p4, float p5, BOOL p6) { invoke<Void>(0xA917E39F2CEFD215, ped, p1, p2, p3, p4, p5, p6); } // 0xA917E39F2CEFD215 b1207
 	NATIVE_DECL void TASK_START_SCENARIO_AT_POSITION(Ped ped, Hash scenarioHash, float x, float y, float z, float heading, int duration, BOOL sittingScenario, BOOL teleport, const char* p9, float p10, BOOL p11) { invoke<Void>(0x4D1F61FC34AF3CD1, ped, scenarioHash, x, y, z, heading, duration, sittingScenario, teleport, p9, p10, p11); } // 0x4D1F61FC34AF3CD1 b1207
+	NATIVE_DECL void TASK_START_SCENARIO_AT_POSITION(Ped ped, Hash scenarioHash, Vector3 vec, float heading, int duration, BOOL sittingScenario, BOOL teleport, const char* p9, float p10, BOOL p11) { invoke<Void>(0x4D1F61FC34AF3CD1, ped, scenarioHash, vec.x, vec.y, vec.z, heading, duration, sittingScenario, teleport, p9, p10, p11); } // 0x4D1F61FC34AF3CD1 b1207
 	NATIVE_DECL Any _0xF97F462779B31786(Any p0) { return invoke<Any>(0xF97F462779B31786, p0); } // 0xF97F462779B31786 b1207
 	NATIVE_DECL Any _0x6C269F673C47031E(Any p0) { return invoke<Any>(0x6C269F673C47031E, p0); } // 0x6C269F673C47031E b1207
 	NATIVE_DECL void _0x9667CCE29BFA0780(Any p0) { invoke<Void>(0x9667CCE29BFA0780, p0); } // 0x9667CCE29BFA0780 b1207
 	NATIVE_DECL Any _0x00FFE0F85253C572(Any p0) { return invoke<Any>(0x00FFE0F85253C572, p0); } // 0x00FFE0F85253C572 b1207
 	NATIVE_DECL void _TASK_USE_NEAREST_SCENARIO_TO_COORD(Ped ped, float x, float y, float z, float distance, int duration, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { invoke<Void>(0x322BFDEA666E2B0E, ped, x, y, z, distance, duration, p6, p7, p8, p9); } // 0x322BFDEA666E2B0E b1207
+	NATIVE_DECL void _TASK_USE_NEAREST_SCENARIO_TO_COORD(Ped ped, Vector3 vec, float distance, int duration, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { invoke<Void>(0x322BFDEA666E2B0E, ped, vec.x, vec.y, vec.z, distance, duration, p6, p7, p8, p9); } // 0x322BFDEA666E2B0E b1207
 	NATIVE_DECL void TASK_USE_NEAREST_SCENARIO_TO_COORD_WARP(Ped ped, float x, float y, float z, float distance, int duration, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { invoke<Void>(0x58E2E0F23F6B76C3, ped, x, y, z, distance, duration, p6, p7, p8, p9); } // 0x58E2E0F23F6B76C3 0x1BE9D65C b1207
+	NATIVE_DECL void TASK_USE_NEAREST_SCENARIO_TO_COORD_WARP(Ped ped, Vector3 vec, float distance, int duration, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { invoke<Void>(0x58E2E0F23F6B76C3, ped, vec.x, vec.y, vec.z, distance, duration, p6, p7, p8, p9); } // 0x58E2E0F23F6B76C3 0x1BE9D65C b1207
 	NATIVE_DECL void TASK_USE_NEAREST_TRAIN_SCENARIO_TO_COORD_WARP(Ped ped, float x, float y, float z, float distance) { invoke<Void>(0x3774B03456DD6106, ped, x, y, z, distance); } // 0x3774B03456DD6106 b1207
+	NATIVE_DECL void TASK_USE_NEAREST_TRAIN_SCENARIO_TO_COORD_WARP(Ped ped, Vector3 vec, float distance) { invoke<Void>(0x3774B03456DD6106, ped, vec.x, vec.y, vec.z, distance); } // 0x3774B03456DD6106 b1207
 	NATIVE_DECL void TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD(Ped ped, float x, float y, float z, float distance, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { invoke<Void>(0x9FDA1B3D7E7028B3, ped, x, y, z, distance, p5, p6, p7, p8); } // 0x9FDA1B3D7E7028B3 0xE32FFB22 b1207
+	NATIVE_DECL void TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD(Ped ped, Vector3 vec, float distance, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { invoke<Void>(0x9FDA1B3D7E7028B3, ped, vec.x, vec.y, vec.z, distance, p5, p6, p7, p8); } // 0x9FDA1B3D7E7028B3 0xE32FFB22 b1207
 	NATIVE_DECL void TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD_WARP(Ped ped, float x, float y, float z, float distance, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { invoke<Void>(0x97A28E63F0BA5631, ped, x, y, z, distance, p5, p6, p7, p8); } // 0x97A28E63F0BA5631 0xBAB4C0AE b1207
+	NATIVE_DECL void TASK_USE_NEAREST_SCENARIO_CHAIN_TO_COORD_WARP(Ped ped, Vector3 vec, float distance, BOOL p5, BOOL p6, BOOL p7, BOOL p8) { invoke<Void>(0x97A28E63F0BA5631, ped, vec.x, vec.y, vec.z, distance, p5, p6, p7, p8); } // 0x97A28E63F0BA5631 0xBAB4C0AE b1207
 	NATIVE_DECL Any _0xFDECCA06E8B81346(Any p0) { return invoke<Any>(0xFDECCA06E8B81346, p0); } // 0xFDECCA06E8B81346 b1207
 	NATIVE_DECL Any _0x2D657B10F211C572(Ped ped, float p1) { return invoke<Any>(0x2D657B10F211C572, ped, p1); } // 0x2D657B10F211C572 b1207
 	NATIVE_DECL void TASK_RIDE_TRAIN(Ped ped, Vehicle train, int scenarioPoint, Hash scenarioHash) { invoke<Void>(0x37FB1C870E2EC2C6, ped, train, scenarioPoint, scenarioHash); } // 0x37FB1C870E2EC2C6 b1207
 	NATIVE_DECL Any _0x79197F7D2BB5E73A(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0x79197F7D2BB5E73A, p0, p1, p2, p3, p4, p5); } // 0x79197F7D2BB5E73A b1207
 	NATIVE_DECL BOOL DOES_SCENARIO_EXIST_IN_AREA(float x, float y, float z, float radius, BOOL p4, Any p5, BOOL p6) { return invoke<BOOL>(0x5A59271FFADD33C1, x, y, z, radius, p4, p5, p6); } // 0x5A59271FFADD33C1 0xFA7F5047 b1207
+	NATIVE_DECL BOOL DOES_SCENARIO_EXIST_IN_AREA(Vector3 vec, float radius, BOOL p4, Any p5, BOOL p6) { return invoke<BOOL>(0x5A59271FFADD33C1, vec.x, vec.y, vec.z, radius, p4, p5, p6); } // 0x5A59271FFADD33C1 0xFA7F5047 b1207
 	NATIVE_DECL BOOL DOES_SCENARIO_OF_TYPE_EXIST_IN_AREA_HASH(float x, float y, float z, Hash typeHash, float radius, BOOL p5) { return invoke<BOOL>(0x6EEAD6AF637DA752, x, y, z, typeHash, radius, p5); } // 0x6EEAD6AF637DA752 b1207
+	NATIVE_DECL BOOL DOES_SCENARIO_OF_TYPE_EXIST_IN_AREA_HASH(Vector3 vec, Hash typeHash, float radius, BOOL p5) { return invoke<BOOL>(0x6EEAD6AF637DA752, vec.x, vec.y, vec.z, typeHash, radius, p5); } // 0x6EEAD6AF637DA752 b1207
 	NATIVE_DECL int FIND_SCENARIO_OF_TYPE_HASH(float xPos, float yPos, float zPos, Hash scenarioType, float distance, Any p5, BOOL p6) { return invoke<int>(0xF533D68FF970D190, xPos, yPos, zPos, scenarioType, distance, p5, p6); } // 0xF533D68FF970D190 b1207
+	NATIVE_DECL int FIND_SCENARIO_OF_TYPE_HASH(Vector3 pos, Hash scenarioType, float distance, Any p5, BOOL p6) { return invoke<int>(0xF533D68FF970D190, pos.x, pos.y, pos.z, scenarioType, distance, p5, p6); } // 0xF533D68FF970D190 b1207
 	NATIVE_DECL void _0x0D322AEF8878B8FE(Any p0, Any p1) { invoke<Void>(0x0D322AEF8878B8FE, p0, p1); } // 0x0D322AEF8878B8FE b1207
 	NATIVE_DECL Any _0xD508FA229F1C4900(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0xD508FA229F1C4900, p0, p1, p2, p3, p4, p5); } // 0xD508FA229F1C4900 b1207
 	NATIVE_DECL void _0xB8E213D02F37947D(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0xB8E213D02F37947D, p0, p1, p2, p3, p4, p5, p6); } // 0xB8E213D02F37947D b1207
@@ -9591,6 +9899,7 @@ namespace TASK
 	NATIVE_DECL Any _0x2C497BDEF897C6DF(Any p0) { return invoke<Any>(0x2C497BDEF897C6DF, p0); } // 0x2C497BDEF897C6DF b1207
 	// Despite its name, it only attacks ONE hated target. The one closest to the specified position.
 	NATIVE_DECL void TASK_COMBAT_HATED_TARGETS_IN_AREA(Ped ped, float x, float y, float z, float radius, int flags, Any p6) { invoke<Void>(0x4CF5F55DAC3280A0, ped, x, y, z, radius, flags, p6); } // 0x4CF5F55DAC3280A0 0xDF099E18 b1207
+	NATIVE_DECL void TASK_COMBAT_HATED_TARGETS_IN_AREA(Ped ped, Vector3 vec, float radius, int flags, Any p6) { invoke<Void>(0x4CF5F55DAC3280A0, ped, vec.x, vec.y, vec.z, radius, flags, p6); } // 0x4CF5F55DAC3280A0 0xDF099E18 b1207
 	NATIVE_DECL void TASK_COMBAT_HATED_TARGETS_NO_LOS_TEST(Ped ped, float radius) { invoke<Void>(0xB5BC69D9C4060BC3, ped, radius); } // 0xB5BC69D9C4060BC3 b1207
 	// Despite its name, it only attacks ONE hated target. The one closest hated target.
 	NATIVE_DECL void TASK_COMBAT_HATED_TARGETS_AROUND_PED(Ped ped, float radius, int flags, Any p3) { invoke<Void>(0x7BF835BB9E2698C8, ped, radius, flags, p3); } // 0x7BF835BB9E2698C8 0x2E7064E4 b1207
@@ -9630,12 +9939,16 @@ namespace TASK
 	NATIVE_DECL void TASK_VEHICLE_SHOOT_AT_PED(Ped ped, Ped target, float p2) { invoke<Void>(0x10AB107B887214D8, ped, target, p2); } // 0x10AB107B887214D8 0x59677BA0 b1207
 	NATIVE_DECL void TASK_VEHICLE_AIM_AT_PED(Ped ped, Ped target) { invoke<Void>(0xE41885592B08B097, ped, target); } // 0xE41885592B08B097 0x920AE6DB b1207
 	NATIVE_DECL void TASK_VEHICLE_SHOOT_AT_COORD(Ped ped, float x, float y, float z, float p4) { invoke<Void>(0x5190796ED39C9B6D, ped, x, y, z, p4); } // 0x5190796ED39C9B6D 0xA7AAA4D6 b1207
+	NATIVE_DECL void TASK_VEHICLE_SHOOT_AT_COORD(Ped ped, Vector3 vec, float p4) { invoke<Void>(0x5190796ED39C9B6D, ped, vec.x, vec.y, vec.z, p4); } // 0x5190796ED39C9B6D 0xA7AAA4D6 b1207
 	NATIVE_DECL void _0xAF2EF28CE3084505(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0xAF2EF28CE3084505, p0, p1, p2, p3); } // 0xAF2EF28CE3084505 b1207
 	NATIVE_DECL void TASK_VEHICLE_AIM_AT_COORD(Ped ped, float x, float y, float z) { invoke<Void>(0x447C1E9EF844BC0F, ped, x, y, z); } // 0x447C1E9EF844BC0F 0x010F47CE b1207
+	NATIVE_DECL void TASK_VEHICLE_AIM_AT_COORD(Ped ped, Vector3 vec) { invoke<Void>(0x447C1E9EF844BC0F, ped, vec.x, vec.y, vec.z); } // 0x447C1E9EF844BC0F 0x010F47CE b1207
 	NATIVE_DECL void TASK_VEHICLE_GOTO_NAVMESH(Ped ped, Vehicle vehicle, float x, float y, float z, float speed, int behaviorFlag, float stoppingRange) { invoke<Void>(0x195AEEB13CEFE2EE, ped, vehicle, x, y, z, speed, behaviorFlag, stoppingRange); } // 0x195AEEB13CEFE2EE 0x55CF3BCD b1207
+	NATIVE_DECL void TASK_VEHICLE_GOTO_NAVMESH(Ped ped, Vehicle vehicle, Vector3 vec, float speed, int behaviorFlag, float stoppingRange) { invoke<Void>(0x195AEEB13CEFE2EE, ped, vehicle, vec.x, vec.y, vec.z, speed, behaviorFlag, stoppingRange); } // 0x195AEEB13CEFE2EE 0x55CF3BCD b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_WHILE_AIMING_AT_COORD(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14, Any p15) { invoke<Void>(0x11315AB3385B8AC0, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15); } // 0x11315AB3385B8AC0 0x1552DC91 b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_WHILE_AIMING_AT_COORD_USING_COMBAT_STYLE(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14, Any p15) { invoke<Void>(0x639C0425A0B4E77E, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15); } // 0x639C0425A0B4E77E b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_WHILE_AIMING_AT_ENTITY(Ped ped1, float x, float y, float z, Ped ped2, float p5, Any p6, float p7, float p8, Any p9, Any p10, Any p11, Hash firingPattern, int p13, Any p14) { invoke<Void>(0xB2A16444EAD9AE47, ped1, x, y, z, ped2, p5, p6, p7, p8, p9, p10, p11, firingPattern, p13, p14); } // 0xB2A16444EAD9AE47 0x9BD52ABD b1207
+	NATIVE_DECL void TASK_GO_TO_COORD_WHILE_AIMING_AT_ENTITY(Ped ped1, Vector3 vec, Ped ped2, float p5, Any p6, float p7, float p8, Any p9, Any p10, Any p11, Hash firingPattern, int p13, Any p14) { invoke<Void>(0xB2A16444EAD9AE47, ped1, vec.x, vec.y, vec.z, ped2, p5, p6, p7, p8, p9, p10, p11, firingPattern, p13, p14); } // 0xB2A16444EAD9AE47 0x9BD52ABD b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_WHILE_AIMING_AT_ENTITY_USING_COMBAT_STYLE(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14) { invoke<Void>(0x78426D0982D083C9, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0x78426D0982D083C9 b1207
 	// shootatEntity:
 	// If true, peds will shoot at Entity till it is dead.
@@ -9643,6 +9956,7 @@ namespace TASK
 	NATIVE_DECL void TASK_GO_TO_ENTITY_WHILE_AIMING_AT_ENTITY(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10) { invoke<Void>(0x97465886D35210E9, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10); } // 0x97465886D35210E9 0x68E36B7A b1207
 	NATIVE_DECL void TASK_GO_TO_ENTITY_WHILE_AIMING_AT_ENTITY_USING_COMBAT_STYLE(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10) { invoke<Void>(0xCEF0117C233026AD, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10); } // 0xCEF0117C233026AD b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_AND_AIM_AT_HATED_ENTITIES_NEAR_COORD(Ped ped, float goToLocationX, float goToLocationY, float goToLocationZ, float focusLocationX, float focusLocationY, float focusLocationZ, float speed, BOOL shootAtEnemies, float distanceToStopAt, float noRoadsDistance, BOOL unkTrue, int unkFlag, int aimingFlag, Hash firingPattern) { invoke<Void>(0xA55547801EB331FC, ped, goToLocationX, goToLocationY, goToLocationZ, focusLocationX, focusLocationY, focusLocationZ, speed, shootAtEnemies, distanceToStopAt, noRoadsDistance, unkTrue, unkFlag, aimingFlag, firingPattern); } // 0xA55547801EB331FC 0x3F91358E b1207
+	NATIVE_DECL void TASK_GO_TO_COORD_AND_AIM_AT_HATED_ENTITIES_NEAR_COORD(Ped ped, Vector3 gotolocation, Vector3 focuslocation, float speed, BOOL shootAtEnemies, float distanceToStopAt, float noRoadsDistance, BOOL unkTrue, int unkFlag, int aimingFlag, Hash firingPattern) { invoke<Void>(0xA55547801EB331FC, ped, gotolocation.x, gotolocation.y, gotolocation.z, focuslocation.x, focuslocation.y, focuslocation.z, speed, shootAtEnemies, distanceToStopAt, noRoadsDistance, unkTrue, unkFlag, aimingFlag, firingPattern); } // 0xA55547801EB331FC 0x3F91358E b1207
 	NATIVE_DECL void TASK_GO_TO_COORD_AND_AIM_AT_HATED_ENTITIES_NEAR_COORD_USING_COMBAT_STYLE(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14) { invoke<Void>(0x87BD711FC31EA273, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0x87BD711FC31EA273 b1207
 	// Makes the ped ragdoll like when falling from a great height
 	NATIVE_DECL void SET_HIGH_FALL_TASK(Ped ped, int p1, int p2, int p3) { invoke<Void>(0x8C825BDC7741D37C, ped, p1, p2, p3); } // 0x8C825BDC7741D37C 0xBBB26172 b1207
@@ -9655,6 +9969,7 @@ namespace TASK
 	NATIVE_DECL BOOL WAYPOINT_RECORDING_GET_COORD(const char* waypointRecording, int point, Vector3* coord) { return invoke<BOOL>(0x2FB897405C90B361, waypointRecording, point, coord); } // 0x2FB897405C90B361 0x19266913 b1207
 	NATIVE_DECL float WAYPOINT_RECORDING_GET_SPEED_AT_POINT(const char* waypointRecording, int point) { return invoke<float>(0x005622AEBC33ACA9, waypointRecording, point); } // 0x005622AEBC33ACA9 0xC765633A b1207
 	NATIVE_DECL BOOL WAYPOINT_RECORDING_GET_CLOSEST_WAYPOINT(const char* waypointRecording, float x, float y, float z, int* point) { return invoke<BOOL>(0xB629A298081F876F, waypointRecording, x, y, z, point); } // 0xB629A298081F876F 0xC4CD35AF b1207
+	NATIVE_DECL BOOL WAYPOINT_RECORDING_GET_CLOSEST_WAYPOINT(const char* waypointRecording, Vector3 vec, int* point) { return invoke<BOOL>(0xB629A298081F876F, waypointRecording, vec.x, vec.y, vec.z, point); } // 0xB629A298081F876F 0xC4CD35AF b1207
 	NATIVE_DECL void TASK_FOLLOW_WAYPOINT_RECORDING_ADVANCED(Ped ped, Any p1) { invoke<Void>(0x0CFC13EBC19BCA52, ped, p1); } // 0x0CFC13EBC19BCA52 b1207
 	NATIVE_DECL void TASK_FOLLOW_WAYPOINT_RECORDING(Ped ped, const char* waypointRecording, int p2, int flag, int p4, BOOL p5, Any p6, int p7) { invoke<Void>(0x0759591819534F7B, ped, waypointRecording, p2, flag, p4, p5, p6, p7); } // 0x0759591819534F7B 0xADF9904D b1207
 	NATIVE_DECL void TASK_FOLLOW_WAYPOINT_RECORDING_AT_OFFSET(Ped ped, const char* waypointRecording, float p2, int p3, int p4, int p5, BOOL p6) { invoke<Void>(0xBE9B0520BD7C445B, ped, waypointRecording, p2, p3, p4, p5, p6); } // 0xBE9B0520BD7C445B b1207
@@ -9665,6 +9980,7 @@ namespace TASK
 	NATIVE_DECL Any SET_PED_WAYPOINT_ROUTE_OFFSET(Ped ped, float p1, float p2, float p3) { return invoke<Any>(0xED98E10B0AFCE4B4, ped, p1, p2, p3); } // 0xED98E10B0AFCE4B4 0xF867F747 b1207
 	NATIVE_DECL float GET_WAYPOINT_DISTANCE_ALONG_ROUTE(const char* waypointRecording, int p1) { return invoke<float>(0xA5B769058763E497, waypointRecording, p1); } // 0xA5B769058763E497 0xE8422AC4 b1207
 	NATIVE_DECL float _0x3ACC128510142B9D(const char* waypointRecording, float x, float y, float z) { return invoke<float>(0x3ACC128510142B9D, waypointRecording, x, y, z); } // 0x3ACC128510142B9D b1207
+	NATIVE_DECL float _0x3ACC128510142B9D(const char* waypointRecording, Vector3 vec) { return invoke<float>(0x3ACC128510142B9D, waypointRecording, vec.x, vec.y, vec.z); } // 0x3ACC128510142B9D b1207
 	NATIVE_DECL BOOL WAYPOINT_PLAYBACK_GET_IS_PAUSED(Ped ped) { return invoke<BOOL>(0x701375A7D43F01CB, ped); } // 0x701375A7D43F01CB 0xA6BB5717 b1207
 	NATIVE_DECL BOOL WAYPOINT_PLAYBACK_GET_IS_AIMING(Ped ped) { return invoke<BOOL>(0xD73A5D1F0325C71C, ped); } // 0xD73A5D1F0325C71C b1207
 	NATIVE_DECL BOOL WAYPOINT_PLAYBACK_GET_IS_SHOOTING(Ped ped) { return invoke<BOOL>(0xA5B94DF8AF058F46, ped); } // 0xA5B94DF8AF058F46 b1207
@@ -9706,6 +10022,7 @@ namespace TASK
 	NATIVE_DECL void TASK_MOVE_NETWORK_BY_NAME(Ped ped, const char* task, float multiplier, BOOL p3, const char* animDict, int flags) { invoke<Void>(0x2D537BA194896636, ped, task, multiplier, p3, animDict, flags); } // 0x2D537BA194896636 0x6F5D215F b1207
 	NATIVE_DECL void TASK_MOVE_NETWORK_BY_NAME_WITH_INIT_PARAMS(Ped ped, const char* moveNetworkDefName, Any* taskData, float p3, BOOL p4, const char* animDict, int flags) { invoke<Void>(0x139805C2A67C4795, ped, moveNetworkDefName, taskData, p3, p4, animDict, flags); } // 0x139805C2A67C4795 b1207
 	NATIVE_DECL void TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS(Ped ped, const char* moveNetworkDefName, Any* taskData, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, int p9, float p10, int p11, int p12, int flag, int p14) { invoke<Void>(0x7B6A04F98BBAFB2C, ped, moveNetworkDefName, taskData, xPos, yPos, zPos, xRot, yRot, zRot, p9, p10, p11, p12, flag, p14); } // 0x7B6A04F98BBAFB2C b1207
+	NATIVE_DECL void TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS(Ped ped, const char* moveNetworkDefName, Any* taskData, Vector3 pos, Vector3 rot, int p9, float p10, int p11, int p12, int flag, int p14) { invoke<Void>(0x7B6A04F98BBAFB2C, ped, moveNetworkDefName, taskData, pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, p9, p10, p11, p12, flag, p14); } // 0x7B6A04F98BBAFB2C b1207
 	NATIVE_DECL void TASK_MOVE_NETWORK_ADVANCED_BY_NAME_WITH_INIT_PARAMS_ATTACHED(Ped ped, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14, Any p15, Any p16, Any p17) { invoke<Void>(0xF92171093BCABED4, ped, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17); } // 0xF92171093BCABED4 b1207
 	NATIVE_DECL BOOL IS_TASK_MOVE_NETWORK_ACTIVE(Ped ped) { return invoke<BOOL>(0x921CE12C489C4C41, ped); } // 0x921CE12C489C4C41 0x902656EB b1207
 	// Returns hash of the underlying move network def, see move_networks.xml
@@ -9720,6 +10037,7 @@ namespace TASK
 	NATIVE_DECL void _0x099D4A855D53B03B(Any p0, Any p1, Any p2) { invoke<Void>(0x099D4A855D53B03B, p0, p1, p2); } // 0x099D4A855D53B03B b1207
 	NATIVE_DECL void SET_TASK_MOVE_NETWORK_SIGNAL_BOOL(Ped ped, const char* signalName, BOOL value) { invoke<Void>(0xB0A6CFD2C69C1088, ped, signalName, value); } // 0xB0A6CFD2C69C1088 0xF3538041 b1207
 	NATIVE_DECL void _SET_TASK_MOVE_NETWORK_SIGNAL_VECTOR(Ped ped, const char* signalName, float x, float y, float z) { invoke<Void>(0x4662BFE01938D98D, ped, signalName, x, y, z); } // 0x4662BFE01938D98D b1207
+	NATIVE_DECL void _SET_TASK_MOVE_NETWORK_SIGNAL_VECTOR(Ped ped, const char* signalName, Vector3 vec) { invoke<Void>(0x4662BFE01938D98D, ped, signalName, vec.x, vec.y, vec.z); } // 0x4662BFE01938D98D b1207
 	NATIVE_DECL float _GET_TASK_MOVE_NETWORK_PHASE_FLOAT(Ped ped, const char* phaseName) { return invoke<float>(0x844CEEE428EA35B0, ped, phaseName); } // 0x844CEEE428EA35B0 b1207
 	NATIVE_DECL BOOL GET_TASK_MOVE_NETWORK_EVENT(Ped ped, const char* eventName) { return invoke<BOOL>(0xB4F47213DF45A64C, ped, eventName); } // 0xB4F47213DF45A64C 0x72FA5EF2 b1207
 	NATIVE_DECL void _0x9585FF23C4B8EDE0(Any p0, Any p1) { invoke<Void>(0x9585FF23C4B8EDE0, p0, p1); } // 0x9585FF23C4B8EDE0 b1207
@@ -9744,6 +10062,7 @@ namespace TASK
 	NATIVE_DECL BOOL _IS_PED_DUELLING(Ped ped) { return invoke<BOOL>(0xC8B29D18022EA2B7, ped); } // 0xC8B29D18022EA2B7 b1207
 	// Params: p4 either 0.2f, 0.25f, 0.31f, 0.4f
 	NATIVE_DECL void TASK_DUEL(Ped ped, Any p1, float p2, Entity entity, float p4, int p5, float vPosOpponentX, float vPosOpponentY, float vPosOpponentZ, float fOpponentHead, int p10) { invoke<Void>(0x5D5B0D5BC3626E5A, ped, p1, p2, entity, p4, p5, vPosOpponentX, vPosOpponentY, vPosOpponentZ, fOpponentHead, p10); } // 0x5D5B0D5BC3626E5A b1207
+	NATIVE_DECL void TASK_DUEL(Ped ped, Any p1, float p2, Entity entity, float p4, int p5, Vector3 vposopponent, float fOpponentHead, int p10) { invoke<Void>(0x5D5B0D5BC3626E5A, ped, p1, p2, entity, p4, p5, vposopponent.x, vposopponent.y, vposopponent.z, fOpponentHead, p10); } // 0x5D5B0D5BC3626E5A b1207
 	NATIVE_DECL Any _0x908BB14BCE85C80E(Any p0) { return invoke<Any>(0x908BB14BCE85C80E, p0); } // 0x908BB14BCE85C80E b1207
 	NATIVE_DECL Any _0x1F7A9A9C38C13A56(Any p0) { return invoke<Any>(0x1F7A9A9C38C13A56, p0); } // 0x1F7A9A9C38C13A56 b1207
 	NATIVE_DECL Any _0x3FEB770D8ED9047A(Any p0) { return invoke<Any>(0x3FEB770D8ED9047A, p0); } // 0x3FEB770D8ED9047A b1207
@@ -9763,6 +10082,7 @@ namespace TASK
 	NATIVE_DECL BOOL GET_IS_CARRIABLE_ENTITY(Entity entity) { return invoke<BOOL>(0x0CCFE72B43C9CF96, entity); } // 0x0CCFE72B43C9CF96 b1207
 	NATIVE_DECL Any _0x10ADFDF07B7DFFBA(Any p0, Any p1, Any p2) { return invoke<Any>(0x10ADFDF07B7DFFBA, p0, p1, p2); } // 0x10ADFDF07B7DFFBA b1207
 	NATIVE_DECL void TASK_PLACE_CARRIED_ENTITY_AT_COORD(Ped ped, Entity entity, float x, float y, float z, float p5, int flags) { invoke<Void>(0xC7F0B43DCDC57E3D, ped, entity, x, y, z, p5, flags); } // 0xC7F0B43DCDC57E3D b1207
+	NATIVE_DECL void TASK_PLACE_CARRIED_ENTITY_AT_COORD(Ped ped, Entity entity, Vector3 vec, float p5, int flags) { invoke<Void>(0xC7F0B43DCDC57E3D, ped, entity, vec.x, vec.y, vec.z, p5, flags); } // 0xC7F0B43DCDC57E3D b1207
 	NATIVE_DECL void TASK_PLACE_CARRIED_ENTITY_ON_MOUNT(Ped ped, Entity entity, Ped mount, float p3) { invoke<Void>(0x6D3D87C57B3D52C7, ped, entity, mount, p3); } // 0x6D3D87C57B3D52C7 b1207
 	NATIVE_DECL void TASK_DUMP_CARRIABLE_FROM_PARENT(Ped ped, Ped ped2, Entity entity) { invoke<Void>(0x17CA98707B15926A, ped, ped2, entity); } // 0x17CA98707B15926A b1207
 	NATIVE_DECL void _DETACH_CARRIABLE_PED(Ped ped) { invoke<Void>(0x36D188AECB26094B, ped); } // 0x36D188AECB26094B b1207
@@ -9784,6 +10104,7 @@ namespace TASK
 	// p7: -1 in R* Scripts
 	// Returns compositeId
 	NATIVE_DECL int _CREATE_HERB_COMPOSITES(Hash asset, float x, float y, float z, float heading, int groundSetting, Any* p6, int p7) { return invoke<int>(0x5B4BBE80AD5972DC, asset, x, y, z, heading, groundSetting, p6, p7); } // 0x5B4BBE80AD5972DC b1207
+	NATIVE_DECL int _CREATE_HERB_COMPOSITES(Hash asset, Vector3 vec, float heading, int groundSetting, Any* p6, int p7) { return invoke<int>(0x5B4BBE80AD5972DC, asset, vec.x, vec.y, vec.z, heading, groundSetting, p6, p7); } // 0x5B4BBE80AD5972DC b1207
 	// Params: p1 is always false except in script nb_egg_protector
 	NATIVE_DECL void _DELETE_PATCH_OBJECTS_FROM_HERB_COMPOSITES(int compositeId, BOOL p1) { invoke<Void>(0x5758B1EE0C3FD4AC, compositeId, p1); } // 0x5758B1EE0C3FD4AC b1207
 	// Flowers, Stalks or whatever the composite has
@@ -9792,6 +10113,7 @@ namespace TASK
 	NATIVE_DECL void TASK_LOOT_ENTITY(Ped ped, Entity entity) { invoke<Void>(0x48FAE038401A2888, ped, entity); } // 0x48FAE038401A2888 b1207
 	NATIVE_DECL void TASK_BREAK_VEHICLE_DOOR_LOCK(Ped ped, Vehicle vehicle) { invoke<Void>(0xBB28D1BC9EA8A6A5, ped, vehicle); } // 0xBB28D1BC9EA8A6A5 b1207
 	NATIVE_DECL void TASK_LOOT_NEAREST_ENTITY(Ped ped, float x, float y, float z, int p4, float p5) { invoke<Void>(0xCF1501CBC4059412, ped, x, y, z, p4, p5); } // 0xCF1501CBC4059412 b1207
+	NATIVE_DECL void TASK_LOOT_NEAREST_ENTITY(Ped ped, Vector3 vec, int p4, float p5) { invoke<Void>(0xCF1501CBC4059412, ped, vec.x, vec.y, vec.z, p4, p5); } // 0xCF1501CBC4059412 b1207
 	NATIVE_DECL void TASK_LASSO_PED(Ped ped, Ped targetPed) { invoke<Void>(0xC716EB2BD16370A3, ped, targetPed); } // 0xC716EB2BD16370A3 b1207
 	NATIVE_DECL void TASK_HOGTIEABLE(Ped ped) { invoke<Void>(0x6AFD8FE0D723328F, ped); } // 0x6AFD8FE0D723328F b1207
 	// getupSetHash: see nm_blend_out_sets.meta
@@ -10106,6 +10428,7 @@ namespace UILOG
 {
 	NATIVE_DECL BOOL _UILOG_IS_ENTRY_REGISTERED(int p0, Hash p1) { return invoke<BOOL>(0xB8188CCF52202475, p0, p1); } // 0xB8188CCF52202475 b1207
 	NATIVE_DECL void _UILOG_ADD_ENTRY_HASH(int p0, int p1, float x, float y, float z, Hash p5, Hash p6, Any p7) { invoke<Void>(0x69D5479982355D8F, p0, p1, x, y, z, p5, p6, p7); } // 0x69D5479982355D8F b1207
+	NATIVE_DECL void _UILOG_ADD_ENTRY_HASH(int p0, int p1, Vector3 vec, Hash p5, Hash p6, Any p7) { invoke<Void>(0x69D5479982355D8F, p0, p1, vec.x, vec.y, vec.z, p5, p6, p7); } // 0x69D5479982355D8F b1207
 	NATIVE_DECL void _UILOG_ADD_ITEM_TO_TASK_LIST(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7) { invoke<Void>(0x49C63FDF69744A27, p0, p1, p2, p3, p4, p5, p6, p7); } // 0x49C63FDF69744A27 b1207
 	NATIVE_DECL void _UILOG_SET_ENTRY_ICON_TEXTURE(int p0, Hash p1, Hash icon, Hash iconDictionary) { invoke<Void>(0x6965469934958D8F, p0, p1, icon, iconDictionary); } // 0x6965469934958D8F b1207
 	NATIVE_DECL void _UILOG_SET_ENTRY_BRIEF_TEXTURE(int p0, Hash p1, Hash texture, Hash textureDictionary) { invoke<Void>(0x69684D9936958D8F, p0, p1, texture, textureDictionary); } // 0x69684D9936958D8F b1207
@@ -10225,8 +10548,10 @@ namespace VEHICLE
 	NATIVE_DECL void _0x6355602C02EDC6DF(Entity entity, Any p1) { invoke<Void>(0x6355602C02EDC6DF, entity, p1); } // 0x6355602C02EDC6DF b1207
 	NATIVE_DECL void _SET_VEHICLE_IS_IN_HURRY(Vehicle vehicle, BOOL enabled) { invoke<Void>(0xCE1531927AD6C9F8, vehicle, enabled); } // 0xCE1531927AD6C9F8 b1207
 	NATIVE_DECL Vehicle CREATE_VEHICLE(Hash modelHash, float x, float y, float z, float heading, BOOL isNetwork, BOOL bScriptHostVeh, BOOL bDontAutoCreateDraftAnimals, BOOL p8) { return invoke<Vehicle>(0xAF35D0D2583051B0, modelHash, x, y, z, heading, isNetwork, bScriptHostVeh, bDontAutoCreateDraftAnimals, p8); } // 0xAF35D0D2583051B0 0xDD75460A b1207
+	NATIVE_DECL Vehicle CREATE_VEHICLE(Hash modelHash, Vector3 vec, float heading, BOOL isNetwork, BOOL bScriptHostVeh, BOOL bDontAutoCreateDraftAnimals, BOOL p8) { return invoke<Vehicle>(0xAF35D0D2583051B0, modelHash, vec.x, vec.y, vec.z, heading, isNetwork, bScriptHostVeh, bDontAutoCreateDraftAnimals, p8); } // 0xAF35D0D2583051B0 0xDD75460A b1207
 	// Identical to CREATE_VEHICLE but allows to set draftAnimalPopGroup (see popgroups.#mt for DRAFT_HORSES_*)
 	NATIVE_DECL Vehicle _CREATE_DRAFT_VEHICLE(Hash modelHash, float x, float y, float z, float heading, BOOL isNetwork, BOOL bScriptHostVeh, BOOL bDontAutoCreateDraftAnimals, Hash draftAnimalPopGroup, BOOL p9) { return invoke<Vehicle>(0x214651FB1DFEBA89, modelHash, x, y, z, heading, isNetwork, bScriptHostVeh, bDontAutoCreateDraftAnimals, draftAnimalPopGroup, p9); } // 0x214651FB1DFEBA89 b1207
+	NATIVE_DECL Vehicle _CREATE_DRAFT_VEHICLE(Hash modelHash, Vector3 vec, float heading, BOOL isNetwork, BOOL bScriptHostVeh, BOOL bDontAutoCreateDraftAnimals, Hash draftAnimalPopGroup, BOOL p9) { return invoke<Vehicle>(0x214651FB1DFEBA89, modelHash, vec.x, vec.y, vec.z, heading, isNetwork, bScriptHostVeh, bDontAutoCreateDraftAnimals, draftAnimalPopGroup, p9); } // 0x214651FB1DFEBA89 b1207
 	// Deletes a vehicle.
 	// The vehicle must be a mission entity to delete, so call this before deleting: SET_ENTITY_AS_MISSION_ENTITY(vehicle, true, true);
 	// 
@@ -10244,6 +10569,7 @@ namespace VEHICLE
 	NATIVE_DECL BOOL IS_VEHICLE_MODEL(Vehicle vehicle, Hash model) { return invoke<BOOL>(0x0045A54EC7A22455, vehicle, model); } // 0x0045A54EC7A22455 0x013B10B6 b1207
 	NATIVE_DECL void _SET_ALL_VEHICLE_GENERATORS_DISABLED_FOR_VOLUME(Volume volume, BOOL toggle) { invoke<Void>(0x424FFCB9F0D2D4B5, volume, toggle); } // 0x424FFCB9F0D2D4B5 b1207
 	NATIVE_DECL void SET_ALL_VEHICLE_GENERATORS_ACTIVE_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL p6, BOOL p7) { invoke<Void>(0xBBB134FB9D50C0CC, x1, y1, z1, x2, y2, z2, p6, p7); } // 0xBBB134FB9D50C0CC 0xB4E0E69A b1207
+	NATIVE_DECL void SET_ALL_VEHICLE_GENERATORS_ACTIVE_IN_AREA(Vector3 vec1, Vector3 vec2, BOOL p6, BOOL p7) { invoke<Void>(0xBBB134FB9D50C0CC, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, p6, p7); } // 0xBBB134FB9D50C0CC 0xB4E0E69A b1207
 	NATIVE_DECL void SET_ALL_VEHICLE_GENERATORS_ACTIVE() { invoke<Void>(0x3D596E6E88A02C24); } // 0x3D596E6E88A02C24 0xAB1FDD76 b1207
 	NATIVE_DECL BOOL SET_VEHICLE_ON_GROUND_PROPERLY(Vehicle vehicle, BOOL p1) { return invoke<BOOL>(0x7263332501E07F52, vehicle, p1); } // 0x7263332501E07F52 0xE14FDBA6 b1207
 	// Returns true if the vehicle's current speed is less than, or equal to 0.0025f.
@@ -10362,6 +10688,7 @@ namespace VEHICLE
 	NATIVE_DECL void SET_RANDOM_TRAINS(BOOL toggle) { invoke<Void>(0x1156C6EE7E82A98A, toggle); } // 0x1156C6EE7E82A98A 0xD461CA7F b1207
 	// Returns trackIndex
 	NATIVE_DECL int _0x331CBD247FC5DAA8(Hash configHash, float x, float y, float z, BOOL direction, BOOL p5) { return invoke<int>(0x331CBD247FC5DAA8, configHash, x, y, z, direction, p5); } // 0x331CBD247FC5DAA8 b1207
+	NATIVE_DECL int _0x331CBD247FC5DAA8(Hash configHash, Vector3 vec, BOOL direction, BOOL p5) { return invoke<int>(0x331CBD247FC5DAA8, configHash, vec.x, vec.y, vec.z, direction, p5); } // 0x331CBD247FC5DAA8 b1207
 	// Takes value returned from 0x45853F4E17D847D5
 	NATIVE_DECL BOOL _0x0516FAE561276EFC(int trackIndex) { return invoke<BOOL>(0x0516FAE561276EFC, trackIndex); } // 0x0516FAE561276EFC b1207
 	// Returns trackIndex
@@ -10388,6 +10715,7 @@ namespace VEHICLE
 	NATIVE_DECL void _0x718EB706B6E998A0(int trackIndex) { invoke<Void>(0x718EB706B6E998A0, trackIndex); } // 0x718EB706B6E998A0 b1207
 	// _IS_* (related to CREATE_MISSION_TRAIN)
 	NATIVE_DECL BOOL _0xF05DFAF1ADFEF2CD(Hash trainConfig, float x, float y, float z, BOOL direction, BOOL p5) { return invoke<BOOL>(0xF05DFAF1ADFEF2CD, trainConfig, x, y, z, direction, p5); } // 0xF05DFAF1ADFEF2CD b1207
+	NATIVE_DECL BOOL _0xF05DFAF1ADFEF2CD(Hash trainConfig, Vector3 vec, BOOL direction, BOOL p5) { return invoke<BOOL>(0xF05DFAF1ADFEF2CD, trainConfig, vec.x, vec.y, vec.z, direction, p5); } // 0xF05DFAF1ADFEF2CD b1207
 	NATIVE_DECL Any _0xD1DF5E54F4ACBE1A(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { return invoke<Any>(0xD1DF5E54F4ACBE1A, p0, p1, p2, p3, p4, p5, p6); } // 0xD1DF5E54F4ACBE1A b1207
 	NATIVE_DECL Any _0x0FDDEE66E3465726(Any p0) { return invoke<Any>(0x0FDDEE66E3465726, p0); } // 0x0FDDEE66E3465726 b1207
 	NATIVE_DECL void _0x4C05B42A8D937796() { invoke<Void>(0x4C05B42A8D937796); } // 0x4C05B42A8D937796 b1207
@@ -10400,10 +10728,13 @@ namespace VEHICLE
 	NATIVE_DECL void _0x3137EDC899E6DAE4(Any p0, Any p1) { invoke<Void>(0x3137EDC899E6DAE4, p0, p1); } // 0x3137EDC899E6DAE4 b1355
 	// Returns trackIndex
 	NATIVE_DECL int _0x6C87F49BFA181DB5(float x, float y, float z) { return invoke<int>(0x6C87F49BFA181DB5, x, y, z); } // 0x6C87F49BFA181DB5 b1207
+	NATIVE_DECL int _0x6C87F49BFA181DB5(Vector3 vec) { return invoke<int>(0x6C87F49BFA181DB5, vec.x, vec.y, vec.z); } // 0x6C87F49BFA181DB5 b1207
 	// Returns trackIndex
 	// _E* - _F*
 	NATIVE_DECL int _GET_TRACK_INDEX_FROM_COORDS(float x, float y, float z) { return invoke<int>(0x85D39F5E3B6D7EB0, x, y, z); } // 0x85D39F5E3B6D7EB0 b1207
+	NATIVE_DECL int _GET_TRACK_INDEX_FROM_COORDS(Vector3 vec) { return invoke<int>(0x85D39F5E3B6D7EB0, vec.x, vec.y, vec.z); } // 0x85D39F5E3B6D7EB0 b1207
 	NATIVE_DECL Vector3 _GET_NEAREST_TRAIN_TRACK_POSITION(float x, float y, float z) { return invoke<Vector3>(0x6DE03BCC15E81710, x, y, z); } // 0x6DE03BCC15E81710 b1207
+	NATIVE_DECL Vector3 _GET_NEAREST_TRAIN_TRACK_POSITION(Vector3 vec) { return invoke<Vector3>(0x6DE03BCC15E81710, vec.x, vec.y, vec.z); } // 0x6DE03BCC15E81710 b1207
 	NATIVE_DECL void DELETE_ALL_TRAINS() { invoke<Void>(0xA3120A1385F17FF7); } // 0xA3120A1385F17FF7 0x83DE7ABF b1207
 	NATIVE_DECL Any _0x0E558D3A49D759D6(Any p0, Any p1) { return invoke<Any>(0x0E558D3A49D759D6, p0, p1); } // 0x0E558D3A49D759D6 b1207
 	NATIVE_DECL void _0xD4907EF4334C7602(Any p0, Any p1) { invoke<Void>(0xD4907EF4334C7602, p0, p1); } // 0xD4907EF4334C7602 b1207
@@ -10459,13 +10790,16 @@ namespace VEHICLE
 	// SET_TIME_POSITION_IN_RECORDING can be emulated by: desired_time - GET_TIME_POSITION_IN_RECORDING(vehicle)
 	NATIVE_DECL void SKIP_TIME_IN_PLAYBACK_RECORDED_VEHICLE(Vehicle vehicle, float time) { invoke<Void>(0x5F5E6379C59EFC56, vehicle, time); } // 0x5F5E6379C59EFC56 0xCF3EFA4B b1207
 	NATIVE_DECL Vehicle GET_CLOSEST_VEHICLE(float x, float y, float z, float radius, Hash modelHash, int flags) { return invoke<Vehicle>(0x52F45D033645181B, x, y, z, radius, modelHash, flags); } // 0x52F45D033645181B 0xD7E26B2C b1207
+	NATIVE_DECL Vehicle GET_CLOSEST_VEHICLE(Vector3 vec, float radius, Hash modelHash, int flags) { return invoke<Vehicle>(0x52F45D033645181B, vec.x, vec.y, vec.z, radius, modelHash, flags); } // 0x52F45D033645181B 0xD7E26B2C b1207
 	NATIVE_DECL Entity GET_TRAIN_CARRIAGE(Vehicle train, int trailerNumber) { return invoke<Entity>(0xD0FB093A4CDB932C, train, trailerNumber); } // 0xD0FB093A4CDB932C 0x2544E7A6 b1207
 	NATIVE_DECL void DELETE_MISSION_TRAIN(Vehicle* train) { invoke<Void>(0x0D3630FB07E8B570, train); } // 0x0D3630FB07E8B570 0x86C9497D b1207
 	NATIVE_DECL void SET_MISSION_TRAIN_AS_NO_LONGER_NEEDED(Vehicle* train, BOOL p1) { invoke<Void>(0xBBE7648349B49BE8, train, p1); } // 0xBBE7648349B49BE8 0x19808560 b1207
 	NATIVE_DECL void SET_MISSION_TRAIN_COORDS(Vehicle train, float x, float y, float z) { invoke<Void>(0x7632755962AB9922, train, x, y, z); } // 0x7632755962AB9922 0xD6D70803 b1207
+	NATIVE_DECL void SET_MISSION_TRAIN_COORDS(Vehicle train, Vector3 vec) { invoke<Void>(0x7632755962AB9922, train, vec.x, vec.y, vec.z); } // 0x7632755962AB9922 0xD6D70803 b1207
 	// Notice: BOOL p4 was wrongly named takePassengers (?)
 	// Can be used to rotate the train by setting the BOOL direction
 	NATIVE_DECL void _SET_MISSION_TRAIN_WARP_TO_COORDS(Vehicle train, float x, float y, float z, BOOL direction) { invoke<Void>(0xC9EA26893C9E4024, train, x, y, z, direction); } // 0xC9EA26893C9E4024 b1207
+	NATIVE_DECL void _SET_MISSION_TRAIN_WARP_TO_COORDS(Vehicle train, Vector3 vec, BOOL direction) { invoke<Void>(0xC9EA26893C9E4024, train, vec.x, vec.y, vec.z, direction); } // 0xC9EA26893C9E4024 b1207
 	NATIVE_DECL void _0xA72B1BF3857B94D7(Vehicle train, BOOL p1) { invoke<Void>(0xA72B1BF3857B94D7, train, p1); } // 0xA72B1BF3857B94D7 b1207
 	NATIVE_DECL BOOL _IS_THIS_MODEL_A_DRAFT_VEHICLE(Hash model) { return invoke<BOOL>(0xB9D5BDDA88E1BB66, model); } // 0xB9D5BDDA88E1BB66 b1207
 	NATIVE_DECL BOOL IS_THIS_MODEL_A_BOAT(Hash model) { return invoke<BOOL>(0x799CFC7C5B743B15, model); } // 0x799CFC7C5B743B15 0x10F6085C b1207
@@ -10528,6 +10862,7 @@ namespace VEHICLE
 	NATIVE_DECL Any _0x09034479E6E3E269(Vehicle train, Hash* trainTrack, int* junctionIndex) { return invoke<Any>(0x09034479E6E3E269, train, trainTrack, junctionIndex); } // 0x09034479E6E3E269 b1207
 	// Outputs junctionIndex, to be used with 0xE6C5E2125EB210C1
 	NATIVE_DECL BOOL _GET_TRAIN_TRACK_JUNCTION_AT_COORDS(Hash trainTrack, float x, float y, float z, int* junctionIndex) { return invoke<BOOL>(0x86AFC343CF7F0B34, trainTrack, x, y, z, junctionIndex); } // 0x86AFC343CF7F0B34 b1207
+	NATIVE_DECL BOOL _GET_TRAIN_TRACK_JUNCTION_AT_COORDS(Hash trainTrack, Vector3 vec, int* junctionIndex) { return invoke<BOOL>(0x86AFC343CF7F0B34, trainTrack, vec.x, vec.y, vec.z, junctionIndex); } // 0x86AFC343CF7F0B34 b1207
 	NATIVE_DECL Any _0xD9BF3ED8EFB67EA3(Any p0, Any p1, Any p2, Any p3, Any p4) { return invoke<Any>(0xD9BF3ED8EFB67EA3, p0, p1, p2, p3, p4); } // 0xD9BF3ED8EFB67EA3 b1207
 	NATIVE_DECL Vector3 _0x785639D89F8451AB(Any p0, Any p1) { return invoke<Vector3>(0x785639D89F8451AB, p0, p1); } // 0x785639D89F8451AB b1207
 	// trainTrack: FREIGHT_GROUP, TRAINS3, BRAITHWAITES2_TRACK_CONFIG, TRAINS_OLD_WEST01, TRAINS_OLD_WEST03, TRAINS_NB1, TRAINS_INTERSECTION1_ANN
@@ -10539,6 +10874,7 @@ namespace VEHICLE
 	NATIVE_DECL void _SET_ALL_JUNCTIONS_CLEARED() { invoke<Void>(0x138398153824E332); } // 0x138398153824E332 b1207
 	NATIVE_DECL void _0x34BCF6209B9668A7(int trackIndex, Any p1) { invoke<Void>(0x34BCF6209B9668A7, trackIndex, p1); } // 0x34BCF6209B9668A7 b1207
 	NATIVE_DECL void _0xD0BA1853D76683C8(int trackIndex, float x, float y, float z, Any p4) { invoke<Void>(0xD0BA1853D76683C8, trackIndex, x, y, z, p4); } // 0xD0BA1853D76683C8 b1207
+	NATIVE_DECL void _0xD0BA1853D76683C8(int trackIndex, Vector3 vec, Any p4) { invoke<Void>(0xD0BA1853D76683C8, trackIndex, vec.x, vec.y, vec.z, p4); } // 0xD0BA1853D76683C8 b1207
 	NATIVE_DECL void SET_TRAIN_OFFSET_FROM_STATION(Vehicle train, float offset) { invoke<Void>(0x8EC47DD4300BF063, train, offset); } // 0x8EC47DD4300BF063 b1207
 	NATIVE_DECL void _0xDC69F6913CCA0B99(Any p0, Any p1) { invoke<Void>(0xDC69F6913CCA0B99, p0, p1); } // 0xDC69F6913CCA0B99 b1207
 	NATIVE_DECL void _0x7840576C50A13DBA(Vehicle train, BOOL p1) { invoke<Void>(0x7840576C50A13DBA, train, p1); } // 0x7840576C50A13DBA b1207
@@ -10598,6 +10934,7 @@ namespace VEHICLE
 	// 
 	// Radius of effect damage applied in a sphere at impact location
 	NATIVE_DECL void SET_VEHICLE_DAMAGE(Vehicle vehicle, float xOffset, float yOffset, float zOffset, float damage, float radius, BOOL p6) { invoke<Void>(0x1D7678F81452BB41, vehicle, xOffset, yOffset, zOffset, damage, radius, p6); } // 0x1D7678F81452BB41 0x21B458B2 b1207
+	NATIVE_DECL void SET_VEHICLE_DAMAGE(Vehicle vehicle, Vector3 offset, float damage, float radius, BOOL p6) { invoke<Void>(0x1D7678F81452BB41, vehicle, offset.x, offset.y, offset.z, damage, radius, p6); } // 0x1D7678F81452BB41 0x21B458B2 b1207
 	// Returns 1000.0 if the function is unable to get the address of the specified vehicle or if it's not a vehicle.
 	// 
 	// Minimum: -4000
@@ -10662,6 +10999,7 @@ namespace VEHICLE
 	NATIVE_DECL void SET_VEHICLE_EXPLODES_ON_HIGH_EXPLOSION_DAMAGE(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xA402939C6761E1A3, vehicle, toggle); } // 0xA402939C6761E1A3 0x38CC692B b1207
 	NATIVE_DECL void SET_ALLOW_VEHICLE_EXPLODES_ON_CONTACT(Vehicle vehicle, BOOL p1) { invoke<Void>(0x8D3230A0ED7DE39F, vehicle, p1); } // 0x8D3230A0ED7DE39F 0xC306A9A3 b1207
 	NATIVE_DECL BOOL IS_ANY_VEHICLE_NEAR_POINT(float x, float y, float z, float radius) { return invoke<BOOL>(0x5698BA4FD04D39C4, x, y, z, radius); } // 0x5698BA4FD04D39C4 0x2867A834 b1207
+	NATIVE_DECL BOOL IS_ANY_VEHICLE_NEAR_POINT(Vector3 vec, float radius) { return invoke<BOOL>(0x5698BA4FD04D39C4, vec.x, vec.y, vec.z, radius); } // 0x5698BA4FD04D39C4 0x2867A834 b1207
 	NATIVE_DECL void REQUEST_VEHICLE_HIGH_DETAIL_MODEL(Vehicle vehicle) { invoke<Void>(0x84B81EF78BD22357, vehicle); } // 0x84B81EF78BD22357 0x9DA21956 b1207
 	NATIVE_DECL void REQUEST_VEHICLE_ASSET(Hash vehicleHash, int vehicleAsset) { invoke<Void>(0x81A15811460FAB3A, vehicleHash, vehicleAsset); } // 0x81A15811460FAB3A 0x902B4F06 b1207
 	NATIVE_DECL void _0xCF9DA72002FC16BF(Any p0, Any p1, Any p2) { invoke<Void>(0xCF9DA72002FC16BF, p0, p1, p2); } // 0xCF9DA72002FC16BF b1207
@@ -10750,6 +11088,7 @@ namespace VEHICLE
 	// Returns number of horses a wagon can have
 	NATIVE_DECL int _GET_NUM_DRAFT_VEHICLE_HARNESS_PED(Hash modelHash) { return invoke<int>(0x5B1A26BB18E7D451, modelHash); } // 0x5B1A26BB18E7D451 b1207
 	NATIVE_DECL Vector3 _GET_CHECKPOINT_TRAIN_SPAWN_LOCATION(int trackIndex, float x, float y, float z, float distance, BOOL direction) { return invoke<Vector3>(0x35D302397E524939, trackIndex, x, y, z, distance, direction); } // 0x35D302397E524939 b1207
+	NATIVE_DECL Vector3 _GET_CHECKPOINT_TRAIN_SPAWN_LOCATION(int trackIndex, Vector3 vec, float distance, BOOL direction) { return invoke<Vector3>(0x35D302397E524939, trackIndex, vec.x, vec.y, vec.z, distance, direction); } // 0x35D302397E524939 b1207
 	NATIVE_DECL void _0xC399CC89FBA05DA0(Vehicle vehicle, BOOL p1) { invoke<Void>(0xC399CC89FBA05DA0, vehicle, p1); } // 0xC399CC89FBA05DA0 b1207
 	// Returns handles of boat paddles entities.
 	NATIVE_DECL void _GET_ROWING_OARS(Vehicle vehicle, Entity* left, Entity* right) { invoke<Void>(0xA6E210FB4283B767, vehicle, left, right); } // 0xA6E210FB4283B767 b1207
@@ -10758,7 +11097,9 @@ namespace VEHICLE
 	NATIVE_DECL void _SET_FORCE_COACH_ROBBERY_LOOT(Vehicle vehicle, Hash coachrobberyLoot) { invoke<Void>(0xF489F94BFEE12BB0, vehicle, coachrobberyLoot); } // 0xF489F94BFEE12BB0 b1207
 	NATIVE_DECL Any _0x0BA4250D20007C2E(Any p0) { return invoke<Any>(0x0BA4250D20007C2E, p0); } // 0x0BA4250D20007C2E b1207
 	NATIVE_DECL void _0x2200AB13CBD10F4E(Vehicle vehicle, float x, float y, float z, BOOL p4, float p5) { invoke<Void>(0x2200AB13CBD10F4E, vehicle, x, y, z, p4, p5); } // 0x2200AB13CBD10F4E b1207
+	NATIVE_DECL void _0x2200AB13CBD10F4E(Vehicle vehicle, Vector3 vec, BOOL p4, float p5) { invoke<Void>(0x2200AB13CBD10F4E, vehicle, vec.x, vec.y, vec.z, p4, p5); } // 0x2200AB13CBD10F4E b1207
 	NATIVE_DECL void _0xB42C87521D1BDD2F(Vehicle vehicle, float x, float y, float z) { invoke<Void>(0xB42C87521D1BDD2F, vehicle, x, y, z); } // 0xB42C87521D1BDD2F b1207
+	NATIVE_DECL void _0xB42C87521D1BDD2F(Vehicle vehicle, Vector3 vec) { invoke<Void>(0xB42C87521D1BDD2F, vehicle, vec.x, vec.y, vec.z); } // 0xB42C87521D1BDD2F b1207
 	NATIVE_DECL void _0xC351394B932A6A50(Any p0) { invoke<Void>(0xC351394B932A6A50, p0); } // 0xC351394B932A6A50 b1207
 	NATIVE_DECL void _0x172E9DD35858DCD7(Any p0) { invoke<Void>(0x172E9DD35858DCD7, p0); } // 0x172E9DD35858DCD7 b1207
 	NATIVE_DECL int _GET_BREAKABLE_VEHICLE_LOCKS_STATE(Vehicle vehicle) { return invoke<int>(0xE015CF1F2C0959D8, vehicle); } // 0xE015CF1F2C0959D8 b1207
@@ -10779,6 +11120,7 @@ namespace VEHICLE
 	NATIVE_DECL void _SET_DRAFT_VEHICLE_ANIMALS_CAN_DETACH(Vehicle draft, BOOL canDetach) { invoke<Void>(0x6090A031C69F384E, draft, canDetach); } // 0x6090A031C69F384E b1207
 	NATIVE_DECL void _SET_DRAFT_VEHICLE_YOKE_CAN_BREAK(Vehicle draft, BOOL canBreak) { invoke<Void>(0x226C6A4E3346D288, draft, canBreak); } // 0x226C6A4E3346D288 b1207
 	NATIVE_DECL void _ADD_TRAIN_TEMPORARY_STOP(Vehicle train, int trackIndex, float x, float y, float z) { invoke<Void>(0x41503629D1139ABC, train, trackIndex, x, y, z); } // 0x41503629D1139ABC b1207
+	NATIVE_DECL void _ADD_TRAIN_TEMPORARY_STOP(Vehicle train, int trackIndex, Vector3 vec) { invoke<Void>(0x41503629D1139ABC, train, trackIndex, vec.x, vec.y, vec.z); } // 0x41503629D1139ABC b1207
 	// _SET_VEHICLE_S*
 	NATIVE_DECL void _0x0794199B25E499E1(Vehicle wagon, BOOL p1) { invoke<Void>(0x0794199B25E499E1, wagon, p1); } // 0x0794199B25E499E1 b1207
 	// _SET_VEHICLE_WHEELS_*
@@ -10822,12 +11164,14 @@ namespace VEHICLE
 	// Params: coords = GET_ENTITY_VELOCITY
 	// _SET_VELOCITY*
 	NATIVE_DECL void _0x12F6C6ED3EFF42DE(Vehicle vehicle, float x, float y, float z) { invoke<Void>(0x12F6C6ED3EFF42DE, vehicle, x, y, z); } // 0x12F6C6ED3EFF42DE b1207
+	NATIVE_DECL void _0x12F6C6ED3EFF42DE(Vehicle vehicle, Vector3 vec) { invoke<Void>(0x12F6C6ED3EFF42DE, vehicle, vec.x, vec.y, vec.z); } // 0x12F6C6ED3EFF42DE b1207
 	NATIVE_DECL void _0x87B974E54C71BA7B(Vehicle vehicle, BOOL p1) { invoke<Void>(0x87B974E54C71BA7B, vehicle, p1); } // 0x87B974E54C71BA7B b1207
 	NATIVE_DECL BOOL _HAS_TRAIN_LOADED(Vehicle train) { return invoke<BOOL>(0xBD3C4A2ED509205E, train); } // 0xBD3C4A2ED509205E b1207
 	// configHash: https://alloc8or.re/rdr3/doc/enums/eTrainConfig.txt
 	// For more information, see trainconfigs.ymt
 	// To make the train AI controlled, set conductor to true and set the speed once.
 	NATIVE_DECL Vehicle _CREATE_MISSION_TRAIN(Hash configHash, float x, float y, float z, BOOL direction, BOOL passengers, BOOL p6, BOOL conductor) { return invoke<Vehicle>(0xC239DBD9A57D2A71, configHash, x, y, z, direction, passengers, p6, conductor); } // 0xC239DBD9A57D2A71 b1207
+	NATIVE_DECL Vehicle _CREATE_MISSION_TRAIN(Hash configHash, Vector3 vec, BOOL direction, BOOL passengers, BOOL p6, BOOL conductor) { return invoke<Vehicle>(0xC239DBD9A57D2A71, configHash, vec.x, vec.y, vec.z, direction, passengers, p6, conductor); } // 0xC239DBD9A57D2A71 b1207
 	NATIVE_DECL void _0xD1EFA8D68BF5D63D(Any p0, Any p1, Any p2, Any p3) { invoke<Void>(0xD1EFA8D68BF5D63D, p0, p1, p2, p3); } // 0xD1EFA8D68BF5D63D b1207
 	NATIVE_DECL Any _0x1121B07088ED3013(Any p0) { return invoke<Any>(0x1121B07088ED3013, p0); } // 0x1121B07088ED3013 b1207
 	NATIVE_DECL Any _0x42404D57D621601A(Any p0) { return invoke<Any>(0x42404D57D621601A, p0); } // 0x42404D57D621601A b1207
@@ -10895,25 +11239,35 @@ namespace VOICE
 namespace VOLUME
 {
 	NATIVE_DECL Volume _CREATE_VOLUME_BY_HASH(Hash volumeType, float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) { return invoke<Volume>(0x502022FA1AF9DC86, volumeType, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ); } // 0x502022FA1AF9DC86 b1207
+	NATIVE_DECL Volume _CREATE_VOLUME_BY_HASH(Hash volumeType, Vector3 vec, Vector3 rot, Vector3 scale) { return invoke<Volume>(0x502022FA1AF9DC86, volumeType, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z); } // 0x502022FA1AF9DC86 b1207
 	NATIVE_DECL Volume CREATE_VOLUME_BOX(float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) { return invoke<Volume>(0xDF85637F22706891, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ); } // 0xDF85637F22706891 b1207
+	NATIVE_DECL Volume CREATE_VOLUME_BOX(Vector3 vec, Vector3 rot, Vector3 scale) { return invoke<Volume>(0xDF85637F22706891, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z); } // 0xDF85637F22706891 b1207
 	NATIVE_DECL Volume CREATE_VOLUME_CYLINDER(float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) { return invoke<Volume>(0x0522D4774B82E3E6, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ); } // 0x0522D4774B82E3E6 b1207
+	NATIVE_DECL Volume CREATE_VOLUME_CYLINDER(Vector3 vec, Vector3 rot, Vector3 scale) { return invoke<Volume>(0x0522D4774B82E3E6, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z); } // 0x0522D4774B82E3E6 b1207
 	NATIVE_DECL Volume CREATE_VOLUME_SPHERE(float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) { return invoke<Volume>(0xB3FB80A32BAE3065, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ); } // 0xB3FB80A32BAE3065 b1207
+	NATIVE_DECL Volume CREATE_VOLUME_SPHERE(Vector3 vec, Vector3 rot, Vector3 scale) { return invoke<Volume>(0xB3FB80A32BAE3065, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z); } // 0xB3FB80A32BAE3065 b1207
 	NATIVE_DECL Volume CREATE_VOLUME_AGGREGATE() { return invoke<Volume>(0x59F6F5C1D129F106); } // 0x59F6F5C1D129F106 b1207
 	NATIVE_DECL Volume _CREATE_VOLUME_BY_HASH_WITH_CUSTOM_NAME(Hash volumeType, float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ, const char* name) { return invoke<Volume>(0x1F85E4AC774A201E, volumeType, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, name); } // 0x1F85E4AC774A201E b1207
+	NATIVE_DECL Volume _CREATE_VOLUME_BY_HASH_WITH_CUSTOM_NAME(Hash volumeType, Vector3 vec, Vector3 rot, Vector3 scale, const char* name) { return invoke<Volume>(0x1F85E4AC774A201E, volumeType, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z, name); } // 0x1F85E4AC774A201E b1207
 	NATIVE_DECL Volume _CREATE_ANTI_GRIEF_VOLUME(Hash volumeType, float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) { return invoke<Volume>(0x0EB78C2B156635B1, volumeType, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ); } // 0x0EB78C2B156635B1 b1207
+	NATIVE_DECL Volume _CREATE_ANTI_GRIEF_VOLUME(Hash volumeType, Vector3 vec, Vector3 rot, Vector3 scale) { return invoke<Volume>(0x0EB78C2B156635B1, volumeType, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z); } // 0x0EB78C2B156635B1 b1207
 	NATIVE_DECL void _SET_ANTI_GRIEF_VOLUME_BLOCKS_HORSE(Volume volume, BOOL toggle) { invoke<Void>(0xBE551C2CC421185D, volume, toggle); } // 0xBE551C2CC421185D b1207
 	NATIVE_DECL void _SET_ANTI_GRIEF_VOLUME_BLOCKS_PLAYER(Volume volume, BOOL toggle) { invoke<Void>(0x5B23DFF8E0948BB2, volume, toggle); } // 0x5B23DFF8E0948BB2 b1207
 	NATIVE_DECL Volume _CREATE_WALK_AND_TALK_VOLUME(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12) { return invoke<Volume>(0xFD0E389CD44434B6, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12); } // 0xFD0E389CD44434B6 b1207
 	NATIVE_DECL Volume _CREATE_SPEED_VOLUME(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13, Any p14) { return invoke<Volume>(0xBBE768E3AE76E07C, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14); } // 0xBBE768E3AE76E07C b1207
 	NATIVE_DECL Volume _CREATE_VOLUME_BOX_WITH_CUSTOM_NAME(float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ, const char* name) { return invoke<Volume>(0xF68485C7495D848E, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, name); } // 0xF68485C7495D848E b1207
+	NATIVE_DECL Volume _CREATE_VOLUME_BOX_WITH_CUSTOM_NAME(Vector3 vec, Vector3 rot, Vector3 scale, const char* name) { return invoke<Volume>(0xF68485C7495D848E, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z, name); } // 0xF68485C7495D848E b1207
 	NATIVE_DECL Volume _CREATE_VOLUME_CYLINDER_WITH_CUSTOM_NAME(float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ, const char* name) { return invoke<Volume>(0xDF1E350EDDF06E59, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, name); } // 0xDF1E350EDDF06E59 b1207
+	NATIVE_DECL Volume _CREATE_VOLUME_CYLINDER_WITH_CUSTOM_NAME(Vector3 vec, Vector3 rot, Vector3 scale, const char* name) { return invoke<Volume>(0xDF1E350EDDF06E59, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z, name); } // 0xDF1E350EDDF06E59 b1207
 	NATIVE_DECL Volume _CREATE_VOLUME_SPHERE_WITH_CUSTOM_NAME(float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ, const char* name) { return invoke<Volume>(0x10157BC3247FF3BA, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ, name); } // 0x10157BC3247FF3BA b1207
+	NATIVE_DECL Volume _CREATE_VOLUME_SPHERE_WITH_CUSTOM_NAME(Vector3 vec, Vector3 rot, Vector3 scale, const char* name) { return invoke<Volume>(0x10157BC3247FF3BA, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z, name); } // 0x10157BC3247FF3BA b1207
 	NATIVE_DECL Volume _CREATE_VOLUME_AGGREGATE_WITH_CUSTOM_NAME(const char* name) { return invoke<Volume>(0x5D580DE6398BB162, name); } // 0x5D580DE6398BB162 b1207
 	// _ADD_R* - _ADD_V(OLUME?)*
 	NATIVE_DECL void _ADD_BOUNDS_TO_AGGREGATE_VOLUME(Volume volume, Volume aggregate) { invoke<Void>(0x6E0D3C3F828DA773, volume, aggregate); } // 0x6E0D3C3F828DA773 b1207
 	// _REMOVE_E* - _REMOVE_R*
 	NATIVE_DECL void _REMOVE_BOUNDS_FROM_AGGREGATE_VOLUME(Volume volume, Volume aggregate) { invoke<Void>(0xF92FA8890DECECF6, volume, aggregate); } // 0xF92FA8890DECECF6 b1207
 	NATIVE_DECL void _ADD_VOLUME_TO_VOLUME_AGGREGATE(Volume aggregate, Hash typeHash, float x, float y, float z, float rotX, float rotY, float rotZ, float scaleX, float scaleY, float scaleZ) { invoke<Void>(0x12FCAA23F2320422, aggregate, typeHash, x, y, z, rotX, rotY, rotZ, scaleX, scaleY, scaleZ); } // 0x12FCAA23F2320422 b1207
+	NATIVE_DECL void _ADD_VOLUME_TO_VOLUME_AGGREGATE(Volume aggregate, Hash typeHash, Vector3 vec, Vector3 rot, Vector3 scale) { invoke<Void>(0x12FCAA23F2320422, aggregate, typeHash, vec.x, vec.y, vec.z, rot.x, rot.y, rot.z, scale.x, scale.y, scale.z); } // 0x12FCAA23F2320422 b1207
 	NATIVE_DECL void _ADD_BOX_VOLUME_TO_VOLUME_AGGREGATE(Volume aggregate, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float p9) { invoke<Void>(0x39816F6F94F385AD, aggregate, p1, p2, p3, p4, p5, p6, p7, p8, p9); } // 0x39816F6F94F385AD b1207
 	NATIVE_DECL void _ADD_CYLINDER_VOLUME_TO_VOLUME_AGGREGATE(Volume aggregate, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float p9) { invoke<Void>(0xBCE668AAF83608BE, aggregate, p1, p2, p3, p4, p5, p6, p7, p8, p9); } // 0xBCE668AAF83608BE b1207
 	NATIVE_DECL void _ADD_SPHERE_VOLUME_TO_VOLUME_AGGREGATE(Volume aggregate, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float p9) { invoke<Void>(0x5B7D7BF36D2DE18B, aggregate, p1, p2, p3, p4, p5, p6, p7, p8, p9); } // 0x5B7D7BF36D2DE18B b1207
@@ -10921,12 +11275,16 @@ namespace VOLUME
 	NATIVE_DECL BOOL DOES_VOLUME_EXIST(Volume volume) { return invoke<BOOL>(0x92A78D0BEDB332A3, volume); } // 0x92A78D0BEDB332A3 b1207
 	// Old name: _IS_POSITION_INSIDE_VOLUME
 	NATIVE_DECL BOOL IS_POINT_IN_VOLUME(Volume volume, float x, float y, float z) { return invoke<BOOL>(0xF256A75210C5C0EB, volume, x, y, z); } // 0xF256A75210C5C0EB b1207
+	NATIVE_DECL BOOL IS_POINT_IN_VOLUME(Volume volume, Vector3 vec) { return invoke<BOOL>(0xF256A75210C5C0EB, volume, vec.x, vec.y, vec.z); } // 0xF256A75210C5C0EB b1207
 	NATIVE_DECL Vector3 GET_VOLUME_COORDS(Volume volume) { return invoke<Vector3>(0xF70F00013A62F866, volume); } // 0xF70F00013A62F866 b1207
 	NATIVE_DECL BOOL SET_VOLUME_COORDS(Volume volume, float posX, float posY, float posZ) { return invoke<BOOL>(0x541B8576615C33DE, volume, posX, posY, posZ); } // 0x541B8576615C33DE b1207
+	NATIVE_DECL BOOL SET_VOLUME_COORDS(Volume volume, Vector3 pos) { return invoke<BOOL>(0x541B8576615C33DE, volume, pos.x, pos.y, pos.z); } // 0x541B8576615C33DE b1207
 	NATIVE_DECL Vector3 GET_VOLUME_ROTATION(Volume volume) { return invoke<Vector3>(0x18675BC914891122, volume); } // 0x18675BC914891122 b1207
 	NATIVE_DECL BOOL SET_VOLUME_ROTATION(Volume volume, float rotX, float rotY, float rotZ) { return invoke<BOOL>(0xA07CF1B21B56F041, volume, rotX, rotY, rotZ); } // 0xA07CF1B21B56F041 b1207
+	NATIVE_DECL BOOL SET_VOLUME_ROTATION(Volume volume, Vector3 rot) { return invoke<BOOL>(0xA07CF1B21B56F041, volume, rot.x, rot.y, rot.z); } // 0xA07CF1B21B56F041 b1207
 	NATIVE_DECL Vector3 GET_VOLUME_SCALE(Volume volume) { return invoke<Vector3>(0x3E2A25B2416DD67E, volume); } // 0x3E2A25B2416DD67E b1207
 	NATIVE_DECL BOOL SET_VOLUME_SCALE(Volume volume, float scaleX, float scaleY, float scaleZ) { return invoke<BOOL>(0xA46E98BDC407E23D, volume, scaleX, scaleY, scaleZ); } // 0xA46E98BDC407E23D b1207
+	NATIVE_DECL BOOL SET_VOLUME_SCALE(Volume volume, Vector3 scale) { return invoke<BOOL>(0xA46E98BDC407E23D, volume, scale.x, scale.y, scale.z); } // 0xA46E98BDC407E23D b1207
 	NATIVE_DECL void _GET_VOLUME_BOUNDS(Volume volume, Vector3* min, Vector3* max) { invoke<Void>(0x5737199AF2DC609F, volume, min, max); } // 0x5737199AF2DC609F b1207
 	// nullsub, doesn't do anything
 	NATIVE_DECL void _0x748C5F51A18CB8F0(Any p0) { invoke<Void>(0x748C5F51A18CB8F0, p0); } // 0x748C5F51A18CB8F0 b1207
@@ -10948,6 +11306,7 @@ namespace VOLUME
 	NATIVE_DECL BOOL _IS_AGGREGATE_VOLUME(Volume volume) { return invoke<BOOL>(0xFEFF01B5725BCD22, volume); } // 0xFEFF01B5725BCD22 b1207
 	// Params: p5 is always 0
 	NATIVE_DECL Volume _CREATE_VOLUME_LOCK(float x, float y, float z, float radius, int flag, Any p5) { return invoke<Volume>(0x00BBF7CEAE8C666A, x, y, z, radius, flag, p5); } // 0x00BBF7CEAE8C666A b1207
+	NATIVE_DECL Volume _CREATE_VOLUME_LOCK(Vector3 vec, float radius, int flag, Any p5) { return invoke<Volume>(0x00BBF7CEAE8C666A, vec.x, vec.y, vec.z, radius, flag, p5); } // 0x00BBF7CEAE8C666A b1207
 	// Params: p3 is always 0
 	NATIVE_DECL Volume _CREATE_VOLUME_LOCK_ATTACHED_TO_ENTITY(Entity entity, float radius, int flag, Any p3) { return invoke<Volume>(0xF383E96C4904DF0C, entity, radius, flag, p3); } // 0xF383E96C4904DF0C b1207
 	NATIVE_DECL BOOL _IS_VOLUME_LOCK_REQUEST_VALID_2(int volLockRequestId) { return invoke<BOOL>(0xF6A8A652A6B186CD, volLockRequestId); } // 0xF6A8A652A6B186CD b1207
@@ -10961,16 +11320,20 @@ namespace VOLUME
 	NATIVE_DECL Any _0xAA9EE2AAFC717623(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0xAA9EE2AAFC717623, p0, p1, p2, p3, p4, p5); } // 0xAA9EE2AAFC717623 b1207
 	NATIVE_DECL Any _0x870E9981ED27C815(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5) { return invoke<Any>(0x870E9981ED27C815, p0, p1, p2, p3, p4, p5); } // 0x870E9981ED27C815 b1207
 	NATIVE_DECL BOOL DOES_VOLUME_COLLIDE_WITH_ANY_VOLUME_LOCK(float x, float y, float z, float radius, BOOL p4, int p5, int p6) { return invoke<BOOL>(0x397769175A7DBB30, x, y, z, radius, p4, p5, p6); } // 0x397769175A7DBB30 b1207
+	NATIVE_DECL BOOL DOES_VOLUME_COLLIDE_WITH_ANY_VOLUME_LOCK(Vector3 vec, float radius, BOOL p4, int p5, int p6) { return invoke<BOOL>(0x397769175A7DBB30, vec.x, vec.y, vec.z, radius, p4, p5, p6); } // 0x397769175A7DBB30 b1207
 	NATIVE_DECL BOOL _IS_POINT_NEAR_VOLUME_LOCK_CENTER(float x, float y, float z, float radius, int p4, int p5, int flags) { return invoke<BOOL>(0x769BB7626B8CDB06, x, y, z, radius, p4, p5, flags); } // 0x769BB7626B8CDB06 b1207
+	NATIVE_DECL BOOL _IS_POINT_NEAR_VOLUME_LOCK_CENTER(Vector3 vec, float radius, int p4, int p5, int flags) { return invoke<BOOL>(0x769BB7626B8CDB06, vec.x, vec.y, vec.z, radius, p4, p5, flags); } // 0x769BB7626B8CDB06 b1207
 	NATIVE_DECL Any _0x51E52C9687FCDEEC(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { return invoke<Any>(0x51E52C9687FCDEEC, p0, p1, p2, p3, p4, p5, p6); } // 0x51E52C9687FCDEEC b1207
 	NATIVE_DECL int _FIND_VOLUME_LOCK_REQUEST_ID_WITH_ARGS(Any* args) { return invoke<int>(0x77A6E4AD0C496F81, args); } // 0x77A6E4AD0C496F81 b1207
 	NATIVE_DECL void _MODIFY_VOLUME_LOCK_LOCATION(int volLock, float x, float y, float z) { invoke<Void>(0xEC43C2FFB70E3F30, volLock, x, y, z); } // 0xEC43C2FFB70E3F30 b1207
+	NATIVE_DECL void _MODIFY_VOLUME_LOCK_LOCATION(int volLock, Vector3 vec) { invoke<Void>(0xEC43C2FFB70E3F30, volLock, vec.x, vec.y, vec.z); } // 0xEC43C2FFB70E3F30 b1207
 	NATIVE_DECL void _0x695DAC2DB928F308(Any p0, Any p1) { invoke<Void>(0x695DAC2DB928F308, p0, p1); } // 0x695DAC2DB928F308 b1207
 	NATIVE_DECL void _RELEASE_LOCK_VOLUME(int volLockRequestId) { invoke<Void>(0xFDFECC6EE4491E11, volLockRequestId); } // 0xFDFECC6EE4491E11 b1207
 	NATIVE_DECL void _0xAC355980681A7F89(Any p0) { invoke<Void>(0xAC355980681A7F89, p0); } // 0xAC355980681A7F89 b1207
 	NATIVE_DECL BOOL _ADD_ENTRY_VOLUME_LOCK(Any* args) { return invoke<BOOL>(0x58D3803FA639A3BB, args); } // 0x58D3803FA639A3BB b1311
 	NATIVE_DECL void _0xC61E2FD926DBB406() { invoke<Void>(0xC61E2FD926DBB406); } // 0xC61E2FD926DBB406 b1311
 	NATIVE_DECL int REQUEST_VOLUME_LOCK(float x, float y, float z, float radius, int p4, int p5) { return invoke<int>(0xF14BCEF290F869E1, x, y, z, radius, p4, p5); } // 0xF14BCEF290F869E1 b1207
+	NATIVE_DECL int REQUEST_VOLUME_LOCK(Vector3 vec, float radius, int p4, int p5) { return invoke<int>(0xF14BCEF290F869E1, vec.x, vec.y, vec.z, radius, p4, p5); } // 0xF14BCEF290F869E1 b1207
 	NATIVE_DECL int REQUEST_VOLUME_LOCK_WITH_ARGS(Any* args) { return invoke<int>(0x183C0B6CFEFFCAE4, args); } // 0x183C0B6CFEFFCAE4 b1207
 	NATIVE_DECL BOOL IS_VOLUME_LOCK_REQUEST_VALID(int volLockRequestId) { return invoke<BOOL>(0xA4A4359320345B34, volLockRequestId); } // 0xA4A4359320345B34 b1207
 	// enum eVolumeLockRequestStatus
@@ -11000,7 +11363,9 @@ namespace WATER
 	NATIVE_DECL void ENABLE_WATER_LOOKUP() { invoke<Void>(0x754616EC6965D1BF); } // 0x754616EC6965D1BF b1207
 	// Checks against a global variable that is set by _SET_WORLD_WATER_TYPE. If that is set to one it will fail. Likely not the only issue but part of it.
 	NATIVE_DECL BOOL GET_WATER_HEIGHT(float x, float y, float z, float* height) { return invoke<BOOL>(0xFCA8B23F28813F69, x, y, z, height); } // 0xFCA8B23F28813F69 0xD864E17C b1207
+	NATIVE_DECL BOOL GET_WATER_HEIGHT(Vector3 vec, float* height) { return invoke<BOOL>(0xFCA8B23F28813F69, vec.x, vec.y, vec.z, height); } // 0xFCA8B23F28813F69 0xD864E17C b1207
 	NATIVE_DECL BOOL GET_WATER_HEIGHT_NO_WAVES(float x, float y, float z, float* height) { return invoke<BOOL>(0xDCF3690AA262C03F, x, y, z, height); } // 0xDCF3690AA262C03F 0x262017F8 b1207
+	NATIVE_DECL BOOL GET_WATER_HEIGHT_NO_WAVES(Vector3 vec, float* height) { return invoke<BOOL>(0xDCF3690AA262C03F, vec.x, vec.y, vec.z, height); } // 0xDCF3690AA262C03F 0x262017F8 b1207
 	// enum eScriptWaterTestResult
 	// {
 	// 	SCRIPT_WATER_TEST_RESULT_NONE,
@@ -11008,10 +11373,12 @@ namespace WATER
 	// 	SCRIPT_WATER_TEST_RESULT_BLOCKED,
 	// };
 	NATIVE_DECL int TEST_PROBE_AGAINST_ALL_WATER(float x1, float y1, float z1, float x2, float y2, float z2, int flags, float* waterHeight) { return invoke<int>(0x8974647ED222EA5F, x1, y1, z1, x2, y2, z2, flags, waterHeight); } // 0x8974647ED222EA5F 0x4A962D55 b1207
+	NATIVE_DECL int TEST_PROBE_AGAINST_ALL_WATER(Vector3 vec1, Vector3 vec2, int flags, float* waterHeight) { return invoke<int>(0x8974647ED222EA5F, vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z, flags, waterHeight); } // 0x8974647ED222EA5F 0x4A962D55 b1207
 	// Checks against a global variable that is set by _SET_WORLD_WATER_TYPE. If it's set to 1 (Guarma) it will fail.
 	// 
 	// See TEST_PROBE_AGAINST_ALL_WATER.
 	NATIVE_DECL int TEST_VERTICAL_PROBE_AGAINST_ALL_WATER(float x, float y, float z, int flags, float* waterHeight) { return invoke<int>(0x2B3451FA1E3142E2, x, y, z, flags, waterHeight); } // 0x2B3451FA1E3142E2 0x4C71D143 b1207
+	NATIVE_DECL int TEST_VERTICAL_PROBE_AGAINST_ALL_WATER(Vector3 vec, int flags, float* waterHeight) { return invoke<int>(0x2B3451FA1E3142E2, vec.x, vec.y, vec.z, flags, waterHeight); } // 0x2B3451FA1E3142E2 0x4C71D143 b1207
 	// Only used in rcm_crackpot1 R* Script: p0 = 0
 	NATIVE_DECL void REMOVE_EXTRA_CALMING_QUAD(int index) { invoke<Void>(0x4BEF8DD75AF6C71C, index); } // 0x4BEF8DD75AF6C71C 0x45268B6F b1207
 	// Called together with REMOVE_EXTRA_CALMING_QUAD in rcm_crackpot1 R* Script: p0 = 0
@@ -11246,6 +11613,7 @@ namespace WEAPON
 	NATIVE_DECL void _CLEAR_PED_LAST_WEAPON_DAMAGE(Ped ped) { invoke<Void>(0x087D8F4BC65F68E4, ped); } // 0x087D8F4BC65F68E4 b1207
 	NATIVE_DECL BOOL _HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON(Entity entity, Hash weaponName, int weaponType) { return invoke<BOOL>(0xDCF06D0CDFF68424, entity, weaponName, weaponType); } // 0xDCF06D0CDFF68424 b1207
 	NATIVE_DECL void SET_PED_DROPS_INVENTORY_WEAPON(Ped ped, Hash weaponHash, float xOffset, float yOffset, float zOffset, int ammoCount) { invoke<Void>(0x208A1888007FC0E6, ped, weaponHash, xOffset, yOffset, zOffset, ammoCount); } // 0x208A1888007FC0E6 0x81FFB874 b1207
+	NATIVE_DECL void SET_PED_DROPS_INVENTORY_WEAPON(Ped ped, Hash weaponHash, Vector3 offset, int ammoCount) { invoke<Void>(0x208A1888007FC0E6, ped, weaponHash, offset.x, offset.y, offset.z, ammoCount); } // 0x208A1888007FC0E6 0x81FFB874 b1207
 	NATIVE_DECL void _0xB0FB9B196A3D13F0(Any p0, Any p1, Any p2) { invoke<Void>(0xB0FB9B196A3D13F0, p0, p1, p2); } // 0xB0FB9B196A3D13F0 b1207
 	// _SET_A* - _SET_B*
 	NATIVE_DECL void _0x2EBF70E1D8C06683(Ped ped, Hash p1) { invoke<Void>(0x2EBF70E1D8C06683, ped, p1); } // 0x2EBF70E1D8C06683 b1207
@@ -11293,6 +11661,7 @@ namespace WEAPON
 	NATIVE_DECL BOOL _HAS_ENTITY_BEEN_DAMAGED_BY_WEAPON_RECENTLY(Entity entity, Hash weaponHash, int ms) { return invoke<BOOL>(0x9E2D5D6BC97A5F1E, entity, weaponHash, ms); } // 0x9E2D5D6BC97A5F1E b1207
 	NATIVE_DECL Hash _GET_PED_HOGTIE_WEAPON(Ped ped) { return invoke<Hash>(0x90EB1CB189923587, ped); } // 0x90EB1CB189923587 b1207
 	NATIVE_DECL Object _CREATE_WEAPON_OBJECT(Hash weaponHash, int ammoCount, float x, float y, float z, BOOL showWorldModel, float scale) { return invoke<Object>(0x9888652B8BA77F73, weaponHash, ammoCount, x, y, z, showWorldModel, scale); } // 0x9888652B8BA77F73 b1207
+	NATIVE_DECL Object _CREATE_WEAPON_OBJECT(Hash weaponHash, int ammoCount, Vector3 vec, BOOL showWorldModel, float scale) { return invoke<Object>(0x9888652B8BA77F73, weaponHash, ammoCount, vec.x, vec.y, vec.z, showWorldModel, scale); } // 0x9888652B8BA77F73 b1207
 	NATIVE_DECL void REMOVE_WEAPON_COMPONENT_FROM_WEAPON_OBJECT(Object weaponObject, Hash component) { invoke<Void>(0xF7D82B0D66777611, weaponObject, component); } // 0xF7D82B0D66777611 0xA6E7ED3C b1207
 	NATIVE_DECL BOOL HAS_WEAPON_GOT_WEAPON_COMPONENT(Object weapon, Hash addonHash) { return invoke<BOOL>(0x76A18844E743BF91, weapon, addonHash); } // 0x76A18844E743BF91 0x1D368510 b1207
 	NATIVE_DECL void _GIVE_WEAPON_COMPONENT_TO_WEAPON_OBJECT(Object* weaponObject, Ped ped, Hash componentHash, BOOL p3) { invoke<Void>(0x1A47699E8D533E8F, weaponObject, ped, componentHash, p3); } // 0x1A47699E8D533E8F b1207
@@ -11457,6 +11826,7 @@ namespace ZONE
 	// 
 	// https://github.com/femga/rdr3_discoveries/tree/master/zones & https://alloc8or.re/rdr3/doc/enums/CMapZone__Type.txt
 	NATIVE_DECL Hash _GET_MAP_ZONE_AT_COORDS(float x, float y, float z, int type) { return invoke<Hash>(0x43AD8FC02B429D33, x, y, z, type); } // 0x43AD8FC02B429D33 b1207
+	NATIVE_DECL Hash _GET_MAP_ZONE_AT_COORDS(Vector3 vec, int type) { return invoke<Hash>(0x43AD8FC02B429D33, vec.x, vec.y, vec.z, type); } // 0x43AD8FC02B429D33 b1207
 	// Returns the zone's name hash if its type matches one of the following:
 	// - LAKE
 	// - RIVER
@@ -11467,6 +11837,7 @@ namespace ZONE
 	// - POND
 	// - GLACIER
 	NATIVE_DECL Hash _GET_WATER_MAP_ZONE_AT_COORDS(float x, float y, float z) { return invoke<Hash>(0x5BA7A68A346A5A91, x, y, z); } // 0x5BA7A68A346A5A91 b1207
+	NATIVE_DECL Hash _GET_WATER_MAP_ZONE_AT_COORDS(Vector3 vec) { return invoke<Hash>(0x5BA7A68A346A5A91, vec.x, vec.y, vec.z); } // 0x5BA7A68A346A5A91 b1207
 }
 
 namespace COMPAPP
@@ -11482,3 +11853,4 @@ namespace COMPAPP
 	// nullsub, doesn't do anything
 	NATIVE_DECL void _0xCCB4635A071FB62D() { invoke<Void>(0xCCB4635A071FB62D); } // 0xCCB4635A071FB62D b1207
 }
+
