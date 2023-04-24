@@ -220,3 +220,33 @@ struct RaycastResult
 	Vector3 SurfaceNormal;
 	Hash MaterialHash;
 };
+
+//TuffyTown (Halen84) Inventory Structs https://www.rdr2mods.com/forums/topic/2139-addingremoving-items-to-inventory-using-natives/
+
+struct sGuid
+{
+	alignas(8) int data1;
+	alignas(8) int data2;
+	alignas(8) int data3;
+	alignas(8) int data4;
+};
+
+struct sSlotInfo
+{
+	alignas(8) sGuid guid;
+	alignas(8) int f_1;
+	alignas(8) int f_2;
+	alignas(8) int f_3;
+	alignas(8) int slotId;
+};
+
+struct sItemInfo
+{
+	alignas(8) int f_0;
+	alignas(8) int f_1;
+	alignas(8) int f_2;
+	alignas(8) int f_3;
+	alignas(8) int f_4;
+	alignas(8) int f_5;
+	alignas(8) int f_6;
+};
