@@ -37,4 +37,15 @@ Prompt promptHandler(const char* promptText, Hash controlAction, int promptType)
 void DisplayObjective(const char* objective);
 Ped getClosestEnemy(float distance);
 void addPedToPlayerGroup(Ped ped);
+void createGroup(int& outGroup, int formation, float formationSeperation);
+/*TuffyTown (Halen84) Add Item To Inventory Functions https://www.rdr2mods.com/forums/topic/2139-addingremoving-items-to-inventory-using-natives/ */
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/
+sGuid CreateNewGUID();
+sGuid GetPlayerInventoryItemGUID(Hash item, sGuid guid, Hash slotId);
+sGuid GetPlayerInventoryGUID();
+Hash GetItemGroup(Hash item);
+sSlotInfo GetItemSlotInfo(Hash item);
+bool AddItemWithGUID(Hash item, sGuid& guid, sSlotInfo& slotInfo, int quantity, Hash addReason);
+bool AddItemToInventory(Hash item, int quantity);
+bool RemoveItemFromInventory(int inventoryid, Hash item, int quanity, Hash removeReason);
 
