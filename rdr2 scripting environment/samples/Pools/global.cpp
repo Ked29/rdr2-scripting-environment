@@ -190,7 +190,120 @@ void addPedToPlayerGroup(Ped ped)
 {
 	PED::SET_PED_AS_GROUP_MEMBER(ped, PLAYER::GET_PLAYER_GROUP(PLAYER::PLAYER_ID()));
 }
+void createGroup(int& outGroup, int formation, float formationSeperation)
+{
+	outGroup = PED::CREATE_GROUP(0);
+	PED::SET_GROUP_FORMATION(outGroup, formation);
+	PED::SET_GROUP_FORMATION_SPACING(outGroup, formationSeperation, formationSeperation, formationSeperation);
+}
 
+/*TuffyTown (Halen84) Add Item To Inventory Functions https://www.rdr2mods.com/forums/topic/2139-addingremoving-items-to-inventory-using-natives/ */
+/*------------------------------------------------------------------------------------------------------------------------------------------------*/
+sGuid CreateNewGUID()
+{
+	sGuid guid{};
+	return guid;
+}
+
+sGuid GetPlayerInventoryItemGUID(Hash item, sGuid guid, Hash slotId)
+{
+	sGuid outGuid{};
+	INVENTORY::INVENTORY_GET_GUID_FROM_ITEMID(1, (Any*)&guid, item, slotId, (Any*)&outGuid);
+	return outGuid;
+
+}
+
+sGuid GetPlayerInventoryGUID()
+{
+	return GetPlayerInventoryItemGUID(MISC::GET_HASH_KEY("CHARACTER"), CreateNewGUID(), MISC::GET_HASH_KEY("SLOTID_NONE"));
+}
+
+Hash GetItemGroup(Hash item)
+{
+	sItemInfo info{};
+
+	if (!ITEMDATABASE::_ITEMDATABASE_IS_KEY_VALID(item, 0))
+	{
+		return 0;
+	}
+	if (!ITEMDATABASE::ITEMDATABASE_FILLOUT_ITEM_INFO(item, (Any*)&info))
+	{
+		return 0;
+	}
+	return info.f_2;
+}
+
+sSlotInfo GetItemSlotInfo(Hash item)
+{
+	sSlotInfo slotInfo{};
+
+	slotInfo.guid = GetPlayerInventoryGUID();
+	slotInfo.slotId = MISC::GET_HASH_KEY("SLOTID_SATCHEL");
+
+	Hash group = GetItemGroup(item);
+	switch (group)
+	{
+	case 0xC2286F01: // CLOTHING
+		if (!INVENTORY::_INVENTORY_FITS_SLOT_ID(item, MISC::GET_HASH_KEY("SLOTID_WARDROBE")))
+		{
+			slotInfo.guid = GetPlayerInventoryItemGUID(MISC::GET_HASH_KEY("WARDROBE"), slotInfo.guid, MISC::GET_HASH_KEY("SLOTID_WARDROBE"));
+			slotInfo.slotId = INVENTORY::_GET_DEFAULT_ITEM_SLOT_INFO(item, MISC::GET_HASH_KEY("WARDROBE"));
+		}
+		else
+		{
+			slotInfo.slotId = MISC::GET_HASH_KEY("SLOTID_WARDROBE");
+		}
+		break;
+	case 0x95A6F147: // HORSE
+		slotInfo.slotId = MISC::GET_HASH_KEY("SLOTID_ACTIVE_HORSE");
+		break;
+	case 0x80FB92CD: // UPGRADE
+		if (INVENTORY::_INVENTORY_FITS_SLOT_ID(item, MISC::GET_HASH_KEY("SLOTID_UPGRADE")))
+		{
+			slotInfo.slotId = MISC::GET_HASH_KEY("SLOTID_UPGRADE");
+		}
+	default:
+		if (INVENTORY::_INVENTORY_FITS_SLOT_ID(item, MISC::GET_HASH_KEY("SLOTID_SATCHEL")))
+		{
+			slotInfo.slotId = MISC::GET_HASH_KEY("SLOTID_SATCHEL");
+		}
+		else if (INVENTORY::_INVENTORY_FITS_SLOT_ID(item, MISC::GET_HASH_KEY("SLOTID_WARDROBE")))
+		{
+			slotInfo.slotId = MISC::GET_HASH_KEY("SLOTID_WARDROBE");
+		}
+		else
+		{
+			slotInfo.slotId = INVENTORY::_GET_DEFAULT_ITEM_SLOT_INFO(item, MISC::GET_HASH_KEY("CHARACTER"));
+		}
+		break;
+	}
+	return slotInfo;
+}
+
+bool AddItemWithGUID(Hash item, sGuid& guid, sSlotInfo& slotInfo, int quantity, Hash addReason)
+{
+	if (!INVENTORY::_INVENTORY_IS_GUID_VALID((Any*)&slotInfo.guid))
+	{
+		return false;
+	}
+	if (!INVENTORY::_INVENTORY_ADD_ITEM_WITH_GUID(1, (Any*)&guid, (Any*)&slotInfo.guid, item, slotInfo.slotId, quantity, addReason))
+	{
+		return false;
+	}
+	return true;
+}
+bool AddItemToInventory(Hash item, int quantity)
+{
+	sSlotInfo slotInfo = GetItemSlotInfo(item);
+	sGuid guid = GetPlayerInventoryItemGUID(item, slotInfo.guid, slotInfo.slotId);
+	return AddItemWithGUID(item, guid, slotInfo, quantity, MISC::GET_HASH_KEY("ADD_REASON_DEFAULT"));
+
+}
+
+bool RemoveItemFromInventory(int inventoryid, Hash item, int quanity, Hash removeReason)
+{
+	return INVENTORY::_INVENTORY_REMOVE_INVENTORY_ITEM_WITH_ITEMID(inventoryid, item, quanity, removeReason);
+}
 
 
 
