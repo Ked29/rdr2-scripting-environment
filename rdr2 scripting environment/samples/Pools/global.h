@@ -35,6 +35,9 @@ void kill_scripts(std::vector<Hash> scripts);
 Prompt promptHandler(const char* promptText, Hash controlAction, int promptType);
 //credit TuffyTown (Halen84)
 void DisplayObjective(const char* objective);
+void DisplayMissionName(const char* name, int duration);
+void DisplayHelpText(const char* text, int duration);
+void DisplayLeftToast(const char* title, const char* subtitle, const char* textureDictionary, const char* textureName, int duration);
 Ped getClosestEnemy(float distance);
 void addPedToPlayerGroup(Ped ped);
 void createGroup(int& outGroup, int formation, float formationSeperation);
