@@ -187,10 +187,10 @@ Ped getClosestEnemy(float distance)
 {
 	Ped worldPeds[1024];
 	int worldPedCount = worldGetAllPeds(worldPeds, 1024);
-	std::vector<std::pair<int, float>> pv;
+	std::vector<std::pair<int, float>> pv{};
 	pv.clear();
-	int p;
-	float f;
+	int p{};
+	float f{};
 	for (int i = 0; i < worldPedCount; i++)
 	{
 		if (!ENTITY::IS_ENTITY_DEAD(worldPeds[i]))
