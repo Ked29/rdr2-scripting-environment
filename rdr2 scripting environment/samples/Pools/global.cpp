@@ -147,6 +147,42 @@ void DisplayObjective(const char* objective)
 	UILOG::_UILOG_CLEAR_CACHED_OBJECTIVE();
 }
 
+void DisplayMissionName(const char* name, int duration)
+{
+	FeedData data;
+	memset(&data, 0, sizeof(data));
+	FeedInfo info;
+	memset(&info, 0, sizeof(info));
+	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", name);
+	data.duration = duration;
+	UIFEED::_UI_FEED_POST_MISSION_NAME((Any*)&data, (Any*)&info, true);
+}
+
+void DisplayHelpText(const char* text, int duration)
+{
+	FeedData data;
+	memset(&data, 0, sizeof(data));
+	FeedInfo info;
+	memset(&info, 0, sizeof(info));
+	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", text);
+	data.duration = duration;
+	UIFEED::_UI_FEED_POST_HELP_TEXT((Any*)&data, (Any*)&info, true);
+}
+
+void DisplayLeftToast(const char* title, const char* subtitle, const char* textureDictionary, const char* textureName, int duration)
+{
+	FeedData data;
+	memset(&data, 0, sizeof(data));
+	FeedInfo info;
+	memset(&info, 0, sizeof(info));
+	data.duration = duration;
+	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
+	info.subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", subtitle);
+	info.texture_dictionary_hash = MISC::GET_HASH_KEY(textureDictionary);
+	info.texture_name_hash = MISC::GET_HASH_KEY(textureName);
+	UIFEED::_UI_FEED_POST_SAMPLE_TOAST((Any*)&data, (Any*)&info, true, true);
+}
+
 Ped getClosestEnemy(float distance)
 {
 	Ped worldPeds[1024];
