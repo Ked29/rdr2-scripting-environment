@@ -371,5 +371,13 @@ std::string Vector3ToString(const Vector3& v)
 	ss << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 	return ss.str();
 }
+template<typename T, typename F>
+void forEach(const std::vector<T>& vec, F func)
+{
+	for (const auto& element : vec) {
+		func(element);
+	}
+}
+
 
 
