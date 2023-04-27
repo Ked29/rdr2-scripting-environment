@@ -371,6 +371,17 @@ std::string Vector3ToString(const Vector3& v)
 	ss << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 	return ss.str();
 }
+
+/*Can be used like this as an example, you can use in many ways though
+std::vector<int> peds{};
+forEach(peds, [&](int* ped)
+{
+	if (PED::GET_CURRENT_TARGET_FOR_PED(ped) == PLAYER::PLAYER_PED_ID())
+	{
+		TASK::TASK_COMBAT_PED(PLAYER::PLAYER_PED_ID(), ped, 0, 0);
+	}
+});
+*/
 template<typename T, typename F>
 void forEach(const std::vector<T>& vec, F func)
 {
