@@ -51,4 +51,9 @@ sSlotInfo GetItemSlotInfo(Hash item);
 bool AddItemWithGUID(Hash item, sGuid& guid, sSlotInfo& slotInfo, int quantity, Hash addReason);
 bool AddItemToInventory(Hash item, int quantity);
 bool RemoveItemFromInventory(int inventoryid, Hash item, int quanity, Hash removeReason);
+/*back to none inventory stuff*/
+Vector3 addVector3(const Vector3& v1, const Vector3& v2);
+Vector3 subVector3(const Vector3& v1, const Vector3& v2);
+Vector3 multiplyVector3(const Vector3& v1, const Vector3& v2);
+Vector3 divideVector3(const Vector3& v1, const Vector3& v2);
 
