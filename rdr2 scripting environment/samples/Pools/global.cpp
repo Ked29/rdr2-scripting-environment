@@ -82,7 +82,7 @@ Vector3 func_vec(Ped ped)
 	return ENTITY::GET_ENTITY_COORDS(ped, true, true);
 }
 
-int func_cped(Hash model, float posx, float posy, float posz, float heading, int outfitVariation)
+int func_cped(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0)
 {
 	int ped;
 	STREAMING::REQUEST_MODEL(model, true);
@@ -97,7 +97,7 @@ int func_cped(Hash model, float posx, float posy, float posz, float heading, int
 	return ped;
 }
 
-int func_cped(Hash model, Vector3 pos, float heading, int outfitVariation)
+int func_cped(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation = 0)
 {
 	int ped;
 	STREAMING::REQUEST_MODEL(model, true);
