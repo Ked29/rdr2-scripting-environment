@@ -56,4 +56,5 @@ Vector3 addVector3(const Vector3& v1, const Vector3& v2);
 Vector3 subVector3(const Vector3& v1, const Vector3& v2);
 Vector3 multiplyVector3(const Vector3& v1, const Vector3& v2);
 Vector3 divideVector3(const Vector3& v1, const Vector3& v2);
+std::string Vector3ToString(const Vector3& v);
 
