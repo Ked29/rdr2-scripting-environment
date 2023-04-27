@@ -365,5 +365,11 @@ Vector3 divideVector3(const Vector3& v1, const Vector3& v2)
 	Vector3 result = { v1.x / v2.x, v1.y / v2.y, v1.z / v2.z };
 	return result;
 }
+std::string Vector3ToString(const Vector3& v)
+{
+	std::stringstream ss;
+	ss << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return ss.str();
+}
 
 
