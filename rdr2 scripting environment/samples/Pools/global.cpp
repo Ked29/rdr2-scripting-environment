@@ -340,6 +340,30 @@ bool RemoveItemFromInventory(int inventoryid, Hash item, int quanity, Hash remov
 {
 	return INVENTORY::_INVENTORY_REMOVE_INVENTORY_ITEM_WITH_ITEMID(inventoryid, item, quanity, removeReason);
 }
+/*back to none inventory functions*/
 
+Vector3 addVector3(const Vector3& v1, const Vector3& v2)
+{
+	Vector3 result = { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
+	return result;
+}
+
+Vector3 subVector3(const Vector3& v1, const Vector3& v2)
+{
+	Vector3 result = { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
+	return result;
+}
+
+Vector3 multiplyVector3(const Vector3& v1, const Vector3& v2)
+{
+	Vector3 result = { v1.x * v2.x, v1.y * v2.y, v1.z * v2.z };
+	return result;
+}
+
+Vector3 divideVector3(const Vector3& v1, const Vector3& v2)
+{
+	Vector3 result = { v1.x / v2.x, v1.y / v2.y, v1.z / v2.z };
+	return result;
+}
 
 
