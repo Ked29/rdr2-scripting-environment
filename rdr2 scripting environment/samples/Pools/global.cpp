@@ -82,7 +82,7 @@ Vector3 GetCoords(Ped ped)
 	return ENTITY::GET_ENTITY_COORDS(ped, true, true);
 }
 
-int func_cped(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0)
+int CreatePed(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -100,7 +100,7 @@ int func_cped(Hash model, float posx, float posy, float posz, float heading = 0.
 	return ped;
 }
 
-int func_cped(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation = 0)
+int CreatePed(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation = 0)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -118,7 +118,7 @@ int func_cped(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation 
 	return ped;
 }
 
-int func_cped_mount(Ped mount, Hash model, int seatIndex = -1, int outfitVariation = 0)
+int CreatePedOnMount(Ped mount, Hash model, int seatIndex = -1, int outfitVariation = 0)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -136,7 +136,7 @@ int func_cped_mount(Ped mount, Hash model, int seatIndex = -1, int outfitVariati
 	return ped;
 }
 
-int func_cvehicle(Hash model, float posx, float posy, float posz, float heading = 0.f)
+int CreateVehicle(Hash model, float posx, float posy, float posz, float heading = 0.f)
 {
 	int vehicle{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -152,7 +152,7 @@ int func_cvehicle(Hash model, float posx, float posy, float posz, float heading 
 	return vehicle;
 }
 
-int func_cvehicle(Hash model, Vector3 pos, float heading = 0.f)
+int CreateVehicle(Hash model, Vector3 pos, float heading = 0.f)
 {
 	int vehicle{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -168,7 +168,7 @@ int func_cvehicle(Hash model, Vector3 pos, float heading = 0.f)
 	return vehicle;
 }
 
-int func_cped_vehicle(Vehicle vehicle, Hash model, int seatIndex = -1, int outfitVariation = 0)
+int CreatePedInVehicle(Vehicle vehicle, Hash model, int seatIndex = -1, int outfitVariation = 0)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -463,6 +463,3 @@ void forEach(const std::vector<T>& vec, F func)
 		func(element);
 	}
 }
-
-
-
