@@ -77,38 +77,112 @@ bool inVehicle(Ped ped)
 	return PED::IS_PED_IN_ANY_VEHICLE(ped, true);
 }
 
-Vector3 func_vec(Ped ped)
+Vector3 GetCoords(Ped ped)
 {
 	return ENTITY::GET_ENTITY_COORDS(ped, true, true);
 }
 
 int func_cped(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0)
 {
-	int ped;
+	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
 	if (!STREAMING::HAS_MODEL_LOADED(model))
 	{
 		WAIT(0);
 	}
-	ped = PED::CREATE_PED(model, posx, posy, posz, heading, false, false, false, false);
-	ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
-	PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, false);
-	PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	else
+	{
+		ped = PED::CREATE_PED(model, posx, posy, posz, heading, false, false, false, false);
+		ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
+		PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, false);
+		PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	}
 	return ped;
 }
 
 int func_cped(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation = 0)
 {
-	int ped;
+	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
 	if (!STREAMING::HAS_MODEL_LOADED(model))
 	{
 		WAIT(0);
 	}
-	ped = PED::CREATE_PED(model, pos, heading, false, false, false, false);
-	ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
-	PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, false);
-	PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	else
+	{
+		ped = PED::CREATE_PED(model, pos, heading, false, false, false, false);
+		ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
+		PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, false);
+		PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	}
+	return ped;
+}
+
+int func_cped_mount(Ped mount, Hash model, int seatIndex = -1, int outfitVariation = 0)
+{
+	int ped{};
+	STREAMING::REQUEST_MODEL(model, true);
+	if (!STREAMING::HAS_MODEL_LOADED(model))
+	{
+		WAIT(0);
+	}
+	else
+	{
+		ped = PED::CREATE_PED_ON_MOUNT(mount, model, seatIndex, false, false, false, false);
+		ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
+		PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, false);
+		PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	}
+	return ped;
+}
+
+int func_cvehicle(Hash model, float posx, float posy, float posz, float heading = 0.f)
+{
+	int vehicle{};
+	STREAMING::REQUEST_MODEL(model, true);
+	if (!STREAMING::HAS_MODEL_LOADED(model))
+	{
+		WAIT(0);
+	}
+	else
+	{
+		vehicle = VEHICLE::CREATE_VEHICLE(model, posx, posy, posz, heading, false, false, false, false);
+		VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(vehicle, true);
+	}
+	return vehicle;
+}
+
+int func_cvehicle(Hash model, Vector3 pos, float heading = 0.f)
+{
+	int vehicle{};
+	STREAMING::REQUEST_MODEL(model, true);
+	if (!STREAMING::HAS_MODEL_LOADED(model))
+	{
+		WAIT(0);
+	}
+	else
+	{
+		vehicle = VEHICLE::CREATE_VEHICLE(model, pos, heading, false, false, false, false);
+		VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(vehicle, true);
+	}
+	return vehicle;
+}
+
+int func_cped_vehicle(Vehicle vehicle, Hash model, int seatIndex = -1, int outfitVariation = 0)
+{
+	int ped{};
+	STREAMING::REQUEST_MODEL(model, true);
+	if (!STREAMING::HAS_MODEL_LOADED(model))
+	{
+		WAIT(0);
+	}
+	else
+	{
+		ped = PED::CREATE_PED_INSIDE_VEHICLE(vehicle, model, seatIndex, false, false, false);
+		ENTITY::PLACE_ENTITY_ON_GROUND_PROPERLY(ped, true);
+		PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, false);
+		PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	}
 	return ped;
 }
 
