@@ -24,10 +24,15 @@ getter function for the vehicle handle that a ped is in.*/
 Vehicle getVehicle(Ped ped);
 /*returns true or false if ped is in any vehicle*/
 bool inVehicle(Ped ped);
-Vector3 func_vec(Ped ped);
+Vector3 GetCoords(Ped ped);
 /*Simple ped creator function, returns the ped handle so that you have full control over all peds you spawn*/
-int func_cped(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0);
-int func_cped(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation = 0);
+int func_cped(Hash model, float posx, float posy, float posz, float heading, int outfitVariation);
+int func_cped(Hash model, Vector3 pos, float heading, int outfitVariation);
+int func_cped_mount(Ped mount, Hash model, int seatIndex, int outfitVariation);
+int func_cvehicle(Hash model, float posx, float posy, float posz, float heading);
+int func_cvehicle(Hash model, Vector3 pos, float heading);
+int func_cped_vehicle(Vehicle vehicle, Hash model, int seatIndex, int outfitVariation);
+
 /*
 Slightly modified version of SgtJoe's script kill code
 only difference is this can kill multiple scripts at once
@@ -61,3 +66,4 @@ Vector3 divideVector3(const Vector3& v1, const Vector3& v2);
 std::string Vector3ToString(const Vector3& v);
 template<typename T, typename F>
 void forEach(const std::vector<T>& vec, F func);
+
