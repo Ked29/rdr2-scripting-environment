@@ -82,7 +82,7 @@ Vector3 GetCoords(Ped ped)
 	return ENTITY::GET_ENTITY_COORDS(ped, true, true);
 }
 
-int CreatePed(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0)
+int CreatePed(Hash model, float posx, float posy, float posz, float heading, int outfitVariation)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -100,7 +100,7 @@ int CreatePed(Hash model, float posx, float posy, float posz, float heading = 0.
 	return ped;
 }
 
-int CreatePed(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation = 0)
+int CreatePed(Hash model, Vector3 pos, float heading, int outfitVariation)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -118,7 +118,7 @@ int CreatePed(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation 
 	return ped;
 }
 
-int CreatePedOnMount(Ped mount, Hash model, int seatIndex = -1, int outfitVariation = 0)
+int CreatePedOnMount(Ped mount, Hash model, int seatIndex, int outfitVariation)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -136,7 +136,7 @@ int CreatePedOnMount(Ped mount, Hash model, int seatIndex = -1, int outfitVariat
 	return ped;
 }
 
-int CreateVehicle(Hash model, float posx, float posy, float posz, float heading = 0.f)
+int CreateVehicle(Hash model, float posx, float posy, float posz, float heading)
 {
 	int vehicle{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -152,7 +152,7 @@ int CreateVehicle(Hash model, float posx, float posy, float posz, float heading 
 	return vehicle;
 }
 
-int CreateVehicle(Hash model, Vector3 pos, float heading = 0.f)
+int CreateVehicle(Hash model, Vector3 pos, float heading)
 {
 	int vehicle{};
 	STREAMING::REQUEST_MODEL(model, true);
@@ -168,7 +168,7 @@ int CreateVehicle(Hash model, Vector3 pos, float heading = 0.f)
 	return vehicle;
 }
 
-int CreatePedInVehicle(Vehicle vehicle, Hash model, int seatIndex = -1, int outfitVariation = 0)
+int CreatePedInVehicle(Vehicle vehicle, Hash model, int seatIndex, int outfitVariation)
 {
 	int ped{};
 	STREAMING::REQUEST_MODEL(model, true);
