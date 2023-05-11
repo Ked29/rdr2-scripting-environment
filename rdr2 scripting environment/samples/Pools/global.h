@@ -66,4 +66,16 @@
 	std::string Vector3ToString(const Vector3& v);
 	template<typename T, typename F>
 	void forEach(const std::vector<T>& vec, F func);
+	int GetMount(Ped ped);
+	Hash GetWeapon(Ped ped);
+	Hash GetBestWeapon(Ped ped);
+	int GetPedTarget(Ped ped);
+	Volume CreateVolumeBox(float posx, float posy, float posz, float size);
+	Volume CreateVolumeBox(Vector3 pos, float size);
+	Volume CreateVolumeSphere(float posx, float posy, float posz, float size);
+	Volume CreateVolumeSphere(Vector3 pos, float size);
+	//the ped parameter is the ped you want to dismount a horse or something.
+	void DismountPed(Ped ped);
+	void DismountAnyVehicle(Ped ped, int flags = ECF_WAIT_FOR_ENTRY_POINT_TO_BE_CLEAR);
+	void AddWeaponToPed(Ped ped, Hash weaponHash, int ammoCount = 100, int attachPoint = WEAPON_ATTACH_POINT_HAND_SECONDARY, bool inHand = true);
 
