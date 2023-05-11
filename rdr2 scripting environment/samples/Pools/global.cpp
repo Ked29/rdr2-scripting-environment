@@ -446,6 +446,63 @@ std::string Vector3ToString(const Vector3& v)
 	return ss.str();
 }
 
+int GetMount(Ped ped)
+{
+	return PED::GET_MOUNT(ped);
+}
+
+Hash GetWeapon(Ped ped)
+{
+	Hash weaponHash{};
+	WEAPON::GET_CURRENT_PED_WEAPON(ped, &weaponHash, true, WEAPON_ATTACH_POINT_HAND_PRIMARY, true);
+	return weaponHash;
+}
+
+Hash GetBestWeapon(Ped ped)
+{
+	return WEAPON::GET_BEST_PED_WEAPON(ped, true, true);
+}
+
+int GetPedTarget(Ped ped)
+{
+	return PED::GET_CURRENT_TARGET_FOR_PED(ped);
+}
+
+Volume CreateVolumeBox(float posx, float posy, float posz, float size)
+{
+	return VOLUME::CREATE_VOLUME_BOX(posx, posy, posz, 0.f, 0.f, 0.f, size, size, size);
+}
+
+Volume CreateVolumeBox(Vector3 pos, float size)
+{
+	return VOLUME::CREATE_VOLUME_BOX(pos, { 0.f, 0.f, 0.f }, { size, size, size });
+}
+
+Volume CreateVolumeSphere(float posx, float posy, float posz, float size)
+{
+	return VOLUME::CREATE_VOLUME_SPHERE(posx, posy, posz, 0.f, 0.f, 0.f, size, size, size);
+}
+
+Volume CreateVolumeSphere(Vector3 pos, float size)
+{
+	return VOLUME::CREATE_VOLUME_SPHERE(pos, { 0.f, 0.f, 0.f }, { size, size, size });
+}
+
+void DismountPed(Ped ped)
+{
+	PED::_REMOVE_PED_FROM_MOUNT(ped, true, true);
+}
+// see enum eEnterExitVehicleFlags
+void DismountAnyVehicle(Ped ped, int flags)
+{
+	TASK::TASK_LEAVE_ANY_VEHICLE(ped, 0, flags);
+}
+
+void AddWeaponToPed(Ped ped, Hash weaponHash, int ammoCount, int attachPoint, bool inHand)
+{
+	WEAPON::GIVE_WEAPON_TO_PED(ped, weaponHash, ammoCount, inHand, !inHand, attachPoint, false, 0.5f, 1.f, joaat("ADD_REASON_DEFAULT"), false, 0.f, false);
+}
+
 /*Can be used like this as an example, you can use in many ways though
 std::vector<int> peds{};
 forEach(peds, [&](int* ped)
