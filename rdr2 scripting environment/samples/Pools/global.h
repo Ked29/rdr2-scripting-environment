@@ -77,5 +77,5 @@
 	//the ped parameter is the ped you want to dismount a horse or something.
 	void DismountPed(Ped ped);
 	void DismountAnyVehicle(Ped ped, int flags = ECF_WAIT_FOR_ENTRY_POINT_TO_BE_CLEAR);
-	void AddWeaponToPed(Ped ped, Hash weaponHash, int ammoCount = 100, int attachPoint = WEAPON_ATTACH_POINT_HAND_SECONDARY, bool inHand = true);
+	void AddWeaponToPed(Ped ped, Hash weaponHash, int ammoCount = 100, int attachPoint = WEAPON_ATTACH_POINT_HAND_PRIMARY, bool inHand = true);
 
