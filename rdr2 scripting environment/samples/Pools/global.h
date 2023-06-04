@@ -28,7 +28,7 @@
 	/*Simple ped creator function, returns the ped handle so that you have full control over all peds you spawn*/
 	int CreatePed(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0);
 	int CreatePed(Hash model, Vector3 pos, float heading = 0.f, int outfitVariation = 0);
-	int CreatePedOnMount(Ped mount, Hash model, int seatIndex = -1, int outfitVariation = );
+	int CreatePedOnMount(Ped mount, Hash model, int seatIndex = -1, int outfitVariation = 0);
 	int CreateVehicle(Hash model, float posx, float posy, float posz, float heading = 0.f);
 	int CreateVehicle(Hash model, Vector3 pos, float heading = 0.f);
 	int CreatePedInVehicle(Vehicle vehicle, Hash model, int seatIndex = -1, int outfitVariation = 0);
