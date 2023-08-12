@@ -50,7 +50,7 @@
 	*/
 	void kill_scripts(std::vector<Hash> scripts);
 	Prompt promptHandler(const char* promptText, Hash controlAction, int promptType);
-	//credit TuffyTown (Halen84)
+	//credit DisplayObjective -> TuffyTown (Halen84)
 	void DisplayObjective(const char* objective);
 	void DisplayMissionName(const char* name, int duration);
 	void DisplayHelpText(const char* text, int duration);
