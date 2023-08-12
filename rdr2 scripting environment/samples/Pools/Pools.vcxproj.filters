@@ -22,6 +22,7 @@
     </ClInclude>
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="global.h" />
+    <ClInclude Include="common.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">

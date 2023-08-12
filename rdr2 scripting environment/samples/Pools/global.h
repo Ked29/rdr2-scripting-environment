@@ -1,13 +1,7 @@
 	#pragma once
 
 	#include "script.h"
-	#include <string>
-	#include <vector>
-	#include <sstream>
-	#include <algorithm>
-	#include <math.h>
-	#include <utility>
-	#include "keyboard.h"
+	
 
 	using namespace std;
 
@@ -19,11 +13,13 @@
 	int CreateBlipForVolume(Hash style, Hash sprite, const char* blipName, Volume volume);
 	int CreateBlipForPed(Hash style, Hash sprite, const char* blipName, Ped ped);
 	int CreateBlipForCoords(Hash style, Hash sprite, const char* blipName, Vector3 coords);
+	std::string Vector3ToString(const Vector3& v);
 	/*Can be combined/used in harmony with function below.
 	getter function for the vehicle handle that a ped is in.*/
 	Vehicle getVehicle(Ped ped);
 	/*returns true or false if ped is in any vehicle*/
 	bool inVehicle(Ped ped);
+	bool VehicleIsEmpty(Vehicle vehicle);
 	Vector3 GetCoords(Ped ped);
 	/*Simple ped creator function, returns the ped handle so that you have full control over all peds you spawn*/
 	int CreatePed(Hash model, float posx, float posy, float posz, float heading = 0.f, int outfitVariation = 0);
@@ -32,6 +28,20 @@
 	int CreateVehicle(Hash model, float posx, float posy, float posz, float heading = 0.f);
 	int CreateVehicle(Hash model, Vector3 pos, float heading = 0.f);
 	int CreatePedInVehicle(Vehicle vehicle, Hash model, int seatIndex = -1, int outfitVariation = 0);
+	void GiveSaddleToHorse(Ped horse);
+	void UpdatePedOutfit(Ped ped, int outfitVariation = 0);
+	int GetRandomOutfitPreset(Ped ped);
+	void SetRandomOutfitPreset(Ped ped);
+	void RequestTextureDict(const char* textureDict);
+	void RequestTextureHash(Hash textureHash);
+	void ReleaseTextureDict(const char* textureDict);
+	void ReleaseTextureHash(Hash textureHash);
+	void DrawTextToScreen(const char* text, float x = 0.0f, float y = 0.0f, float scale = 1.f, int r = 255, int g = 255, int b = 255, int a = 255);
+	void DrawTextToScreen(int value, float x = 0.0f, float y = 0.0f, float scale = 1.f, int r = 255, int g = 255, int b = 255, int a = 255);
+	void DrawTextToScreen(std::string text, float x = 0.0f, float y = 0.0f, float scale = 1.f, int r = 255, int g = 255, int b = 255, int a = 255);
+	void DrawTextToScreen(Vector3 value, float x = 0.0f, float y = 0.0f, float scale = 1.f, int r = 255, int g = 255, int b = 255, int a = 255);
+	void PlayFrontendAudio(const char* audioName, const char* audioRef);
+	void StopFrontendAudio(const char* audioName, const char* audioRef);
 
 	/*
 	Slightly modified version of SgtJoe's script kill code
@@ -45,6 +55,8 @@
 	void DisplayMissionName(const char* name, int duration);
 	void DisplayHelpText(const char* text, int duration);
 	void DisplayLeftToast(const char* title, const char* subtitle, const char* textureDictionary, const char* textureName, int duration);
+	void DisplayOneTextShard(const char* title, int duration);
+	void DisplayTwoTextShard(const char* title, const char* subtitle, int duration);
 	Ped getClosestEnemy(float distance);
 	void addPedToPlayerGroup(Ped ped);
 	void createGroup(int& outGroup, int formation, float formationSeperation);
@@ -59,16 +71,13 @@
 	bool AddItemToInventory(Hash item, int quantity);
 	bool RemoveItemFromInventory(int inventoryid, Hash item, int quanity, Hash removeReason);
 	/*back to none inventory stuff*/
-	Vector3 addVector3(const Vector3& v1, const Vector3& v2);
-	Vector3 subVector3(const Vector3& v1, const Vector3& v2);
-	Vector3 multiplyVector3(const Vector3& v1, const Vector3& v2);
-	Vector3 divideVector3(const Vector3& v1, const Vector3& v2);
-	std::string Vector3ToString(const Vector3& v);
-	template<typename T, typename F>
-	void forEach(const std::vector<T>& vec, F func);
 	int GetMount(Ped ped);
 	Hash GetWeapon(Ped ped);
 	Hash GetBestWeapon(Ped ped);
+	int GetAmmo(int ped);
+	int GetMaxClipAmmo(int ped);
+	int GetClipAmmo(int ped);
+	Object CreateObject(Hash model, Vector3 pos);
 	int GetPedTarget(Ped ped);
 	Volume CreateVolumeBox(float posx, float posy, float posz, float size);
 	Volume CreateVolumeBox(Vector3 pos, float size);
@@ -78,4 +87,8 @@
 	void DismountPed(Ped ped);
 	void DismountAnyVehicle(Ped ped, int flags = ECF_WAIT_FOR_ENTRY_POINT_TO_BE_CLEAR);
 	void AddWeaponToPed(Ped ped, Hash weaponHash, int ammoCount = 100, int attachPoint = WEAPON_ATTACH_POINT_HAND_PRIMARY, bool inHand = true);
+	void RemoveAllWeapons(Ped ped);
+	void RemoveCurrentWeapon(Ped ped);
+	Hash GetWeaponFromGroup(Hash group);
+	Hash GetWeaponFromGroups(std::vector<Hash> groups);
 

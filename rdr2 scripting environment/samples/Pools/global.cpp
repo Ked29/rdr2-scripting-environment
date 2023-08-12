@@ -67,6 +67,13 @@ int CreateBlipForCoords(Hash style, Hash sprite, const char* blipName, Vector3 c
 	return coordBlip;
 }
 
+std::string Vector3ToString(const Vector3& v)
+{
+	std::stringstream ss;
+	ss << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return ss.str();
+}
+
 Vehicle getVehicle(Ped ped)
 {
 	return PED::GET_VEHICLE_PED_IS_USING(ped);
@@ -75,6 +82,23 @@ Vehicle getVehicle(Ped ped)
 bool inVehicle(Ped ped)
 {
 	return PED::IS_PED_IN_ANY_VEHICLE(ped, true);
+}
+
+bool VehicleIsEmpty(Vehicle vehicle)
+{
+	bool empty{ true };
+	int totalSeats = VEHICLE::GET_VEHICLE_MODEL_NUMBER_OF_SEATS(ENTITY::GET_ENTITY_MODEL(vehicle));
+	for (int i = 0; i < totalSeats; i++)
+	{
+		int seatPed = VEHICLE::GET_PED_IN_VEHICLE_SEAT(vehicle, i);
+		if (seatPed != 0 && !ENTITY::IS_ENTITY_DEAD(seatPed))
+		{
+			empty = false;
+			break;
+		}
+	}
+
+	return empty;
 }
 
 Vector3 GetCoords(Ped ped)
@@ -168,6 +192,133 @@ int CreatePedInVehicle(Vehicle vehicle, Hash model, int seatIndex, int outfitVar
 	return ped;
 }
 
+void GiveSaddleToHorse(Ped horse)
+{
+	PED::_APPLY_SHOP_ITEM_TO_PED(horse, joaat("HORSE_EQUIPMENT_CHARRO_01_IMPROVED_NEW_SADDLE_000"), true, false, false);
+}
+
+void UpdatePedOutfit(Ped ped, int outfitVariation)
+{
+	if (ENTITY::DOES_ENTITY_EXIST(ped))
+	{
+		PED::_EQUIP_META_PED_OUTFIT_PRESET(ped, outfitVariation, true);
+		PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	}
+}
+
+int GetRandomOutfitPreset(Ped ped)
+{
+	int preset{};
+	if (ENTITY::DOES_ENTITY_EXIST(ped))
+	{
+		preset = RINT(0, PED::GET_NUM_META_PED_OUTFITS(ped));
+	}
+	else
+	{
+		preset = 0;
+	}
+	return preset;
+}
+
+void SetRandomOutfitPreset(Ped ped)
+{
+	if (ENTITY::DOES_ENTITY_EXIST(ped))
+	{
+		PED::_SET_RANDOM_OUTFIT_VARIATION(ped, true);
+		PED::_UPDATE_PED_VARIATION(ped, true, true, true, true, true);
+	}
+}
+
+void RequestTextureDict(const char* textureDict)
+{
+	if (!TXD::DOES_STREAMED_TEXTURE_DICT_EXIST(textureDict))
+	{
+		return;
+	}
+	else
+	{
+		TXD::REQUEST_STREAMED_TEXTURE_DICT(textureDict, true);
+		while (!TXD::HAS_STREAMED_TEXTURE_DICT_LOADED(textureDict)) { WAIT(0); }
+	}
+}
+
+void RequestTextureHash(Hash textureHash)
+{
+	if (!TXD::DOES_STREAMED_TXD_EXIST(textureHash))
+	{
+		return;
+	}
+	else
+	{
+		TXD::REQUEST_STREAMED_TXD(textureHash, true);
+		while (!TXD::HAS_STREAMED_TXD_LOADED(textureHash)) { WAIT(0); }
+	}
+}
+
+void ReleaseTextureDict(const char* textureDict)
+{
+	if (!TXD::DOES_STREAMED_TEXTURE_DICT_EXIST(textureDict))
+	{
+		return;
+	}
+	else
+	{
+		TXD::SET_STREAMED_TEXTURE_DICT_AS_NO_LONGER_NEEDED(textureDict);
+	}
+}
+
+void ReleaseTextureHash(Hash textureHash)
+{
+	if (!TXD::DOES_STREAMED_TXD_EXIST(textureHash))
+	{
+		return;
+	}
+	else
+	{
+		TXD::SET_STREAMED_TXD_AS_NO_LONGER_NEEDED(textureHash);
+	}
+}
+
+void DrawTextToScreen(const char* text, float x, float y, float scale, int r, int g, int b, int a)
+{
+	UIDEBUG::_BG_SET_TEXT_SCALE(scale, scale);
+	UIDEBUG::_BG_SET_TEXT_COLOR(r, g, b, a);
+	UIDEBUG::_BG_DISPLAY_TEXT(MISC::VAR_STRING(10, "LITERAL_STRING", static_cast<char*>(_strdup(text))), x, y);
+}
+
+void DrawTextToScreen(int value, float x, float y, float scale, int r, int g, int b, int a)
+{
+	UIDEBUG::_BG_SET_TEXT_SCALE(scale, scale);
+	UIDEBUG::_BG_SET_TEXT_COLOR(r, g, b, a);
+	UIDEBUG::_BG_DISPLAY_TEXT(MISC::VAR_STRING(10, "LITERAL_STRING", static_cast<char*>(_strdup(std::to_string(value).c_str()))), x, y);
+}
+
+void DrawTextToScreen(std::string text, float x, float y, float scale, int r, int g, int b, int a)
+{
+	UIDEBUG::_BG_SET_TEXT_SCALE(scale, scale);
+	UIDEBUG::_BG_SET_TEXT_COLOR(r, g, b, a);
+	UIDEBUG::_BG_DISPLAY_TEXT(MISC::VAR_STRING(10, "LITERAL_STRING", static_cast<char*>(_strdup(text.c_str()))), x, y);
+}
+
+void DrawTextToScreen(Vector3 value, float x, float y, float scale, int r, int g, int b, int a)
+{
+	UIDEBUG::_BG_SET_TEXT_SCALE(scale, scale);
+	UIDEBUG::_BG_SET_TEXT_COLOR(r, g, b, a);
+	UIDEBUG::_BG_DISPLAY_TEXT(MISC::VAR_STRING(10, "LITERAL_STRING", static_cast<char*>(_strdup(Vector3ToString(value).c_str()))), x, y);
+}
+
+void PlayFrontendAudio(const char* audioName, const char* audioRef)
+{
+	AUDIO::PLAY_SOUND_FRONTEND(audioName, audioRef, true, 0);
+}
+
+void StopFrontendAudio(const char* audioName, const char* audioRef)
+{
+	AUDIO::_STOP_SOUND_WITH_NAME(audioName, audioRef);
+}
+
+
+
 void kill_scripts(std::vector<Hash> scripts)
 {
 	SCRIPTS::SCRIPT_THREAD_ITERATOR_RESET();
@@ -205,10 +356,8 @@ void DisplayObjective(const char* objective)
 
 void DisplayMissionName(const char* name, int duration)
 {
-	FeedData data;
-	memset(&data, 0, sizeof(data));
-	FeedInfo info;
-	memset(&info, 0, sizeof(info));
+	FeedData data{};
+	FeedInfo info{};
 	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", name);
 	data.duration = duration;
 	UIFEED::_UI_FEED_POST_MISSION_NAME((Any*)&data, (Any*)&info, true);
@@ -216,10 +365,8 @@ void DisplayMissionName(const char* name, int duration)
 
 void DisplayHelpText(const char* text, int duration)
 {
-	FeedData data;
-	memset(&data, 0, sizeof(data));
-	FeedInfo info;
-	memset(&info, 0, sizeof(info));
+	FeedData data{};
+	FeedInfo info{};
 	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", text);
 	data.duration = duration;
 	UIFEED::_UI_FEED_POST_HELP_TEXT((Any*)&data, (Any*)&info, true);
@@ -227,16 +374,33 @@ void DisplayHelpText(const char* text, int duration)
 
 void DisplayLeftToast(const char* title, const char* subtitle, const char* textureDictionary, const char* textureName, int duration)
 {
-	FeedData data;
-	memset(&data, 0, sizeof(data));
-	FeedInfo info;
-	memset(&info, 0, sizeof(info));
+	FeedData data{};
+	FeedInfo info{};
 	data.duration = duration;
 	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
 	info.subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", subtitle);
 	info.texture_dictionary_hash = MISC::GET_HASH_KEY(textureDictionary);
 	info.texture_name_hash = MISC::GET_HASH_KEY(textureName);
 	UIFEED::_UI_FEED_POST_SAMPLE_TOAST((Any*)&data, (Any*)&info, true, true);
+}
+
+void DisplayOneTextShard(const char* title, int duration)
+{
+	FeedData data{};
+	FeedInfo info{};
+	data.duration = duration;
+	info.title = title;
+	UIFEED::_UI_FEED_POST_ONE_TEXT_SHARD((Any*)&data, (Any*)&info, true);
+}
+
+void DisplayTwoTextShard(const char* title, const char* subtitle, int duration)
+{
+	FeedData data{};
+	FeedInfo info{};
+	data.duration = duration;
+	info.title = title;
+	info.subtitle = subtitle;
+	UIFEED::_UI_FEED_POST_TWO_TEXT_SHARD((Any*)&data, (Any*)&info, true, true);
 }
 
 Ped getClosestEnemy(float distance)
@@ -398,36 +562,6 @@ bool RemoveItemFromInventory(int inventoryid, Hash item, int quanity, Hash remov
 }
 /*back to none inventory functions*/
 
-Vector3 addVector3(const Vector3& v1, const Vector3& v2)
-{
-	Vector3 result = { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
-	return result;
-}
-
-Vector3 subVector3(const Vector3& v1, const Vector3& v2)
-{
-	Vector3 result = { v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
-	return result;
-}
-
-Vector3 multiplyVector3(const Vector3& v1, const Vector3& v2)
-{
-	Vector3 result = { v1.x * v2.x, v1.y * v2.y, v1.z * v2.z };
-	return result;
-}
-
-Vector3 divideVector3(const Vector3& v1, const Vector3& v2)
-{
-	Vector3 result = { v1.x / v2.x, v1.y / v2.y, v1.z / v2.z };
-	return result;
-}
-std::string Vector3ToString(const Vector3& v)
-{
-	std::stringstream ss;
-	ss << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-	return ss.str();
-}
-
 int GetMount(Ped ped)
 {
 	return PED::GET_MOUNT(ped);
@@ -443,6 +577,39 @@ Hash GetWeapon(Ped ped)
 Hash GetBestWeapon(Ped ped)
 {
 	return WEAPON::GET_BEST_PED_WEAPON(ped, true, true);
+}
+
+int GetAmmo(int ped)
+{
+	return WEAPON::GET_AMMO_IN_PED_WEAPON(ped, GetWeapon(ped));
+}
+
+int GetMaxClipAmmo(int ped)
+{
+	return WEAPON::GET_MAX_AMMO_IN_CLIP(ped, GetWeapon(ped), true);
+}
+
+int GetClipAmmo(int ped)
+{
+	int clipAmmo{};
+	WEAPON::GET_AMMO_IN_CLIP(ped, &clipAmmo, GetWeapon(ped));
+	return clipAmmo;
+}
+
+Object CreateObject(Hash model, Vector3 pos)
+{
+	Object obj{};
+	if (STREAMING::IS_MODEL_VALID(model))
+	{
+		STREAMING::REQUEST_MODEL(model, true);
+		while (!STREAMING::HAS_MODEL_LOADED(model))
+		{
+			WAIT(0);
+		}
+		obj = OBJECT::CREATE_OBJECT(model, pos, true, true, true, false, false);
+		OBJECT::PLACE_OBJECT_ON_GROUND_PROPERLY(obj, true);
+	}
+	return obj;
 }
 
 int GetPedTarget(Ped ped)
@@ -485,20 +652,28 @@ void AddWeaponToPed(Ped ped, Hash weaponHash, int ammoCount, int attachPoint, bo
 	WEAPON::GIVE_WEAPON_TO_PED(ped, weaponHash, ammoCount, inHand, !inHand, attachPoint, false, 0.5f, 1.f, joaat("ADD_REASON_DEFAULT"), false, 0.f, false);
 }
 
-/*Can be used like this as an example, you can use in many ways though
-std::vector<int> peds{};
-forEach(peds, [&](int* ped)
+void RemoveAllWeapons(Ped ped)
 {
-	if (PED::GET_CURRENT_TARGET_FOR_PED(ped) == PLAYER::PLAYER_PED_ID())
-	{
-		TASK::TASK_COMBAT_PED(PLAYER::PLAYER_PED_ID(), ped, 0, 0);
-	}
-});
-*/
-template<typename T, typename F>
-void forEach(const std::vector<T>& vec, F func)
-{
-	for (const auto& element : vec) {
-		func(element);
-	}
+	WEAPON::REMOVE_ALL_PED_WEAPONS(ped, true, true);
 }
+
+void RemoveCurrentWeapon(Ped ped)
+{
+	WEAPON::REMOVE_WEAPON_FROM_PED(ped, GetWeapon(ped), true, REMOVE_REASON_DEFAULT);
+}
+
+Hash GetWeaponFromGroup(Hash group)
+{
+	return WEAPON::_0xF8204EF17410BF43(group, 0.5f, 1.f, 0);
+}
+
+Hash GetWeaponFromGroups(std::vector<Hash> groups)
+{
+	std::vector<Hash> weapons{};
+	for (int i = 0; i < groups.size(); i++)
+	{
+		weapons.push_back(WEAPON::_0xF8204EF17410BF43(groups[i], 0.5f, 1.f, 0));
+	}
+	return weapons[RINT(0, weapons.size())];
+}
+
