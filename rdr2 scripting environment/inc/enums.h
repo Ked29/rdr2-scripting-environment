@@ -3212,3 +3212,11 @@ enum eRemoveItemReason : Hash
 	REMOVE_REASON_USED = 0x2188E0A3,
 	REMOVE_REASON_USE_FAILED = 0x671F9EAD
 };
+
+enum ePromptPriority
+{
+	PP_Low = 0,
+	PP_Normal = 1,
+	PP_High = 2,
+	PP_MissionCritical = 3,
+};
