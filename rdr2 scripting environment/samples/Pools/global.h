@@ -49,7 +49,7 @@
 	Example param -> std::vector<Hash> killscripts = {joaat("carmodydell"), joaat("beat_bear_trap"), joaat("campfire_gang")};
 	*/
 	void kill_scripts(std::vector<Hash> scripts);
-	Prompt promptHandler(const char* promptText, Hash controlAction, int promptType);
+	Prompt promptHandler(const char* promptText, Hash controlAction, int promptType, int priority = PP_Normal);
 	//credit DisplayObjective -> TuffyTown (Halen84)
 	void DisplayObjective(const char* objective);
 	void DisplayMissionName(const char* name, int duration);
