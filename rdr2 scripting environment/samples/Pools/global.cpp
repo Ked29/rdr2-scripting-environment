@@ -332,18 +332,19 @@ void kill_scripts(std::vector<Hash> scripts)
 		ThreadID = SCRIPTS::SCRIPT_THREAD_ITERATOR_GET_NEXT_THREAD_ID();
 	}
 }
-
-Prompt promptHandler(const char* promptText, Hash controlAction, int promptType)
+//example priority PP_High
+Prompt promptHandler(const char* promptText, Hash controlAction, int promptType, int priority)
 {
-	Prompt pVar0{};
-	pVar0 = HUD::_UI_PROMPT_REGISTER_BEGIN();
-	HUD::_UI_PROMPT_SET_CONTROL_ACTION(pVar0, controlAction);
-	HUD::_UI_PROMPT_SET_TEXT(pVar0, MISC::VAR_STRING(10, "LITERAL_STRING", promptText));
-	HUD::_UI_PROMPT_SET_STANDARD_MODE(pVar0, promptType);
-	HUD::_UI_PROMPT_REGISTER_END(pVar0);
-	HUD::_UI_PROMPT_SET_ENABLED(pVar0, false);
-	HUD::_UI_PROMPT_SET_VISIBLE(pVar0, false);
-	return pVar0;
+	Prompt prompt{};
+	prompt = HUD::_UI_PROMPT_REGISTER_BEGIN();
+	HUD::_UI_PROMPT_SET_CONTROL_ACTION(prompt, controlAction);
+	HUD::_UI_PROMPT_SET_TEXT(prompt, MISC::VAR_STRING(10, "LITERAL_STRING", promptText));
+	HUD::_UI_PROMPT_SET_STANDARD_MODE(prompt, promptType);
+	HUD::_UI_PROMPT_SET_PRIORITY(prompt, priority);
+	HUD::_UI_PROMPT_REGISTER_END(prompt);
+	HUD::_UI_PROMPT_SET_ENABLED(prompt, false);
+	HUD::_UI_PROMPT_SET_VISIBLE(prompt, false);
+	return prompt;
 }
 
 void DisplayObjective(const char* objective)
