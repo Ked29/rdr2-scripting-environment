@@ -249,7 +249,7 @@ struct FeedInfo
 	alignas(8) int f_0;
 	alignas(8) const char* title; //The title of the feed item.
 	alignas(8) const char* subtitle; //the main subtitle of the feed item.
-	alignas(8) int f_3;
+	alignas(8) const char* secondary_subtitle; //the subtitle that plays after the first subtitle.  Used with natives like UIFEED::_UI_FEED_POST_THREE_TEXT_SHARD
 	alignas(8) int texture_dictionary_hash; //the texture dict hash. Used with natives like UIFEED::_UI_FEED_POST_SAMPLE_TOAST
 	alignas(8) int texture_name_hash; //the texture name hash. Used with natives like UIFEED::_UI_FEED_POST_SAMPLE_TOAST
 	alignas(8) int f_6;
