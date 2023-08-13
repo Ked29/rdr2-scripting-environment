@@ -390,7 +390,7 @@ void DisplayOneTextShard(const char* title, int duration)
 	FeedData data{};
 	FeedInfo info{};
 	data.duration = duration;
-	info.title = title;
+	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
 	UIFEED::_UI_FEED_POST_ONE_TEXT_SHARD((Any*)&data, (Any*)&info, true);
 }
 
@@ -399,9 +399,20 @@ void DisplayTwoTextShard(const char* title, const char* subtitle, int duration)
 	FeedData data{};
 	FeedInfo info{};
 	data.duration = duration;
-	info.title = title;
-	info.subtitle = subtitle;
+	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
+	info.subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", subtitle);
 	UIFEED::_UI_FEED_POST_TWO_TEXT_SHARD((Any*)&data, (Any*)&info, true, true);
+}
+
+void DisplayThreeTextShard(const char* title, const char* subtitle, const char* secondary_subtitle, int duration)
+{
+	FeedData data{};
+	FeedInfo info{};
+	data.duration = duration;
+	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
+	info.subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", subtitle);
+	info.secondary_subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", secondary_subtitle);
+	UIFEED::_UI_FEED_POST_THREE_TEXT_SHARD((Any*)&data, (Any*)&info, true, true, true);
 }
 
 Ped getClosestEnemy(float distance)
