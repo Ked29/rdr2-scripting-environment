@@ -57,6 +57,7 @@
 	void DisplayLeftToast(const char* title, const char* subtitle, const char* textureDictionary, const char* textureName, int duration);
 	void DisplayOneTextShard(const char* title, int duration);
 	void DisplayTwoTextShard(const char* title, const char* subtitle, int duration);
+	void DisplayThreeTextShard(const char* title, const char* subtitle, const char* secondary_subtitle, int duration);
 	Ped getClosestEnemy(float distance);
 	void addPedToPlayerGroup(Ped ped);
 	void createGroup(int& outGroup, int formation, float formationSeperation);
