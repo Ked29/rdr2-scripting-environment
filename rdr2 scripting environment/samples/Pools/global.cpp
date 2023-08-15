@@ -707,3 +707,21 @@ Hash GetWeaponFromGroups(std::vector<Hash> groups)
 	return weapons[RINT(0, weapons.size())];
 }
 
+int GetIntStatValue(Hash BaseId, Hash PermutationId)
+{
+	int StatInt{};
+	StatId Stat{};
+	Stat.BaseId = BaseId;
+	Stat.PermutationId = PermutationId;
+	STATS::STAT_ID_GET_INT((Any*)&Stat, &StatInt);
+	return StatInt;
+}
+
+void SetIntStatValue(Hash BaseId, Hash PermutationId, int value)
+{
+	StatId Stat{};
+	Stat.BaseId = BaseId;
+	Stat.PermutationId = PermutationId;
+	STATS::STAT_ID_SET_INT((Any*)&Stat, value, true);
+}
+
