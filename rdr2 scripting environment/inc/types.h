@@ -255,6 +255,27 @@ struct FeedInfo
 	alignas(8) int f_6;
 	alignas(8) int f_7;
 };
+
+//Researched by Halen84 (Tuffy) and Ked
+struct SampleToastRightStruct1
+{
+    alignas(8) int Duration; //duration to display right toast (milliseconds)
+    alignas(8) const char* SoundSet; // soundset for the sound to play
+    alignas(8) const char* SoundToPlay; // sound to play from soundset
+    alignas(8) int f_3; // unk
+};
+//Researched by Halen84 (Tuffy) and Ked
+struct SampleToastRightStruct2
+{
+    alignas(8) int f_0; // unk
+    alignas(8) const char* Title; // title or text that is displayed.
+    alignas(8) const char* ImageDictionary; //the image dictionary for the image texture that is displayed.
+    alignas(8) Hash ImageHash; // the image texture that is displayed.
+    alignas(8) int BounceAmount; //the amount of bounce affect applied to the toast when displayed.
+    alignas(8) Hash Color; //color of the text that is displayed.
+    alignas(8) int f_6; // unk
+};
+
 struct VolumeSphere
 {
 	float f_0;
