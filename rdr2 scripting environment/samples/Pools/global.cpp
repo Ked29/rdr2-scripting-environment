@@ -415,6 +415,24 @@ void DisplayThreeTextShard(const char* title, const char* subtitle, const char* 
 	UIFEED::_UI_FEED_POST_THREE_TEXT_SHARD((Any*)&data, (Any*)&info, true, true, true);
 }
 
+void DisplayRightToast(const char* title, const char* imageDictionary, Hash imageHash, int bounceAmount, Hash color, const char* soundSet, const char* soundToPlay, int p8, bool toggle)
+{
+	SampleToastRightStruct1 data{};
+	SampleToastRightStruct2 info{};
+
+	data.SoundSet = soundSet;
+	data.SoundToPlay = soundToPlay;
+	data.f_3 = p8;
+	data.Duration = 450;
+	info.Title = title;
+	info.ImageDictionary = imageDictionary;
+	info.ImageHash = imageHash;
+	info.BounceAmount = bounceAmount;
+	info.Color = color;
+	info.f_6 = 0;
+	UIFEED::_UI_FEED_POST_SAMPLE_TOAST_RIGHT((Any*)&data, (Any*)&info, toggle);
+}
+
 Ped getClosestEnemy(float distance)
 {
 	Ped worldPeds[1024];
