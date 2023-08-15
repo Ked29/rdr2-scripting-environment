@@ -58,6 +58,8 @@
 	void DisplayOneTextShard(const char* title, int duration);
 	void DisplayTwoTextShard(const char* title, const char* subtitle, int duration);
 	void DisplayThreeTextShard(const char* title, const char* subtitle, const char* secondary_subtitle, int duration);
+	//for title use VAR_STRING, refer to decompiled scripts to see example usages of UIFEED::_UI_FEED_POST_SAMPLE_TOAST_RIGHT.
+	void DisplayRightToast(const char* title, const char* imageDictionary, Hash imageHash, int bounceAmount, Hash color, const char* soundSet, const char* soundToPlay, int p8, bool toggle);
 	Ped getClosestEnemy(float distance);
 	void addPedToPlayerGroup(Ped ped);
 	void createGroup(int& outGroup, int formation, float formationSeperation);
