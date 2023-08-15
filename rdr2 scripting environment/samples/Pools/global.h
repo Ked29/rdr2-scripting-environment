@@ -95,4 +95,6 @@
 	void RemoveCurrentWeapon(Ped ped);
 	Hash GetWeaponFromGroup(Hash group);
 	Hash GetWeaponFromGroups(std::vector<Hash> groups);
+	int GetIntStatValue(Hash BaseId, Hash PermutationId);
+	void SetIntStatValue(Hash BaseId, Hash PermutationId, int value);
 
