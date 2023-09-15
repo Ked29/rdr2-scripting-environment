@@ -8,6 +8,7 @@
 
 #include <windows.h>
 #include <cstdint>
+#include <cmath>
 
 using Any = uint64_t;
 using Void = uint64_t;
