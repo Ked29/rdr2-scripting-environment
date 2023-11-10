@@ -41,7 +41,7 @@ struct Vector2
 	ALIGN8 float y;
 };
 
-/*Halen84 (TuffyTown) Vector3 class*/
+/*Halen84 (TuffyTown) Vector3 class https://github.com/Halen84/Vector3/blob/master/Vector3.h */
 #pragma warning(disable:26495)
 class Vector3
 {
