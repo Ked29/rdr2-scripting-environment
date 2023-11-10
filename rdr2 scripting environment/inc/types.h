@@ -42,6 +42,7 @@ struct Vector2
 };
 
 /*Halen84 (TuffyTown) Vector3 class*/
+#pragma warning(disable:26495)
 class Vector3
 {
 public:
@@ -49,15 +50,15 @@ public:
 	{
 		struct
 		{
-			ALIGN8 float x;
-			ALIGN8 float y;
-			ALIGN8 float z;
+			float x;
+			float y;
+			float z;
 		};
 		struct
 		{
-			ALIGN8 float X;
-			ALIGN8 float Y;
-			ALIGN8 float Z;
+			float X;
+			float Y;
+			float Z;
 		};
 	};
 
@@ -90,7 +91,7 @@ public:
 	Vector3& operator/=(const float& right) { x /= right; y /= right; z /= right; return *this; }
 
 	// Get the cross product of two vectors
-	Vector3 Cross(const Vector3& right)
+	Vector3 Cross(const Vector3 &right)
 	{
 		Vector3 result;
 		result.x = y * right.z - z * right.y;
@@ -102,12 +103,7 @@ public:
 	// Get the length of the vector
 	float Length()
 	{
-		return sqrtf((x * x) + (y * y) + (z * z));
-	}
-	// Returns the squared length of the vector
-	float LengthSquared()
-	{
-		return x * x + y * y + z * z;
+		return sqrtf( (x * x) + (y * y) + (z * z) );
 	}
 
 	// Get the length of the vector
@@ -123,41 +119,35 @@ public:
 	}
 
 	// Convert the vector to have a length of 1
-	void Normalize()
+	Vector3 Normalize()
 	{
 		float length = Length();
-		if (length == 0.0f) return;
+		if (length == 0.0f) return *this;
 
+		Vector3 copy = *this;
 		float norm = 1.0f / length;
-		x *= norm;
-		y *= norm;
-		z *= norm;
-	}
-	// Returns a normalized version of the vector
-	Vector3 Normalized()
-	{
-		float length = Length();
-		if (length == 0.0f)
-			return Vector3(0.0f, 0.0f, 0.0f);
-		float norm = 1.0f / length;
-		return Vector3(x * norm, y * norm, z * norm);
+		copy.x *= norm;
+		copy.y *= norm;
+		copy.z *= norm;
+
+		return copy;
 	}
 
-	// Linearly interpolate between two vectors
+	// Linearly interpolate between two vectors by amount t
 	Vector3 Lerp(const Vector3& to, float t)
 	{
 		t = fmaxf(fminf(t, 1.0f), 0.0f);
 		return Vector3(x + (to.x - x) * t, y + (to.y - y) * t, z + (to.z - z) * t);
 	}
 
-	// Reflect this vector about a given normal vector
+	// Reflects a vector off the plane defined by a normal
 	Vector3 Reflect(const Vector3& normal)
 	{
 		float d = Dot(normal);
 		return Vector3(x - 2.0f * d * normal.x, y - 2.0f * d * normal.y, z - 2.0f * d * normal.z);
 	}
 
-	// Spherically interpolate between two vectors
+	// Spherically interpolate between two vectors by amount t
 	Vector3 Slerp(const Vector3& to, float t)
 	{
 		t = fmaxf(fminf(t, 1.0f), 0.0f);
@@ -168,14 +158,24 @@ public:
 		// Vectors are parallel
 		if (sinTheta == 0.0f) {
 			return Lerp(to, t);
-		}
+		}	
 
 		float w1 = sinf((1.0f - t) * theta) / sinTheta;
 		float w2 = sinf(t * theta) / sinTheta;
 
 		return Vector3(x * w1 + to.x * w2, y * w1 + to.y * w2, z * w1 + to.z * w2);
 	}
+	
+	// Returns the distance between two vectors
+	float Distance(const Vector3& other)
+	{
+		float dx = x - other.x;
+		float dy = y - other.y;
+		float dz = z - other.z;
+		return sqrtf(dx * dx + dy * dy + dz * dz);
+	}
 };
+#pragma warning(default:26495)
 
 struct Vector4
 {
