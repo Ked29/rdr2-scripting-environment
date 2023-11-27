@@ -50,15 +50,15 @@ public:
 	{
 		struct
 		{
-			float x;
-			float y;
-			float z;
+			ALIGN8 float x;
+			ALIGN8 float y;
+			ALIGN8 float z;
 		};
 		struct
 		{
-			float X;
-			float Y;
-			float Z;
+			ALIGN8 float X;
+			ALIGN8 float Y;
+			ALIGN8 float Z;
 		};
 	};
 
