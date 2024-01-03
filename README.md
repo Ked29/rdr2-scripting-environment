@@ -19,6 +19,8 @@ https://github.com/Halen84/RDR3-Native-Flags-And-Enums
 
 https://github.com/Halen84/RDR3-Decompiled-Scripts
 
+https://alexguirre.github.io/rage-parser-dumps/dump.html?game=rdr3&build=1491
+
 ----------------------------------------------------------------------------------------------------------
 
 You'll need to change the output directory for the asi file to the location your rdr2 root directory is.
