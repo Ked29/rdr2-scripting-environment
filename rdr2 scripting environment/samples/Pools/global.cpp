@@ -359,7 +359,7 @@ void DisplayMissionName(const char* name, int duration)
 {
 	FeedData data{};
 	FeedInfo info{};
-	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", name);
+	info.title = name;
 	data.duration = duration;
 	UIFEED::_UI_FEED_POST_MISSION_NAME((Any*)&data, (Any*)&info, true);
 }
@@ -368,7 +368,7 @@ void DisplayHelpText(const char* text, int duration)
 {
 	FeedData data{};
 	FeedInfo info{};
-	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", text);
+	info.title = text;
 	data.duration = duration;
 	UIFEED::_UI_FEED_POST_HELP_TEXT((Any*)&data, (Any*)&info, true);
 }
@@ -378,8 +378,8 @@ void DisplayLeftToast(const char* title, const char* subtitle, const char* textu
 	FeedData data{};
 	FeedInfo info{};
 	data.duration = duration;
-	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
-	info.subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", subtitle);
+	info.title = title;
+	info.subtitle = subtitle;
 	info.texture_dictionary_hash = MISC::GET_HASH_KEY(textureDictionary);
 	info.texture_name_hash = MISC::GET_HASH_KEY(textureName);
 	UIFEED::_UI_FEED_POST_SAMPLE_TOAST((Any*)&data, (Any*)&info, true, true);
@@ -390,7 +390,7 @@ void DisplayOneTextShard(const char* title, int duration)
 	FeedData data{};
 	FeedInfo info{};
 	data.duration = duration;
-	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
+	info.title = title;
 	UIFEED::_UI_FEED_POST_ONE_TEXT_SHARD((Any*)&data, (Any*)&info, true);
 }
 
@@ -399,8 +399,8 @@ void DisplayTwoTextShard(const char* title, const char* subtitle, int duration)
 	FeedData data{};
 	FeedInfo info{};
 	data.duration = duration;
-	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
-	info.subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", subtitle);
+	info.title = title;
+	info.subtitle = subtitle;
 	UIFEED::_UI_FEED_POST_TWO_TEXT_SHARD((Any*)&data, (Any*)&info, true, true);
 }
 
@@ -409,9 +409,9 @@ void DisplayThreeTextShard(const char* title, const char* subtitle, const char* 
 	FeedData data{};
 	FeedInfo info{};
 	data.duration = duration;
-	info.title = MISC::VAR_STRING(10, "LITERAL_STRING", title);
-	info.subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", subtitle);
-	info.secondary_subtitle = MISC::VAR_STRING(10, "LITERAL_STRING", secondary_subtitle);
+	info.title = title;
+	info.subtitle = subtitle;
+	info.secondary_subtitle = secondary_subtitle;
 	UIFEED::_UI_FEED_POST_THREE_TEXT_SHARD((Any*)&data, (Any*)&info, true, true, true);
 }
 
