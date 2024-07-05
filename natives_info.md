@@ -1,10 +1,10 @@
 # RDR2 Natives Documentation
+# Generated Fri, 05 Jul 2024 16:48:09 GMT https://alloc8or.re/rdr3/nativedb/ -> Converted to Markdown
 
 ## BUILTIN
 ### WAIT
 - **Return Type**: void
 - **Parameters**: int ms
-- **Description**: Generated Fri, 05 Jul 2024 16:48:09 GMT https://alloc8or.re/rdr3/nativedb/
 
 ### TIMERA
 - **Return Type**: int
