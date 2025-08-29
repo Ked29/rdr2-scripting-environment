@@ -1,6 +1,7 @@
 #pragma once
 
-enum eInputType : Hash
+
+enum eInputType : unsigned int
 {
 	UNDEFINED_INPUT = 0x2417F471,
 	INPUT_NEXT_CAMERA = 0x7F8D09B8,
@@ -788,7 +789,7 @@ enum eInputType : Hash
 	INPUT_SCRIPTED_FLY_ZUP = 0x639B9FC9,
 	INPUT_SCRIPTED_FLY_ZDOWN = 0x9C5E030C
 };
-enum eBrawlingStyle : Hash
+enum eBrawlingStyle : unsigned int
 {
 	BS_AI = 0x802C604D,
 	BS_AI_BARBRAWL = 0x4FF5F0C7,
@@ -1575,7 +1576,7 @@ enum eCombatAttribute
 	CA_0xA78BB3BD
 };
 
-enum eBlipModifier : Hash
+enum eBlipModifier : unsigned int
 {
 	BLIP_MODIFIER_ANIMAL_SKINNED = 0xFCAD9589,
 	BLIP_MODIFIER_AREA = 0xA2814CC7,
@@ -1950,7 +1951,7 @@ enum eBlipModifier : Hash
 	BLIP_MODIFIER_WITNESS_INVESTIGATING = 0x5E176D3A,
 	BLIP_MODIFIER_WITNESS_UNIDENTIFIED = 0xFAA28257
 };
-enum eBlips : Hash
+enum eBlips : unsigned int
 {
 	BLIP_STYLE_LOOT_OBJECTIVE = 0x3EE98B8E,
 	BLIP_STYLE_ENEMY = 0x318C617C,
@@ -2148,7 +2149,7 @@ enum eCombatAbilityLevel
 	CAL_PROFESSIONAL
 };
 
-enum eCrimeType : Hash
+enum eCrimeType : unsigned int
 {
 	CRIME_ACCOMPLICE = 0xAF074F6D,
 	CRIME_ARSON = 0x68134DC7,
@@ -2593,7 +2594,7 @@ enum class WorldState
 	WS_WATSON_GRAVE = 69
 };
 
-enum eMarkerType : Hash
+enum eMarkerType : unsigned int
 {
 	MARKERTYPE_CYLINDER = 0x94FDAE17,
 	MARKERTYPE_CUBE = 0x6EB7D3BB,
@@ -2614,7 +2615,7 @@ enum eMarkerType : Hash
 	MARKERTYPE_NUM_9 = 0xE9F6303B
 };
 
-enum PedBodyComponentTags : Hash
+enum PedBodyComponentTags : unsigned int
 {
 	TAG_HATS = 0x9925C067,
 	TAG_HAIR = 0x864B03AE,
@@ -2691,7 +2692,7 @@ enum eEmotePlaybackMode
 	EMOTE_PM_FULLBODY,
 };
 
-enum eEmote : Hash
+enum eEmote : unsigned int
 {
 	BOAR_EMOTE = 0x9D11F0CE,
 	BUCK_EMOTE = 0x0887EA4C,
@@ -2820,7 +2821,7 @@ enum eTargetingMode
 	TARGETING_MODE_HARD,
 	TARGETING_MODE_EXPERT
 };
-enum eWeaponHash : Hash
+enum eWeaponHash : unsigned int
 {
 	WEAPON_ALLIGATOR = 0xB5C5D8F1,
 	WEAPON_ANIMAL = 0xF9FBAEBE,
@@ -3064,7 +3065,7 @@ enum eInventories
 	INVENTORY_IDS_COUNT
 };
 
-enum ePromptPressDuration : Hash
+enum ePromptPressDuration : unsigned int
 {
 	SHORT_TIMED_EVENT_MP = 0x31CB12D4,
 	SHORT_TIMED_EVENT = 0x65943D74,
@@ -3109,7 +3110,7 @@ enum eEnterExitVehicleFlags
 };
 
 
-enum eAddItemReason : Hash
+enum eAddItemReason : unsigned int
 {
 	ADD_REASON_AWARDS = 0xB784AD1E,
 	ADD_REASON_CREATE_CHARACTER = 0xE2C4FF71,
@@ -3129,7 +3130,7 @@ enum eAddItemReason : Hash
 	ADD_REASON_SYNCING = 0x8D4B4FF4,
 	ADD_REASON_USE_FAILED = 0xD385B670
 };
-enum eRemoveItemReason : Hash
+enum eRemoveItemReason : unsigned int
 {
 	REMOVE_REASON_CLIENT_PURGED = 0x4A4E94DC,
 	REMOVE_REASON_COALESCE = 0x2ABE393E,
